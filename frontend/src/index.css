@@ -1,0 +1,94 @@
+/* Universal CSS Start */
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Inter', sans-serif;
+}
+
+button{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+button:hover{
+  cursor: pointer;
+  transform: scale(1.01);
+  transition: 0.25s ease-in;
+}
+
+/* Universal CSS Ends*/
+
+/* Login Page Start */
+.admin-login-page-container {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.admin-login-page-row{
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.admin-login-page-first {
+  background-color: #9B6EE7;
+  height: 100vh;
+}
+#row1{
+  color: white;
+  margin-left: 70px;
+  margin-top: 90px;
+}
+#row1 h1{
+  font-weight: bold;
+}
+#row2 img{
+  margin-top: 35px;
+  margin-left: -10px;
+  height: 500px;
+  width: 650px;
+  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+}
+
+.login-box{
+  align-items: center;
+  margin-left: 170px;
+  margin-top: 240px;
+
+}
+.login-box h3{
+  color: white;
+  font-weight: bold;
+}
+.login-box h5{
+  color: white;
+  font-size: 15px;
+  margin-top: 20px;
+}
+.admin-login-page-second {
+  background-color: #1C1D21;
+  height: 100vh;
+}
+.admin-login-page-second-login-box{
+  margin-top: 35px;
+  background-color: #1C1D21;
+  border-bottom: solid 1px white;
+  color: white;
+  width: 380px;
+  border: none;
+  border-bottom: solid 1px white;
+  padding-bottom: 10px;
+}
+.admin-login-page-second-button{
+  margin-top: 60px;
+  background-color: blueviolet ;
+  color: white;
+  width: 380px;
+  border-radius: 5px;
+  height: 40px;
+  border: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+.admin-login-page-second-login-box:focus{
+  border: none;
+  outline: none;
+
+}
+/* Login Page End */
