@@ -1,13 +1,15 @@
 /* Universal CSS Start */
-*{
+* {
   margin: 0px;
   padding: 0px;
   font-family: 'Inter', sans-serif;
+  /* overflow: hidden; */
 }
 
+/* 
 button{
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
+} */
 
 button:hover{
   cursor: pointer;
@@ -15,6 +17,15 @@ button:hover{
   transition: 0.25s ease-in;
 }
 
+.container{
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+body{
+   min-height: 100vh;
+   overflow: auto;
+}
 /* Universal CSS Ends*/
 
 /* Login Page Start */
@@ -27,7 +38,7 @@ button:hover{
   padding: 0px !important;
 }
 .admin-login-page-first {
-  background-color: #9B6EE7;
+  background-color: #4361e5;
   height: 100vh;
 }
 #row1{
@@ -53,32 +64,33 @@ button:hover{
 
 }
 .login-box h3{
-  color: white;
+  color: black;
   font-weight: bold;
 }
 .login-box h5{
-  color: white;
+  color: black;
   font-size: 15px;
   margin-top: 20px;
 }
 .admin-login-page-second {
-  background-color: #1C1D21;
+  background-color: white;
   height: 100vh;
 }
 .admin-login-page-second-login-box{
   margin-top: 35px;
-  background-color: #1C1D21;
-  border-bottom: solid 1px white;
-  color: white;
+  background-color: white;
+  border-bottom: solid 1px black;
+  color: black;
   width: 380px;
   border: none;
-  border-bottom: solid 1px white;
+  border-bottom: solid 1px black;
   padding-bottom: 10px;
 }
 .admin-login-page-second-button{
   margin-top: 60px;
-  background-color: blueviolet ;
-  color: white;
+  background-color: #4361e5  ;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
+  color: black;
   width: 380px;
   border-radius: 5px;
   height: 40px;
@@ -89,6 +101,152 @@ button:hover{
 .admin-login-page-second-login-box:focus{
   border: none;
   outline: none;
-
 }
 /* Login Page End */
+
+/* Navbar Start */
+nav{
+  background-color: white !important;
+}
+.navbar-brand{
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.navbar-second-part{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.navbar-second-part-admin-name{
+  font-weight: bold;
+  font-size: 18px;
+}
+/* Navbar End */
+
+/* Sidebar Start */
+
+.sidebar-outermost{
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-accordion {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+  padding-bottom: 20px;
+  overflow-y: auto;
+}
+.sidebar-profile {
+  margin-top: -140px;
+  font-size: 18px;
+  padding-left: 80px !important;
+  color: black !important;
+  background-color: white !important;
+}
+
+.accordion{
+  border: none;
+}
+.accordion-item{
+  border: none;
+  margin-left: 10px;
+  
+}
+.accordion-button::after {
+  display: none !important;
+}
+
+.accordion-button {
+  font-weight: bold;
+  border-radius: 5px;
+  padding-left: 30px;
+  background-color: white;
+}
+.accordion-button:not(.collapsed) {
+  background-color: #4361e5;
+  border: none;
+  color: white; /* for better contrast */
+}
+.accordion-button:hover{
+  border-radius: 5px;
+}
+
+
+/* Sidebar End */
+
+/* Admin Dashboard Start */
+.admin-dashboard-container{
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 100%;
+}
+.admin-dashboard-row{
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.admin-dashboard-first{
+  background-color: white;
+  padding: 0px;
+}
+.admin-dashboard-second{
+  /* background-color: greenyellow; */
+  padding: 10px;
+}
+.admin-dashboard-second-row1{
+  margin: 0px !important;
+  padding: 0px !important;
+  margin-top: -9px !important;
+  height: 170px;
+}
+.admin-dashboard-second-row2{
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.row1-first{
+  margin: 0px 15px 0px 0px;
+  background-color: #eaebef;
+  border-radius: 5px;
+}
+.row1-second{
+  margin: 0px 15px 0px 0px;
+  padding-top: auto;
+  background-color: #eaebef;
+  border-radius: 5px;
+}
+.row1-third{
+  margin: 0px 15px 0px 0px;
+  padding-top: auto;
+  background-color: #eaebef;
+  border-radius: 5px;
+}
+.row1-first h3{
+  justify-content: center;
+  text-align: center;
+  margin-left: 25px ;
+  font-weight: bolder;
+  margin-top: 50px;
+  align-items: center;
+}
+.row1-second h3{
+  justify-content: center;
+  text-align: center;
+  margin-left: 25px ;
+  font-weight: bolder;
+  margin-top: 50px;
+  align-items: center;
+}
+.row1-third h3{
+  justify-content: center;
+  text-align: center;
+  margin-left: 25px ;
+  font-weight: bolder;
+  margin-top: 50px;
+  align-items: center;
+}
+
+/* Admin Dashboard End */
