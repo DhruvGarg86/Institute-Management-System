@@ -2,8 +2,15 @@
 
 ## 1st June 2025
 
-### By Dhruv Garg
+### By dhruvGarg
 - Added basic frontend app using React(Javascript) and Vite.
 - Created admin login page, only frontend part.
 - Added Documentation, including project requirements, UML Case diagram, ER diagram, and the schema of the intended DB.
 - Added some website UI screenshots, including login page and admin dashboard.
+
+## 2nd June 2025
+
+### By dhruvGarg
+- Added 80% implemented frontend of Admin Dashboard.
+- Changed color schema from purple black to blue white.
+- Created a sidebar for admin, 50% implemented.
