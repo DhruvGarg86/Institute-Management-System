@@ -14,3 +14,11 @@
 - Added 80% implemented frontend of Admin Dashboard.
 - Changed color schema from purple black to blue white.
 - Created a sidebar for admin, 50% implemented.
+
+## 4th June 2025
+
+### By dhruvGarg
+- Completed Admin Dashboard
+- Sidebar completed.
+- Added navigation to dashboard from login page.
+- Profile image, logout added.

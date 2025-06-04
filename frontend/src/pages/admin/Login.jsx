@@ -1,7 +1,9 @@
 import React from 'react'
 import studyImg from '../../assets/study.svg';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+    const navigate = useNavigate();
     return (
         <div>
             <div className="container-fluid admin-login-page-container">
@@ -22,7 +24,8 @@ function Login() {
                             <input type="text" name="" placeholder="Email ID" className="admin-login-page-second-login-box" /><br />
                             <input type="password" name="" placeholder="Password" className="admin-login-page-second-login-box" />
                             <div>
-                                <button className="admin-login-page-second-button">LOGIN</button>
+                                <button onClick={() => navigate("/admin/dashboard")}
+                                className="admin-login-page-second-button">LOGIN</button>
                             </div>
                         </div>
                     </div>
