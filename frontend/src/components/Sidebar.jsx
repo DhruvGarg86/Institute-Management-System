@@ -1,6 +1,11 @@
 import React from 'react';
+import Dashboard from '../pages/admin/Dashboard';
+import profileImg from '../assets/profile.svg';
+import { useNavigate } from 'react-router-dom';
+
 
 function Sidebar() {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -22,7 +27,7 @@ function Sidebar() {
         {/* Dashboard */}
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingOne">
-            <button
+            <button onClick={() => navigate("/admin/dashboard")}
               className="accordion-button"
               type="button"
               data-bs-toggle="collapse"
@@ -39,7 +44,6 @@ function Sidebar() {
             aria-labelledby="headingOne"
             data-bs-parent="#accordionPanelsStayOpenExample"
           >
-            <div className="accordion-body">{/* Dashboard content here */}</div>
           </div>
         </div>
 
@@ -63,7 +67,14 @@ function Sidebar() {
             aria-labelledby="headingTwo"
             data-bs-parent="#accordionPanelsStayOpenExample"
           >
-            <div className="accordion-body">{/* Student content here */}</div>
+            <div className="accordion-body">
+              <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Display All Teachers</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -87,7 +98,14 @@ function Sidebar() {
             aria-labelledby="headingThree"
             data-bs-parent="#accordionPanelsStayOpenExample"
           >
-            <div className="accordion-body">{/* Teacher content here */}</div>
+            <div className="accordion-body">
+              <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Display All Teachers</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -111,7 +129,14 @@ function Sidebar() {
             aria-labelledby="headingFour"
             data-bs-parent="#accordionPanelsStayOpenExample"
           >
-            <div className="accordion-body">{/* Courses content here */}</div>
+            <div className="accordion-body">
+              <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Display All Teachers</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -135,14 +160,29 @@ function Sidebar() {
             aria-labelledby="headingFive"
             data-bs-parent="#accordionPanelsStayOpenExample"
           >
-            <div className="accordion-body">{/* Notices content here */}</div>
+            <div className="accordion-body">
+              <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
+                <li><button type="button" className='sidebar-inner-button'>Add New Notice</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Display All Notices</button></li>
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Profile - pinned at bottom */}
         <div className="accordion-item" style={{ marginTop: 'auto' }}>
           <h2 className="accordion-header" id="headingSix">
-            <button className="accordion-button sidebar-profile" type="button">
+            <button className="accordion-button sidebar-profile" type="button" style={{borderRadius: '10px'}}>
+              <img src={profileImg} alt="Profile"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  marginRight: '40px',
+                  objectFit: 'cover',
+                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+                }}
+              />
               Profile
             </button>
           </h2>

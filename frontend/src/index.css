@@ -90,7 +90,7 @@ body{
   margin-top: 60px;
   background-color: #4361e5  ;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
-  color: black;
+  color: white;
   width: 380px;
   border-radius: 5px;
   height: 40px;
@@ -160,7 +160,6 @@ nav{
 .accordion-button::after {
   display: none !important;
 }
-
 .accordion-button {
   font-weight: bold;
   border-radius: 5px;
@@ -170,16 +169,52 @@ nav{
 .accordion-button:not(.collapsed) {
   background-color: #4361e5;
   border: none;
-  color: white; /* for better contrast */
+  color: white;
 }
 .accordion-button:hover{
   border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+.sidebar-profile{
+  padding-left: 40px !important;
+}
+.sidebar-inner{
+  padding-left: 0px;
+}
+.sidebar-inner-button{
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+    width: 300px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+}
+  .sidebar-inner-button:hover{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  color: white !important;
+  background-color: #4361e5;
 
-
+}
+.sidebar-inner-button:not(.collapsed) {
+  border: none;
+  color: black; 
+  text-align: left;
+  padding-left: 30px;
+}
 /* Sidebar End */
 
 /* Admin Dashboard Start */
+.admin-navbar-logout{
+  cursor: pointer;
+}
+.admin-navbar-logout:hover{
+  transform: scale(1.05);
+  transition: all 0.2s ease-in;
+
+}
 .admin-dashboard-container{
   margin: 0px !important;
   padding: 0px !important;
@@ -206,19 +241,24 @@ nav{
 .admin-dashboard-second-row2{
   margin: 0px !important;
   padding: 0px !important;
+  margin-top: 13px !important;
+  height: 65vh;
 }
 .row1-first{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 0px 15px 0px 0px;
   background-color: #eaebef;
   border-radius: 5px;
 }
 .row1-second{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 0px 15px 0px 0px;
   padding-top: auto;
   background-color: #eaebef;
   border-radius: 5px;
 }
 .row1-third{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 0px 15px 0px 0px;
   padding-top: auto;
   background-color: #eaebef;
@@ -227,26 +267,39 @@ nav{
 .row1-first h3{
   justify-content: center;
   text-align: center;
-  margin-left: 25px ;
   font-weight: bolder;
-  margin-top: 50px;
+  margin-top: 35px;
   align-items: center;
 }
 .row1-second h3{
   justify-content: center;
   text-align: center;
-  margin-left: 25px ;
   font-weight: bolder;
-  margin-top: 50px;
+  margin-top: 35px;
   align-items: center;
 }
 .row1-third h3{
   justify-content: center;
   text-align: center;
-  margin-left: 25px ;
   font-weight: bolder;
-  margin-top: 50px;
+  margin-top: 35px;
   align-items: center;
 }
-
+.row2-first{
+  /* background-color: #eaebef; */
+  padding: 0px;
+  padding-right: 16px;
+}
+.row2-second{
+  /* background-color: #eaebef; */
+  border-radius: 5px;
+  padding-left: 2px;
+}
+.row2-first-inner-div{    
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 510px;
+  border-radius: 5px;
+  background-color: #eaebef;
+  padding: 5px;
+}
 /* Admin Dashboard End */
