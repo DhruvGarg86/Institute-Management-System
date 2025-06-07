@@ -172,7 +172,8 @@ function Sidebar() {
         {/* Profile - pinned at bottom */}
         <div className="accordion-item" style={{ marginTop: 'auto' }}>
           <h2 className="accordion-header" id="headingSix">
-            <button className="accordion-button sidebar-profile" type="button" style={{borderRadius: '10px'}}>
+            <button className="accordion-button sidebar-profile" type="button"
+              style={{ borderRadius: '10px' }} onClick={() => navigate('/admin/profile')}>
               <img src={profileImg} alt="Profile"
                 style={{
                   width: '40px',

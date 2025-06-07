@@ -22,3 +22,10 @@
 - Sidebar completed.
 - Added navigation to dashboard from login page.
 - Profile image, logout added.
+
+## 07th June 2025
+
+### By dhruvGarg
+- Added notices and top student to admin dashboard.
+- Profile page 50% completed
+- Added navigation for dashboard and profile button
