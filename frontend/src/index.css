@@ -332,7 +332,7 @@ nav{
 
 /* Admin Dashboard Card End */
 
-/* Admin Dashbaord Profile Start */
+/* Admin Profile Start */
 .admin-profile-box {
   display: flex;
   justify-content: center;
@@ -340,9 +340,7 @@ nav{
   height: 680px;
   padding: 25px;
   border-radius: 5px;
-  /* background-color: #eaebef; */
 }
-
 .admin-profile-box-inside {
   display: flex;
   width: 90%;
@@ -351,12 +349,14 @@ nav{
   overflow: hidden;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 }
-
 .admin-profile-box-inside-left {
-  width: 25%;
+  width: 35%;
   background-color: white;
 }
-
+.admin-profile-box-inside-left:hover{
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
+}
 .admin-profile-img {
   width: 100%;
   height: 100%;
@@ -364,9 +364,8 @@ nav{
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-
 .admin-profile-box-inside-right {
-  width: 75%;
+  width: 65%;
   background-color: #4361e5;
   display: flex;
   align-items: center;
@@ -374,7 +373,62 @@ nav{
   color: white;
   font-size: 24px;
   font-weight: bold;
-  padding: 20px;
+  padding: 10px;
+}
+.admin-profile-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-/* Admin Dashbaord Profile End */
+.social-icon {
+  font-size: 20px;
+  color: #333;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 40px;
+  padding-left: 10px;
+  padding-top: 4px;
+  height: 40px;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#social-icon-facebook:hover{
+  background-color: #1877F2;
+  color: white;
+}
+#social-icon-instagram:hover{
+  color: white;
+  background-color: #ba35c1;
+}
+#social-icon-twitter:hover{
+  color: white;
+  background-color: #1DA1F2;
+}
+#social-icon-linkedin:hover{
+  color: white;
+  background-color: #0077B5;
+}
+/* Admin Profile End */
+
+/* Admin Add Notice Start*/
+.admin-add-notice-button{
+  background-color: #4361e5  ;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
+  color: white;
+  border-radius: 5px;
+}
+.admin-add-notice-button:hover{
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  color: white !important;
+  background-color: #4361e5;
+}
+.admin-add-notice-box{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/* Admin Add Notice End */

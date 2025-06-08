@@ -29,3 +29,9 @@
 - Added notices and top student to admin dashboard.
 - Profile page 50% completed
 - Added navigation for dashboard and profile button
+
+## 08th June 2025
+
+### By dhruvGarg
+- Completed Profile page.
+- Started 'add-notice' page frontend.

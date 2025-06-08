@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import ElonImg from '../../assets/elon.png';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 function Profile() {
     return (
@@ -19,34 +20,25 @@ function Profile() {
                                     <img src={ElonImg} alt="Elon Musk" className="admin-profile-img" />
                                 </div>
                                 <div className="admin-profile-box-inside-right">
-                                    <div className="admin-profile-box-inside-right">
-                                        <div className="admin-profile-box-inside-right">
-                                            <div className="admin-profile-box-inside-right">
-                                                <h2>Elon Musk</h2>
-                                                <div className="profile-row">
-                                                    <span className="profile-label">Role:</span>
-                                                    <span className="profile-value">Admin</span><br />
-                                                </div>
-                                                <div className="profile-row">
-                                                    <span className="profile-label">Gender:</span>
-                                                    <span className="profile-value">Male</span>
-                                                </div>
-                                                <div className="profile-row">
-                                                    <span className="profile-label">Date of Birth:</span>
-                                                    <span className="profile-value">June 28, 1971</span>
-                                                </div>
-                                                <div className="profile-row">
-                                                    <span className="profile-label">Phone:</span>
-                                                    <span className="profile-value">+1 234 567 8901</span>
-                                                </div>
-                                                <div className="profile-row">
-                                                    <span className="profile-label">Address:</span>
-                                                    <span className="profile-value">
-                                                        3500 Deer Creek Road, Palo Alto, CA, USA
-                                                    </span>
-                                                </div>
-                                            </div>
-
+                                    <div className="admin-profile-details">
+                                        <h2 className="admin-profile-name fw-bold mb-4 ">This is Elon Musk</h2>
+                                        <p>Gender:Male</p>
+                                        <p><strong>Email:</strong> elon.musk@example.com</p>
+                                        <p><strong>Date of Birth:</strong> June 28, 1971</p>
+                                        <p><strong>Address:</strong> 1 Rocket Road, Hawthorne, CA</p>
+                                        <div className="admin-profile-socials mt-4">
+                                            <a href="https://facebook.com" target="_blank" rel="blank" className="ms-3 social-icon" id='social-icon-facebook'>
+                                                <FaFacebookF />
+                                            </a>
+                                            <a href="https://twitter.com" target="_blank" rel="blank" className="ms-3 social-icon" id='social-icon-twitter'>
+                                                <FaTwitter />
+                                            </a>
+                                            <a href="https://instagram.com" target="_blank" rel="blank" className="ms-3 social-icon" id='social-icon-instagram'>
+                                                <FaInstagram />
+                                            </a>
+                                            <a href="https://linkedin.com" target="_blank" rel="blank" className="ms-3 social-icon" id='social-icon-linkedin'>
+                                                <FaLinkedinIn />
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +46,7 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     );
 }
