@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import Profile from './pages/admin/Profile';
+import AddNotice from './pages/admin/AddNotice';
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
       <Route 
       path='/admin/profile'
       element = {<Profile/>}
+      />
+      <Route 
+      path='/admin/add-notice'
+      element = {<AddNotice/>}
       />
     </Routes>
   )
