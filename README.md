@@ -35,3 +35,15 @@
 ### By dhruvGarg
 - Completed Profile page.
 - Started 'add-notice' page frontend.
+
+## 10th June 2025
+
+### By dhruvGarg
+- Switched to Yarn, removed package-lock.json, to avoid inconsistency and mixing of 'npm' and 'yarn'. 
+- Changed Schema filetype from .txt to .sql. in 'Documentation Folder'.
+- Finished Admin Add Notice page.
+- Created Admin Add Student page. (Yet to add image input functionality)
+- Updated CSS by removing redundant code.
+- Added 'react-toastify', to give visually better response to user.
+- Updated Sidebar, mapped links to pages.
+- Added screenshots of 'Admin/AddNotice' page and 'Admin/AddStudent' page
