@@ -7,7 +7,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/f
 function Profile() {
     return (
         <>
-            <Navbar />
+        <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
                     <div className="col-3 admin-dashboard-first">

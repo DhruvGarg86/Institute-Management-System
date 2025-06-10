@@ -48,7 +48,7 @@ function Dashboard() {
             <div className="row admin-dashboard-second-row2">
               <div className="col-8 row2-first">
                 <div className="row2-first-inner-div">
-                  <h2 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>Top Student</h2>
+                  <h2 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px', color: 'black' }}>Top Student</h2>
                   <div className="row2-first-inner-div-profile">
                     <Card />
                   </div>

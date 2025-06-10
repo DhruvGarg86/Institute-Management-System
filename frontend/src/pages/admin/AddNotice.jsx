@@ -1,7 +1,14 @@
+import React from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
+import { toast } from 'react-toastify';
 
 function AddNotice() {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        toast.success("Notice added successfully");
+    };
+
     return (
         <>
             <Navbar />
@@ -11,10 +18,19 @@ function AddNotice() {
                         <Sidebar />
                     </div>
                     <div className="col-9 admin-dashboard-second p-4">
-                        <h2 className="mb-4 fw-bold">Manage Notices</h2>
+                        <h2 className="mb-4 fw-bold text-primary">Manage Notices</h2>
                         <div className="card p-4 shadow-sm mb-5 admin-add-notice-box">
-                            <h3 className="mb-3 mx-auto fw-bold" >New Notice</h3>
-                            <form>
+                            <h3 className="mb-3 mx-auto fw-bold">New Notice</h3>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label className="form-label">Notice Status</label>
+                                    <select className="form-select" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Students">Students</option>
+                                        <option value="Teachers">Teachers</option>
+                                        <option value="All">All</option>
+                                    </select>
+                                </div>
                                 <div className="mb-3">
                                     <label className="form-label">Title</label>
                                     <input type="text" className="form-control" required />
@@ -25,10 +41,9 @@ function AddNotice() {
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Description</label>
-                                    <textarea className="form-control" rows="3" required>
-
-                                    </textarea>
+                                    <textarea className="form-control" rows="3" required></textarea>
                                 </div>
+                                
                                 <button type="submit" className="btn admin-add-notice-button">Add Notice</button>
                             </form>
                         </div>
