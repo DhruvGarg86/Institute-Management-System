@@ -437,7 +437,86 @@ nav{
 .admin-add-notice-box{
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+input[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
 /* Admin Add Notice End */
+
+/* Admin Display Notice Start */
+.admin-display-notice {
+  margin-top: -20px;
+}
+
+.notice-container {
+  margin-top: 10px;
+  max-height: 550px; /* adjust as needed */
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.notice-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.notice-container::-webkit-scrollbar-thumb {
+  background-color: #4361e5;
+  border-radius: 5px;
+}
+
+.notice-container::-webkit-scrollbar-track {
+  background: #eaebef;
+}
+
+.notice-card {
+  position: relative;
+  border: 1px dashed #ddd;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 200px;
+}
+
+/* Bottom highlight indicator */
+.notice-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #4361e5, #5c7cfa);
+  transition: opacity 0.3s ease;
+  opacity: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.notice-card:hover {
+  height: 400px;
+}
+
+.notice-card:hover::after {
+  opacity: 0;
+}
+
+.notice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.notice-description {
+  padding: 10px;
+  min-height: 80px;
+}
+/* Admin Display Notice End */
 
 /* Admin Add Student Start */
 .admin-add-student-heading{
