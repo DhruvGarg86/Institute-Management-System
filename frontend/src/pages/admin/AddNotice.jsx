@@ -37,13 +37,18 @@ function AddNotice() {
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Date</label>
-                                    <input type="date" className="form-control" required />
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={new Date().toLocaleDateString('en-GB')}
+                                        readOnly
+                                    />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Description</label>
                                     <textarea className="form-control" rows="3" required></textarea>
                                 </div>
-                                
+
                                 <button type="submit" className="btn admin-add-notice-button">Add Notice</button>
                             </form>
                         </div>

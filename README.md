@@ -47,3 +47,12 @@
 - Added 'react-toastify', to give visually better response to user.
 - Updated Sidebar, mapped links to pages.
 - Added screenshots of 'Admin/AddNotice' page and 'Admin/AddStudent' page
+
+
+## 11th June 2025
+
+### By dhruvGarg
+
+- Added Display Notice, completed 70%.
+- Updated sidebar.
+- Modified Add Notice such that while inserting a notice, the date of notice is preselected as the current date i.e today, and is non-editable, even for ADMIN(user role).

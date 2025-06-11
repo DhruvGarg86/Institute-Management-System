@@ -163,7 +163,7 @@ function Sidebar() {
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-notice')}> Add New Notice</button></li>
-                <li><button type="button" className='sidebar-inner-button'>Display All Notices</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/display-notices')}>Display All Notices</button></li>
               </ul>
             </div>
           </div>
