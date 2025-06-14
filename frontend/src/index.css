@@ -407,7 +407,14 @@ nav{
 }
 #social-icon-instagram:hover{
   color: white;
-  background-color: #ba35c1;
+  background-image: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
 }
 #social-icon-twitter:hover{
   color: white;
@@ -451,7 +458,7 @@ input[readonly] {
 
 .notice-container {
   margin-top: 10px;
-  max-height: 550px; /* adjust as needed */
+  max-height: 550px;
   overflow-y: auto;
   border-radius: 12px;
   padding: 20px;
@@ -488,7 +495,7 @@ input[readonly] {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 4px;
+  height: 10px;
   width: 100%;
   background: linear-gradient(90deg, #4361e5, #5c7cfa);
   transition: opacity 0.3s ease;
@@ -499,6 +506,7 @@ input[readonly] {
 
 .notice-card:hover {
   height: 400px;
+  border: dashed 3px #4361e5;
 }
 
 .notice-card:hover::after {
@@ -526,3 +534,7 @@ input[readonly] {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 /* Admin Add Student End */
+
+/* Admin Display Student Start */
+
+/* Admin Display Student End */
