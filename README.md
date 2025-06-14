@@ -56,3 +56,11 @@
 - Added Display Notice, completed 70%.
 - Updated sidebar.
 - Modified Add Notice such that while inserting a notice, the date of notice is preselected as the current date i.e today, and is non-editable, even for ADMIN(user role).
+
+
+## 14th June 2025
+
+### By dhruvGarg
+
+- Added Display all students, can search through course, city and name.
+- Changed background-color of instagram icon in profile page.
