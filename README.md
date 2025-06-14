@@ -64,3 +64,4 @@
 
 - Added Display all students, can search through course, city and name.
 - Changed background-color of instagram icon in profile page.
+- Added 'upload PDF/Image' functionality in Add Notice Page.
