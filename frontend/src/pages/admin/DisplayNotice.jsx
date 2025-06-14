@@ -20,7 +20,11 @@ function DisplayNotice() {
                                     <span className="notice-date me-3">2025-08-15</span>
                                 </div>
                                 <div className="notice-description">
-                                    College will remain closed on Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam pariatur accusantium atque saepe recusandae ipsum, perspiciatis omnis id inventore voluptas a quia et accusamus quod, commodi vitae dolor quo eos. 15th Augustollege will remain closed on Lorem ipsum dolor sit amet...
+                                    College will remain closed on Lorem ipsum dolor sit   t consectetur adipisicing elit. Nam pariatur accusantium atque saepe recusandae ipsum, perspiciatis omnis id inventore voluptas a quia et accusamus quod, commodi vitae dolor quo eos. 15th Augustollege will remain closed on Lorem ipsum dolor sit amet...
+                                </div>
+                                <div className="notice-description-link">
+                                    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                                        Notice if pdf/image is available</a>
                                 </div>
                             </div>
 
@@ -32,6 +36,10 @@ function DisplayNotice() {
                                 <div className="notice-description">
                                     Mid-sem exams start from 20th September.
                                 </div>
+                                <div className="notice-description-link">
+                                    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScQRjfti_wKmLvm_i9RRGUXUdDdIxBQ9H5Ew&s" target="_blank" rel="noopener noreferrer">
+                                        Notice if pdf/image is available</a>
+                                </div>
                             </div>
 
                             <div className="notice-card">
@@ -42,6 +50,10 @@ function DisplayNotice() {
                                 <div className="notice-description">
                                     AI Seminar on 1st October in the auditorium.
                                 </div>
+                                <div className="notice-description-link">
+                                    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                                        Notice if pdf/image is available</a>
+                                </div>
                             </div>
 
                             <div className="notice-card">
@@ -51,6 +63,9 @@ function DisplayNotice() {
                                 </div>
                                 <div className="notice-description">
                                     Submit your Data Structures assignment by 5th July.
+                                </div>
+                                <div className="notice-description-link">
+                                    <a href='www.google.com'>Notice if pdf/image is available</a>
                                 </div>
                             </div>
 
