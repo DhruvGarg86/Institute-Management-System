@@ -65,3 +65,10 @@
 - Added Display all students, can search through course, city and name.
 - Changed background-color of instagram icon in profile page.
 - Added 'upload PDF/Image' functionality in Add Notice Page.
+
+## 19th July 2025
+
+### By dhruvGarg
+
+- Added RichTextEditor via Syncfusion in 'Add Notice' page, to provide better text customization options.
+- The Syncfusion is using a 7 day free trial period license, and a request for permanent license is applied, if not approved, syncfusion will be removed. 

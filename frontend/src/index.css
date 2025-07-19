@@ -223,10 +223,15 @@ nav{
 /* Admin Dashboard Start */
 .admin-navbar-logout{
   cursor: pointer;
+  border-radius: 20px;
 }
 .admin-navbar-logout:hover{
-  transform: scale(1.05);
-  transition: all 0.2s ease-in;
+  padding: 2px;
+  border-radius: 20px;
+  transform: scale(1.5);
+  transition: all 0.3s ease-in-out  ;
+  background-color: #B23B3B ;
+  color: white;
 
 }
 .admin-dashboard-container{
