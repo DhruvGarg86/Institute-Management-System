@@ -21,7 +21,7 @@ function Profile() {
                                 </div>
                                 <div className="admin-profile-box-inside-right">
                                     <div className="admin-profile-details">
-                                        <h2 className="admin-profile-name fw-bold mb-4 " style={{color: 'white'}}>This is Elon Musk</h2>
+                                        <h2 className="admin-profile-name fw-bold mb-4 " style={{color: 'white'}}>Elon Musk</h2>
                                         <p>Gender:Male</p>
                                         <p><strong>Email:</strong> elon.musk@example.com</p>
                                         <p><strong>Date of Birth:</strong> June 28, 1971</p>
