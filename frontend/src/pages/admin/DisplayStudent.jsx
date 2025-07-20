@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash, FaSearch, FaChevronDown } from 'react-icons/fa';
 
 const sampleStudents = [
@@ -71,6 +72,7 @@ const sampleStudents = [
 
 function DisplayStudent() {
     const [students] = useState(sampleStudents);
+    const navigate = useNavigate();
 
     return (
         <>
@@ -83,7 +85,7 @@ function DisplayStudent() {
                     <div className="col-9 admin-dashboard-second p-4">
                         <div className="card p-4 shadow">
                             <div className="d-flex justify-content-between align-items-center mb-3">
-                                <h4>Students Information</h4>
+                                <h4>Students List</h4>
                                 <div className="d-flex align-items-center gap-3">
                                     <div className="input-group">
                                         <input type="text" className="form-control" placeholder="Search by name or roll" />
@@ -122,7 +124,8 @@ function DisplayStudent() {
                                                 <td>{student.dob}</td>
                                                 <td>{student.phone}</td>
                                                 <td>
-                                                    <button className="btn btn-sm btn-light me-2"><FaEdit /></button>
+                                                    <button className="btn btn-sm btn-light text-primary me-2" onClick={() => navigate(`/admin/student-marks/${student.roll}`)}>View Marks</button>
+                                                    <button className="btn btn-sm btn-light me-2" onClick={() => navigate(`/admin/edit-student/${student.roll}`)}><FaEdit /></button>
                                                     <button className="btn btn-sm btn-light text-danger"><FaTrash /></button>
                                                 </td>
                                             </tr>

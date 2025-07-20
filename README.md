@@ -52,7 +52,6 @@
 ## 11th June 2025
 
 ### By dhruvGarg
-
 - Added Display Notice, completed 70%.
 - Updated sidebar.
 - Modified Add Notice such that while inserting a notice, the date of notice is preselected as the current date i.e today, and is non-editable, even for ADMIN(user role).
@@ -61,7 +60,6 @@
 ## 14th June 2025
 
 ### By dhruvGarg
-
 - Added Display all students, can search through course, city and name.
 - Changed background-color of instagram icon in profile page.
 - Added 'upload PDF/Image' functionality in Add Notice Page.
@@ -69,6 +67,14 @@
 ## 19th July 2025
 
 ### By dhruvGarg
-
 - Added RichTextEditor via Syncfusion in 'Add Notice' page, to provide better text customization options.
 - The Syncfusion is using a 7 day free trial period license, and a request for permanent license is applied, if not approved, syncfusion will be removed. 
+
+## 20th July 2025
+
+### By dhruvGarg
+- Created 'EditStudent' page for admin , and linked to edit action button of student display.
+- Added 'View Marks' button to list displayed on 'DisplayStudent' page.
+- Created 'StudentMarks' page for admin, to show overall marks secured by a student, includes a pie chart via Syncfusion.
+- Used PieCharts from Syncfusion to show students marks, and also can download the same.
+- 

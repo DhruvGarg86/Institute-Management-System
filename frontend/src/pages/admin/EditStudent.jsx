@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
 
-function AddStudent() {
+function EditStudent() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,7 +20,7 @@ function AddStudent() {
                     </div>
 
                     <div className="col-9 admin-dashboard-second p-4">
-                        <h2 className="text-primary mb-5 fw-bold admin-add-student-heading">Add Student</h2>
+                        <h2 className="text-primary mb-5 fw-bold admin-add-student-heading">Edit Student</h2>
                         <form className="row g-4 bg-white p-4 rounded admin-add-student-form" onSubmit={handleSubmit}>
 
                             <div className="col-md-6">
@@ -92,7 +92,7 @@ function AddStudent() {
 
                             <div className="col-12 text-center">
                                 <button type="submit" className="btn btn-primary px-4 custom-button-primary">
-                                    Add Student
+                                    Update Student Details
                                 </button>
                             </div>
                         </form>
@@ -103,4 +103,4 @@ function AddStudent() {
     );
 }
 
-export default AddStudent;
+export default EditStudent;
