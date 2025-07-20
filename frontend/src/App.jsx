@@ -6,6 +6,8 @@ import AddNotice from './pages/admin/AddNotice';
 import AddStudent from './pages/admin/AddStudent';
 import DisplayNotice from './pages/admin/DisplayNotice';
 import DisplayStudent from './pages/admin/DisplayStudent';
+import EditStudent from './pages/admin/EditStudent';
+import StudentMarks from './pages/admin/StudentMarks';
 
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,12 +37,20 @@ function App() {
           element={<AddStudent />}
         />
         <Route
-        path='/admin/display-notices'
-        element={<DisplayNotice />}
+          path='/admin/edit-student/:id'
+          element={<EditStudent />}
         />
-        <Route 
-        path='/admin/display-students'
-        element={<DisplayStudent />}
+        <Route
+        path ='/admin/student-marks/:id'
+        element = {<StudentMarks/>}
+        />
+        <Route
+          path='/admin/display-notices'
+          element={<DisplayNotice />}
+        />
+        <Route
+          path='/admin/display-students'
+          element={<DisplayStudent />}
         />
       </Routes>
       <ToastContainer
