@@ -3,8 +3,12 @@ import Sidebar from '../../components/Sidebar';
 import { FaEnvelope } from 'react-icons/fa';
 import { useRef } from 'react';
 
-import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
+import {
+    AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
+    Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
+} from '@syncfusion/ej2-react-charts';
 import { Export } from '@syncfusion/ej2-charts';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print } from '@syncfusion/ej2-react-grids';
 
 function StudentMarks() {
     const data = [
@@ -12,7 +16,13 @@ function StudentMarks() {
         { name: 'Science', value: 20 },
         { name: 'Social', value: 10 },
         { name: 'Maths', value: 30 },
-    ]
+    ];
+    const data1 = [
+        { Subject: 'English', Total: 50, Obtained: 40, Percentage: 80, Grade: 'B+' },
+        { Subject: 'Science', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
+        { Subject: 'Science', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
+        { Subject: 'Science', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
+    ];
 
     const student = {
         name: "Dhruv Garg",
@@ -21,10 +31,12 @@ function StudentMarks() {
         dob: "23-12-2002",
         course: "B.TECH",
         class: "2nd Year",
-        profilePic: "https://media.tenor.com/aQeq7mTyqskAAAAj/cat-cute-devon-rex-scrolling-cats-cell-phone-late-night-meme.gif",
+        profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif",
     };
 
     const chartRef = useRef(null);
+    const gridRef = useRef(null);
+
 
     return (
         <>
@@ -52,13 +64,11 @@ function StudentMarks() {
                                             <div>
                                                 <h5 className="mb-1 fw-bold">{student.name}</h5>
                                                 <p className="mb-0 text-muted">
-                                                    <pre>
-                                                        <FaEnvelope /> {student.email}
-                                                    </pre>
+                                                    <FaEnvelope className="me-2" />
+                                                    {student.email}
                                                 </p>
                                             </div>
                                         </div>
-
                                         {/* Right Part of Student details */}
                                         <div className="me-3">
                                             <p className="mb-1"><strong>Roll No:</strong> {student.rollNo}</p>
@@ -69,9 +79,15 @@ function StudentMarks() {
                                     </div>
                                 </div>
                                 {/* Second Row: Mark Details */}
-
-                                <div className="row">
-                                    <div className="col rounded mx-2">
+                                <div className="row g-2 position-relative" style={{ minHeight: '60px' }}>
+                                    <button
+                                        className="btn btn-outline-primary btn-sm position-absolute"
+                                        style={{ width: 'auto', top: 0, right: 10, zIndex: 10, padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}
+                                        onClick={() => chartRef.current.exportModule.export('PNG', 'Student_Marks')}
+                                    >
+                                        Download Chart
+                                    </button>
+                                    <div className="col-4 rounded">
                                         <AccumulationChartComponent
                                             id='studentMarksChart'
                                             ref={chartRef}
@@ -99,20 +115,37 @@ function StudentMarks() {
                                                 />
                                             </AccumulationSeriesCollectionDirective>
                                         </AccumulationChartComponent>
-
-
-
                                     </div>
-                                    <div className="col rounded mx-2 position-relative" style={{ minHeight: '60px' }}>
-                                        <button
-                                            className="btn btn-outline-primary btn-sm position-absolute"
-                                            style={{ top: '10px', right: '30px', padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}
-                                            onClick={() => chartRef.current.exportModule.export('PNG', 'Student_Marks')}
+                                    <div className="col-8 rounded" style={{ marginTop: '80px' }}>
+                                        <GridComponent
+                                            ref={gridRef}
+                                            dataSource={data1}
+                                            allowSorting={true}
+                                            allowExcelExport={true}
+                                            allowPdfExport={true}
+                                            allowPrint={true}
+                                            toolbar={['ExcelExport', 'PdfExport', 'Print']}
+                                            toolbarClick={(args) => {
+                                                if (args.item.id.includes('pdfexport')) {
+                                                    gridRef.current.pdfExport();
+                                                }
+                                                if (args.item.id.includes('excelexport')) {
+                                                    gridRef.current.excelExport();
+                                                }if (args.item.id.includes('print')) {
+                                                    gridRef.current.print();
+                                                }
+                                            }}
                                         >
-                                            Download Chart
-                                        </button>
+                                            <ColumnsDirective>
+                                                <ColumnDirective field='Subject' headerText='Subject' />
+                                                <ColumnDirective field='Total' headerText='Total Marks' textAlign="center" />
+                                                <ColumnDirective field='Obtained' headerText='Marks Obtained' textAlign="center" />
+                                                <ColumnDirective field='Percentage' headerText='Percentage' textAlign="center" />
+                                                <ColumnDirective field='Grade' headerText='Grade' />
+                                            </ColumnsDirective>
+                                            <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print]} />
+                                        </GridComponent>
 
-                                        {/* You can add more content here as needed */}
                                     </div>
                                 </div>
                             </div>

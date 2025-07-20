@@ -77,4 +77,5 @@
 - Added 'View Marks' button to list displayed on 'DisplayStudent' page.
 - Created 'StudentMarks' page for admin, to show overall marks secured by a student, includes a pie chart via Syncfusion.
 - Used PieCharts from Syncfusion to show students marks, and also can download the same.
-- 
+- Added 'Grid Component' from Syncfusion, providing the admin the funtionality to download students marks in PDF or excel format.
+- Changed column size in bootstrap grid to custom size in 'Dashboard' page, will be doing the same change to al the pages after checking for versatility.
