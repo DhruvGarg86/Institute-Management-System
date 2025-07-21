@@ -10,10 +10,10 @@ function Profile() {
         <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
-                    <div className="col-3 admin-dashboard-first">
+                    <div className="col-2-5 admin-dashboard-first">
                         <Sidebar />
                     </div>
-                    <div className="col-9 container-fluid admin-dashboard-second">
+                    <div className="col-7-5 container-fluid admin-dashboard-second">
                         <div className="admin-profile-box">
                             <div className="admin-profile-box-inside">
                                 <div className="admin-profile-box-inside-left">

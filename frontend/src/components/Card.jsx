@@ -22,10 +22,10 @@ function Card() {
                         <div className="row">
                             <div className='col text-center mt-4 fw-bold'>
                                 <p className="text-md font-bold text-gray-800">test@gmail.com</p>
-                                <p className="text-xs text-gray-500">1234567890</p>
+                                <p className="text-xs text-gray-500">B.TECH</p>
                             </div>
                             <div className='col text-center mt-4 fw-bold' >
-                                <p className="text-md font-bold text-gray-800">23 December 2002</p>
+                                <p className="text-md font-bold text-gray-800">MARKS</p>
                                 <p className="text-xs text-gray-500">Male</p>
                             </div>
                         </div>

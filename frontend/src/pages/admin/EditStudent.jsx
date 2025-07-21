@@ -15,11 +15,11 @@ function EditStudent() {
             <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
-                    <div className="col-3 admin-dashboard-first">
+                    <div className="col-2-5 admin-dashboard-first">
                         <Sidebar />
                     </div>
 
-                    <div className="col-9 admin-dashboard-second p-4">
+                    <div className="col-7-5 admin-dashboard-second p-4">
                         <h2 className="text-primary mb-5 fw-bold admin-add-student-heading">Edit Student</h2>
                         <form className="row g-4 bg-white p-4 rounded admin-add-student-form" onSubmit={handleSubmit}>
 

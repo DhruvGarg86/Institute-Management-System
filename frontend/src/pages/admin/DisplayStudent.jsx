@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
-import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaTrash, FaSearch, FaChevronDown } from 'react-icons/fa';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Inject } from '@syncfusion/ej2-react-grids';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
+
 
 const sampleStudents = [
+    {
+        name: "Aarav Sharma",
+        roll: "01",
+        address: "D-45, Connaught Place, New Delhi",
+        studentClass: "01",
+        dob: "02/05/2005",
+        phone: "+91 9876543210",
+        avatar: "https://i.pravatar.cc/40?img=1",
+    },
     {
         name: "Aarav Sharma",
         roll: "01",
@@ -51,7 +63,7 @@ const sampleStudents = [
         avatar: "https://i.pravatar.cc/40?img=5",
     },
     {
-        name: "Kavya Reddy",
+        name: "Dhruv Garg",
         roll: "01",
         address: "9-10, Banjara Hills, Hyderabad",
         studentClass: "04",
@@ -70,81 +82,81 @@ const sampleStudents = [
     }
 ];
 
+
 function DisplayStudent() {
-    const [students] = useState(sampleStudents);
     const navigate = useNavigate();
+
+    const gridRef = useRef(null);
 
     return (
         <>
             <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
-                    <div className="col-3 admin-dashboard-first">
+                    <div className="col-2-5 admin-dashboard-first">
                         <Sidebar />
                     </div>
-                    <div className="col-9 admin-dashboard-second p-4">
+                    <div className="col-7-5 admin-dashboard-second p-4">
                         <div className="card p-4 shadow">
-                            <div className="d-flex justify-content-between align-items-center mb-3">
-                                <h4>Students List</h4>
-                                <div className="d-flex align-items-center gap-3">
-                                    <div className="input-group">
-                                        <input type="text" className="form-control" placeholder="Search by name or roll" />
-                                        <span className="input-group-text cursor-pointer"><FaSearch /></span>
-                                    </div>
-                                </div>
-                            </div>
+                            <h3 className='fw-bold' style={{ color: '#4361e5' }}>Student List</h3>
+                            <GridComponent
+                                ref={gridRef}
+                                dataSource={sampleStudents}
+                                allowSorting={true}
+                                allowExcelExport={true}
+                                allowPdfExport={true}
+                                allowPaging={true}
+                                // allowFiltering={true}
+                                pageSettings={{ pageSize: 7 }}
+                                toolbar={['Search', 'ExcelExport', 'PdfExport', 'Print']}
+                                toolbarClick={(args) => {
+                                    if (args.item.id.includes('pdfexport')) gridRef.current.pdfExport();
+                                    if (args.item.id.includes('excelexport')) gridRef.current.excelExport();
+                                    if (args.item.id.includes('print')) gridRef.current.print();
+                                }}
 
-                            <div className="table-responsive">
-                                <table className="table table-hover align-middle">
-                                    <thead className="table-light">
-                                        <tr>
-                                            <th><input type="checkbox" /></th>
-                                            <th>Students Name</th>
-                                            <th>Roll</th>
-                                            <th>Address</th>
-                                            <th>Class</th>
-                                            <th>Date of Birth</th>
-                                            <th>Phone</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {students.map((student, index) => (
-                                            <tr key={index}>
-                                                <td><input type="checkbox" /></td>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <img src={student.avatar} alt="avatar" className="rounded-circle me-2" width="40" height="40" />
-                                                        {student.name}
-                                                    </div>
-                                                </td>
-                                                <td>{student.roll}</td>
-                                                <td>{student.address}</td>
-                                                <td>{student.studentClass}</td>
-                                                <td>{student.dob}</td>
-                                                <td>{student.phone}</td>
-                                                <td>
-                                                    <button className="btn btn-sm btn-light text-primary me-2" onClick={() => navigate(`/admin/student-marks/${student.roll}`)}>View Marks</button>
-                                                    <button className="btn btn-sm btn-light me-2" onClick={() => navigate(`/admin/edit-student/${student.roll}`)}><FaEdit /></button>
-                                                    <button className="btn btn-sm btn-light text-danger"><FaTrash /></button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            >
 
-                            <div className="d-flex justify-content-center align-items-center mt-3">
-                                <div>
-                                    <button className="btn btn-sm btn-outline-secondary me-1 ">{'<'}</button>
-                                    {[1, 2, 3, 4, 5].map((page) => (
-                                        <button key={page} className={`btn btn-sm me-1 ${page === 1 ? 'btn-primary' : 'btn-outline-secondary'}`}>
-                                            {page}
-                                        </button>
-                                    ))}
-                                    <button className="btn btn-sm btn-outline-secondary">{'>'}</button>
-                                </div>
-                            </div>
+                                <ColumnsDirective>
+                                    <ColumnDirective field='avatar' headerText='Profile' width='60' template={(props) => (
+                                        <img src={props.avatar} alt="avatar" style={{ borderRadius: '50%', height: '45px', objectFit: 'cover' }} />
+                                    )} />
+                                    <ColumnDirective field='name' headerText='Name' textAlign="Center" width='85' />
+                                    <ColumnDirective field='roll' headerText='Roll' textAlign="Center" width='50' />
+                                    <ColumnDirective field='address' headerText='Address' width='150' />
+                                    <ColumnDirective field='studentClass' headerText='Class' textAlign="Center" width='57' />
+                                    <ColumnDirective field='dob' headerText='DOB' textAlign="Center" width='75' />
+                                    <ColumnDirective field='phone' headerText='Phone' width='95' />
+                                    <ColumnDirective headerText='Action' width='135'
+                                        template={(props) => {
+                                            return (
+                                                <div>
+                                                    <button
+                                                        className="btn btn-sm btn-light text-primary me-2"
+                                                        onClick={() => navigate(`/admin/student-marks/${props.roll}`)}
+                                                    >
+                                                        View Marks
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-sm btn-light me-2"
+                                                        onClick={() => navigate(`/admin/edit-student/${props.roll}`)}
+                                                    >
+                                                        <FaEdit />
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-sm btn-light text-danger"
+                                                        onClick={() => navigate(`Delete action for:/${props.roll}`)} 
+                                                    >
+                                                        <FaTrash />
+                                                    </button>
+                                                </div>
+                                            );
+                                        }} />
+                                </ColumnsDirective>
+
+                                <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search]} />
+                            </GridComponent>
+
                         </div>
                     </div>
                 </div>
