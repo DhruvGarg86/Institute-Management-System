@@ -43,7 +43,7 @@ function Sidebar() {
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate("/admin/add-student")}>Add Student</button></li>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate("/admin/display-students")}>Display All Student</button></li>
-                <li><button type="button" className='sidebar-inner-button'>Student Attendance</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/student-attendance')}>Student Attendance</button></li>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/student-marks')}>Student Marks</button></li>
               </ul>
             </div>

@@ -81,11 +81,8 @@ function AddStudent() {
                             </div>
 
                             <div className="col-md-6">
-                                <label className="form-label">Status</label>
-                                <select className="form-select" name="status">
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
+                                <label className="form-label">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed)</sub>
+                                <input type="file" accept='.jpg, .jpeg, .png' name="image" required className="form-control" />
                             </div>
 
 

@@ -46,13 +46,95 @@ function StudentMarksOverview() {
             email: "dhruvgarg086@gmail.com",
             rollNo: "2000300100084",
             dob: "23-12-2002",
+            course: "MBBS",
+            class: "2nd Year",
+            marks: "98",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "MBBS",
+            class: "2nd Year",
+            marks: "98",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "MBBS",
+            class: "2nd Year",
+            marks: "98",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "MBBS",
+            class: "2nd Year",
+            marks: "98",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
             course: "B.TECH",
             class: "2nd Year",
             marks: "57",
             profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
         },
     ];
-    const sortedStudents = [...student].sort((a, b) => b.marks - a.marks);
+     const students = [
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "B.TECH",
+            class: "2nd Year",
+            marks: "38",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "BCOM",
+            class: "2nd Year",
+            marks: "68",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "MBBS",
+            class: "2nd Year",
+            marks: "98",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+        {
+            name: "Dhruv Garg",
+            email: "dhruvgarg086@gmail.com",
+            rollNo: "2000300100084",
+            dob: "23-12-2002",
+            course: "B.TECH",
+            class: "2nd Year",
+            marks: "57",
+            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
+        },
+    ];
+    const sortedStudents = [...students].sort((a, b) => b.marks - a.marks);
 
 
     const gridRef = useRef(null);
