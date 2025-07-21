@@ -17,10 +17,10 @@ function AddNotice() {
             <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
-                    <div className="col-3 admin-dashboard-first">
+                    <div className="col-2-5 admin-dashboard-first">
                         <Sidebar />
                     </div>
-                    <div className="col-9 admin-dashboard-second p-4 admin-notice-box">
+                    <div className="col-7-5 admin-dashboard-second p-4 admin-notice-box">
                         <h2 className="mb-2 fw-bold text-primary">Manage Notices</h2>
                         <div className="card p-3 shadow-sm mb-5 admin-add-notice-box">
                             <h3 className="mb-1 mx-auto fw-bold">New Notice</h3>

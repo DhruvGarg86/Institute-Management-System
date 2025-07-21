@@ -589,3 +589,27 @@ input[readonly] {
 }
 
 /* Admin StudentMarksOverview End */
+
+.e-grid .e-gridheader .e-headercell .e-headertext {
+  font-weight: 700 !important;
+  color: #000 !important;
+}
+
+/* Search input text color */
+.e-grid .e-search input {
+  color: #000 !important;
+  
+}
+.e-grid .e-search input:focus {
+  color: #000 !important;
+  
+}
+/* Force typed text in search box to be black */
+.e-grid .e-toolbar .e-search input.e-input {
+  color: #000 !important;
+}
+.e-grid .e-toolbar .e-search input.e-input::placeholder {
+  color: #000 !important;
+  opacity: 1 !important;
+}
+

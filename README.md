@@ -84,3 +84,5 @@
 
 ### By dhruvGarg
 - Created 'StudentMarksOverview' for admin to see each course topper, along with leaderboard using Syncfusion-grid.
+- Changed 'DisplayStudent' page to Syncfusiongrid structure.
+- Changed layout of every page from 'bootstrap: col-3, col-7' to custom layout.

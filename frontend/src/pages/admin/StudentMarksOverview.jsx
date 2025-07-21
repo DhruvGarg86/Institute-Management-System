@@ -26,7 +26,7 @@ function StudentMarksOverview() {
             email: "dhruvgarg086@gmail.com",
             rollNo: "2000300100084",
             dob: "23-12-2002",
-            course: "B.TECH",
+            course: "BCOM",
             class: "2nd Year",
             marks: "68",
             profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
@@ -36,7 +36,7 @@ function StudentMarksOverview() {
             email: "dhruvgarg086@gmail.com",
             rollNo: "2000300100084",
             dob: "23-12-2002",
-            course: "B.TECH",
+            course: "MBBS",
             class: "2nd Year",
             marks: "98",
             profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
@@ -71,10 +71,10 @@ function StudentMarksOverview() {
             <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
-                    <div className="col-3 admin-dashboard-first">
+                    <div className="col-2-5 admin-dashboard-first">
                         <Sidebar />
                     </div>
-                    <div className="col-9 admin-dashboard-second p-4 admin-notice-box">
+                    <div className="col-7-5  admin-dashboard-second p-4 admin-notice-box">
                         <h2 className="mb-2 fw-bold text-primary">Marks Overview</h2>
                         <div className="card p-3 shadow-sm mb-5 admin-add-notice-box">
                             <div className="container">
@@ -90,7 +90,6 @@ function StudentMarksOverview() {
                                                     style={{ height: '70px', width: '70px', objectFit: 'cover' }}
                                                 />
                                                 <div>
-                                                    <div className="text small">Rank #{index + 1}</div>
                                                     <div className="fw-bold" style={{ fontSize: '1.1rem' }}>{student.name}</div>
                                                     <div className="student-subtitle text-muted" style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                                                         {student.course}
