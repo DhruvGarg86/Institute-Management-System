@@ -11,6 +11,7 @@ import StudentMarks from './pages/admin/StudentMarks';
 
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import StudentMarksOverview from './pages/admin/StudentMarksOverview';
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
         <Route
           path='/admin/edit-student/:id'
           element={<EditStudent />}
+        />
+        <Route
+        path ='/admin/student-marks'
+        element = {<StudentMarksOverview/>}
         />
         <Route
         path ='/admin/student-marks/:id'

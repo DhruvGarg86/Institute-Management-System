@@ -560,3 +560,32 @@ input[readonly] {
 /* Admin Display Student Start */
 
 /* Admin Display Student End */
+
+/* Admin StudentMarksOverview Start */
+.top-students-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.student-card {
+  width: 220px;
+  height: 120px;
+  background-color: #f8f9ff;
+  transition: transform 0.2s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-4px);
+}
+
+.student-score {
+  color: #000;
+}
+
+.student-subtitle {
+  font-weight: 500;
+  color: #6c757d;
+}
+
+/* Admin StudentMarksOverview End */
