@@ -20,8 +20,8 @@ function EditStudent() {
                     </div>
 
                     <div className="col-7-5 admin-dashboard-second p-4">
-                        <h2 className="text-primary mb-5 fw-bold admin-add-student-heading">Edit Student</h2>
-                        <form className="row g-4 bg-white p-4 rounded admin-add-student-form" onSubmit={handleSubmit}>
+                        <h2 className="text-primary mb-4 fw-bold admin-add-student-heading">Edit Student</h2>
+                        <form className="row g-4 bg-white p-2 rounded admin-add-student-form" onSubmit={handleSubmit}>
 
                             <div className="col-md-6">
                                 <label className="form-label">First Name</label>
@@ -45,7 +45,7 @@ function EditStudent() {
 
                             <div className="col-md-6">
                                 <label className="form-label">Date of Birth</label>
-                                <input type="date" name="dob"required className="form-control" />
+                                <input type="date" name="dob" required className="form-control" />
                             </div>
 
                             <div className="col-md-6">
@@ -88,6 +88,10 @@ function EditStudent() {
                                 </select>
                             </div>
 
+                            <div className="col-md-6">
+                                <label className="form-label me-1">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed)</sub>
+                                <input type="file" accept='.jpg, .jpeg, .png' name="image" required className="form-control" />
+                            </div>
 
 
                             <div className="col-12 text-center">

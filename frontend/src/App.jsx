@@ -12,6 +12,7 @@ import StudentMarks from './pages/admin/StudentMarks';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StudentMarksOverview from './pages/admin/StudentMarksOverview';
+import StudentAttendance from './pages/admin/StudentAttendance';
 
 function App() {
   return (
@@ -42,12 +43,16 @@ function App() {
           element={<EditStudent />}
         />
         <Route
-        path ='/admin/student-marks'
-        element = {<StudentMarksOverview/>}
+          path='/admin/student-attendance'
+          element={<StudentAttendance />}
         />
         <Route
-        path ='/admin/student-marks/:id'
-        element = {<StudentMarks/>}
+          path='/admin/student-marks'
+          element={<StudentMarksOverview />}
+        />
+        <Route
+          path='/admin/student-marks/:id'
+          element={<StudentMarks />}
         />
         <Route
           path='/admin/display-notices'
