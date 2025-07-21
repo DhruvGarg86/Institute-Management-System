@@ -79,3 +79,8 @@
 - Used PieCharts from Syncfusion to show students marks, and also can download the same.
 - Added 'Grid Component' from Syncfusion, providing the admin the funtionality to download students marks in PDF or excel format.
 - Changed column size in bootstrap grid to custom size in 'Dashboard' page, will be doing the same change to al the pages after checking for versatility.
+
+## 21th July 2025
+
+### By dhruvGarg
+- Created 'StudentMarksOverview' for admin to see each course topper, along with leaderboard using Syncfusion-grid.
