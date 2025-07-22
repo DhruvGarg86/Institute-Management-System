@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Inject } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, 
+    ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject } from '@syncfusion/ej2-react-grids';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 
