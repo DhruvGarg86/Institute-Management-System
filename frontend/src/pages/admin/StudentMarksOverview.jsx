@@ -5,7 +5,7 @@ import {
     AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
     Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
 } from '@syncfusion/ej2-react-charts';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit } from '@syncfusion/ej2-react-grids';
 
 function StudentMarksOverview() {
 
@@ -197,8 +197,9 @@ function StudentMarksOverview() {
                                         allowPaging={true}
                                         pageSettings={{ pageSize: 5 }}
                                         allowPrint={true}
+                                        editSettings={{allowEditing: true }}
                                         allowGrouping={true}
-                                        toolbar={['Search', 'ExcelExport', 'PdfExport', 'Print']}
+                                        toolbar={['Search', 'ExcelExport', 'PdfExport', 'Print', 'Edit']}
                                         rowDataBound={rowDataBound}
                                         toolbarClick={(args) => {
                                             if (args.item.id.includes('pdfexport')) gridRef.current.pdfExport();
@@ -216,7 +217,7 @@ function StudentMarksOverview() {
                                             <ColumnDirective field='rollNo' headerText='Roll No.' textAlign="center" width={'70'} />
                                             <ColumnDirective field='class' headerText='Class' width={'50'} />
                                         </ColumnsDirective>
-                                        <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group]} />
+                                        <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit]} />
                                     </GridComponent>
 
                                 </div>

@@ -8,7 +8,7 @@ import {
     Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
 } from '@syncfusion/ej2-react-charts';
 import { Export } from '@syncfusion/ej2-charts';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Edit } from '@syncfusion/ej2-react-grids';
 
 function StudentMarks() {
     const data = [
@@ -124,7 +124,8 @@ function StudentMarks() {
                                             allowExcelExport={true}
                                             allowPdfExport={true}
                                             allowPrint={true}
-                                            toolbar={['ExcelExport', 'PdfExport', 'Print']}
+                                            toolbar={['ExcelExport', 'PdfExport', 'Print', 'Edit']}
+                                            editSettings={{allowEditing: true }}
                                             toolbarClick={(args) => {
                                                 if (args.item.id.includes('pdfexport')) {
                                                     gridRef.current.pdfExport();
@@ -143,7 +144,7 @@ function StudentMarks() {
                                                 <ColumnDirective field='Percentage' headerText='Percentage' textAlign="center" />
                                                 <ColumnDirective field='Grade' headerText='Grade' />
                                             </ColumnsDirective>
-                                            <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print]} />
+                                            <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Edit]} />
                                         </GridComponent>
 
                                     </div>
