@@ -13,6 +13,8 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StudentMarksOverview from './pages/admin/StudentMarksOverview';
 import StudentAttendance from './pages/admin/StudentAttendance';
+import StudentLogin from './pages/student/StudentLogin';
+import StudentDashboard from './pages/student/StudentDashboard';
 import StudentFees from './pages/admin/StudentFees';
 
 function App() {
@@ -67,6 +69,16 @@ function App() {
           path='/admin/display-students'
           element={<DisplayStudent />}
         />
+
+        <Route
+          path='/student/login'
+          element={<StudentLogin />}
+          />
+
+        <Route
+          path='/student/dashboard'
+          element={<StudentDashboard />}
+          ></Route>
       </Routes>
       <ToastContainer
         position="top-center"
