@@ -381,6 +381,19 @@
     "@syncfusion/ej2-notifications" "~30.1.37"
     "@syncfusion/ej2-popups" "~30.1.40"
 
+"@syncfusion/ej2-dropdowns@~30.1.41":
+  version "30.1.41"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-dropdowns/-/ej2-dropdowns-30.1.41.tgz#5b85f5db7ebbd5d18d72c438be185f14390fd0cf"
+  integrity sha512-A5OI8hDS/wbc0wkYMcmebBwuxqw6hYQjWWHEofnpHuUcVgbZDxL5I1zDGqdncYH1NHtZj2yNZwBtvmVWj/A6tg==
+  dependencies:
+    "@syncfusion/ej2-base" "~30.1.38"
+    "@syncfusion/ej2-data" "~30.1.40"
+    "@syncfusion/ej2-inputs" "~30.1.40"
+    "@syncfusion/ej2-lists" "~30.1.41"
+    "@syncfusion/ej2-navigations" "~30.1.41"
+    "@syncfusion/ej2-notifications" "~30.1.37"
+    "@syncfusion/ej2-popups" "~30.1.40"
+
 "@syncfusion/ej2-excel-export@~30.1.37":
   version "30.1.37"
   resolved "https://registry.npmjs.org/@syncfusion/ej2-excel-export/-/ej2-excel-export-30.1.37.tgz"
@@ -410,7 +423,30 @@
     "@syncfusion/ej2-popups" "~30.1.37"
     "@syncfusion/ej2-splitbuttons" "~30.1.39"
 
+
 "@syncfusion/ej2-grids@~30.1.39", "@syncfusion/ej2-grids@30.1.40":
+"@syncfusion/ej2-grids@30.1.41":
+  version "30.1.41"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-grids/-/ej2-grids-30.1.41.tgz#84cea537a869d7d6a9f7875fa9586a01833648fe"
+  integrity sha512-l5PblEn6Su+zBO7MoQiEyU94W0iigFjYrEah+Xxi/Rwnadl4Mgf6dry4GJmC4N1MkqtJivkQlNmOZ8lSkJ5yEA==
+  dependencies:
+    "@syncfusion/ej2-base" "~30.1.38"
+    "@syncfusion/ej2-buttons" "~30.1.37"
+    "@syncfusion/ej2-calendars" "~30.1.37"
+    "@syncfusion/ej2-compression" "~30.1.37"
+    "@syncfusion/ej2-data" "~30.1.40"
+    "@syncfusion/ej2-dropdowns" "~30.1.41"
+    "@syncfusion/ej2-excel-export" "~30.1.37"
+    "@syncfusion/ej2-file-utils" "~30.1.37"
+    "@syncfusion/ej2-inputs" "~30.1.40"
+    "@syncfusion/ej2-lists" "~30.1.41"
+    "@syncfusion/ej2-navigations" "~30.1.41"
+    "@syncfusion/ej2-notifications" "~30.1.37"
+    "@syncfusion/ej2-pdf-export" "~30.1.41"
+    "@syncfusion/ej2-popups" "~30.1.40"
+    "@syncfusion/ej2-splitbuttons" "~30.1.39"
+
+"@syncfusion/ej2-grids@~30.1.39
   version "30.1.40"
   resolved "https://registry.npmjs.org/@syncfusion/ej2-grids/-/ej2-grids-30.1.40.tgz"
   integrity sha512-t6WHFhF2dD0vusdn9rEOFi8Opony/TDIFlu9iBRYd2g+RvKDzK4jo97qWQbAzOnbgvJGhSy3DLnVnIMwFdnqRw==
@@ -463,6 +499,16 @@
     "@syncfusion/ej2-data" "~30.1.37"
     "@syncfusion/ej2-popups" "~30.1.37"
 
+"@syncfusion/ej2-lists@~30.1.41":
+  version "30.1.41"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-lists/-/ej2-lists-30.1.41.tgz#4bf2b09aacb8e05c4512566f3b9434dce771b238"
+  integrity sha512-gTrYbGaDeGWe7Fg2B1vjQUQzcT7uQyjkzVXVH0nYCgYi/MI5Vks+XOhfWnCEdXna70lqCaiH9isk8q43t9pilw==
+  dependencies:
+    "@syncfusion/ej2-base" "~30.1.38"
+    "@syncfusion/ej2-buttons" "~30.1.37"
+    "@syncfusion/ej2-data" "~30.1.40"
+    "@syncfusion/ej2-popups" "~30.1.40"
+
 "@syncfusion/ej2-navigations@~30.1.39":
   version "30.1.39"
   resolved "https://registry.npmjs.org/@syncfusion/ej2-navigations/-/ej2-navigations-30.1.39.tgz"
@@ -475,6 +521,18 @@
     "@syncfusion/ej2-lists" "~30.1.37"
     "@syncfusion/ej2-popups" "~30.1.37"
 
+"@syncfusion/ej2-navigations@~30.1.41":
+  version "30.1.41"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-navigations/-/ej2-navigations-30.1.41.tgz#1be34b83ac1c84ed1c9921b045d54ae7dbc06c2e"
+  integrity sha512-c90yWvaAhCgpvnapWMbfmADec1+zH0oOCuECvftF08Y59gViJpDWPefsrH6At6GluvpmzJAPI7rytsCF79qoOw==
+  dependencies:
+    "@syncfusion/ej2-base" "~30.1.38"
+    "@syncfusion/ej2-buttons" "~30.1.37"
+    "@syncfusion/ej2-data" "~30.1.40"
+    "@syncfusion/ej2-inputs" "~30.1.40"
+    "@syncfusion/ej2-lists" "~30.1.41"
+    "@syncfusion/ej2-popups" "~30.1.40"
+
 "@syncfusion/ej2-notifications@~30.1.37":
   version "30.1.37"
   resolved "https://registry.npmjs.org/@syncfusion/ej2-notifications/-/ej2-notifications-30.1.37.tgz"
@@ -483,6 +541,13 @@
     "@syncfusion/ej2-base" "~30.1.37"
     "@syncfusion/ej2-buttons" "~30.1.37"
     "@syncfusion/ej2-popups" "~30.1.37"
+
+"@syncfusion/ej2-pdf-export@^30.1.41", "@syncfusion/ej2-pdf-export@~30.1.41":
+  version "30.1.41"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-pdf-export/-/ej2-pdf-export-30.1.41.tgz#256fa730c573d35b110c42dab668cb189a0b30ee"
+  integrity sha512-gTydhpkMfL4T8PXEbUztjdmntNrhvnSw49qbm5MBJMWmNH1GXEClaecuV7dCIdzwk4v8Fd3DziPdMxb/X2No8w==
+  dependencies:
+    "@syncfusion/ej2-compression" "~30.1.37"
 
 "@syncfusion/ej2-pdf-export@~30.1.38":
   version "30.1.38"
@@ -515,13 +580,12 @@
     "@syncfusion/ej2-charts" "30.1.40"
     "@syncfusion/ej2-react-base" "~30.1.37"
 
-"@syncfusion/ej2-react-grids@^30.1.40":
-  version "30.1.40"
-  resolved "https://registry.npmjs.org/@syncfusion/ej2-react-grids/-/ej2-react-grids-30.1.40.tgz"
-  integrity sha512-NaqR/r8yN1tomNkp4X5lUQe55wLmtKBvX2Qj0Sm6+SAb2taRR2v2MSKX+MHWToV1cGpUhmVDKo/PikbW98r2eA==
+  version "30.1.41"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-react-grids/-/ej2-react-grids-30.1.41.tgz#22616f99ccb6dfb1666c46533ae83d93d505a997"
+  integrity sha512-PF4lFVPI1kCA2kCShRicVPT4avcB+FPOZrqGUxKcyezSq8Hkc9yPe2XkOHuw4ErkvWB9eVkBXLXyV88tN3rhcg==
   dependencies:
     "@syncfusion/ej2-base" "~30.1.38"
-    "@syncfusion/ej2-grids" "30.1.40"
+    "@syncfusion/ej2-grids" "30.1.41"
     "@syncfusion/ej2-react-base" "~30.1.37"
 
 "@syncfusion/ej2-react-richtexteditor@^30.1.40":

@@ -87,3 +87,16 @@
 - Changed 'DisplayStudent' page to Syncfusiongrid structure.
 - Changed layout of every page from 'bootstrap: col-3, col-7' to custom layout.
 - Created 'StudentAttendance' page.
+
+## 22th July 2025
+
+### By dhruvGarg
+- Added 'Delete' button to 'DisplayNotice' page.
+- Added Edit function to list of individual student marks, and overall student marks list.
+- Added Syncfusion Enterprise Edition license in .env file
+- Added 'StudentFees' page in Admin panel to see which student has paid fees or not.
+
+## 23th July 2025
+
+### By dhruvGarg
+- Created basic entities in spring , not containing relations only standalone properties.

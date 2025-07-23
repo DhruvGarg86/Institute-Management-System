@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 // SyncFusion License
 import { registerLicense } from '@syncfusion/ej2-base';
-registerLicense(import.meta.env.VITE_SYNC_FUSION_KEY);
+registerLicense(import.meta.env.VITE_SYNCFUSION_LICENSE);
 // SyncFusion License
 
 createRoot(document.getElementById('root')).render(

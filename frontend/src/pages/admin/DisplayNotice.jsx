@@ -1,7 +1,38 @@
+import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
+import { FaTrash } from 'react-icons/fa';
 
 function DisplayNotice() {
+    const [notices, setNotices] = useState([
+        {
+            id: 1,
+            title: 'Holiday Notice',
+            date: '2025-08-15',
+            description: 'College will remain closed on Independence Day.',
+            link: 'https://www.google.com',
+        },
+        {
+            id: 2,
+            title: 'Exam Schedule',
+            date: '2025-09-20',
+            description: 'Mid-sem exams start from 20th September.',
+            link: 'https://exam-link.com',
+        },
+        {
+            id: 3,
+            title: 'Seminar',
+            date: '2025-10-01',
+            description: 'AI Seminar on 1st October in the auditorium.',
+            link: 'https://seminar-link.com',
+        },
+    ]);
+
+    const handleDelete = (id) => {
+        const updatedNotices = notices.filter(notice => notice.id !== id);
+        setNotices(updatedNotices);
+    };
+
     return (
         <>
             <Navbar />
@@ -14,60 +45,31 @@ function DisplayNotice() {
                         <h2 className="mb-4 fw-bold text-primary">All Notices</h2>
                         <div className="notice-container">
 
-                            <div className="notice-card">
-                                <div className="notice-header">
-                                    <h5 className='fw-bold ms-2 mb-4'>Holiday Notice</h5>
-                                    <span className="notice-date me-3">2025-08-15</span>
-                                </div>
-                                <div className="notice-description">
-                                    College will remain closed on Lorem ipsum dolor sit   t consectetur adipisicing elit. Nam pariatur accusantium atque saepe recusandae ipsum, perspiciatis omnis id inventore voluptas a quia et accusamus quod, commodi vitae dolor quo eos. 15th Augustollege will remain closed on Lorem ipsum dolor sit amet...
-                                </div>
-                                <div className="notice-description-link">
-                                    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
-                                        Notice if pdf/image is available</a>
-                                </div>
-                            </div>
+                            {notices.map(notice => (
+                                <div className="notice-card" key={notice.id}>
+                                    <div className="notice-header">
+                                        <h5 className="fw-bold ms-2 mb-4">{notice.title}</h5>
+                                        <div>
+                                            <span className="notice-date me-3">{notice.date}</span>
 
-                            <div className="notice-card">
-                                <div className="notice-header">
-                                    <h5 className='fw-bold ms-2 mb-4'>Exam Schedule</h5>
-                                    <span className="notice-date me-3">2025-09-20</span>
+                                            <button
+                                                className="btn btn-danger btn-sm"
+                                                onClick={() => handleDelete(notice.id)}
+                                            >
+                                                <FaTrash />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="notice-description">
+                                        {notice.description}
+                                    </div>
+                                    <div className="notice-description-link mb-2">
+                                        <a href={notice.link} target="_blank" rel="noopener noreferrer">
+                                            Notice if PDF/Image is available
+                                        </a>
+                                    </div>
                                 </div>
-                                <div className="notice-description">
-                                    Mid-sem exams start from 20th September.
-                                </div>
-                                <div className="notice-description-link">
-                                    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScQRjfti_wKmLvm_i9RRGUXUdDdIxBQ9H5Ew&s" target="_blank" rel="noopener noreferrer">
-                                        Notice if pdf/image is available</a>
-                                </div>
-                            </div>
-
-                            <div className="notice-card">
-                                <div className="notice-header">
-                                    <h5 className='fw-bold ms-2 mb-4'>Seminar</h5>
-                                    <span className="notice-date me-3">2025-10-01</span>
-                                </div>
-                                <div className="notice-description">
-                                    AI Seminar on 1st October in the auditorium.
-                                </div>
-                                <div className="notice-description-link">
-                                    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
-                                        Notice if pdf/image is available</a>
-                                </div>
-                            </div>
-
-                            <div className="notice-card">
-                                <div className="notice-header">
-                                    <h5 className='fw-bold ms-2 mb-4'>Assignment</h5>
-                                    <span className="notice-date me-3">2025-07-05</span>
-                                </div>
-                                <div className="notice-description">
-                                    Submit your Data Structures assignment by 5th July.
-                                </div>
-                                <div className="notice-description-link">
-                                    <a href='www.google.com'>Notice if pdf/image is available</a>
-                                </div>
-                            </div>
+                            ))}
 
                         </div>
                     </div>
@@ -75,7 +77,6 @@ function DisplayNotice() {
             </div>
         </>
     );
-
 }
 
 export default DisplayNotice;

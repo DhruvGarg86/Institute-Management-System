@@ -15,6 +15,7 @@ import StudentMarksOverview from './pages/admin/StudentMarksOverview';
 import StudentAttendance from './pages/admin/StudentAttendance';
 import StudentLogin from './pages/student/StudentLogin';
 import StudentDashboard from './pages/student/StudentDashboard';
+import StudentFees from './pages/admin/StudentFees';
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
         <Route
           path='/admin/student-marks/:id'
           element={<StudentMarks />}
+        />
+        <Route
+          path='/admin/student-fees'
+          element={<StudentFees />}
         />
         <Route
           path='/admin/display-notices'
