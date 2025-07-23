@@ -1,42 +1,55 @@
-import React, { useState } from 'react';
-function StudentFee() {
-  const [files, setFiles] = useState({});
+import React, { useEffect, useState } from 'react';
 
-  const students = [
-    {
+function StudentFee() {
+  const [fee, setFee] = useState(null);
+  const [file, setFile] = useState(null);
+
+  // Dummy data simulating fetched API data
+  useEffect(() => {
+    const dummyFeeData = {
       id: 1,
-      rollNo: '1',
+      rollNo: '101',
       course: 'DAC',
       name: 'Vedant Choudhari',
       amount: '10000',
-      issuedOn: '10/05/2025',
+      issuedOn: '2025-07-20', // YYYY-MM-DD
       status: 'Pending',
-    },
-    {
-      id: 2,
-      rollNo: '2',
-      course: 'DBDA',
-      name: 'Sara Ali',
-      amount: '12000',
-      issuedOn: '11/06/2025',
-      status: 'Paid',
-    }
-    // Add more students as needed
-  ];
+    };
 
-  const handleFileChange = (event, id) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFiles(prev => ({ ...prev, [id]: file }));
-      console.log(`File selected for ID ${id}:`, file.name);
+    // Validate issued date
+    if (new Date(dummyFeeData.issuedOn) > new Date()) {
+      alert('Issued date cannot be in the future!');
+    } else {
+      setFee(dummyFeeData);
+    }
+  }, []);
+
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    if (selected) {
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+      const maxSizeMB = 10;
+
+      if (!allowedTypes.includes(selected.type)) {
+        alert('Only JPG, JPEG, PNG, or PDF files are allowed!');
+        return;
+      }
+
+      if (selected.size > maxSizeMB * 1024 * 1024) {
+        alert('File size must be less than 10MB!');
+        return;
+      }
+
+      setFile(selected);
+      console.log('Selected file:', selected.name);
     }
   };
 
   return (
     <div className="container-fluid mt-4">
-      <h2 className="mb-4 " >Student Fees</h2>
+      <h2 className="mb-4">Student Fee Details</h2>
       <div className="table-responsive">
-        <table className="table table-bordered table-striped table-hover">
+        <table className="table table-bordered table-hover table-striped">
           <thead className="table-primary">
             <tr>
               <th>Roll No.</th>
@@ -49,31 +62,38 @@ function StudentFee() {
             </tr>
           </thead>
           <tbody>
-            {students.map(student => (
-              <tr key={student.id}>
-                <td>{student.rollNo}</td>
-                <td>{student.course}</td>
-                <td>{student.name}</td>
-                <td>₹{student.amount}</td>
-                <td>{student.issuedOn}</td>
-                <td>{student.status}</td>
+            {fee ? (
+              <tr>
+                <td>{fee.rollNo}</td>
+                <td>{fee.course}</td>
+                <td>{fee.name}</td>
+                <td>₹{fee.amount}</td>
+                <td>{fee.issuedOn}</td>
+                <td>{fee.status}</td>
                 <td>
                   <label className="btn btn-sm btn-primary mb-0">
                     Upload
                     <input
                       type="file"
+                      accept=".jpg,.jpeg,.png,.pdf"
                       style={{ display: 'none' }}
-                      onChange={e => handleFileChange(e, student.id)}
+                      onChange={handleFileChange}
                     />
                   </label>
-                  {files[student.id] && (
+                  {file && (
                     <span className="text-success ms-2">
-                      ✔️ {files[student.id].name}
+                      ✔️ {file.name}
                     </span>
                   )}
                 </td>
               </tr>
-            ))}
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center text-muted">
+                  No fee record available.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
