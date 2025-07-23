@@ -95,3 +95,8 @@
 - Added Edit function to list of individual student marks, and overall student marks list.
 - Added Syncfusion Enterprise Edition license in .env file
 - Added 'StudentFees' page in Admin panel to see which student has paid fees or not.
+
+## 23th July 2025
+
+### By dhruvGarg
+- Created basic entities in spring , not containing relations only standalone properties.
