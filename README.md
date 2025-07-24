@@ -100,3 +100,8 @@
 
 ### By dhruvGarg
 - Created basic entities in spring , not containing relations only standalone properties.
+
+## 24th July 2025
+
+### By dhruvGarg
+- Created 'AddTeacher' , 'DisplayTeachers', 'TeacherAttendance' and 'EditTeacher' page to admin panel

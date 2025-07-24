@@ -68,8 +68,9 @@ function Sidebar() {
           <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button'>Add Teacher</button></li>
-                <li><button type="button" className='sidebar-inner-button'>Display All Teachers</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-teacher')}>Add Teacher</button></li>
+                <li><button type="button" className='sidebar-inner-button'onClick={() => navigate('/admin/display-teachers')}>Display All Teachers</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/teacher-attendance')}>Teacher   Attendance</button></li>
               </ul>
             </div>
           </div>

@@ -1,9 +1,8 @@
-import React from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
 
-function EditStudent() {
+function AddTeacher() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,8 +19,8 @@ function EditStudent() {
                     </div>
 
                     <div className="col-7-5 admin-dashboard-second p-4">
-                        <h2 className="text-primary mb-4 fw-bold admin-add-student-heading">Edit Student</h2>
-                        <form className="row g-4 bg-white p-2 rounded admin-add-student-form" onSubmit={handleSubmit}>
+                        <h2 className="text-primary mb-4 fw-bold admin-add-student-heading">Add Teacher</h2>
+                        <form className="row g-4 bg-white p-4 rounded admin-add-student-form" onSubmit={handleSubmit}>
 
                             <div className="col-md-6">
                                 <label className="form-label">First Name</label>
@@ -44,8 +43,8 @@ function EditStudent() {
                             </div>
 
                             <div className="col-md-6">
-                                <label className="form-label">Date of Birth</label>
-                                <input type="date" name="dob" required className="form-control" />
+                                <label className="form-label">Salary</label>
+                                <input type="number" inputMode='decimal' step="0.01" name="salary" required className="form-control" placeholder='Enter salary' />
                             </div>
 
                             <div className="col-md-6">
@@ -59,16 +58,39 @@ function EditStudent() {
                             </div>
 
                             <div className="col-md-6">
-                                <label className="form-label">Course</label>
-                                <select id="course" name="course" required className="form-control">
-                                    <option value="">Select Course</option>
-                                    <option value="1">Web Development</option>
-                                    <option value="1">Web Development</option>
-                                    <option value="1">Web Development</option>
-                                    <option value="1">Web Development</option>
-                                    <option value="2">Data Science</option>
-                                    <option value="3">Cyber Security</option>
+                                <label className="form-label">Subjects</label>
+                                <select
+                                    id="subject"
+                                    name="subject"
+                                    required
+                                    className="form-control"
+                                    multiple
+                                    size="3"
+                                >
+                                    <optgroup label="Web Development">
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="react">React</option>
+                                    </optgroup>
+
+                                    <optgroup label="Data Science">
+                                        <option value="python">Python</option>
+                                        <option value="statistics">Statistics</option>
+                                        <option value="ml">Machine Learning</option>
+                                        <option value="dl">Deep Learning</option>
+                                    </optgroup>
+
+                                    <optgroup label="Cyber Security">
+                                        <option value="networking">Networking</option>
+                                        <option value="cryptography">Cryptography</option>
+                                        <option value="ethical_hacking">Ethical Hacking</option>
+                                        <option value="forensics">Digital Forensics</option>
+                                    </optgroup>
                                 </select>
+                                <small className="form-text text-muted">
+                                    Hold Ctrl (Windows) or Cmd (Mac) to select multiple subjects.
+                                </small>
                             </div>
 
                             <div className="col-md-6">
@@ -81,22 +103,15 @@ function EditStudent() {
                             </div>
 
                             <div className="col-md-6">
-                                <label className="form-label">Status</label>
-                                <select className="form-select" name="status">
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
-                            </div>
-
-                            <div className="col-md-6">
-                                <label className="form-label me-1">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed)</sub>
+                                <label className="form-label">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed)</sub>
                                 <input type="file" accept='.jpg, .jpeg, .png' name="image" required className="form-control" />
                             </div>
 
 
+
                             <div className="col-12 text-center">
                                 <button type="submit" className="btn btn-primary px-4 custom-button-primary">
-                                    Update Details
+                                    Add Student
                                 </button>
                             </div>
                         </form>
@@ -107,4 +122,4 @@ function EditStudent() {
     );
 }
 
-export default EditStudent;
+export default AddTeacher;

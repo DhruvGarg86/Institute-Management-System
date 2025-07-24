@@ -2,11 +2,7 @@ import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 
 import { useRef } from 'react';
-import {
-    AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
-    Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
-} from '@syncfusion/ej2-react-charts';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Inject } from '@syncfusion/ej2-react-grids';
 
 function StudentAttendance() {
     const student = [
@@ -98,7 +94,7 @@ function StudentAttendance() {
         const attendanceValue = parseInt(attendanceStr);
 
         if (attendanceValue < 70) {
-            args.row.style.backgroundColor = '#de4f3cff';
+            args.row.style.backgroundColor = '#fdecea';
         }
     };
 
