@@ -4,8 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import java.math.BigDecimal;
+
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
@@ -54,5 +59,18 @@ public class Teacher extends BaseEntity {
 
 	@Column(name = "experience", length = 100)
 	private String experience;
+
+	@Column(name = "salary", precision = 10, scale = 2)
+	private  BigDecimal salary;
+
+	@ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Course> courses = new HashSet<Course>();
+
+	@OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Attendance attendance;
+
+	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Subject> subjects;
+
 
 }

@@ -13,15 +13,23 @@ import lombok.ToString;
 @ToString
 public class Fee extends BaseEntity {
 
+    @Column(name = "total_amount", nullable = false)
+    private Double totalAmount;
 
-    @Column(name = "amount_paid", precision = 10, scale = 2, nullable = false)
+    @Column(name = "amount_paid", nullable = false)
     private Double amountPaid;
 
-    @Column(name = "remaining_amount", precision = 10, scale = 2, nullable = false)
+    @Column(name = "remaining_amount", nullable = false)
     private Double remainingAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private FeeStatus status = FeeStatus.UNPAID;
+
+    @OneToOne
+    @JoinColumn(name = "student_id", nullable = false, unique = true)
+    private Student student;
+
+
 
 }

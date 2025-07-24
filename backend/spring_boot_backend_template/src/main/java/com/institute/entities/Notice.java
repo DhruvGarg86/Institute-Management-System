@@ -1,5 +1,6 @@
 package com.institute.entities;
 
+import com.institute.entities.enums.Audience;
 import com.institute.entities.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,4 +28,13 @@ public class Notice extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private Status status = Status.ACTIVE;
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id", nullable = false)
+    private Admin createdBy;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "target_audience", nullable = false, length = 20)
+    private Audience audience;
+
 }
