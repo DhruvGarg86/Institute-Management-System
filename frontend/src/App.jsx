@@ -13,6 +13,8 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StudentMarksOverview from './pages/admin/StudentMarksOverview';
 import StudentAttendance from './pages/admin/StudentAttendance';
+import StudentLogin from './pages/student/StudentLogin';
+import StudentDashboard from './pages/student/StudentDashboard';
 import StudentFees from './pages/admin/StudentFees';
 import StudentProfile from './pages/student/StudentProfile';
 import StudentFee from './pages/student/StudentFee';
@@ -69,6 +71,7 @@ function App() {
           path='/admin/display-students'
           element={<DisplayStudent />}
         />
+       vedantbranch
         <Route
           path='/student/fee'
           element={<StudentFee/>}
@@ -81,6 +84,17 @@ function App() {
           path='/student/profile'
           element={<StudentProfile />}
         />
+
+        <Route
+          path='/student/login'
+          element={<StudentLogin />}
+          />
+
+        <Route
+          path='/student/dashboard'
+          element={<StudentDashboard />}
+          ></Route>
+      main
       </Routes>
       <ToastContainer
         position="top-center"
