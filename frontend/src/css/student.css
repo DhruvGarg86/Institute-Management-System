@@ -1,0 +1,15 @@
+.student-profile-card{
+    margin: 20px;
+    width: 50rem;
+}
+
+h2{
+    margin: 10px;
+    color: blue;
+    text-align: center;
+}
+
+.student-fee{
+    margin: 20px;
+    width: 80%;
+}

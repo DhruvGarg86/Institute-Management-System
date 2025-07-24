@@ -16,7 +16,9 @@ import StudentAttendance from './pages/admin/StudentAttendance';
 import StudentLogin from './pages/student/StudentLogin';
 import StudentDashboard from './pages/student/StudentDashboard';
 import StudentFees from './pages/admin/StudentFees';
-
+import StudentProfile from './pages/student/StudentProfile';
+import StudentFee from './pages/student/StudentFee';
+import Student_Attendance from './pages/student/Student_Attendance';
 function App() {
   return (
     <>
@@ -69,6 +71,19 @@ function App() {
           path='/admin/display-students'
           element={<DisplayStudent />}
         />
+       vedantbranch
+        <Route
+          path='/student/fee'
+          element={<StudentFee/>}
+        />
+        <Route
+          path='/student/attendance'
+          element={<Student_Attendance />}
+        />
+        <Route
+          path='/student/profile'
+          element={<StudentProfile />}
+        />
 
         <Route
           path='/student/login'
@@ -79,6 +94,7 @@ function App() {
           path='/student/dashboard'
           element={<StudentDashboard />}
           ></Route>
+      main
       </Routes>
       <ToastContainer
         position="top-center"

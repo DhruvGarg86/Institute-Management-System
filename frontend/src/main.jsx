@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-
+import './css/student.css'
 // SyncFusion License
 import { registerLicense } from '@syncfusion/ej2-base';
 registerLicense(import.meta.env.VITE_SYNCFUSION_LICENSE);
