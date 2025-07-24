@@ -14,7 +14,7 @@ function StudentAttendance() {
   }));
 
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
+  const recordsPerPage = 12;
 
   const totalPages = Math.ceil(attendanceData.length / recordsPerPage);
 
@@ -32,7 +32,7 @@ function StudentAttendance() {
 
   return (
     <div className="container-fluid mt-4">
-      <h2 className="mb-4">Student Attendance</h2>
+      <h2 className="mb-4 student-center">Student Attendance</h2>
 
       <div className="table-responsive">
         <table className="table table-striped table-bordered table-hover">

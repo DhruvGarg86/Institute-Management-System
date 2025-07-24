@@ -89,11 +89,11 @@ function App() {
           path='/student/login'
           element={<StudentLogin />}
           />
-
+  
         <Route
           path='/student/dashboard'
           element={<StudentDashboard />}
-          ></Route>
+        ></Route>
       main
       </Routes>
       <ToastContainer

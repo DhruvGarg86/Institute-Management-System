@@ -95,7 +95,7 @@ function StudentProfile() {
   return (
     <>
       <div>
-        <h2 className="text-center mt-4">Student Profile</h2>
+        <h2 className="text-center mt-4 student-center">Profile</h2>
       </div>
       <div className="container-fluid mt-4 d-flex justify-content-center">
         <div className="card shadow p-4" style={{ maxWidth: '700px', width: '100%' }}>
