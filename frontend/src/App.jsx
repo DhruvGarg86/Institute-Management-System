@@ -9,6 +9,20 @@ import DisplayStudent from './pages/admin/DisplayStudent';
 import EditStudent from './pages/admin/EditStudent';
 import StudentMarks from './pages/admin/StudentMarks';
 
+
+// TEACHER IMPORTS
+import TeacherDashboard from './pages/teacher/TeacherDashboard'
+import TeacherAddNotice from './pages/teacher/TeacherAddNotice'
+import TeacherDisplayNotice from './pages/teacher/TeacherDisplayNotice'
+import TeacherProfile from './pages/teacher/TeacherProfile';
+import TeacherDisplayStudent from './pages/teacher/TeacherDisplayStudent'
+import TeacherStudentAttendance from './pages/teacher/TeacherStudentAttendance'
+import TeacherStudentMarks from './pages/teacher/TeacherStudentMarks';
+import TeacherStudentMarksOverview from './pages/teacher/TeacherStudentMarksOverview';
+
+
+
+
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StudentMarksOverview from './pages/admin/StudentMarksOverview';
@@ -66,6 +80,49 @@ function App() {
         <Route
           path='/admin/display-students'
           element={<DisplayStudent />}
+        />
+        
+
+
+{/* *****************************TEACHER ROUTES***********************************  */}
+        <Route
+          path='/teacher/dashboard'
+          element={<TeacherDashboard/>}
+        />
+
+        <Route
+          path='/teacher/profile'
+          element={<TeacherProfile/>}
+        />
+
+        <Route
+          path='/teacher/add-notice'
+          element={<TeacherAddNotice/>}
+        />
+
+        <Route
+          path='/teacher/display-notice'
+          element={<TeacherDisplayNotice/>}
+        />
+
+        <Route
+          path='/teacher/display-students'
+          element={<TeacherDisplayStudent/>}
+        />
+
+        <Route
+          path='/teacher/student-attendance'
+          element={<TeacherStudentAttendance/>}
+        />
+
+        <Route
+          path='/teacher/student-marks/:id'
+          element={<TeacherStudentMarks/>}
+        />
+
+        <Route
+          path='/teacher/student-marks'
+          element={<TeacherStudentMarksOverview/>}
         />
       </Routes>
       <ToastContainer
