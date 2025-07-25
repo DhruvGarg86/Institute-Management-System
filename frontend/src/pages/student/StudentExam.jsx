@@ -3,7 +3,7 @@ import StudentNavbar from "./StudentNavbar";
 import StudentSidebar from "../../components/Sidebar/StudentSidebar";
 import Footer from "../../components/Footer";
 
-function StudentCourse() {
+function StudentExam() {
   // Dummy data
   const timetable = [
     { day: "Monday", subject: "Java", time: "2:00 PM - 3:00 PM" },
@@ -30,7 +30,7 @@ function StudentCourse() {
             <StudentSidebar />
           </div>
           <div className="col-7-5">
-            <h2 className="text-center mt-4">Student Dashboard</h2>
+            <h2 className="text-center mt-4">Exam Dashboard</h2>
 
             {/* Timetable Section */}
             <div className="card shadow p-4 my-3">
@@ -108,4 +108,4 @@ function StudentCourse() {
   );
 }
 
-export default StudentCourse
+export default StudentExam
