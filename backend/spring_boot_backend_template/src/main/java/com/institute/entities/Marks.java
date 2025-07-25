@@ -26,4 +26,14 @@ public class Marks extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private Status status = Status.ACTIVE;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", nullable = false, unique = true)
+    private Subject subject;
+
+
 }
