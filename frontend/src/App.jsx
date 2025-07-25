@@ -41,7 +41,7 @@ import StudentFees from './pages/admin/StudentFees';
 import StudentProfile from './pages/student/StudentProfile';
 import StudentFee from './pages/student/StudentFee';
 import Student_Attendance from './pages/student/Student_Attendance';
-import StudentCourse from './pages/student/StudentCourse';
+import StudentExam from './pages/student/StudentExam';
 function App() {
   return (
     <>
@@ -170,8 +170,8 @@ function App() {
         />
 
         <Route
-          path='/student/course'
-          element={<StudentCourse />}
+          path='/student/exam'
+          element={<StudentExam />}
           />
 
         <Route

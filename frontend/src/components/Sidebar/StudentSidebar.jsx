@@ -54,18 +54,18 @@ function StudentSidebar() {
           </button>
           <button
             className={`nav-link w-100 ${
-              location.pathname === "/student/course" ? "active" : ""
+              location.pathname === "/student/exam" ? "active" : ""
             }`}
             id="v-pills-course-tab"
             data-bs-toggle="pill"
-            data-bs-target="#v-pills-course"
+            data-bs-target="#v-pills-exam"
             type="button"
             role="tab"
-            aria-controls="v-pills-course"
+            aria-controls="v-pills-exam"
             aria-selected="false"
-            onClick={() => navigate("/student/course")}
+            onClick={() => navigate("/student/exam")}
           >
-            Course
+            Exam
           </button>
           <button
             className={`nav-link w-100 ${

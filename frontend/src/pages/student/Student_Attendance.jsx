@@ -46,7 +46,7 @@ function StudentAttendance() {
             <StudentSidebar />
           </div>
           <div className="col-7-5">
-            <h2 className="mb-4">Student Attendance</h2>
+            <h2 className="mb-4 text-center">Student Attendance</h2>
 
             <div className="table-responsive">
               <table className="table table-striped table-bordered table-hover">
