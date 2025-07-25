@@ -14,12 +14,6 @@ function StudentFee() {
       amount: 10000,
       amountPaid: 3000,
       DueDate: "2025-07-20",
-      rollNo: "101",
-      course: "DAC",
-      name: "Vedant Choudhari",
-      amount: 10000,
-      amountPaid: 3000,
-      DueDate: "2025-07-20",
     };
 
     const remainingAmount = dummyFeeData.amount - dummyFeeData.amountPaid;
