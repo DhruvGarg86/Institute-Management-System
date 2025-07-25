@@ -8,6 +8,8 @@ import DisplayNotice from './pages/admin/DisplayNotice';
 import DisplayStudent from './pages/admin/DisplayStudent';
 import EditStudent from './pages/admin/EditStudent';
 import StudentMarks from './pages/admin/StudentMarks';
+import "@syncfusion/ej2-react-layouts/styles/material.css";
+
 
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,6 +21,7 @@ import StudentFees from './pages/admin/StudentFees';
 import StudentProfile from './pages/student/StudentProfile';
 import StudentFee from './pages/student/StudentFee';
 import Student_Attendance from './pages/student/Student_Attendance';
+import StudentCourse from './pages/student/StudentCourse';
 function App() {
   return (
     <>
@@ -35,6 +38,7 @@ function App() {
           path='/admin/profile'
           element={<Profile />}
         />
+        
         <Route
           path='/admin/add-notice'
           element={<AddNotice />}
@@ -84,6 +88,11 @@ function App() {
           path='/student/profile'
           element={<StudentProfile />}
         />
+
+        <Route
+          path='/student/course'
+          element={<StudentCourse />}
+          />
 
         <Route
           path='/student/login'

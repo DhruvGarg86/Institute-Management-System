@@ -2,3 +2,130 @@
   flex: 0 0 20%;
   max-width: 20%;
 }
+
+.col-7-5 {
+  flex: 0 0 80%;
+  max-width: 80%; 
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+}
+
+
+.admin-navbar-logout{
+  cursor: pointer;
+  border-radius: 20px;
+}
+.admin-navbar-logout:hover{
+  padding: 2px;
+  border-radius: 20px;
+  transform: scale(1.5);
+  transition: all 0.3s ease-in-out  ;
+  background-color: #B23B3B ;
+  color: white;
+
+}
+.admin-dashboard-container{
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 100%;
+}
+.admin-dashboard-row{
+  margin: 0px !important;
+  padding: 0px !important;
+}
+.admin-dashboard-first{
+  background-color: white;
+  padding: 0px;
+}
+.admin-dashboard-second{
+  /* background-color: greenyellow; */
+  padding: 10px;
+}
+.admin-dashboard-second h2{
+  color: #4361e5;
+}
+.admin-dashboard-second-row1{
+  margin: 0px !important;
+  padding: 0px !important;
+  margin-top: -9px !important;
+  height: 170px;
+}
+.admin-dashboard-second-row2{
+  margin: 0px !important;
+  padding: 0px !important;
+  margin-top: 13px !important;
+  height: 65vh;
+}
+.row1-first{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 0px 15px 0px 0px;
+  background-color: #eaebef;
+  border-radius: 5px;
+}
+.row1-second{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 0px 15px 0px 0px;
+  padding-top: auto;
+  background-color: #eaebef;
+  border-radius: 5px;
+}
+.row1-third{
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 0px 15px 0px 0px;
+  padding-top: auto;
+  background-color: #eaebef;
+  border-radius: 5px;
+}
+.row1-first h3,
+.row1-second h3,
+.row1-third h3 {
+  justify-content: center;
+  text-align: center;
+  font-weight: bolder;
+  margin-top: 35px;
+  align-items: center;
+}
+
+.row2-first{
+  /* background-color: #eaebef; */
+  padding: 0px;
+  padding-right: 16px;
+}
+.row2-second{
+  /* background-color: #eaebef; */
+  border-radius: 5px;
+  padding-left: 2px;
+}
+.row2-first-inner-div{    
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 510px;
+  border-radius: 5px;
+  background-color: #eaebef;
+  padding: 25px;
+}
+/* Admin Dasboard Notice Start */
+.row2-second-notice{
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+.row2-second-notice-item{
+  font-size: 0.7rem;
+  margin: 0px;
+}
+.admin-dashboard-notice-link{
+  text-decoration: none;
+  color: black;
+}
+.admin-dashboard-notice-link:hover{
+  color: #4361e5;
+  transform: scale(1.05);
+  transition: 0.2s ease-in-out;
+}
