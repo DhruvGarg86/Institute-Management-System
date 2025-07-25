@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "admin")
 @Getter
@@ -40,4 +43,8 @@ public class Admin extends BaseEntity {
 	@Enumerated(EnumType.STRING) 
 	@Column(name = "status", length = 15, nullable = false)
 	private Status status = Status.ACTIVE;
+
+	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Notice> notices = new ArrayList<Notice>();
+
 }

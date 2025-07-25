@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import StudentNavbar from './StudentNavbar'; // adjust path if needed
 import StudentSidebar from '../../components/Sidebar/StudentSidebar'; // adjust path if needed
+import React, { useEffect, useState } from 'react';
+import StudentNavbar from './StudentNavbar'; // adjust path if needed
+import StudentSidebar from '../../components/Sidebar/StudentSidebar'; // adjust path if needed
 
 function StudentFee() {
   const [fee, setFee] = useState(null);
@@ -14,8 +17,22 @@ function StudentFee() {
       amount: 10000,
       amountPaid: 3000,
       DueDate: '2025-07-20',
+      rollNo: '101',
+      course: 'DAC',
+      name: 'Vedant Choudhari',
+      amount: 10000,
+      amountPaid: 3000,
+      DueDate: '2025-07-20',
     };
 
+    // Calculate remaining amount and fee status
+    const remainingAmount = dummyFeeData.amount - dummyFeeData.amountPaid;
+
+    let status = 'Pending';
+    if (dummyFeeData.amountPaid === 0) status = 'Unpaid';
+    else if (remainingAmount === 0) status = 'Paid';
+
+    setFee({ ...dummyFeeData, remainingAmount, status });
     // Calculate remaining amount and fee status
     const remainingAmount = dummyFeeData.amount - dummyFeeData.amountPaid;
 

@@ -9,6 +9,9 @@ import lombok.ToString;
 
 import com.institute.entities.enums.Status;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "subjects")
 @Getter
@@ -28,5 +31,18 @@ public class Subject extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private Status status = Status.ACTIVE;
-    
+
+    @ManyToMany(mappedBy = "subjects")
+    private Set<Course> courses = new HashSet<Course>();
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
+
+    @OneToOne(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Marks marks;
+
+
+
+
 }

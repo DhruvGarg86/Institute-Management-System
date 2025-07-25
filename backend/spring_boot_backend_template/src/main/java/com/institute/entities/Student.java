@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
@@ -46,7 +48,22 @@ public class Student extends BaseEntity {
     @Column(name = "dob")
     private LocalDate dob;
 
-    @Column(name = "joining_date")
-    private LocalDate joiningDate;
+    @Column(name = "admission_date")
+    private LocalDate admissionDate;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Attendance attendance;
+
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Fee fee;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Marks> marks = new HashSet<Marks>();
+
+
 
 }
