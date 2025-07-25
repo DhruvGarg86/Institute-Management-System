@@ -19,7 +19,7 @@ function StudentAttendance() {
   }));
 
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
+  const recordsPerPage = 12;
   const totalPages = Math.ceil(attendanceData.length / recordsPerPage);
 
   const indexOfLast = currentPage * recordsPerPage;

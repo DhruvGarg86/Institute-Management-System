@@ -1,8 +1,9 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import profileImg from '../assets/profile.svg';
+import profileImg from '../../assets/profile.svg';
 
-function Sidebar() {
+
+function TeacherSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -14,8 +15,8 @@ function Sidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingOne">
             <button
-              onClick={() => navigate("/admin/dashboard")}
-              className={`accordion-button ${location.pathname !== "/admin/dashboard" ? "collapsed" : ""} ${location.pathname === "/admin/dashboard" ? 'active-section' : ''}`}
+              onClick={() => navigate("/teacher/dashboard")}
+              className={`accordion-button ${location.pathname !== "/teacher/dashboard" ? "collapsed" : ""} ${location.pathname === "/teacher/dashboard" ? 'active-section' : ''}`}
               type="button"
             >
               Dashboard
@@ -28,7 +29,7 @@ function Sidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingTwo">
             <button
-              className={`accordion-button collapsed ${location.pathname.startsWith('/admin/student') || location.pathname.includes('student') ? 'active-section' : ''}`}
+              className={`accordion-button collapsed ${location.pathname.startsWith('/teacher/student') || location.pathname.includes('student') ? 'active-section' : ''}`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseTwo"
@@ -41,11 +42,9 @@ function Sidebar() {
           <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate("/admin/add-student")}>Add Student</button></li>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate("/admin/display-students")}>Display All Student</button></li>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/student-attendance')}>Student Attendance</button></li>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/student-marks')}>Student Marks</button></li>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/student-fees')}>Student Fees</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate("/teacher/display-students")}>Display All Student</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/student-attendance')}>Student Attendance</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/student-marks')}>Student Marks</button></li>
               </ul>
             </div>
           </div>
@@ -55,7 +54,7 @@ function Sidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingThree">
             <button
-              className={`accordion-button collapsed ${location.pathname.includes('teacher') ? 'active-section' : ''}`}
+              className={`accordion-button collapsed ${location.pathname === '/teacher/display-teachers' ? 'active-section' : ''}`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseThree"
@@ -68,9 +67,7 @@ function Sidebar() {
           <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-teacher')}>Add Teacher</button></li>
-                <li><button type="button" className='sidebar-inner-button'onClick={() => navigate('/admin/display-teachers')}>Display All Teachers</button></li>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/teacher-attendance')}>Teacher   Attendance</button></li>
+                <li><button type="button" className='sidebar-inner-button'>Display All Teachers</button></li>
               </ul>
             </div>
           </div>
@@ -93,7 +90,6 @@ function Sidebar() {
           <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button'>Add Course</button></li>
                 <li><button type="button" className='sidebar-inner-button'>Display All Courses</button></li>
               </ul>
             </div>
@@ -117,8 +113,8 @@ function Sidebar() {
           <div id="collapseFive" className="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-notice')}>Add New Notice</button></li>
-                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/display-notices')}>Display All Notices</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/add-notice')}>Add New Notice</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/display-notice')}>Display All Notices</button></li>
               </ul>
             </div>
           </div>
@@ -128,9 +124,9 @@ function Sidebar() {
         <div className="accordion-item" style={{ marginTop: 'auto' }}>
           <h2 className="accordion-header" id="headingSix">
             <button
-              className={`accordion-button sidebar-profile ${location.pathname === '/admin/profile' ? 'active-section' : ''}`}
+              className={`accordion-button sidebar-profile ${location.pathname === '/teacher/profile' ? 'active-section' : ''}`}
               type="button"
-              onClick={() => navigate('/admin/profile')}
+              onClick={() => navigate('/teacher/profile')}
             >
               <img src={profileImg} alt="Profile"
                 style={{
@@ -151,4 +147,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default TeacherSidebar;

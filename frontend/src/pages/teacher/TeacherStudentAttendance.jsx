@@ -2,9 +2,15 @@ import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 
 import { useRef } from 'react';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Inject } from '@syncfusion/ej2-react-grids';
+import {
+    AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
+    Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
+} from '@syncfusion/ej2-react-charts';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group } from '@syncfusion/ej2-react-grids';
+import TeacherSidebar from './TeacherSidebar';
+import TeacherNavbar from './TeacherNavbar';
 
-function StudentAttendance() {
+function TeacherStudentAttendance() {
     const student = [
         {
             name: "Dhruv Garg",
@@ -94,17 +100,17 @@ function StudentAttendance() {
         const attendanceValue = parseInt(attendanceStr);
 
         if (attendanceValue < 70) {
-            args.row.style.backgroundColor = '#fdecea';
+            args.row.style.backgroundColor = '#de4f3cff';
         }
     };
 
     return (
         <>
-            <Navbar />
+            <TeacherNavbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
                     <div className="col-2-5 admin-dashboard-first">
-                        <Sidebar />
+                        <TeacherSidebar />
                     </div>
                     <div className="col-7-5  admin-dashboard-second p-4 admin-notice-box">
                         <h2 className="mb-2 fw-bold text-primary">Attendance Overview</h2>
@@ -163,4 +169,4 @@ function StudentAttendance() {
     );
 }
 
-export default StudentAttendance;
+export default TeacherStudentAttendance;

@@ -1,13 +1,33 @@
 import { Route, Routes } from 'react-router-dom';
+
+// ADMIN IMPORTS
 import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
-import Profile from './pages/admin/Profile';
-import AddNotice from './pages/admin/AddNotice';
 import AddStudent from './pages/admin/AddStudent';
-import DisplayNotice from './pages/admin/DisplayNotice';
-import DisplayStudent from './pages/admin/DisplayStudent';
 import EditStudent from './pages/admin/EditStudent';
 import StudentMarks from './pages/admin/StudentMarks';
+import DisplayStudent from './pages/admin/DisplayStudent';
+import AddTeacher from './pages/admin/AddTeacher';
+import DisplayTeacher from './pages/admin/DisplayTeacher';
+import EditTeacher from './pages/admin/EditTeacher';
+import TeacherAttendance from './pages/admin/TeacherAttendance';
+import AddNotice from './pages/admin/AddNotice';
+import DisplayNotice from './pages/admin/DisplayNotice';
+import Profile from './pages/admin/Profile';
+
+
+// TEACHER IMPORTS
+import TeacherDashboard from './pages/teacher/TeacherDashboard'
+import TeacherAddNotice from './pages/teacher/TeacherAddNotice'
+import TeacherDisplayNotice from './pages/teacher/TeacherDisplayNotice'
+import TeacherProfile from './pages/teacher/TeacherProfile';
+import TeacherDisplayStudent from './pages/teacher/TeacherDisplayStudent'
+import TeacherStudentAttendance from './pages/teacher/TeacherStudentAttendance'
+import TeacherStudentMarks from './pages/teacher/TeacherStudentMarks';
+import TeacherStudentMarksOverview from './pages/teacher/TeacherStudentMarksOverview';
+
+
+
 import "@syncfusion/ej2-react-layouts/styles/material.css";
 
 
@@ -40,12 +60,12 @@ function App() {
         />
         
         <Route
-          path='/admin/add-notice'
-          element={<AddNotice />}
-        />
-        <Route
           path='/admin/add-student'
           element={<AddStudent />}
+        />
+        <Route
+          path='/admin/display-students'
+          element={<DisplayStudent />}
         />
         <Route
           path='/admin/edit-student/:id'
@@ -68,17 +88,77 @@ function App() {
           element={<StudentFees />}
         />
         <Route
+          path='/admin/add-teacher'
+          element={<AddTeacher />}
+        />
+        <Route
+          path='/admin/display-teachers'
+          element={<DisplayTeacher />}
+        />
+        <Route
+          path='/admin/edit-teacher/:id'
+          element={<EditTeacher />}
+        />
+        <Route
+          path='/admin/teacher-attendance'
+          element={<TeacherAttendance />}
+        />
+        <Route
+          path='/admin/add-notice'
+          element={<AddNotice />}
+        />
+        <Route
           path='/admin/display-notices'
           element={<DisplayNotice />}
         />
+
+
+
+        {/* *****************************TEACHER ROUTES***********************************  */}
         <Route
-          path='/admin/display-students'
-          element={<DisplayStudent />}
+          path='/teacher/dashboard'
+          element={<TeacherDashboard />}
         />
-       vedantbranch
+
+        <Route
+          path='/teacher/profile'
+          element={<TeacherProfile />}
+        />
+
+        <Route
+          path='/teacher/add-notice'
+          element={<TeacherAddNotice />}
+        />
+
+        <Route
+          path='/teacher/display-notice'
+          element={<TeacherDisplayNotice />}
+        />
+
+        <Route
+          path='/teacher/display-students'
+          element={<TeacherDisplayStudent />}
+        />
+
+        <Route
+          path='/teacher/student-attendance'
+          element={<TeacherStudentAttendance />}
+        />
+
+        <Route
+          path='/teacher/student-marks/:id'
+          element={<TeacherStudentMarks />}
+        />
+
+        <Route
+          path='/teacher/student-marks'
+          element={<TeacherStudentMarksOverview />}
+        />
+
+        {/* vedantbranch */}
         <Route
           path='/student/fee'
-          element={<StudentFee/>}
+          element={<StudentFee />}
         />
         <Route
           path='/student/attendance'
@@ -97,14 +177,14 @@ function App() {
         <Route
           path='/student/login'
           element={<StudentLogin />}
-          />
+        />
 
         <Route
           path='/student/dashboard'
           element={<StudentDashboard />}
-          ></Route>
-      main
+        ></Route>
       </Routes>
+
       <ToastContainer
         position="top-center"
         autoClose={1000}

@@ -5,9 +5,7 @@ import StudentNavbar from "./StudentNavbar";
 
 function StudentFee() {
   const [fee, setFee] = useState(null);
-  const [file, setFile] = useState(null);
 
-  // Dummy data simulating fetched API data
   useEffect(() => {
     const dummyFeeData = {
       id: 1,
