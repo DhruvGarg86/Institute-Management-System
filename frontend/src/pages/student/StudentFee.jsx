@@ -24,7 +24,6 @@ function StudentFee() {
 
     setFee({ ...dummyFeeData, remainingAmount, status });
     // Calculate remaining amount and fee status
-
   }, []);
   return (
     <>
