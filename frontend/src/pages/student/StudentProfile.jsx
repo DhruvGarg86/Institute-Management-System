@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaUpload } from "react-icons/fa";
 import defaultPhoto from "../../assets/student_profile_photo.jpg"; // adjust based on your structure
 import Navbar from "../../components/Navbar";
-import StudentSidebar from "../../components/Sidebar/StudentSidebar";
+import StudentSidebar from "../../components/StudentSidebar";
 import "./Student.module.css";
 import Footer from "../../components/Footer";
 import StudentNavbar from "./StudentNavbar";

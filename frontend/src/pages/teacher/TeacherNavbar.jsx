@@ -22,9 +22,9 @@ function TeacherNavbar() {
                         </button>
                     </div>
                     <div className='navbar-second-part'>
-                        <span className='navbar-second-part-admin-name'><a href='/admin/profile' style={{textDecoration: 'none', color: 'black'}}>TEACHER NAME</a></span>
-                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout' 
-                        onClick={() => handleLogout()}
+                        <span className='navbar-second-part-admin-name'><a href='/admin/profile' style={{ textDecoration: 'none', color: 'black' }}>TEACHER NAME</a></span>
+                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout'
+                            onClick={() => handleLogout()}
                         />
                     </div>
 

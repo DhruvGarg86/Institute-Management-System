@@ -1,4 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Zoom } from 'react-toastify';
 
 // ADMIN IMPORTS
 import Login from './pages/admin/Login';
@@ -29,13 +31,7 @@ import TeacherStudentAttendance from './pages/teacher/TeacherStudentAttendance'
 import TeacherStudentMarks from './pages/teacher/TeacherStudentMarks';
 import TeacherStudentMarksOverview from './pages/teacher/TeacherStudentMarksOverview';
 
-
-
-import "@syncfusion/ej2-react-layouts/styles/material.css";
-
-
-import { ToastContainer, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// STUDENT IMPORTS
 import StudentMarksOverview from './pages/admin/StudentMarksOverview';
 import StudentAttendance from './pages/admin/StudentAttendance';
 import StudentLogin from './pages/student/StudentLogin';
@@ -49,6 +45,8 @@ function App() {
   return (
     <>
       <Routes>
+
+        {/* *****************************ADMIN ROUTES***********************************  */}
         <Route
           path='/'
           element={<Login />}
@@ -61,7 +59,7 @@ function App() {
           path='/admin/profile'
           element={<Profile />}
         />
-        
+
         <Route
           path='/admin/add-student'
           element={<AddStudent />}
@@ -121,7 +119,7 @@ function App() {
         <Route
           path='/admin/edit-subject/:id'
           element={<EditSubject />}
-        /> 
+        />
         <Route
           path='/admin/add-course'
           element={<AddCourse />}
@@ -129,7 +127,7 @@ function App() {
         <Route
           path='/admin/edit-course/:id'
           element={<EditCourse />}
-        /> 
+        />
 
         {/* *****************************TEACHER ROUTES***********************************  */}
         <Route
@@ -172,7 +170,7 @@ function App() {
           element={<TeacherStudentMarksOverview />}
         />
 
-        {/* vedantbranch */}
+        {/* *****************************STUDENT ROUTES***********************************  */}
         <Route
           path='/student/fee'
           element={<StudentFee />}
@@ -185,17 +183,14 @@ function App() {
           path='/student/profile'
           element={<StudentProfile />}
         />
-
         <Route
           path='/student/exam'
           element={<StudentExam />}
-          />
-
+        />
         <Route
           path='/student/login'
           element={<StudentLogin />}
         />
-
         <Route
           path='/student/dashboard'
           element={<StudentDashboard />}

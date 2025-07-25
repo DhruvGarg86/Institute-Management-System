@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import NoticeList from "../../components/Notices/NoticeList";
 import notices from "../../data/notices";
-import StudentSidebar from "../../components/Sidebar/StudentSidebar";
+import StudentSidebar from "../../components/StudentSidebar";
 import "./Student.module.css";
 import StudentNavbar from "./StudentNavbar";
 
