@@ -14,7 +14,10 @@ import TeacherAttendance from './pages/admin/TeacherAttendance';
 import AddNotice from './pages/admin/AddNotice';
 import DisplayNotice from './pages/admin/DisplayNotice';
 import Profile from './pages/admin/Profile';
-
+import AddSubject from './pages/admin/AddSubject';
+import EditSubject from './pages/admin/EditSubject';
+import AddCourse from './pages/admin/AddCourse';
+import EditCourse from './pages/admin/EditCourse';
 
 // TEACHER IMPORTS
 import TeacherDashboard from './pages/teacher/TeacherDashboard'
@@ -111,8 +114,22 @@ function App() {
           path='/admin/display-notices'
           element={<DisplayNotice />}
         />
-
-
+        <Route
+          path='/admin/add-subject'
+          element={<AddSubject />}
+        />
+        <Route
+          path='/admin/edit-subject/:id'
+          element={<EditSubject />}
+        /> 
+        <Route
+          path='/admin/add-course'
+          element={<AddCourse />}
+        />
+        <Route
+          path='/admin/edit-course/:id'
+          element={<EditCourse />}
+        /> 
 
         {/* *****************************TEACHER ROUTES***********************************  */}
         <Route
