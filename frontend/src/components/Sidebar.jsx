@@ -69,7 +69,7 @@ function Sidebar() {
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-teacher')}>Add Teacher</button></li>
-                <li><button type="button" className='sidebar-inner-button'onClick={() => navigate('/admin/display-teachers')}>Display All Teachers</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/display-teachers')}>Display All Teachers</button></li>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/teacher-attendance')}>Teacher   Attendance</button></li>
               </ul>
             </div>
@@ -93,8 +93,8 @@ function Sidebar() {
           <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button'>Add Course</button></li>
-                <li><button type="button" className='sidebar-inner-button'>Display All Courses</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-course')}>Add Course</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/display-courses')}>Display All Courses</button></li>
               </ul>
             </div>
           </div>

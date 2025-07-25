@@ -23,9 +23,8 @@ function StudentSidebar() {
           aria-orientation="vertical"
         >
           <button
-            className={`nav-link w-100 ${
-              location.pathname === "/student/dashboard" ? "active" : ""
-            }`}
+            className={`nav-link w-100 ${location.pathname === "/student/dashboard" ? "active" : ""
+              }`}
             id="v-pills-dashboard-tab"
             data-bs-toggle="pill"
             data-bs-target="#v-pills-dashboard"
@@ -38,9 +37,8 @@ function StudentSidebar() {
             Dashboard
           </button>
           <button
-            className={`nav-link w-100 ${
-              location.pathname === "/student/profile" ? "active" : ""
-            }`}
+            className={`nav-link w-100 ${location.pathname === "/student/profile" ? "active" : ""
+              }`}
             id="v-pills-home-tab"
             data-bs-toggle="pill"
             data-bs-target="#v-pills-home"
@@ -53,9 +51,8 @@ function StudentSidebar() {
             Profile
           </button>
           <button
-            className={`nav-link w-100 ${
-              location.pathname === "/student/exam" ? "active" : ""
-            }`}
+            className={`nav-link w-100 ${location.pathname === "/student/exam" ? "active" : ""
+              }`}
             id="v-pills-course-tab"
             data-bs-toggle="pill"
             data-bs-target="#v-pills-exam"
@@ -68,9 +65,8 @@ function StudentSidebar() {
             Exam
           </button>
           <button
-            className={`nav-link w-100 ${
-              location.pathname === "/student/attendance" ? "active" : ""
-            }`}
+            className={`nav-link w-100 ${location.pathname === "/student/attendance" ? "active" : ""
+              }`}
             id="v-pills-profile-tab"
             data-bs-toggle="pill"
             data-bs-target="#v-pills-profile"
@@ -84,9 +80,8 @@ function StudentSidebar() {
           </button>
 
           <button
-            className={`nav-link w-100 ${
-              location.pathname === "/student/fee" ? "active" : ""
-            }`}
+            className={`nav-link w-100 ${location.pathname === "/student/fee" ? "active" : ""
+              }`}
             id="v-pills-settings-tab"
             data-bs-toggle="pill"
             data-bs-target="#v-pills-settings"

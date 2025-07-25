@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
-import StudentSidebar from "../../components/Sidebar/StudentSidebar";
+import StudentSidebar from "../../components/StudentSidebar";
 import "./Student.module.css";
 import Footer from "../../components/Footer";
 import StudentNavbar from "./StudentNavbar";
