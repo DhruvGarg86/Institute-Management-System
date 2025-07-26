@@ -1,6 +1,6 @@
 
 import { useRef } from 'react';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit, Inject } from '@syncfusion/ej2-react-grids';
 import TeacherNavbar from './TeacherNavbar';
 import TeacherSidebar from './TeacherSidebar';
 
