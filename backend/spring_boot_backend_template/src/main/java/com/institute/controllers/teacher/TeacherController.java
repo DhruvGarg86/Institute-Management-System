@@ -2,7 +2,9 @@ package com.institute.controllers.teacher;
 
 import com.institute.dto.AddNewTeacherDTO;
 import com.institute.entities.Teacher;
-import com.institute.service.admin.AddTeacher;
+import com.institute.service.admin.TeacherService;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,19 +22,22 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/admin")
 public class TeacherController {
-	private final AddTeacher teacherService;
+	private final TeacherService teacherService;
 
-	@GetMapping("/ping")
-	public String pingTest() {
-	    System.out.println("✅ Ping endpoint hit!");
-	    return "TeacherController is working!";
+	@GetMapping("/display-teachers")
+	@Operation(summary="Admin-teacher-DisplayAllTeacher")
+	public ResponseEntity<?> displayAllTeachers(){
+		return ResponseEntity.ok(teacherService.displayTeachers());
 	}
 
 	
 	@PostMapping("/add-teacher")
 	public ResponseEntity<?> addTeacher(@RequestBody AddNewTeacherDTO teacher) {
-	    System.out.println("✅ Controller reached: " + teacher);
 	    return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
 	}
-
+	
+	@GetMapping("/teacher-attendance")
+	public ResponseEntity<?> displayAllTeacherAttendance(){
+		return ResponseEntity.ok(teacherService.teacherAttendance());
+	}
 }

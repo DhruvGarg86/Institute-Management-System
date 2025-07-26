@@ -32,8 +32,8 @@ public class Teacher extends BaseEntity {
 	private String email;
 
 	@Column(name = "password", nullable = false, length = 255)
-    private String password;
-	
+	private String password;
+
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 

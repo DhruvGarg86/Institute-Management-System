@@ -7,7 +7,7 @@ function Navbar() {
 
     const handleLogout = () => {
         setTimeout(() => {
-            navigate("/");
+            navigate("/login");
         }, 500); // in ms
     };
 
