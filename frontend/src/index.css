@@ -746,3 +746,127 @@ input[readonly] {
 }
 
 /* Teacher display student end */
+
+
+/* Landing Page Starts */
+
+/* General Reset */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f6fafc;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+
+/* Header with Gradient */
+.header {
+  background: linear-gradient(135deg, #0250c3, #00b4db);
+  color: #fff;
+  text-align: center;
+  padding-bottom: 3rem;
+  position: relative;
+}
+
+/* Navigation Bar */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #ffe600;
+}
+
+/* Hero Section */
+.hero {
+  padding: 2rem;
+}
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.cta-btn {
+  background: #ffe600;
+  color: #003b7f;
+  font-weight: bold;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.cta-btn:hover {
+  transform: scale(1.05);
+  background: #ffcc00;
+}
+
+/* Content */
+.content {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.feature {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(2, 80, 195, 0.12);
+  padding: 2rem;
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(2, 50, 130, 0.2);
+}
+
+/* Footer */
+.footer {
+  background: #f1f2f8;
+  text-align: center;
+  padding: 1.5rem 0;
+  color: #02307a;
+  font-size: 0.95rem;
+}
+.footer-links a {
+  color: #0250c3;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+.social-icons span {
+  font-size: 1.4rem;
+  margin: 0 0.3rem;
+  cursor: pointer;
+}
+.social-icons span:hover {
+  opacity: 0.7;
+}
+
+/* Landing Page Ends */

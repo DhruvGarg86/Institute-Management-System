@@ -54,7 +54,7 @@
 ### By dhruvGarg
 - Added Display Notice, completed 70%.
 - Updated sidebar.
-- Modified Add Notice such that while inserting a notice, the date of notice is preselected as the current date i.e today, and is non-editable, even for ADMIN(user role).
+- Modified Add Notice such that while inserting a notice, the date of notice is preselected as the current date i.e. today, and is non-editable, even for ADMIN(user role).
 
 
 ## 14th June 2025
@@ -68,7 +68,7 @@
 
 ### By dhruvGarg
 - Added RichTextEditor via Syncfusion in 'Add Notice' page, to provide better text customization options.
-- The Syncfusion is using a 7 day free trial period license, and a request for permanent license is applied, if not approved, syncfusion will be removed. 
+- The Syncfusion is using a 7-day free trial period license, and a request for permanent license is applied, if not approved, syncfusion will be removed. 
 
 ## 20th July 2025
 
@@ -77,10 +77,10 @@
 - Added 'View Marks' button to list displayed on 'DisplayStudent' page.
 - Created 'StudentMarks' page for admin, to show overall marks secured by a student, includes a pie chart via Syncfusion.
 - Used PieCharts from Syncfusion to show students marks, and also can download the same.
-- Added 'Grid Component' from Syncfusion, providing the admin the funtionality to download students marks in PDF or excel format.
+- Added 'Grid Component' from Syncfusion, providing the admin the funtionality to download students marks in PDF or Excel format.
 - Changed column size in bootstrap grid to custom size in 'Dashboard' page, will be doing the same change to al the pages after checking for versatility.
 
-## 21th July 2025
+## 21st July 2025
 
 ### By dhruvGarg
 - Created 'StudentMarksOverview' for admin to see each course topper, along with leaderboard using Syncfusion-grid.
@@ -88,7 +88,7 @@
 - Changed layout of every page from 'bootstrap: col-3, col-7' to custom layout.
 - Created 'StudentAttendance' page.
 
-## 22th July 2025
+## 22nd July 2025
 
 ### By dhruvGarg
 - Added 'Delete' button to 'DisplayNotice' page.
@@ -96,7 +96,7 @@
 - Added Syncfusion Enterprise Edition license in .env file
 - Added 'StudentFees' page in Admin panel to see which student has paid fees or not.
 
-## 23th July 2025
+## 23rd July 2025
 
 ### By dhruvGarg
 - Created basic entities in spring , not containing relations only standalone properties.
@@ -105,3 +105,16 @@
 
 ### By dhruvGarg
 - Created 'AddTeacher' , 'DisplayTeachers', 'TeacherAttendance' and 'EditTeacher' page to admin panel
+
+## 25th July 2025
+
+### By dhruvGarg
+- Added 'AddCourse' and 'EditCourse' to Admin Panel
+- Remade the 'Profile' page of Admin Panel
+- Changed layout of 'DisplayNotice' page for better readability.
+
+## 26th July 2025
+
+### By dhruvGarg
+- Create landing page for the website partially.
+- Started BACKEND, 
