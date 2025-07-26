@@ -41,14 +41,18 @@ import StudentProfile from './pages/student/StudentProfile';
 import StudentFee from './pages/student/StudentFee';
 import Student_Attendance from './pages/student/Student_Attendance';
 import StudentExam from './pages/student/StudentExam';
+import Home from './pages/Home';
 function App() {
   return (
     <>
       <Routes>
-
+        <Route
+        path='/'
+        element={<Home/>}
+        />
         {/* *****************************ADMIN ROUTES***********************************  */}
         <Route
-          path='/'
+          path='/login'
           element={<Login />}
         />
         <Route

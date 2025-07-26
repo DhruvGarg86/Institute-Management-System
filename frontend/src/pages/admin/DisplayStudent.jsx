@@ -119,7 +119,7 @@ function DisplayStudent() {
                             >
 
                                 <ColumnsDirective>
-                                    <ColumnDirective field='avatar' headerText='Profile' width='60' template={(props) => (
+                                    <ColumnDirective field='avatar' headerText='Profile' width='60' allowSorting={false} template={(props) => (
                                         <img src={props.avatar} alt="avatar" style={{ borderRadius: '50%', height: '45px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="Center" width='85' />
