@@ -44,7 +44,9 @@ function TeacherSidebar() {
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate("/teacher/display-students")}>Display All Student</button></li>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/student-attendance')}>Student Attendance</button></li>
+                {/* <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/student-marks')}>Student Marks</button></li> */}
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/student-marks')}>Student Marks</button></li>
+
               </ul>
             </div>
           </div>
@@ -54,7 +56,7 @@ function TeacherSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingThree">
             <button
-              className={`accordion-button collapsed ${location.pathname === '/teacher/display-teachers' ? 'active-section' : ''}`}
+              className={`accordion-button collapsed ${location.pathname === '/teacher/display-teacher' ? 'active-section' : ''}`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseThree"
@@ -67,7 +69,8 @@ function TeacherSidebar() {
           <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
-                <li><button type="button" className='sidebar-inner-button'>Display All Teachers</button></li>
+                    <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/teacher/display-teachers')}>Display All Teachers</button></li>
+
               </ul>
             </div>
           </div>
