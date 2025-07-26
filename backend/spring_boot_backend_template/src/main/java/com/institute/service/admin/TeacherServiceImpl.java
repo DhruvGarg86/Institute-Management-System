@@ -1,21 +1,27 @@
 package com.institute.service.admin;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.institute.dao.TeacherDao;
 import com.institute.dto.AddNewTeacherDTO;
 import com.institute.dto.ApiResponse;
+import com.institute.dto.DisplayTeacherDTO;
+import com.institute.dto.TeacherAttendanceDTO;
 import com.institute.entities.Teacher;
+import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
 @Transactional
 @AllArgsConstructor
-public class AddTeacherImpl implements AddTeacher {
+public class TeacherServiceImpl implements TeacherService {
 
 	private final TeacherDao teacherDao;
 	private final ModelMapper modelMapper;
@@ -31,6 +37,16 @@ public class AddTeacherImpl implements AddTeacher {
 
 	    teacherDao.save(entity);
 	    return new ApiResponse("New Teacher Added");
+	}
+
+	@Override
+	public List<DisplayTeacherDTO> displayTeachers() {
+		return teacherDao.findByStatus(Status.ACTIVE).stream().map(teacher -> modelMapper.map(teacher, DisplayTeacherDTO.class)).toList();
+	}
+
+	@Override
+	public List<TeacherAttendanceDTO> teacherAttendance() {
+		return teacherDao.findAllTeachersWithAttendance();
 	}
 
 
