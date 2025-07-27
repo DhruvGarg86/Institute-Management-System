@@ -1,8 +1,8 @@
 package com.institute.controllers.teacher;
 
-import com.institute.dto.AddNewTeacherDTO;
+import com.institute.dto.teacher.AddNewTeacherDTO;
 import com.institute.entities.Teacher;
-import com.institute.service.admin.TeacherService;
+import com.institute.service.teacher.TeacherService;
 
 import io.swagger.v3.oas.annotations.Operation;
 

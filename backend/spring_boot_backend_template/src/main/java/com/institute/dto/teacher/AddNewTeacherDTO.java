@@ -1,4 +1,4 @@
-package com.institute.dto;
+package com.institute.dto.teacher;
 
 import java.time.LocalDate;
 

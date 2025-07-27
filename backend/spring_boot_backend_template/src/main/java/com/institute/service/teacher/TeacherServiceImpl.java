@@ -1,4 +1,4 @@
-package com.institute.service.admin;
+package com.institute.service.teacher;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.institute.dao.TeacherDao;
-import com.institute.dto.AddNewTeacherDTO;
 import com.institute.dto.ApiResponse;
-import com.institute.dto.DisplayTeacherDTO;
+import com.institute.dto.teacher.AddNewTeacherDTO;
+import com.institute.dto.teacher.DisplayTeacherDTO;
 import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.institute.dto.ApiResponse;
-import com.institute.dto.SubjectDto;
+import com.institute.dto.admin.SubjectDto;
 import com.institute.service.admin.SubjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +31,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SubjectController {
 	
+//	 subject apis ----------------------------------------------------------
 	public final SubjectService subjectService;
 	
 	@GetMapping("/display-subject")
@@ -62,6 +63,6 @@ public class SubjectController {
 	public ResponseEntity<?> deleteSubject(@PathVariable Long subjectId) {
 	    return ResponseEntity.ok(subjectService.deleteSubjectsById(subjectId));
 	}
-
+// ------------------------------------------------------------------------------------------------
 		
 }
