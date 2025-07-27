@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 	
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/admin")
 public class TeacherController {
 	private final TeacherService teacherService;
@@ -35,11 +36,10 @@ public class TeacherController {
 	public ResponseEntity<?> displayAllTeachers(){
 		return ResponseEntity.ok(teacherService.displayTeachers());
 	}
-
 	
-	
-//	@GetMapping("/teacher-attendance")
-//	public ResponseEntity<?> displayAllTeacherAttendance(){
-//		return ResponseEntity.ok(teacherService.teacherAttendance());
-//	}
+	@GetMapping("/teacher-attendance")
+	@Operation(summary="Admin-teacher-DisplayTeacherAttendance")
+	public ResponseEntity<?> displayAllTeacherAttendance(){
+		return ResponseEntity.ok(teacherService.teacherAttendance());
+	}
 }

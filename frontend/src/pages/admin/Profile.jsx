@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { FiEdit } from "react-icons/fi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import profileImg from "../../assets/elon.jpeg"; // replace with the desired profile image
+import defaultImg from "../../assets/elon.jpeg"; // fallback image
 
 function Profile() {
+    const [profileImg, setProfileImg] = useState(defaultImg);
+
+    // Handle Image Upload
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setProfileImg(imageUrl);
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -18,8 +29,28 @@ function Profile() {
                     {/* Profile Section */}
                     <div className="col-7-5 admin-dashboard-second d-flex justify-content-center">
                         <div className="profile-card">
-                            {/* Profile Image */}
-                            <img src={profileImg} alt="Profile" className="profile-image" />
+
+                            {/*Profile Image Section */}
+                            <div className="profile-image-container">
+                                <img src={profileImg} alt="Profile" className="profile-image" />
+                                
+                                {/* Hidden file input */}
+                                <input
+                                    type="file"
+                                    id="profileImageInput"
+                                    accept="image/*"
+                                    style={{ display: "none" }}
+                                    onChange={handleImageUpload}
+                                />
+
+                                {/* Hover Overlay */}
+                                <div
+                                    className="edit-overlay"
+                                    onClick={() => document.getElementById("profileImageInput").click()}
+                                >
+                                    <FiEdit className="overlay-icon" />
+                                </div>
+                            </div>
 
                             {/* Name & Username */}
                             <h2 className="profile-name mb-3">Jessica Alba</h2>

@@ -31,11 +31,11 @@ public class Attendance extends BaseEntity {
 	private Integer attendanceFlag;
 
 	@OneToOne
-	@JoinColumn(name = "student_id", nullable = false, unique = true)
+	@JoinColumn(name = "student_id", unique = true)
 	private Student student;
 
 	@OneToOne
-	@JoinColumn(name = "teacher_id", nullable = false, unique = true)
+	@JoinColumn(name = "teacher_id", unique = true)
 	private Teacher teacher;
 
 }

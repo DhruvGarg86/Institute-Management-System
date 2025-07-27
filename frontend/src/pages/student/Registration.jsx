@@ -2,7 +2,7 @@ import React from 'react'
 import studyImg from '../../assets/study.svg';
 import { useNavigate, Link } from 'react-router-dom';
 
-function Login() {
+function Registration() {
     const navigate = useNavigate();
     return (
         <div>
@@ -19,18 +19,18 @@ function Login() {
                     </div>
                     <div className="col-6 admin-login-page-second">
                         <div className="login-box">
-                            <h3>LOGIN</h3>
-                            <h5>Enter your account details  </h5>
+                            <h3>REGISTRATION</h3>
+                            <h5>Enter your details  </h5>
                             <input type="text" name="" placeholder="Email ID" className="admin-login-page-second-login-box" /><br />
-                            <input type="password" name="" placeholder="Password" className="admin-login-page-second-login-box" />
+                            <input type="number" name="" placeholder="Contact Number" className="admin-login-page-second-login-box" />
                             <div>
-                                <button onClick={() => navigate("/admin/dashboard")}
-                                    className="admin-login-page-second-button">LOGIN</button>
+                                <button onClick={() => navigate("/login")}
+                                    className="admin-login-page-second-button">REGISTER</button>
                             </div>
                             <p style={{ marginTop: '20px', fontSize: '15px'     }}>
-                                Don't have an account?{' '}
-                                <Link to="/register" style={{ color: '#4361e5', fontWeight: 'bold', textDecoration: 'none' }}>
-                                    Register Here!
+                                Already have an account?{' '}
+                                <Link to="/login" style={{ color: '#4361e5', fontWeight: 'bold', textDecoration: 'none' }}>
+                                    Login Here!
                                 </Link>
                             </p>
                         </div>
@@ -41,4 +41,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Registration

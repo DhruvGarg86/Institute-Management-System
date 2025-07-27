@@ -23,13 +23,8 @@ function EditTeacher() {
                         <form className="row g-4 bg-white p-4 rounded admin-add-student-form" onSubmit={handleSubmit}>
 
                             <div className="col-md-6">
-                                <label className="form-label">First Name</label>
-                                <input type="text" name="first_name" required className="form-control" placeholder="Enter first name" />
-                            </div>
-
-                            <div className="col-md-6">
-                                <label className="form-label">Last Name</label>
-                                <input type="text" name="last_name" required className="form-control" placeholder="Enter last name" />
+                                <label className="form-label">Full Name</label>
+                                <input type="text" name="name" required className="form-control" placeholder="Enter full name" />
                             </div>
 
                             <div className="col-md-6">

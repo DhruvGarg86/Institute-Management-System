@@ -1,7 +1,9 @@
 package com.institute.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.institute.entities.Subject;
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
 
@@ -12,9 +14,9 @@ import lombok.Setter;
 @Setter
 
 public class DisplayTeacherDTO {
-	private String firstName;
-	
-	private String lastName;
+	private Long id;
+		
+	private String name;
 	
 	private String phoneNumber;
 	
@@ -25,5 +27,8 @@ public class DisplayTeacherDTO {
 	private LocalDate joiningDate;
 	
 	private Status status;
-//	private List<Subject> subjects;
+	
+	private String image;
+	
+	private List<SubjectDTO> subjects;
 }

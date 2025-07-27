@@ -11,13 +11,17 @@ import org.springframework.data.jpa.repository.Query;
 public interface TeacherDao extends JpaRepository<Teacher, Long> {
 
 	boolean existsByEmail(String email);
+
 	List<Teacher> findByStatus(Status status);
-//
-//	@Query("SELECT new com.institute.dto.TeacherAttendanceDTO(t.firstName, t.lastName, t.email, t.phoneNumber, t.address, "
-//			+ "t.joiningDate, t.status, a.presentDays, a.absentDays, a.totalWorkingDays, a.attendancePercentage) "
-//			+ "FROM Teacher t LEFT JOIN t.attendance "
-//			+ "a WHERE t.isDeleted = false AND a.attendanceFlag = 0")
-//	List<TeacherAttendanceDTO> findAllTeachersWithAttendance();
+	@Query("""
+			   SELECT t.image, t.name, t.email, t.joiningDate, t.phoneNumber, t.status, a.attendancePercentage
+			   FROM Teacher t 
+			   LEFT JOIN Attendance a ON a.teacher.id = t.id 
+			   WHERE t.status = 'ACTIVE'
+			""")
+	List<Object[]> findAllTeachersWithLatestAttendance();
+
+
 
 
 }

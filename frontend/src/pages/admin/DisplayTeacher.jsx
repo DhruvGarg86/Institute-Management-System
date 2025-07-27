@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
@@ -7,100 +7,38 @@ import {
     GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter,
     ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject
 } from '@syncfusion/ej2-react-grids';
+import { toast } from 'react-toastify';
+import { getAllTeachers } from '../../services/Admin/Teacher';
 
-
-const sampleTeachers = [
-    {
-        roll: "T101",
-        name: "Alice Johnson",
-        phone_number: "9876543210",
-        email: "alice.johnson@example.com",
-        salary: 55000.0,
-        joining_date: "10/01/2023",
-        address: "123 Maple Street, New York",
-        subjects: ["HTML", "CSS", "JavaScript"], // FIXED
-        gender: "Female",
-        image: "https://i.pravatar.cc/40?img=5"
-    },
-    {
-        roll: "T102",
-        name: "Brian Smith",
-        phone_number: "8765432109",
-        email: "brian.smith@example.com",
-        salary: 60000.0,
-        joining_date: "01/08/2022",
-        address: "456 Oak Avenue, Chicago",
-        subjects: ["Python", "Machine Learning"],
-        gender: "Male",
-        image: "https://i.pravatar.cc/40?img=6"
-    },
-    {
-        roll: "T103",
-        name: "Catherine Lee",
-        phone_number: "7654321098",
-        email: "catherine.lee@example.com",
-        salary: 62000.0,
-        joining_date: "15/03/2023",
-        address: "789 Pine Road, Los Angeles",
-        subjects: ["Cyber Security", "Ethical Hacking"],
-        gender: "Female",
-        image: "https://i.pravatar.cc/40?img=7"
-    },
-    {
-        roll: "T104",
-        name: "David Brown",
-        phone_number: "6543210987",
-        email: "david.brown@example.com",
-        salary: 58000.0,
-        joining_date: "05/01/2024",
-        address: "321 Cedar Lane, Houston",
-        subjects: ["React", "JavaScript"],
-        gender: "Male",
-        image: "https://i.pravatar.cc/40?img=8"
-    },
-    {
-        roll: "T105",
-        name: "Emily Walker",
-        phone_number: "5432109876",
-        email: "emily.walker@example.com",
-        salary: 61000.0,
-        joining_date: "20/11/2023",
-        address: "654 Birch Blvd, San Francisco",
-        subjects: ["Deep Learning", "Statistics"],
-        gender: "Female",
-        image: "https://i.pravatar.cc/40?img=9"
-    },
-    {
-        roll: "T106",
-        name: "Emily Walker",
-        phone_number: "5432109876",
-        email: "emily.walker@example.com",
-        salary: 61000.0,
-        joining_date: "20/11/2023",
-        address: "654 Birch Blvd, San Francisco",
-        subjects: ["Deep Learning", "Statistics"],
-        gender: "Female",
-        image: "https://i.pravatar.cc/40?img=10"
-    },
-    {
-        roll: "T107",
-        name: "Emily Walker",
-        phone_number: "5432109876",
-        email: "emily.walker@example.com",
-        salary: 61000.0,
-        joining_date: "20/11/2023",
-        address: "654 Birch Blvd, San Francisco",
-        subjects: ["Deep Learning", "Statistics"],
-        gender: "Female",
-        image: "https://i.pravatar.cc/40?img=11"
-    }
-];
 
 
 function DisplayTeacher() {
 
     const navigate = useNavigate();
     const gridRef = useRef(null);
+
+    const [teachers, setTeachers] = useState([]);
+
+    const loadAllTeachers = async () => {
+        try {
+            const data = await getAllTeachers();
+            const formattedData = data.map(teacher => (
+                {
+                    ...teacher, subjects: teacher.subjects.map(sub => sub.name).join(",")
+                }
+            ));
+            setTeachers(formattedData);
+            console.log(data);
+        } catch (error) {
+            console.error("Error loading teachers:", error); // For debugging purposes only
+            toast.error("Failed to load teachers. Please try again later.");
+        }
+    };
+
+    useEffect(() => {
+        loadAllTeachers();
+    }, []);
+
 
     return (
         <>
@@ -115,7 +53,7 @@ function DisplayTeacher() {
                             <h3 className='fw-bold' style={{ color: '#4361e5' }}>Teacher List</h3>
                             <GridComponent
                                 ref={gridRef}
-                                dataSource={sampleTeachers}
+                                dataSource={teachers}
                                 allowSorting={true}
                                 allowExcelExport={true}
                                 allowPdfExport={true}
@@ -133,13 +71,13 @@ function DisplayTeacher() {
 
                                 <ColumnsDirective>
                                     <ColumnDirective field='image' headerText='Profile' width='60' allowSorting={false} template={(props) => (
-                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '45px', objectFit: 'cover' }} />
+                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '40px', width: '40px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="Center" width='87' />
-                                    <ColumnDirective field='phone_number' headerText='Contact' textAlign="Center" width='80' />
-                                    <ColumnDirective field='address' headerText='Address' width='130' />
+                                    <ColumnDirective field='phoneNumber' headerText='Contact' textAlign="Center" width='80' />
+                                    <ColumnDirective field='address' headerText='Address' width='110' />
                                     <ColumnDirective field='email' headerText='Email' textAlign="Center" width='130' />
-                                    <ColumnDirective field='joining_date' headerText='Joining' textAlign="Center" width='75' />
+                                    <ColumnDirective field='joiningDate' headerText='Joining' textAlign="Center" width='75' />
                                     <ColumnDirective field='subjects' headerText='Subject' width='95' />
                                     <ColumnDirective headerText='Action' width='60'
                                         template={(props) => {
@@ -153,13 +91,13 @@ function DisplayTeacher() {
                                                     </button> */}
                                                     <button
                                                         className="btn btn-sm btn-light me-2"
-                                                        onClick={() => navigate(`/admin/edit-teacher/${props.roll}`)}
+                                                        onClick={() => navigate(`/admin/edit-teacher/${props.id}`)}
                                                     >
                                                         <FaEdit />
                                                     </button>
                                                     <button
                                                         className="btn btn-sm btn-light text-danger"
-                                                        onClick={() => navigate(`Delete action for:/${props.roll}`)}
+                                                        onClick={() => navigate(`Delete action for:/${props.id}`)}
                                                     >
                                                         <FaTrash />
                                                     </button>
