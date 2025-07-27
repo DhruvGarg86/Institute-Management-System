@@ -15,7 +15,7 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 	List<Teacher> findByStatus(Status status);
   
 	@Query("""
-			   SELECT t.image, t.name, t.email, t.joiningDate, t.phoneNumber, t.status, a.attendancePercentage
+			   SELECT t.image, t.name, t.email, t.joiningDate, t.phoneNumber, t.status, t.id, a.attendancePercentage
 			   FROM Teacher t 
 			   LEFT JOIN Attendance a ON a.teacher.id = t.id 
 			   WHERE t.status = 'ACTIVE'

@@ -11,7 +11,7 @@ import com.institute.dao.TeacherDao;
 import com.institute.dto.AddNewTeacherDTO;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.DisplayTeacherDTO;
-import com.institute.dto.SubjectDTO;
+import com.institute.dto.DisplayTeacherSubjectDTO;
 import com.institute.dto.TeacherAttendanceDTO;
 import com.institute.entities.Subject;
 import com.institute.entities.Teacher;
@@ -51,9 +51,9 @@ public class TeacherServiceImpl implements TeacherService {
 					DisplayTeacherDTO dto = modelMapper.map(teacher, DisplayTeacherDTO.class);
 
 					// Map all subjects of each teacher record
-					List<SubjectDTO> subjectDTOs = teacher.getSubjects()
+					List<DisplayTeacherSubjectDTO> subjectDTOs = teacher.getSubjects()
 							.stream()
-							.map(subject -> modelMapper.map(subject, SubjectDTO.class))
+							.map(subject -> modelMapper.map(subject, DisplayTeacherSubjectDTO.class))
 							.toList();
 
 					dto.setSubjects(subjectDTOs);
@@ -74,7 +74,8 @@ public class TeacherServiceImpl implements TeacherService {
 	        dto.setJoiningDate((LocalDate) obj[3]);
 	        dto.setPhoneNumber((String) obj[4]);
 	        dto.setStatus((Status) obj[5]);
-	        dto.setAttendancePercentage((BigDecimal) obj[6]);
+	        dto.setId((Long)obj[6]);
+	        dto.setAttendancePercentage((BigDecimal) obj[7]);
 
 	        return dto;
 	    }).toList();

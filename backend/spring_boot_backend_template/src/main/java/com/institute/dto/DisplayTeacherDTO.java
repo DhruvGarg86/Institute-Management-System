@@ -9,11 +9,13 @@ import com.institute.entities.enums.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DisplayTeacherDTO {
 	private Long id;
 		
@@ -31,5 +33,5 @@ public class DisplayTeacherDTO {
 	
 	private String image;
 	
-	private List<SubjectDTO> subjects;
+	private List<DisplayTeacherSubjectDTO> subjects;
 }
