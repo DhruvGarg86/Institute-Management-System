@@ -13,6 +13,6 @@ public interface TeacherService {
 
 	List<DisplayTeacherDTO> displayTeachers();
 
-	List<TeacherAttendanceDTO> teacherAttendance();
+//	List<TeacherAttendanceDTO> teacherAttendance();
 
 }

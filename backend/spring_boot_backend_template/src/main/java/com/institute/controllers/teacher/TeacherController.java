@@ -35,9 +35,9 @@ public class TeacherController {
 	public ResponseEntity<?> addTeacher(@RequestBody AddNewTeacherDTO teacher) {
 	    return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
 	}
-	
-	@GetMapping("/teacher-attendance")
-	public ResponseEntity<?> displayAllTeacherAttendance(){
-		return ResponseEntity.ok(teacherService.teacherAttendance());
-	}
+//	
+//	@GetMapping("/teacher-attendance")
+//	public ResponseEntity<?> displayAllTeacherAttendance(){
+//		return ResponseEntity.ok(teacherService.teacherAttendance());
+//	}
 }
