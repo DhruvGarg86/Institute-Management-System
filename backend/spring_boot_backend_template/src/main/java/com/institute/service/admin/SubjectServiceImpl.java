@@ -34,7 +34,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<SubjectDto> getAllSubjects() {
         return subjectDao.findAll().stream()
-                .filter(subject -> subject.getStatus() == Status.ACTIVE)
+                .filter(subject -> subject.getStatus() == Status.ACTIVE || subject.getStatus() == Status.INACTIVE)
                 .map(subject -> modelMapper.map(subject, SubjectDto.class))
                 .toList();
     }
@@ -113,7 +113,7 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subject = subjectDao.findById(subjectId)
                 .orElseThrow(() -> new ApiException("Subject not found"));
 
-        // Prevent deleting ACTIVE subjects
+        // Prevents deleting ACTIVE subjects
         if (subject.getStatus() == Status.ACTIVE) {
             throw new ApiException("Cannot delete subject: status is ACTIVE. Please mark it as INACTIVE first.");
         }
