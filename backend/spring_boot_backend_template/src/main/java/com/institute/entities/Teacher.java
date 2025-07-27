@@ -63,14 +63,11 @@ public class Teacher extends BaseEntity {
 	@Column(name = "image", length = 500)
 	private String image;
 
-	@ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Course> courses = new HashSet<Course>();
-
 	@OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Attendance attendance;
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Subject> subjects;
+	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
 
 }

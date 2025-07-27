@@ -35,7 +35,7 @@ public class TeacherController {
 	@Operation(summary="Admin-teacher-DisplayAllTeacher")
 	public ResponseEntity<?> displayAllTeachers(){
 		return ResponseEntity.ok(teacherService.displayTeachers());
-	}
+  }
 	
 	@GetMapping("/teacher-attendance")
 	@Operation(summary="Admin-teacher-DisplayTeacherAttendance")

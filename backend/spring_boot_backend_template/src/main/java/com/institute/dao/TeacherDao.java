@@ -13,6 +13,7 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 	boolean existsByEmail(String email);
 
 	List<Teacher> findByStatus(Status status);
+  
 	@Query("""
 			   SELECT t.image, t.name, t.email, t.joiningDate, t.phoneNumber, t.status, a.attendancePercentage
 			   FROM Teacher t 
@@ -20,8 +21,5 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 			   WHERE t.status = 'ACTIVE'
 			""")
 	List<Object[]> findAllTeachersWithLatestAttendance();
-
-
-
 
 }

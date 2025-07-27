@@ -49,22 +49,7 @@ public class Course extends BaseEntity {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Student> students = new ArrayList<Student>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "course_teacher",
-			joinColumns = @JoinColumn(name = "course_id"),
-			inverseJoinColumns = @JoinColumn(name = "teacher_id")
-	)
-	private Set<Teacher> teachers = new HashSet<Teacher>();
-
-	@ManyToMany
-	@JoinTable(
-			name = "course_subject",
-			joinColumns = @JoinColumn(name = "course_id"),
-			inverseJoinColumns = @JoinColumn(name = "subject_id")
-	)
-	private Set<Subject> subjects = new HashSet<Subject>();
-
-
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
 }
