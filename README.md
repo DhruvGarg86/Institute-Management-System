@@ -118,3 +118,8 @@
 ### By dhruvGarg
 - Create landing page for the website partially.
 - Started BACKEND, 
+
+## 27th July 2025
+
+### By dhruvGarg
+- Commented backend 'displayTeacherWithAttendance' API to remove the run error(temporary fix).
