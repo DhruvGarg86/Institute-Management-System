@@ -36,7 +36,7 @@ public class Subject extends BaseEntity {
     private Set<Course> courses = new HashSet<Course>();
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
 
     @OneToOne(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -17,6 +17,7 @@ import com.institute.dto.SubjectDto;
 import com.institute.service.admin.SubjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestControllerAdvice
@@ -39,10 +40,12 @@ public class SubjectController {
 	
 	@PostMapping("/add-subject")
 	@Operation(description = "add new subject")
-	public ResponseEntity<?> addNewSubject(@RequestBody SubjectDto subjectDto ){
-		return ResponseEntity
-				.status(HttpStatus.CREATED)// adding appropriate http status code -> 201
-				.body(subjectService.addSubject(subjectDto)); // adding new subject in database
+	public ResponseEntity<?> addNewSubject(@Valid @RequestBody SubjectDto subjectDto) {
+	    return ResponseEntity.status(HttpStatus.CREATED)
+	                         .body(subjectService.addSubject(subjectDto));
 	}
+	
+	
+
 	
 }

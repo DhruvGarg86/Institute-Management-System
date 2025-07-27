@@ -43,7 +43,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public List<DisplayTeacherDTO> displayTeachers() {
 		return teacherDao.findByStatus(Status.ACTIVE).stream().map(teacher -> modelMapper.map(teacher, DisplayTeacherDTO.class)).toList();
 	}
-//
+
 //	@Override
 //	public List<TeacherAttendanceDTO> teacherAttendance() {
 //		return teacherDao.findAllTeachersWithAttendance();
