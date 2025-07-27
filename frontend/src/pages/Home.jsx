@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate();
     return (
         <div>
             {/* Sticky Header */}
@@ -19,7 +21,7 @@ function Home() {
                 <div className="hero" id="home">
                     <h1>Welcome to Our Institute Management System</h1>
                     <p>Manage students, staff, and operations seamlessly — all in one platform.</p>
-                    <button className="cta-btn">Explore Features</button>
+                    <button className="cta-btn" onClick={() => navigate('/login')}>Explore Features</button>
                 </div>
             </header>
 
