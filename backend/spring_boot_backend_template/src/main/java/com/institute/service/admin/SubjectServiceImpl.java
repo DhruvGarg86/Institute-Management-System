@@ -1,9 +1,6 @@
 package com.institute.service.admin;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -11,83 +8,127 @@ import org.springframework.stereotype.Service;
 import com.institute.dao.CourseDao;
 import com.institute.dao.SubjectDao;
 import com.institute.dao.TeacherDao;
+import com.institute.dao.CourseSubjectTeacherDao;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.SubjectDto;
-import com.institute.entities.Course;
-import com.institute.entities.Subject;
-import com.institute.entities.Teacher;
+import com.institute.dto.CourseSubjectTeacherDTO;
+import com.institute.entities.*;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
-@AllArgsConstructor
-@Getter
-@Setter
-public class SubjectServiceImpl implements SubjectService{
-	
-	private final SubjectDao subjectDao;
-	private final TeacherDao teacherDao;
-	private final CourseDao courseDao;
-	private final ModelMapper modelMapper;
+@RequiredArgsConstructor
+public class SubjectServiceImpl implements SubjectService {
 
-	@Override
-	public List<SubjectDto> getAllSubjects() {
-		return subjectDao.findAll()
-				.stream()
-				.map(Subject -> modelMapper.map(Subject, SubjectDto.class))// entity 
-				.toList();	
-	}
+    private final SubjectDao subjectDao;
+    private final TeacherDao teacherDao;
+    private final CourseDao courseDao;
+    private final CourseSubjectTeacherDao courseSubjectTeacherDao;
+    private final ModelMapper modelMapper;
 
-	@Override
-	public ApiResponse deleteSubjectsById(Long subjectId) {
-		
-		return null;
-	}
+    // ---------------------- GET ALL ----------------------
+    @Override
+    public List<SubjectDto> getAllSubjects() {
+        return subjectDao.findAll().stream()
+                .filter(subject -> subject.getStatus() == Status.ACTIVE)
+                .map(subject -> modelMapper.map(subject, SubjectDto.class))
+                .toList();
+    }
 
-	@Override
-	public ApiResponse updateSubjectsById(Long subjectId) {
-		
-		return null;
-	}
+    // ---------------------- ADD SUBJECT ----------------------
+    @Override
+    public ApiResponse addSubject(SubjectDto dto) {
+        if (subjectDao.existsByName(dto.getName()))
+            throw new ApiException("Duplicate subject name");
 
-	@Override
-	public ApiResponse addSubject(SubjectDto dto) {
-	    if (subjectDao.existsByName(dto.getName()))
-	        throw new ApiException("Duplicate subject");
+        Subject subject = modelMapper.map(dto, Subject.class);
+        subject.setStatus(dto.getStatus() != null ? dto.getStatus() : Status.ACTIVE);
+        subjectDao.save(subject);
 
-	    Subject subject = new Subject();
-	    subject.setName(dto.getName());
-	    subject.setCode(dto.getCode());
-	    subject.setDescription(dto.getDescription());
-	    subject.setStatus(dto.getStatus() != null ? dto.getStatus() : Status.ACTIVE);
+        return new ApiResponse("New subject added with ID: " + subject.getId());
+    }
 
-	    // Set teacher if teacherId is provided
-	    if (dto.getTeacherId() != null) {
-	        Teacher teacher = teacherDao.findById(dto.getTeacherId())
-	            .orElseThrow(() -> new ApiException("Invalid teacher ID"));
-	        subject.setTeacher(teacher);
-	    }
+    // ---------------------- ASSIGN TO COURSE + TEACHER ----------------------
+    public ApiResponse assignSubjectToCourseAndTeacher(CourseSubjectTeacherDTO dto) {
+        Course course = courseDao.findById(dto.getCourseId())
+                .orElseThrow(() -> new ApiException("Invalid course ID"));
 
-	    // Set courses if courseIds are provided
-	    if (dto.getCourseIds() != null && !dto.getCourseIds().isEmpty()) {
-	        Set<Course> courses = new HashSet<>();
-	        for (Long id : dto.getCourseIds()) {
-	            Course course = courseDao.findById(id)
-	                .orElseThrow(() -> new ApiException("Invalid course ID: " + id));
-	            courses.add(course);
-	        }
-	        subject.setCourses(courses);
-	    }
+        Subject subject = subjectDao.findById(dto.getSubjectId())
+                .orElseThrow(() -> new ApiException("Invalid subject ID"));
 
-	    subjectDao.save(subject);
-	    return new ApiResponse("New subject added with ID " + subject.getId());
-	}
+        Teacher teacher = teacherDao.findById(dto.getTeacherId())
+                .orElseThrow(() -> new ApiException("Invalid teacher ID"));
+
+        if (subject.getStatus() != Status.ACTIVE)
+            throw new ApiException("Cannot assign an inactive subject.");
+
+        // prevent duplicates
+        if (courseSubjectTeacherDao.existsByCourseAndSubjectAndTeacher(course, subject, teacher)) {
+            throw new ApiException("This subject is already assigned to this course and teacher.");
+        }
+
+        CourseSubjectTeacher link = new CourseSubjectTeacher();
+        link.setCourse(course);
+        link.setSubject(subject);
+        link.setTeacher(teacher);
+
+        course.getCourseSubjectTeachers().add(link);
+        subject.getCourseSubjectTeachers().add(link);
+        teacher.getCourseSubjectTeachers().add(link);
+
+        return new ApiResponse("Assigned subject to course and teacher successfully.");
+    }
+
+    // ---------------------- UPDATE SUBJECT ----------------------
+    @Override
+    public ApiResponse updateSubjectsById(Long subjectId, SubjectDto dto) {
+        Subject subject = subjectDao.findById(subjectId)
+                .orElseThrow(() -> new ApiException("Subject not found"));
+
+        if (subject.getStatus() != Status.ACTIVE) {
+            throw new ApiException("Cannot update an inactive subject.");
+        }
+
+        subject.setName(dto.getName());
+        subject.setCode(dto.getCode());
+        subject.setDescription(dto.getDescription());
+
+        // Optional: allow status update if needed
+        if (dto.getStatus() != null) {
+            subject.setStatus(dto.getStatus());
+        }
+
+        subjectDao.save(subject);
+
+        return new ApiResponse("Subject updated successfully.");
+    }
+
+    // ---------------------- DELETE SUBJECT (Soft Delete) ----------------------
+    @Override
+    public ApiResponse deleteSubjectsById(Long subjectId) {
+        Subject subject = subjectDao.findById(subjectId)
+                .orElseThrow(() -> new ApiException("Subject not found"));
+
+        // Prevent deleting ACTIVE subjects
+        if (subject.getStatus() == Status.ACTIVE) {
+            throw new ApiException("Cannot delete subject: status is ACTIVE. Please mark it as INACTIVE first.");
+        }
+
+        // Ensure status is INACTIVE and perform soft delete logic
+        if (subject.getStatus() == Status.INACTIVE) {
+            subject.setDeleted(true); // Only if you have an `isDeleted` flag
+            // Keep status as INACTIVE (do NOT set to null)
+            subjectDao.save(subject);
+            return new ApiResponse("Subject soft-deleted successfully.");
+        }
+
+        return new ApiResponse("Subject is already deleted or status is invalid.");
+    }
+
 
 
 

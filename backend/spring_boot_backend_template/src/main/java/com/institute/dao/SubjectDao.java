@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.institute.entities.Subject;
+import com.institute.entities.enums.Status;
 
 public interface SubjectDao extends JpaRepository<Subject, Long> {
 	//to display all subjects 
@@ -15,5 +16,7 @@ public interface SubjectDao extends JpaRepository<Subject, Long> {
 	
 	//derived check method
 	boolean existsByName(String subjectName);
+	List<Subject> findByStatus(Status status);
+
 	
 }

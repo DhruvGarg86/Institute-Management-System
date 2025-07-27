@@ -63,16 +63,11 @@ public class Teacher extends BaseEntity {
 	@Column(name = "salary", precision = 10, scale = 2)
 	private  BigDecimal salary;
 
-	@ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
-	private Set<Course> courses = new HashSet<>();
-
-
 	@OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Attendance attendance;
 
-	@OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Subject> subjects;
-
+	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
 
 }

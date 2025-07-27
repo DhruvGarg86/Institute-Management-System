@@ -1,8 +1,5 @@
 package com.institute.dto;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.institute.entities.enums.Status;
 
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +21,5 @@ public class SubjectDto {
     private String code;
 	@NotBlank
     private String description;
-    private Long teacherId;                     // ✅ Optional
-    private Set<Long> courseIds = new HashSet<>(); // ✅ New field
     private Status status;
 }

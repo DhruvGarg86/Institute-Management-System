@@ -9,6 +9,6 @@ import com.institute.entities.Subject;
 public interface SubjectService {
 	List<SubjectDto> getAllSubjects();
 	ApiResponse deleteSubjectsById(Long subjectId);
-	ApiResponse updateSubjectsById(Long subjectId);
 	ApiResponse addSubject(SubjectDto subject);
+	ApiResponse updateSubjectsById(Long subjectId, SubjectDto dto);
 }
