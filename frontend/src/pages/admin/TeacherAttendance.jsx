@@ -1,70 +1,37 @@
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import { getAllTeachersWithAttendance } from '../../services/Admin/Teacher';
+
 import {
     GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter,
     ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Inject
 } from '@syncfusion/ej2-react-grids';
 
 function TeacherAttendance() {
-    const teachers = [
-        {
-            name: "Alice Johnson",
-            email: "alice.johnson@example.com",
-            joiningDate: "15-06-2017",
-            dob: "10-02-1985",
-            subject: "Web Development",
-            contact: "9876543210",
-            attendance: "92",
-            profilePic: "https://i.pravatar.cc/40?img=1"
-        },
-        {
-            name: "Brian Smith",
-            email: "brian.smith@example.com",
-            joiningDate: "01-09-2015",
-            dob: "22-08-1983",
-            subject: "Data Science",
-            contact: "8765432109",
-            attendance: "78",
-            profilePic: "https://i.pravatar.cc/40?img=2"
-        },
-        {
-            name: "Catherine Lee",
-            email: "catherine.lee@example.com",
-            joiningDate: "20-01-2018",
-            dob: "15-03-1988",
-            subject: "Cyber Security",
-            contact: "7654321098",
-            attendance: "61",
-            profilePic: "https://i.pravatar.cc/40?img=3"
-        },
-        {
-            name: "David Brown",
-            email: "david.brown@example.com",
-            joiningDate: "12-04-2019",
-            dob: "12-11-1987",
-            subject: "JavaScript",
-            contact: "9123456780",
-            attendance: "84",
-            profilePic: "https://i.pravatar.cc/40?img=4"
-        },
-        {
-            name: "Emily Walker",
-            email: "emily.walker@example.com",
-            joiningDate: "30-07-2020",
-            dob: "05-07-1990",
-            subject: "Statistics",
-            contact: "9988776655",
-            attendance: "68",
-            profilePic: "https://i.pravatar.cc/40?img=5"
-        },
-    ];
-
     const gridRef = useRef(null);
 
+    const [teachers, setTeachers] = useState([]);
+
+    const loadAllTeachers = async () => {
+        try {
+            const data = await getAllTeachersWithAttendance();
+            setTeachers(data);
+            console.log(data);
+        } catch (error) {
+            console.error("Error loading teachers:", error); // For debugging purposes only
+            toast.error("Failed to load teachers. Please try again later.");
+        }
+    };
+
+    useEffect(() => {
+        loadAllTeachers();
+    }, []);
+
     const rowDataBound = (args) => {
-        const attendanceValue = parseInt(args.data.attendance);
+        const attendanceValue = parseInt(args.data.attendancePercentage);
         if (attendanceValue < 70) {
             args.row.style.backgroundColor = '#fdecea';
         }
@@ -105,17 +72,17 @@ function TeacherAttendance() {
                                 }}
                             >
                                 <ColumnsDirective>
-                                    <ColumnDirective field='profilePic' headerText='Profile' width={50} allowFiltering={false} allowSorting={false}
+                                    <ColumnDirective field='image' headerText='Profile' width={50} allowFiltering={false} allowSorting={false}
                                         template={(props) => (
-                                            <img src={props.profilePic} alt="avatar" style={{ borderRadius: '50%', height: '30px', objectFit: 'cover' }} />
+                                            <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '30px', width: '30px', objectFit: 'cover' }} />
                                         )} />
                                     <ColumnDirective field='name' headerText='Name' width={60} textAlign='Center' />
                                     <ColumnDirective field='email' headerText='Email ID' width={110} />
                                     <ColumnDirective field='subject' headerText='Subject' width={90} />
                                     <ColumnDirective field='joiningDate' headerText='Joining Date' width={80} textAlign='Center' />
-                                    <ColumnDirective field='contact' headerText='Contact' width={90} />
-                                    <ColumnDirective field='attendance' headerText='Attendance' width={70} textAlign="Center"
-                                        template={(props) => `${props.attendance}%`} />
+                                    <ColumnDirective field='phoneNumber' headerText='Contact' width={90} />
+                                    <ColumnDirective field='attendancePercentage' headerText='Attendance' width={70} textAlign="Center"
+                                        template={(props) => `${props.attendancePercentage}%`} />
                                 </ColumnsDirective>
                                 <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group]} />
                             </GridComponent>

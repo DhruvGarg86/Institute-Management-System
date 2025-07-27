@@ -22,7 +22,7 @@ public class AddNewTeacherDTO {
 	private String password;
 	
 	private double salary;
-	
+
 	private LocalDate joiningDate;
 	
 	private String address;

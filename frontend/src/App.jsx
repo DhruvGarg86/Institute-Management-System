@@ -43,6 +43,7 @@ import StudentProfile from './pages/student/StudentProfile';
 import StudentFee from './pages/student/StudentFee';
 import Student_Attendance from './pages/student/Student_Attendance';
 import StudentExam from './pages/student/StudentExam';
+import Registration from './pages/student/Registration';
 
 function App() {
   return (
@@ -66,6 +67,10 @@ function App() {
           element={<Profile />}
         />
 
+        <Route
+        path='/register'
+        element={<Registration />}
+        />
         <Route
           path='/admin/add-student'
           element={<AddStudent />}

@@ -258,7 +258,6 @@ nav {
   padding: 0px;
 }
 .admin-dashboard-second {
-  /* background-color: greenyellow; */
   padding: 10px;
 }
 .admin-dashboard-second h2 {
@@ -367,10 +366,69 @@ nav {
 /* Admin Dashboard Card End */
 
 /* Admin Profile Start */
-.admin-profile-socials {
-  /* display: flex; */
-  gap: 10px;
-  margin-top: 20px;
+
+.profile-card {
+  background: white;
+  padding: 15px 80px;
+  border-radius: 12px;
+  text-align: center;
+  width: 800px;
+  height: 650px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.profile-image-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: 0.3s ease;
+}
+
+.edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  caret-color: transparent;
+  user-select: none;
+}
+
+.overlay-icon {
+  color: white;
+  font-size: 32px;
+}
+
+.profile-image-container:hover .edit-overlay {
+  opacity: 1;
+}
+
+.profile-name {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.profile-username {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
 }
 
 .social-icon {
@@ -407,35 +465,6 @@ nav {
 #social-icon-linkedin:hover {
   color: white;
   background-color: #0077b5;
-}
-.profile-card {
-  background: white;
-  padding: 15px 80px;
-  border-radius: 12px;
-  text-align: center;
-  width: 800px;
-  height: 650px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.profile-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-.profile-name {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 5px 0;
-}
-
-.profile-username {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 20px;
 }
 
 .profile-info {
@@ -753,7 +782,6 @@ input[readonly] {
 /* General Reset */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f6fafc;
   margin: 0;
   padding: 0;
   color: #222;

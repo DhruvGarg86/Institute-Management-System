@@ -6,12 +6,13 @@ import com.institute.dto.ApiResponse;
 import com.institute.dto.teacher.AddNewTeacherDTO;
 import com.institute.dto.teacher.DisplayTeacherDTO;
 import com.institute.entities.enums.Status;
+import com.institute.dto.teacher.TeacherAttendanceDTO;
 
 public interface TeacherService {
 	ApiResponse addNewTeacher(AddNewTeacherDTO addTeacher);
 
 	List<DisplayTeacherDTO> displayTeachers();
 
-//	List<TeacherAttendanceDTO> teacherAttendance();
+	List<TeacherAttendanceDTO> teacherAttendance();
 
 }
