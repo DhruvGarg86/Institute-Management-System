@@ -15,10 +15,7 @@ import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-
 // Define or import SubjectDTO and TeacherAttendanceDTO
 // import com.institute.dto.teacher.SubjectDTO; // Remove this if SubjectDTO does not exist or is not needed
 import com.institute.dto.teacher.TeacherAttendanceDTO;

@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.institute.entities.enums.Status;
 
-// import com.institute.dto.teacher.SubjectDTO;
-import com.institute.dto.SubjectDTO;
+// import com.institute.dto.subject.SubjectDTO;
+
+// If SubjectDTO is in a different package, update the import accordingly, for example:
+import com.institute.dto.admin.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +34,5 @@ public class DisplayTeacherDTO {
 	
 	private String image;
 	
-	private List<SubjectDTO> subjects;
+	private List<SubjectDto> subjects;
 }

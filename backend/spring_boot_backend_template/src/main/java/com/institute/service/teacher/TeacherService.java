@@ -5,7 +5,6 @@ import java.util.List;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.teacher.AddNewTeacherDTO;
 import com.institute.dto.teacher.DisplayTeacherDTO;
-import com.institute.entities.enums.Status;
 import com.institute.dto.teacher.TeacherAttendanceDTO;
 
 public interface TeacherService {
