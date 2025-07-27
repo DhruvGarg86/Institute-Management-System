@@ -37,7 +37,15 @@ public class TeacherController {
 	}
 
 	
+ vedantbranch
+	@PostMapping("/add-teacher")
+	public ResponseEntity<?> addTeacher(@RequestBody AddNewTeacherDTO teacher) {
+	    return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
+	}
+//	
+
 	
+main
 //	@GetMapping("/teacher-attendance")
 //	public ResponseEntity<?> displayAllTeacherAttendance(){
 //		return ResponseEntity.ok(teacherService.teacherAttendance());
