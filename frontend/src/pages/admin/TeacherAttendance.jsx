@@ -78,7 +78,6 @@ function TeacherAttendance() {
                                         )} />
                                     <ColumnDirective field='name' headerText='Name' width={60} textAlign='Center' />
                                     <ColumnDirective field='email' headerText='Email ID' width={110} />
-                                    <ColumnDirective field='subject' headerText='Subject' width={90} />
                                     <ColumnDirective field='joiningDate' headerText='Joining Date' width={80} textAlign='Center' />
                                     <ColumnDirective field='phoneNumber' headerText='Contact' width={90} />
                                     <ColumnDirective field='attendancePercentage' headerText='Attendance' width={70} textAlign="Center"
