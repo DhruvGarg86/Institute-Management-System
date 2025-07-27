@@ -9,7 +9,6 @@ import com.institute.dao.TeacherDao;
 import com.institute.dto.AddNewTeacherDTO;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.DisplayTeacherDTO;
-import com.institute.dto.TeacherAttendanceDTO;
 import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
