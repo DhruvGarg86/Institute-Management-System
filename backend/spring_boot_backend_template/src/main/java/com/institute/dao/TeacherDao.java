@@ -12,11 +12,10 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 
 	boolean existsByEmail(String email);
 	List<Teacher> findByStatus(Status status);
-vedantbranch
+
 
 
 //
-main
 //	@Query("SELECT new com.institute.dto.TeacherAttendanceDTO(t.firstName, t.lastName, t.email, t.phoneNumber, t.address, "
 //			+ "t.joiningDate, t.status, a.presentDays, a.absentDays, a.totalWorkingDays, a.attendancePercentage) "
 //			+ "FROM Teacher t LEFT JOIN t.attendance "
