@@ -24,6 +24,12 @@ import lombok.AllArgsConstructor;
 public class TeacherController {
 	private final TeacherService teacherService;
 
+	@PostMapping("/add-teacher")
+	@Operation(summary="Admin-teacher-AddTeacher")
+	public ResponseEntity<?> addTeacher(@RequestBody AddNewTeacherDTO teacher) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
+	}
+	
 	@GetMapping("/display-teachers")
 	@Operation(summary="Admin-teacher-DisplayAllTeacher")
 	public ResponseEntity<?> displayAllTeachers(){
@@ -31,13 +37,9 @@ public class TeacherController {
 	}
 
 	
-	@PostMapping("/add-teacher")
-	public ResponseEntity<?> addTeacher(@RequestBody AddNewTeacherDTO teacher) {
-	    return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
-	}
 	
-	@GetMapping("/teacher-attendance")
-	public ResponseEntity<?> displayAllTeacherAttendance(){
-		return ResponseEntity.ok(teacherService.teacherAttendance());
-	}
+//	@GetMapping("/teacher-attendance")
+//	public ResponseEntity<?> displayAllTeacherAttendance(){
+//		return ResponseEntity.ok(teacherService.teacherAttendance());
+//	}
 }
