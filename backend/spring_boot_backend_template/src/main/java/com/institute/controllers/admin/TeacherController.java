@@ -1,14 +1,12 @@
 package com.institute.controllers.admin;
 
-import com.institute.dto.AddNewTeacherDTO;
 import com.institute.dto.AdminEditTeacherDTO;
-import com.institute.entities.Teacher;
+import com.institute.dto.teacher.AddNewTeacherDTO;
 import com.institute.service.admin.TeacherService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
