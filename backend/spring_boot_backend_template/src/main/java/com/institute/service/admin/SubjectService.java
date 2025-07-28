@@ -3,7 +3,7 @@ package com.institute.service.admin;
 import java.util.List;
 
 import com.institute.dto.ApiResponse;
-import com.institute.dto.SubjectDto;
+import com.institute.dto.admin.SubjectDto;
 
 public interface SubjectService {
 	List<SubjectDto> getAllSubjects();

@@ -1,7 +1,10 @@
 package com.institute.entities;
 
+import java.time.LocalDate;
+
 import com.institute.entities.enums.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,7 +32,9 @@ public class Fee extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "student_id", nullable = false, unique = true)
     private Student student;
-
-
+    
+    @FutureOrPresent(message = "Due date cannot be in the past")
+    @Column(name = "due_date", nullable = false)
+    private LocalDate dueDate;
 
 }
