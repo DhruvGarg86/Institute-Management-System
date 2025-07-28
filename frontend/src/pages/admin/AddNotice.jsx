@@ -1,15 +1,49 @@
-
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
 import { RichTextEditorComponent, Toolbar, HtmlEditor, Inject } from '@syncfusion/ej2-react-richtexteditor';
+import { useRef, useState } from 'react';
+// import { addNoticeByAdmin, uploadNoticeFile } from '../../services/Admin/Notices';
 
 function AddNotice() {
+    const [role, setRole] = useState('');
+    const [title, setTitle] = useState('');
+    const [file, setFile] = useState(null);
 
-    const handleSubmit = (e) => {
+    const editorRef = useRef(null);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        toast.success("Notice added successfully");
+        const descValue = editorRef.current.getHtml();
+
+        try {
+            // Upload file if present
+            // let uploadFilePath = null;
+            // if (file) {
+            //     uploadFilePath = await uploadNoticeFile(file);
+            // }
+
+            const noticeData = {
+                adminId: 1,
+                audience: role,
+                title: title,
+                date: new Date().toISOString().split('T')[0],
+                description: descValue,
+                // filePath: uploadFilePath || null
+            };
+
+            await addNoticeByAdmin(noticeData);
+            toast.success('Notice added successfully!');
+
+            setTitle('');
+            setRole('');
+            setFile(null);
+            editorRef.current.setHtml('');
+            editorRef.current.refresh();
+        } catch (error) {
+            toast.error('Failed to add notice');
+        }
     };
 
     return (
@@ -26,18 +60,20 @@ function AddNotice() {
                             <h3 className="mb-1 mx-auto fw-bold">New Notice</h3>
                             <form onSubmit={handleSubmit} encType="multipart/form-data">
                                 <div className="mb-3">
-                                    <label className="form-label">Notice Status</label>
-                                    <select name="status" className="form-select" required>
+                                    <label className="form-label">Role</label>
+                                    <select name="role" className="form-select" required value={role} onChange={(e) => setRole(e.target.value)}>
                                         <option value="">Select Status</option>
-                                        <option value="Students">Students</option>
-                                        <option value="Teachers">Teachers</option>
-                                        <option value="All">All</option>
+                                        <option value="STUDENT">Students</option>
+                                        <option value="TEACHER">Teachers</option>
+                                        <option value="ALL">All</option>
                                     </select>
                                 </div>
+
                                 <div className="mb-3">
                                     <label className="form-label">Title</label>
-                                    <input name="title" type="text" className="form-control" required />
+                                    <input name="title" type="text" className="form-control" required value={title} onChange={(e) => setTitle(e.target.value)} />
                                 </div>
+
                                 <div className="mb-3">
                                     <label className="form-label">Date</label>
                                     <input
@@ -48,28 +84,34 @@ function AddNotice() {
                                         readOnly
                                     />
                                 </div>
+
                                 <div className="mb-3">
                                     <label className="form-label">Description</label>
                                     <div name="description">
                                         <RichTextEditorComponent
+                                            ref={editorRef}
                                             toolbarSettings={{
                                                 items: [
                                                     'Bold', 'Italic', 'Underline', 'StrikeThrough', 'FontName', 'FontSize', 'LowerCase',
-                                                    'UpperCase', '|', 'Formats', 'Alignments', 'OrderedList', 'UnorderedList']
+                                                    'UpperCase', '|', 'Formats', 'Alignments', 'OrderedList', 'UnorderedList'
+                                                ]
                                             }}>
                                             <Inject services={[Toolbar, HtmlEditor]} />
                                         </RichTextEditorComponent>
                                     </div>
-
                                 </div>
+
+                                {/* File Upload */}
                                 <div className="mb-3">
                                     <label className="form-label">Attach PDF</label>
                                     <input
                                         type="file"
                                         accept=".pdf, image/*"
                                         className="form-control"
+                                        onChange={(e) => setFile(e.target.files[0])}
                                     />
                                 </div>
+
                                 <button type="submit" className="btn admin-add-notice-button">Add Notice</button>
                             </form>
                         </div>

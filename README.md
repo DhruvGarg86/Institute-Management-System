@@ -91,12 +91,16 @@
 - Released initial landing page.
 - Started backend development.
 
-### 27th July — Backend/API
+### 27th July — Backend/API (Admin)
 - Connected 'Display All Teachers' and 'Display All Teachers with Attendance' API to frontend (via Axios).
 - Added a `config.js` for base URL management.
 - Released student registration page.
 - Added 'TeacherImages' for testing purposes.
 - Unified name fields to a single `full_name` on both frontend and backend.
+
+### 28th July — Backend/API (Admin)
+- Completed 'Display Notices', 'Delete Notice by ID', and 'Add Notice' APIs for the admin panel.
+- Completed 'EditTeacher' API partially, still required to create API to pre-populate Edit Form.
 
 ---
 

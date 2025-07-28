@@ -1,56 +1,51 @@
-import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import Sidebar from '../../components/Sidebar';
-import { FaTrash } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
+import { FaTrash } from "react-icons/fa";
+import { deleteNoticeById, getAllNotices } from "../../services/Admin/Notices";
+import { toast } from "react-toastify";
 
 function DisplayNotice() {
-    const [notices, setNotices] = useState([
-        {
-            id: 1,
-            title: 'Holiday Notice',
-            date: '2025-08-15',
-            description: 'College will remain closed on Independence Day.',
-            link: 'https://www.google.com',
-        },
-        {
-            id: 2,
-            title: 'Exam Schedule',
-            date: '2025-09-20',
-            description: 'Mid-sem exams start from 20th September.',
-            link: 'https://exam-link.com',
-        },
-        {
-            id: 3,
-            title: 'Seminar',
-            date: '2025-10-01',
-            description: 'AI Seminar on 1st October in the auditorium.',
-            link: 'https://seminar-link.com',
-        },
-        {
-            id: 4,
-            title: 'Sports Day',
-            date: '2025-11-05',
-            description: 'Annual sports day will be celebrated with various events.',
-            link: 'https://sports-link.com',
-        },
-        {
-            id: 5,
-            title: 'Workshop',
-            date: '2025-12-10',
-            description: 'Coding workshop on JavaScript for beginners.',
-            link: 'https://workshop-link.com',
-        },
-    ]);
-
-    // ✅ State to track which notice is expanded
+    const [notices, setNotices] = useState([]);
     const [expandedId, setExpandedId] = useState(null);
 
-    const handleDelete = (id) => {
-        const updatedNotices = notices.filter(notice => notice.id !== id);
-        setNotices(updatedNotices);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedNotice, setSelectedNotice] = useState(null);
+
+    const fetchNotices = async () => {
+        try {
+            const response = await getAllNotices();
+            if (response.length == 0) {
+                toast.info("No notices to display");
+            } else {
+                setNotices(response);
+            }
+        } catch (error) {
+            console.error("Error fetching notices:", error);
+        }
     };
 
-    // ✅ Toggle expand on click
+    useEffect(() => {
+        fetchNotices();
+    }, []);
+
+    const confirmDelete = async () => {
+        try {
+            await deleteNoticeById(selectedNotice.id);
+            fetchNotices();
+            setShowModal(false);
+            setSelectedNotice(null);
+        } catch (error) {
+            console.error("Error deleting notice:", error);
+        }
+    };
+
+
+    const handleDeleteClick = (notice) => {
+        setSelectedNotice(notice);
+        setShowModal(true);
+    };
+
     const toggleExpand = (id) => {
         setExpandedId(expandedId === id ? null : id);
     };
@@ -66,36 +61,37 @@ function DisplayNotice() {
                     <div className="col-7-5 admin-dashboard-second admin-display-notice p-4">
                         <h2 className="mb-4 fw-bold text-primary">All Notices</h2>
 
-                        {/* ✅ Display notices in 3 per row grid */}
                         <div className="row g-3">
-                            {notices.map(notice => (
+                            {notices.map((notice) => (
                                 <div className="col-md-4" key={notice.id}>
                                     <div
-                                        className={`notice-card p-3 shadow-sm rounded ${expandedId === notice.id ? 'expanded' : ''}`}
+                                        className={`notice-card p-3 shadow-sm rounded ${expandedId === notice.id ? "expanded" : ""
+                                            }`}
                                         onClick={() => toggleExpand(notice.id)}
                                         style={{
-                                            cursor: 'pointer',
-                                            transition: 'transform 0.2s ease-in-out',
-                                            height: '160px',
-                                            overflow: 'hidden'
+                                            cursor: "pointer",
+                                            transition: "transform 0.2s ease-in-out",
+                                            height: "160px",
+                                            overflow: "hidden",
                                         }}
                                     >
                                         <div className="notice-header d-flex justify-content-between align-items-start">
-                                            <h5 className="fw-bold">{notice.title}</h5>
+                                            <div>
+                                                <h5 className="fw-bold mb-1">{notice.title}</h5>
+                                                <span className="small text-dark">({notice.audience})</span>
+                                            </div>
                                             <button
                                                 className="btn btn-danger btn-sm"
                                                 onClick={(e) => {
-                                                    e.stopPropagation(); // ✅ Prevent triggering expand when deleting
-                                                    handleDelete(notice.id);
+                                                    e.stopPropagation();
+                                                    handleDeleteClick(notice);
                                                 }}
                                             >
                                                 <FaTrash />
                                             </button>
                                         </div>
                                         <span className="notice-date text-muted small">{notice.date}</span>
-                                        <div className="notice-description mt-2">
-                                            {notice.description}
-                                        </div>
+                                        <div className="notice-description mt-2" dangerouslySetInnerHTML={{ __html: notice.description }} />
                                         <div className="notice-description-link mt-2">
                                             <a
                                                 href={notice.link}
@@ -113,6 +109,45 @@ function DisplayNotice() {
                     </div>
                 </div>
             </div>
+
+            {showModal && (
+                <div className="modal show fade d-block" tabIndex="-1">
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content shadow ">
+                            <div className="modal-header">
+                                <h5 className="modal-title text-danger fw-bold">Confirm Delete</h5>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    onClick={() => setShowModal(false)}
+                                ></button>
+                            </div>
+                            <div className="modal-body">
+                                <p>
+                                    Are you sure you want to delete{" "}
+                                    <strong>{selectedNotice?.title}</strong>?
+                                </p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={confirmDelete}
+                                >
+                                    Yes, Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

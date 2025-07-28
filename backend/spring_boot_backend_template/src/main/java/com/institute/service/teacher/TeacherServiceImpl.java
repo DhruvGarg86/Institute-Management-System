@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.institute.dao.TeacherDao;
+import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.teacher.AddNewTeacherDTO;
 import com.institute.dto.teacher.DisplayTeacherDTO;
@@ -76,6 +77,14 @@ public class TeacherServiceImpl implements TeacherService {
 			dto.setAttendancePercentage((BigDecimal) obj[6]);
 			return dto;
 		}).toList();
+	}
+
+
+
+	@Override
+	public ApiResponse editTeacherById(AdminEditTeacherDTO teacher, Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
