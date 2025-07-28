@@ -1,4 +1,4 @@
-package com.institute.dto;
+package com.institute.dto.admin;
 
 import com.institute.entities.enums.Status;
 

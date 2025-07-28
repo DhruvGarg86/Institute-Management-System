@@ -6,12 +6,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.institute.dao.CourseDao;
-import com.institute.dao.SubjectDao;
 import com.institute.dao.TeacherDao;
 import com.institute.dao.CourseSubjectTeacherDao;
+import com.institute.dao.SubjectDao;
 import com.institute.dto.ApiResponse;
-import com.institute.dto.SubjectDto;
-import com.institute.dto.CourseSubjectTeacherDTO;
+import com.institute.dto.admin.CourseSubjectTeacherDTO;
+import com.institute.dto.admin.SubjectDto;
 import com.institute.entities.*;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
