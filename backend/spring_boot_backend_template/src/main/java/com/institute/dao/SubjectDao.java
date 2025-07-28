@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.institute.entities.Subject;
 import com.institute.entities.enums.Status;
 
+@Repository
 public interface SubjectDao extends JpaRepository<Subject, Long> {
 	//to display all subjects 
 	@Query("select s from Subject s")

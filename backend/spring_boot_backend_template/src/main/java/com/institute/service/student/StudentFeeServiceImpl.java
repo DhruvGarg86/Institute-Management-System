@@ -60,7 +60,7 @@ public class StudentFeeServiceImpl implements StudentFeeService {
         dto.setDueDate(fee.getDueDate());
 
         dto.setStudentId(student.getId());
-        dto.setStudentName(student.getFirstName() + " " + student.getLastName());
+        dto.setStudentName(student.getName());
         dto.setEmail(student.getEmail());
         dto.setCourseName(course.getName());
 
