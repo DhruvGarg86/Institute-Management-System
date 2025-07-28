@@ -82,7 +82,7 @@ function TeacherAttendance() {
                                     <ColumnDirective field='phoneNumber' headerText='Contact' width={90} />
                                     <ColumnDirective field='attendancePercentage' headerText='Attendance' width={70} textAlign="Center"
                                         template={(props) => `${props.attendancePercentage}%`} />
-                                </ColumnsDirective>
+            e                     </ColumnsDirective>
                                 <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group]} />
                             </GridComponent>
                         </div>
