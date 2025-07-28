@@ -140,11 +140,11 @@ function StudentFees() {
                   />
                   <ColumnDirective field='name' headerText='Name' textAlign='Center' width='130' />
                   <ColumnDirective field='roll' headerText='RollNo' textAlign='Center' width='120' />
-                  <ColumnDirective field='studentClass' headerText='Class' textAlign='Center' width='110' />
+                  <ColumnDirective field='studentClass' headerText='Due Date' textAlign='Center' width='140' />
                   <ColumnDirective field='course' headerText='Course' width='120' />
                   <ColumnDirective field='totalFees' headerText='Total (₹)' textAlign='Center' width='120' />
                   <ColumnDirective field='paid' headerText='Paid (₹)' textAlign='Center' width='130' />
-                  <ColumnDirective headerText='Remaining (₹)' width='140' textAlign='Center'
+                  <ColumnDirective headerText='Remaining (₹)' width='100' textAlign='Center'
                     template={(props) => (
                       <span>
                         ₹{(props.totalFees - props.paid).toLocaleString()}

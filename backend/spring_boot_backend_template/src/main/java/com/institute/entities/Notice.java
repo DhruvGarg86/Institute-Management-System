@@ -25,6 +25,9 @@ public class Notice extends BaseEntity {
     @Column(name = "description", length = 500)
     private String description;
 
+    @Column(name = "filePath")
+    private String filePath;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private Status status = Status.ACTIVE;

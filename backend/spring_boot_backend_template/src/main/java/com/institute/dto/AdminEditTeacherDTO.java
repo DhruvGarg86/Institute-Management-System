@@ -3,6 +3,7 @@ package com.institute.dto;
 import java.time.LocalDate;
 
 import com.institute.entities.enums.Gender;
+import com.institute.entities.enums.Status;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class AddNewTeacherDTO {
+public class AdminEditTeacherDTO {
 	private String name;
 	
 	private String phoneNumber;
@@ -26,4 +27,6 @@ public class AddNewTeacherDTO {
 	private String address;
 	
 	private Gender gender;
+	
+	private Status status;
 }
