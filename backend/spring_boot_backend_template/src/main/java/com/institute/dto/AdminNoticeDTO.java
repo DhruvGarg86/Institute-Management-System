@@ -21,4 +21,5 @@ public class AdminNoticeDTO {
 	private LocalDate date;
 	private Audience audience;
 	private Status status;
+	private String filePath;
 }

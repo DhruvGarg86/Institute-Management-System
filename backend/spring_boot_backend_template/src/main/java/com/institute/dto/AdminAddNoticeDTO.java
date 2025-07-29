@@ -19,5 +19,5 @@ public class AdminAddNoticeDTO {
 	private String title;
 	private LocalDate date;
 	private String description;
-	private String filePath;
+	private String filePath;	
 }
