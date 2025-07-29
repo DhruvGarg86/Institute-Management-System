@@ -25,7 +25,7 @@ public class Notice extends BaseEntity {
     @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "filePath")
+    @Column(name = "file_path")
     private String filePath;
     
     @Enumerated(EnumType.STRING)

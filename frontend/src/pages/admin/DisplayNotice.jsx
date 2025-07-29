@@ -18,6 +18,7 @@ function DisplayNotice() {
             if (response.length == 0) {
                 toast.info("No notices to display");
             } else {
+                console.log(response);
                 setNotices(response);
             }
         } catch (error) {
@@ -35,6 +36,7 @@ function DisplayNotice() {
             fetchNotices();
             setShowModal(false);
             setSelectedNotice(null);
+            toast.success("Notice deleted successfully");
         } catch (error) {
             console.error("Error deleting notice:", error);
         }
@@ -90,11 +92,17 @@ function DisplayNotice() {
                                                 <FaTrash />
                                             </button>
                                         </div>
-                                        <span className="notice-date text-muted small">{notice.date}</span>
+                                        <span className="notice-date text-muted small">
+                                            {new Date(notice.date).toLocaleDateString('en-GB', {
+                                                day: 'numeric',
+                                                month: 'numeric',
+                                                year: 'numeric'
+                                            })}
+                                        </span>
                                         <div className="notice-description mt-2" dangerouslySetInnerHTML={{ __html: notice.description }} />
                                         <div className="notice-description-link mt-2">
                                             <a
-                                                href={notice.link}
+                                                href={notice.filePath}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="admin-dashboard-notice-link"
