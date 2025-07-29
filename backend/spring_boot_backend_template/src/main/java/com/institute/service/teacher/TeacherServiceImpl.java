@@ -15,6 +15,7 @@ import com.institute.dto.teacher.DisplayTeacherDTO;
 import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
+import com.institute.service.admin.TeacherService;
 
 import jakarta.transaction.Transactional;
 // Define or import SubjectDTO and TeacherAttendanceDTO

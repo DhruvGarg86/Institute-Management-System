@@ -2,11 +2,11 @@ package com.institute.service.admin;
 
 import java.util.List;
 
-import com.institute.dto.AddNewTeacherDTO;
 import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.ApiResponse;
-import com.institute.dto.DisplayTeacherDTO;
-import com.institute.dto.TeacherAttendanceDTO;
+import com.institute.dto.teacher.AddNewTeacherDTO;
+import com.institute.dto.teacher.DisplayTeacherDTO;
+import com.institute.dto.teacher.TeacherAttendanceDTO;
 
 public interface TeacherService {
 	ApiResponse addNewTeacher(AddNewTeacherDTO addTeacher);
