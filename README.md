@@ -102,6 +102,10 @@
 - Completed 'Display Notices', 'Delete Notice by ID', and 'Add Notice' APIs for the admin panel.
 - Completed 'EditTeacher' API partially, still required to create API to pre-populate Edit Form.
 
+### 31st July — Backend/API - Image Path (Admin)
+- Fixed 'Teacher APIs' in Admin Panel with working image path fields;
+- Admin 'Notice APIs' are also finalized.
+
 ---
 
 *For detailed technical and UI design documentation, see the project’s `/Documentation` folder.*

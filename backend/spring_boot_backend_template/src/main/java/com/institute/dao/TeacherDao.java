@@ -1,5 +1,6 @@
 package com.institute.dao;
 
+import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
 
@@ -16,8 +17,9 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 	boolean existsByEmail(String email);
 
 	List<Teacher> findByStatus(Status status);
+	
 	Optional<Teacher> findById(Long id);
-  
+	  
 	@Query("""
 			   SELECT t.image, t.name, t.email, t.joiningDate, t.phoneNumber, t.status, t.id, a.attendancePercentage
 			   FROM Teacher t 
