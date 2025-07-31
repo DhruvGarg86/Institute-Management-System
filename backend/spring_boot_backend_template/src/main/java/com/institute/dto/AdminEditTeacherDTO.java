@@ -1,10 +1,12 @@
 package com.institute.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,7 @@ import lombok.Setter;
 @Setter
 
 public class AdminEditTeacherDTO {
+	
 	private String name;
 	
 	private String phoneNumber;
@@ -20,7 +23,7 @@ public class AdminEditTeacherDTO {
 	
 	private String password;
 	
-	private double salary;
+	private BigDecimal salary;
 
 	private LocalDate joiningDate;
 	
@@ -29,4 +32,6 @@ public class AdminEditTeacherDTO {
 	private Gender gender;
 	
 	private Status status;
+	
+	private String image;
 }
