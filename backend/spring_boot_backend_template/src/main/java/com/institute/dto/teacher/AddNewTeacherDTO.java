@@ -26,4 +26,6 @@ public class AddNewTeacherDTO {
 	private String address;
 	
 	private Gender gender;
+	
+	private String image;	
 }
