@@ -3,6 +3,10 @@ package com.institute.dao;
 import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
+<<<<<<< HEAD
+=======
+import org.springframework.data.jpa.repository.JpaRepository;
+>>>>>>> sahilbranch
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeacherDao extends JpaRepository<Teacher, Long> {
+<<<<<<< HEAD
 
 	boolean existsByEmail(String email);
 
@@ -28,4 +33,7 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 			""")
 	List<Object[]> findAllTeachersWithLatestAttendance();
 
+=======
+    long countByStatus(Status status);
+>>>>>>> sahilbranch
 }

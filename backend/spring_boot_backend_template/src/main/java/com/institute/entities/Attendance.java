@@ -28,9 +28,6 @@ public class Attendance extends BaseEntity {
 	// Setting default value to zero for any newly added student , teacher
 	private BigDecimal attendancePercentage = BigDecimal.ZERO; 
 
-	@Column(name = "attendance_flag", nullable = false)
-	private Integer attendanceFlag;
-
 	@OneToOne
 	@JoinColumn(name = "student_id", unique = true)
 	private Student student;
