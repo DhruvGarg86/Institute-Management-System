@@ -19,6 +19,8 @@ import java.util.List;
 public class Admin extends BaseEntity {
 
 	@Column(name = "name", length = 15, nullable = false )
+	@Column(name = "name", length = 15)
+
 	private String name;
 
 	@Column(name = "phone_number", length = 15)

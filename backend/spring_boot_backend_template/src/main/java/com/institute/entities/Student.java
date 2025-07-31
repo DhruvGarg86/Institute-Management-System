@@ -19,7 +19,10 @@ import com.institute.entities.enums.Status;
 @ToString
 public class Student extends BaseEntity {
 
+
     @Column(name = "name", length = 50)
+
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "phone_number", length = 15)
@@ -33,6 +36,9 @@ public class Student extends BaseEntity {
 
     @Column(name = "address", length = 255)
     private String address;
+
+    @Column(name = "image_path", length = 255)
+    private String imagePath;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false, length = 10)
