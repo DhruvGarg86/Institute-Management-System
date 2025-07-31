@@ -1,4 +1,4 @@
-package com.institute.entities;
+package com.institute;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;

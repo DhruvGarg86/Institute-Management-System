@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "fee")
 @Getter
@@ -21,6 +23,9 @@ public class Fee extends BaseEntity {
 
     @Column(name = "remaining_amount", nullable = false)
     private Double remainingAmount;
+
+    @Column(name = "due_date")
+    private LocalDate dueDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)

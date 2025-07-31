@@ -18,11 +18,8 @@ import java.util.List;
 @ToString(exclude = "password")
 public class Admin extends BaseEntity {
 
-	@Column(name = "first_name", length = 15, nullable = false )
-	private String firstName;
-	
-	@Column(name = "last_name", length = 15)
-	private String lastName;
+	@Column(name = "name", length = 15)
+	private String name;
 
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;		

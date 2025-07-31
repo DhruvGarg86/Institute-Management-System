@@ -22,11 +22,8 @@ import com.institute.entities.enums.Status;
 @ToString(exclude = "password")
 public class Teacher extends BaseEntity {
 
-	@Column(name = "first_name", nullable = false, length = 50)
-	private String firstName;
-
-	@Column(name = "last_name", length = 50)
-	private String lastName;
+	@Column(name = "name", nullable = false, length = 50)
+	private String name;
 
 	@Column(name = "email", unique = true, nullable = false, length = 100)
 	private String email;
