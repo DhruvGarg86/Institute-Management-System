@@ -19,9 +19,6 @@ import com.institute.entities.enums.Status;
 @ToString
 public class Student extends BaseEntity {
 
-
-    @Column(name = "name", length = 50)
-
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 

@@ -27,9 +27,6 @@ public class Fee extends BaseEntity {
     @Column(name = "remaining_amount", nullable = false)
     private Double remainingAmount;
 
-    @Column(name = "due_date")
-    private LocalDate dueDate;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private FeeStatus status = FeeStatus.UNPAID;

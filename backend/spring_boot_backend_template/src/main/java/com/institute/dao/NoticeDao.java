@@ -1,30 +1,13 @@
 package com.institute.dao;
-
-<<<<<<< HEAD
-import com.institute.entities.Notice;
-import com.institute.entities.enums.Status;
-
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface NoticeDao extends JpaRepository<Notice,Long> {
-
-	List<Notice> findByStatus(Status status);
-	Optional<Notice> findById(Long id);
-}
-=======
-import com.institute.dto.admin.NoticeDto;
-import com.institute.entities.Marks;
-import com.institute.entities.Notice;
-import com.institute.entities.enums.Audience;
-import com.institute.entities.enums.Status;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import com.institute.entities.Notice;
+import com.institute.entities.enums.Audience;
+import com.institute.entities.enums.Status;
 
 public interface NoticeDao extends JpaRepository<Notice, Long> {
 
@@ -35,7 +18,6 @@ public interface NoticeDao extends JpaRepository<Notice, Long> {
     List<Notice> getTopNotices(Pageable pageable);
 
     List<Notice> findByAudienceAndStatusOrderByDateDesc(Audience audience, Status status);
+
+	List<Notice> findByStatus(Status status);
 }
-
-
->>>>>>> sahilbranch
