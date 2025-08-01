@@ -4,8 +4,9 @@ import com.institute.entities.Course;
 import com.institute.entities.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
+import java.util.Optional;
+
 @Repository
 public interface CourseDao extends JpaRepository<Course,Long> {
     long countByStatus(Status status);
