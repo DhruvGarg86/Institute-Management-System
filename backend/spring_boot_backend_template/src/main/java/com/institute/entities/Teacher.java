@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
 
@@ -25,7 +26,8 @@ import lombok.ToString;
 @Table(name = "teachers")
 @Getter
 @Setter
-@ToString(exclude = "password")
+@ToString(exclude = "password,attendance,subjects,courseSubjectTeachers")
+@JsonIgnoreProperties({"attendance,subjects,courseSubjectTeachers"})
 public class Teacher extends BaseEntity {
 
 	@Column(name = "name", nullable = false, length = 50)
@@ -74,7 +76,7 @@ public class Teacher extends BaseEntity {
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Subject> subjects;
-	
+
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
