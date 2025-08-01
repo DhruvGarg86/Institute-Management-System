@@ -12,6 +12,7 @@ function StudentExam() {
   ];
 
   const upcomingExams = [
+    
     { subject: "Core Java", date: "2025-08-05", time: "10:00 AM" },
     { subject: "DSA", date: "2025-08-07", time: "1:00 PM" },
   ];
