@@ -49,7 +49,7 @@ public class Course extends BaseEntity {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Student> students = new ArrayList<Student>();
 
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
 }
