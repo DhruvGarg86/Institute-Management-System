@@ -1,16 +1,28 @@
 package com.institute.controllers.admin;
 
 
-import com.institute.dto.ApiResponse;
-import com.institute.dto.admin.*;
-import com.institute.service.admin.DashboardService;
-import com.institute.service.admin.StudentService;
-import lombok.AllArgsConstructor;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.institute.dto.admin.AddStudentDto;
+import com.institute.dto.admin.FeeUpdateRequest;
+import com.institute.dto.admin.StudentPercentageDto;
+import com.institute.dto.admin.TopperStudentResponseDto;
+import com.institute.dto.admin.UpdateStudentRequestDto;
+import com.institute.service.admin.StudentService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/admin/student")

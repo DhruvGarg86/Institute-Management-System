@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.institute.entities.Teacher;
+import com.institute.entities.enums.Status;
+
 @Repository
 public interface TeacherDao extends JpaRepository<Teacher, Long> {
 
@@ -25,8 +28,5 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 			   WHERE t.status = 'ACTIVE'
 			""")
 	List<Object[]> findAllTeachersWithLatestAttendance();
-
-	long countByStatus(Status status);
-
-
+    long countByStatus(Status status);
 }
