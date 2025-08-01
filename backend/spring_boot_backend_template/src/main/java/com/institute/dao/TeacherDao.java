@@ -29,4 +29,20 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 			""")
 	List<Object[]> findAllTeachersWithLatestAttendance();
     long countByStatus(Status status);
+
+	@Query("""
+        SELECT COUNT(DISTINCT s.id)
+        FROM Student s
+        JOIN CourseSubjectTeacher cst ON s.course = cst.course
+        WHERE cst.teacher.id = :teacherId
+        """)
+	Long countStudentsByTeacherId(Long teacherId);
+
+	@Query("""
+        SELECT COUNT(DISTINCT cst.course.id)
+        FROM CourseSubjectTeacher cst
+        WHERE cst.teacher.id = :teacherId
+        """)
+	Long countCoursesByTeacherId(Long teacherId);
+
 }

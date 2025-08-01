@@ -3,8 +3,8 @@ package com.institute.service.admin;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
+import com.institute.dto.teacher.TeacherProfileDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,6 +95,16 @@ public class TeacherServiceImpl implements TeacherService {
 		teacherDao.save(entity);
 		return new ApiResponse("Teacher id : " + id + "successfully updated");			
 
+	}
+
+	@Override
+	public TeacherProfileDTO findTeacherById(Long teacherId) {
+		Teacher entity = teacherDao.findById(teacherId)
+				.orElseThrow(() -> new ResourceNotFoundException("No teacher exist with id: " + teacherId));
+
+		TeacherProfileDTO teacherProfileDTO = modelMapper.map(entity, TeacherProfileDTO.class);
+
+		return teacherProfileDTO;
 	}
 }
 
