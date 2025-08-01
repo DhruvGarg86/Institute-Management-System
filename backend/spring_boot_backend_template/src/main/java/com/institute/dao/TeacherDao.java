@@ -27,4 +27,6 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 	List<Object[]> findAllTeachersWithLatestAttendance();
 
 	long countByStatus(Status status);
+
+
 }
