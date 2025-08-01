@@ -1,6 +1,5 @@
 package com.institute.dao;
 
-<<<<<<< HEAD
 import com.institute.entities.Notice;
 import com.institute.entities.enums.Status;
 
@@ -9,12 +8,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface NoticeDao extends JpaRepository<Notice,Long> {
-
-	List<Notice> findByStatus(Status status);
-	Optional<Notice> findById(Long id);
-}
-=======
 import com.institute.dto.admin.NoticeDto;
 import com.institute.entities.Marks;
 import com.institute.entities.Notice;
@@ -27,15 +20,15 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface NoticeDao extends JpaRepository<Notice, Long> {
+	List<Notice> findByStatus(Status status);
+	Optional<Notice> findById(Long id);
 
 
-    @Query("SELECT n FROM Notice n " +
-            "WHERE n.status = 'ACTIVE' AND n.isDeleted = false " +
-            "ORDER BY n.createdAt DESC")
-    List<Notice> getTopNotices(Pageable pageable);
+	@Query("SELECT n FROM Notice n " +
+			"WHERE n.status = 'ACTIVE' AND n.isDeleted = false " +
+			"ORDER BY n.createdAt DESC")
+	List<Notice> getTopNotices(Pageable pageable);
 
-    List<Notice> findByAudienceAndStatusOrderByDateDesc(Audience audience, Status status);
+	List<Notice> findByAudienceAndStatusOrderByDateDesc(Audience audience, Status status);
 }
 
-
->>>>>>> sahilbranch
