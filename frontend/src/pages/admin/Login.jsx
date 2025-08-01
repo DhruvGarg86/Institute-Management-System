@@ -1,6 +1,6 @@
 import React from 'react'
 import studyImg from '../../assets/study.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
     const navigate = useNavigate();
@@ -25,8 +25,14 @@ function Login() {
                             <input type="password" name="" placeholder="Password" className="admin-login-page-second-login-box" />
                             <div>
                                 <button onClick={() => navigate("/admin/dashboard")}
-                                className="admin-login-page-second-button">LOGIN</button>
+                                    className="admin-login-page-second-button">LOGIN</button>
                             </div>
+                            <p style={{ marginTop: '20px', fontSize: '15px'     }}>
+                                Don't have an account?{' '}
+                                <Link to="/register" style={{ color: '#4361e5', fontWeight: 'bold', textDecoration: 'none' }}>
+                                    Register Here!
+                                </Link>
+                            </p>
                         </div>
                     </div>
                 </div>

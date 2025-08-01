@@ -127,14 +127,14 @@ function TeacherStudentMarks() {
                                             allowPdfExport={true}
                                             allowPrint={true}
                                             toolbar={['ExcelExport', 'PdfExport', 'Print', 'Edit']}
-                                            editSettings={{allowEditing: true }}
+                                            editSettings={{ allowEditing: true }}
                                             toolbarClick={(args) => {
                                                 if (args.item.id.includes('pdfexport')) {
                                                     gridRef.current.pdfExport();
                                                 }
                                                 if (args.item.id.includes('excelexport')) {
                                                     gridRef.current.excelExport();
-                                                }if (args.item.id.includes('print')) {
+                                                } if (args.item.id.includes('print')) {
                                                     gridRef.current.print();
                                                 }
                                             }}

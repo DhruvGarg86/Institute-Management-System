@@ -1,12 +1,6 @@
 package com.institute.entities;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import java.math.BigDecimal;
-
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +9,18 @@ import java.util.Set;
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "teachers")
 @Getter
@@ -22,18 +28,15 @@ import com.institute.entities.enums.Status;
 @ToString(exclude = "password")
 public class Teacher extends BaseEntity {
 
-	@Column(name = "first_name", nullable = false, length = 50)
-	private String firstName;
-
-	@Column(name = "last_name", length = 50)
-	private String lastName;
+	@Column(name = "name", nullable = false, length = 50)
+	private String name;
 
 	@Column(name = "email", unique = true, nullable = false, length = 100)
 	private String email;
 
 	@Column(name = "password", nullable = false, length = 255)
-    private String password;
-	
+	private String password;
+
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 
@@ -62,15 +65,18 @@ public class Teacher extends BaseEntity {
 
 	@Column(name = "salary", precision = 10, scale = 2)
 	private  BigDecimal salary;
-
-	@ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Course> courses = new HashSet<Course>();
+	
+	@Column(name = "image", length = 500)
+	private String image;
 
 	@OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Attendance attendance;
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Subject> subjects;
+	
+	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
 
 }

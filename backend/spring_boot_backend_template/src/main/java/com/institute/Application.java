@@ -1,4 +1,4 @@
-package com.institute.entities;
+package com.institute;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
@@ -15,7 +15,7 @@ public class Application {
 	}
 
 	/*
-	 * Configure ModelMapper as spring bean - so thar SC will manage it's life cycle
+	 * Configure ModelMapper as spring bean - so thar SC will manage its life cycle
 	 * + provide it as the depcy
 	 */
 	@Bean // method level annotation - to tell SC , following method

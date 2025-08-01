@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import studyImg from '../../assets/study.svg';
 
 function StudentLogin() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     return (
         <div>
             <div className="container-fluid admin-login-page-container">
@@ -25,7 +25,7 @@ function StudentLogin() {
                             <input type="password" name="" placeholder="Password" className="admin-login-page-second-login-box" />
                             <div>
                                 <button onClick={() => navigate("/student/dashboard")}
-                                className="admin-login-page-second-button">LOGIN</button>
+                                    className="admin-login-page-second-button">LOGIN</button>
                             </div>
                         </div>
                     </div>

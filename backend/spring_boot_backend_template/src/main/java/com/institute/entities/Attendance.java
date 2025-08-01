@@ -25,17 +25,15 @@ public class Attendance extends BaseEntity {
 	//Flag = 0 -> teacher
 
 	@Column(name = "attendance_percentage", precision = 5, scale = 2, nullable = false)
-	private BigDecimal attendancePercentage;
-
-	@Column(name = "attendance_flag", nullable = false)
-	private Integer attendanceFlag;
+	// Setting default value to zero for any newly added student , teacher
+	private BigDecimal attendancePercentage = BigDecimal.ZERO; 
 
 	@OneToOne
-	@JoinColumn(name = "student_id", nullable = false, unique = true)
+	@JoinColumn(name = "student_id", unique = true)
 	private Student student;
 
 	@OneToOne
-	@JoinColumn(name = "teacher_id", nullable = false, unique = true)
+	@JoinColumn(name = "teacher_id", unique = true)
 	private Teacher teacher;
 
 }

@@ -1,10 +1,6 @@
 
 import { useRef } from 'react';
-import {
-    AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
-    Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
-} from '@syncfusion/ej2-react-charts';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit, Inject } from '@syncfusion/ej2-react-grids';
 import TeacherNavbar from './TeacherNavbar';
 import TeacherSidebar from './TeacherSidebar';
 
@@ -94,7 +90,7 @@ function TeacherStudentMarksOverview() {
             profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
         },
     ];
-     const students = [
+    const students = [
         {
             name: "Dhruv Garg",
             email: "dhruvgarg086@gmail.com",
@@ -199,7 +195,7 @@ function TeacherStudentMarksOverview() {
                                         allowPaging={true}
                                         pageSettings={{ pageSize: 5 }}
                                         allowPrint={true}
-                                        editSettings={{allowEditing: true }}
+                                        editSettings={{ allowEditing: true }}
                                         allowGrouping={true}
                                         toolbar={['Search', 'ExcelExport', 'PdfExport', 'Print', 'Edit']}
                                         rowDataBound={rowDataBound}

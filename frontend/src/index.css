@@ -2,24 +2,24 @@
 * {
   margin: 0px;
   padding: 0px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   /* overflow: hidden; */
 }
 
-button:hover{
+button:hover {
   cursor: pointer;
   transform: scale(1.01);
   transition: 0.25s ease-in;
 }
 
-.container{
+.container {
   margin: 0px !important;
   padding: 0px !important;
 }
 
-body{
-   min-height: 100vh;
-   overflow: auto;
+body {
+  min-height: 100vh;
+  overflow: auto;
 }
 
 .custom-button-primary {
@@ -47,7 +47,7 @@ body{
   margin: 0px !important;
   padding: 0px !important;
 }
-.admin-login-page-row{
+.admin-login-page-row {
   margin: 0px !important;
   padding: 0px !important;
 }
@@ -55,15 +55,15 @@ body{
   background-color: #4361e5;
   height: 100vh;
 }
-#row1{
+#row1 {
   color: white;
   margin-left: 70px;
   margin-top: 90px;
 }
-#row1 h1{
+#row1 h1 {
   font-weight: bold;
 }
-#row2 img{
+#row2 img {
   margin-top: 35px;
   margin-left: -10px;
   height: 500px;
@@ -71,17 +71,16 @@ body{
   /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 }
 
-.login-box{
+.login-box {
   align-items: center;
   margin-left: 170px;
   margin-top: 240px;
-
 }
-.login-box h3{
+.login-box h3 {
   color: black;
   font-weight: bold;
 }
-.login-box h5{
+.login-box h5 {
   color: black;
   font-size: 15px;
   margin-top: 20px;
@@ -90,7 +89,7 @@ body{
   background-color: white;
   height: 100vh;
 }
-.admin-login-page-second-login-box{
+.admin-login-page-second-login-box {
   margin-top: 35px;
   background-color: white;
   border-bottom: solid 1px black;
@@ -100,10 +99,10 @@ body{
   border-bottom: 1px solid black;
   padding-bottom: 10px;
 }
-.admin-login-page-second-button{
+.admin-login-page-second-button {
   margin-top: 60px;
-  background-color: #4361e5  ;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
+  background-color: #4361e5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
   width: 380px;
   border-radius: 5px;
@@ -112,29 +111,29 @@ body{
   font-weight: bold;
   font-size: 20px;
 }
-.admin-login-page-second-login-box:focus{
+.admin-login-page-second-login-box:focus {
   border: none;
   outline: none;
 }
 /* Login Page End */
 
 /* Navbar Start */
-nav{
+nav {
   background-color: white !important;
 }
-.navbar-brand{
+.navbar-brand {
   font-size: 30px;
   font-weight: 900;
   letter-spacing: -1px;
   padding-top: 10px;
   padding-left: 20px;
 }
-.navbar-second-part{
+.navbar-second-part {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.navbar-second-part-admin-name{
+.navbar-second-part-admin-name {
   font-weight: bold;
   font-size: 18px;
 }
@@ -142,7 +141,7 @@ nav{
 
 /* Sidebar Start */
 
-.sidebar-outermost{
+.sidebar-outermost {
   background-color: white;
   height: 100vh;
   display: flex;
@@ -151,14 +150,14 @@ nav{
 .sidebar-accordion {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; 
+  flex-grow: 1;
   padding-bottom: 20px;
   overflow-y: auto;
 }
 .sidebar-profile {
   margin-top: -140px;
   font-size: 16px;
-  padding: 8px 40px !important;   
+  padding: 8px 40px !important;
   color: black !important;
   background-color: white !important;
 }
@@ -168,16 +167,15 @@ nav{
 }
 .col-7-5 {
   flex: 0 0 80%;
-  max-width: 80%; 
+  max-width: 80%;
 }
 
-.accordion{
+.accordion {
   border: none;
 }
-.accordion-item{
+.accordion-item {
   border: none;
   margin-left: 10px;
-  
 }
 .accordion-button::after {
   display: none !important;
@@ -199,101 +197,98 @@ nav{
   font-weight: bold;
 }
 
-.accordion-button:hover{
+.accordion-button:hover {
   border-radius: 5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.sidebar-profile{
+.sidebar-profile {
   padding-left: 40px !important;
 }
-.sidebar-inner{
+.sidebar-inner {
   padding-left: 0px;
 }
-.sidebar-inner-button{
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 5px;
-    width: 272px;
-    font-weight: bold;
-    border-radius: 5px;
-    color: black;
-    background-color: white;
+.sidebar-inner-button {
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 5px;
+  width: 272px;
+  font-weight: bold;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
 }
-  .sidebar-inner-button:hover{
+.sidebar-inner-button:hover {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   color: white !important;
   background-color: #4361e5;
-
 }
 .sidebar-inner-button:not(.collapsed) {
   border: none;
-  color: black; 
+  color: black;
   text-align: left;
   padding-left: 30px;
 }
 /* Sidebar End */
 
 /* Admin Dashboard Start */
-.admin-navbar-logout{
+.admin-navbar-logout {
   cursor: pointer;
   border-radius: 20px;
 }
-.admin-navbar-logout:hover{
+.admin-navbar-logout:hover {
   padding: 2px;
   border-radius: 20px;
   transform: scale(1.5);
-  transition: all 0.3s ease-in-out  ;
-  background-color: #B23B3B ;
+  transition: all 0.3s ease-in-out;
+  background-color: #b23b3b;
   color: white;
-
 }
-.admin-dashboard-container{
+.admin-dashboard-container {
   margin: 0px !important;
   padding: 0px !important;
   width: 100%;
 }
-.admin-dashboard-row{
+.admin-dashboard-row {
   margin: 0px !important;
   padding: 0px !important;
 }
-.admin-dashboard-first{
+.admin-dashboard-first {
   background-color: white;
   padding: 0px;
 }
-.admin-dashboard-second{
-  /* background-color: greenyellow; */
+.admin-dashboard-second {
   padding: 10px;
 }
-.admin-dashboard-second h2{
+.admin-dashboard-second h2 {
   color: #4361e5;
 }
-.admin-dashboard-second-row1{
+.admin-dashboard-second-row1 {
   margin: 0px !important;
   padding: 0px !important;
   margin-top: -9px !important;
   height: 170px;
 }
-.admin-dashboard-second-row2{
+.admin-dashboard-second-row2 {
   margin: 0px !important;
   padding: 0px !important;
   margin-top: 13px !important;
   height: 65vh;
 }
-.row1-first{
+.row1-first {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 0px 15px 0px 0px;
   background-color: #eaebef;
   border-radius: 5px;
 }
-.row1-second{
+.row1-second {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 0px 15px 0px 0px;
   padding-top: auto;
   background-color: #eaebef;
   border-radius: 5px;
 }
-.row1-third{
+.row1-third {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 0px 15px 0px 0px;
   padding-top: auto;
@@ -310,47 +305,60 @@ nav{
   align-items: center;
 }
 
-.row2-first{
+.row2-first {
   /* background-color: #eaebef; */
   padding: 0px;
   padding-right: 16px;
 }
-.row2-second{
+.row2-second {
   /* background-color: #eaebef; */
   border-radius: 5px;
   padding-left: 2px;
 }
-.row2-first-inner-div{    
+.row2-first-inner-div {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   height: 510px;
   border-radius: 5px;
   background-color: #eaebef;
   padding: 25px;
 }
+/* Admin Dashboard End */
+
 /* Admin Dasboard Notice Start */
-.row2-second-notice{
+.row2-second-notice {
   font-weight: bold;
   margin-bottom: 30px;
 }
-.row2-second-notice-item{
+.row2-second-notice-item {
   font-size: 0.7rem;
   margin: 0px;
 }
-.admin-dashboard-notice-link{
+.admin-dashboard-notice-link {
   text-decoration: none;
   color: black;
 }
-.admin-dashboard-notice-link:hover{
+.admin-dashboard-notice-link:hover {
   color: #4361e5;
   transform: scale(1.05);
   transition: 0.2s ease-in-out;
 }
+
+.notice-card.expanded {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+  z-index: 2;
+  height: auto !important;
+}
+
+.admin-dashboard-notice-link:hover {
+  color: #4361e5;
+  transform: none;
+}
+
 /* Admin Dashboard Notice End */
 
-/* Admin Dashboard End */
-
 /* Admin Dashboard Card Start */
-.card-img:hover{
+.card-img:hover {
   transform: scale(1.05);
   transition: 0.3s ease-in-out;
 }
@@ -358,52 +366,69 @@ nav{
 /* Admin Dashboard Card End */
 
 /* Admin Profile Start */
-.admin-profile-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 680px;
-  padding: 25px;
-  border-radius: 5px;
+
+.profile-card {
+  background: white;
+  padding: 15px 80px;
+  border-radius: 12px;
+  text-align: center;
+  width: 800px;
+  height: 650px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
-.admin-profile-box-inside {
-  display: flex;
-  width: 90%;
-  height: 550px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+
+.profile-image-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
 }
-.admin-profile-box-inside-left {
-  width: 35%;
-  background-color: white;
-}
-.admin-profile-box-inside-left:hover{
-  transform: scale(1.05);
-  transition: 0.3s ease-in-out;
-}
-.admin-profile-img {
+
+.profile-image {
   width: 100%;
   height: 100%;
-  object-fit: fill;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: 0.3s ease;
 }
-.admin-profile-box-inside-right {
-  width: 65%;
-  background-color: #4361e5;
+
+.edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  caret-color: transparent;
+  user-select: none;
 }
-.admin-profile-socials {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+
+.overlay-icon {
+  color: white;
+  font-size: 32px;
+}
+
+.profile-image-container:hover .edit-overlay {
+  opacity: 1;
+}
+
+.profile-name {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.profile-username {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
 }
 
 .social-icon {
@@ -411,20 +436,18 @@ nav{
   color: #333;
   background-color: #f0f0f0;
   border-radius: 50%;
-  width: 40px;
-  padding-left: 10px;
-  padding-top: 4px;
-  height: 40px;
+  padding: 5px 6px;
   text-decoration: none;
   transition: 0.3s ease;
+  margin-right: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-#social-icon-facebook:hover{
-  background-color: #1877F2;
+#social-icon-facebook:hover {
+  background-color: #1877f2;
   color: white;
 }
-#social-icon-instagram:hover{
+#social-icon-instagram:hover {
   color: white;
   background-image: linear-gradient(
     45deg,
@@ -435,27 +458,55 @@ nav{
     #bc1888 100%
   );
 }
-#social-icon-twitter:hover{
+#social-icon-twitter:hover {
   color: white;
-  background-color: #1DA1F2;
+  background-color: #1da1f2;
 }
-#social-icon-linkedin:hover{
+#social-icon-linkedin:hover {
   color: white;
-  background-color: #0077B5;
+  background-color: #0077b5;
 }
+
+.profile-info {
+  text-align: left;
+}
+
+.profile-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.field-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.field-value {
+  color: #555;
+}
+
+.edit-icon {
+  color: #3b82f6;
+  cursor: pointer;
+}
+
 /* Admin Profile End */
 
 /* Admin Add Notice Start*/
-.admin-notice-box{
+.admin-notice-box {
   padding-top: 10px !important;
 }
-.admin-add-notice-button{
-  background-color: #4361e5  ;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);  
+.admin-add-notice-button {
+  background-color: #4361e5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
   border-radius: 5px;
 }
-.admin-add-notice-button:hover{
+.admin-add-notice-button:hover {
   transform: scale(1.05);
   transition: 0.3s ease-in-out;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -463,12 +514,12 @@ nav{
   color: white !important;
   background-color: #4361e5;
 }
-.admin-add-notice-box{
+.admin-add-notice-box {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 input[readonly] {
-    background-color: #f8f9fa;
-    cursor: not-allowed;
+  background-color: #f8f9fa;
+  cursor: not-allowed;
 }
 
 /* Admin Add Notice End */
@@ -549,10 +600,10 @@ input[readonly] {
 /* Admin Display Notice End */
 
 /* Admin Add Student Start */
-.admin-add-student-heading{
+.admin-add-student-heading {
   margin-top: -7px;
 }
-.admin-add-student-form{
+.admin-add-student-form {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 /* Admin Add Student End */
@@ -598,11 +649,9 @@ input[readonly] {
 /* Search input text color */
 .e-grid .e-search input {
   color: #000 !important;
-  
 }
 .e-grid .e-search input:focus {
   color: #000 !important;
-  
 }
 /* Force typed text in search box to be black */
 .e-grid .e-toolbar .e-search input.e-input {
@@ -649,7 +698,7 @@ input[readonly] {
   border-radius: 10px;
   transition: 0.3s ease;
   background-color: #fafbff;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .fees-card:hover {
@@ -670,7 +719,6 @@ input[readonly] {
 
 /* Admin Student Fees End */
 
-
 /* Footer Start */
 
 .footer {
@@ -681,51 +729,172 @@ input[readonly] {
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-
 /* Footer End */
 /* ********************************************* TEACHER *************************************** */
 /* Teacher display student start */
 
 .form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8
+  box-shadow: none;
+  border-color: #ba68c8;
 }
 
 .profile-button {
-    background: rgb(99, 39, 120);
-    box-shadow: none;
-    border: none
+  background: rgb(99, 39, 120);
+  box-shadow: none;
+  border: none;
 }
 
 .profile-button:hover {
-    background: #682773
+  background: #682773;
 }
 
 .profile-button:focus {
-    background: #682773;
-    box-shadow: none
+  background: #682773;
+  box-shadow: none;
 }
 
 .profile-button:active {
-    background: #682773;
-    box-shadow: none
+  background: #682773;
+  box-shadow: none;
 }
 
 .back:hover {
-    color: #682773;
-    cursor: pointer
+  color: #682773;
+  cursor: pointer;
 }
 
 .labels {
-    font-size: 11px
+  font-size: 11px;
 }
 
 .add-experience:hover {
-    background: #BA68C8;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px #BA68C8
+  background: #ba68c8;
+  color: #fff;
+  cursor: pointer;
+  border: solid 1px #ba68c8;
 }
 
 /* Teacher display student end */
+
+
+/* Landing Page Starts */
+
+/* General Reset */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+
+/* Header with Gradient */
+.header {
+  background: linear-gradient(135deg, #0250c3, #00b4db);
+  color: #fff;
+  text-align: center;
+  padding-bottom: 3rem;
+  position: relative;
+}
+
+/* Navigation Bar */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #ffe600;
+}
+
+/* Hero Section */
+.hero {
+  padding: 2rem;
+}
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.cta-btn {
+  background: #ffe600;
+  color: #003b7f;
+  font-weight: bold;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.cta-btn:hover {
+  transform: scale(1.05);
+  background: #ffcc00;
+}
+
+/* Content */
+.content {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.feature {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(2, 80, 195, 0.12);
+  padding: 2rem;
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(2, 50, 130, 0.2);
+}
+
+/* Footer */
+.footer {
+  background: #f1f2f8;
+  text-align: center;
+  padding: 1.5rem 0;
+  color: #02307a;
+  font-size: 0.95rem;
+}
+.footer-links a {
+  color: #0250c3;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+.social-icons span {
+  font-size: 1.4rem;
+  margin: 0 0.3rem;
+  cursor: pointer;
+}
+.social-icons span:hover {
+  opacity: 0.7;
+}
+
+/* Landing Page Ends */

@@ -7,7 +7,7 @@ function Navbar() {
 
     const handleLogout = () => {
         setTimeout(() => {
-            navigate("/");
+            navigate("/login");
         }, 500); // in ms
     };
 
@@ -22,9 +22,9 @@ function Navbar() {
                         </button>
                     </div>
                     <div className='navbar-second-part'>
-                        <span className='navbar-second-part-admin-name'><a href='/admin/profile' style={{textDecoration: 'none', color: 'black'}}>Dhruv Garg</a></span>
-                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout' 
-                        onClick={() => handleLogout()}
+                        <span className='navbar-second-part-admin-name'><a href='/admin/profile' style={{ textDecoration: 'none', color: 'black' }}>Dhruv Garg</a></span>
+                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout'
+                            onClick={() => handleLogout()}
                         />
                     </div>
 
