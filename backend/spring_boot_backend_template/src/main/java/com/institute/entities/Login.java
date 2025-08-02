@@ -20,7 +20,7 @@ public class Login extends BaseEntity {
 	private String email;
 
 	@Column(name = "password", length = 255, nullable = false)
-	private String password;
+	private String password = "12345";
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", length = 20, nullable = false)
@@ -41,4 +41,4 @@ public class Login extends BaseEntity {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Admin admin;
-}
+

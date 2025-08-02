@@ -108,4 +108,11 @@
 
 ---
 
+## August 2025
+
+### 2nd July — Backend/API - Image Path (Admin)
+- Fixed 'Teacher APIs' with dto.
+---
+
 *For detailed technical and UI design documentation, see the project’s `/Documentation` folder.*
+  

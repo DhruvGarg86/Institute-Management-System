@@ -19,6 +19,7 @@ import lombok.ToString;
 @Table(name = "teachers")
 @Getter
 @Setter
+
 @ToString(exclude = "password,attendance,subjects,courseSubjectTeachers")
 @JsonIgnoreProperties({"attendance,subjects,courseSubjectTeachers"})
 public class Teacher extends BaseEntity {
@@ -54,7 +55,7 @@ public class Teacher extends BaseEntity {
 
 	@Column(name = "salary", precision = 10, scale = 2)
 	private  BigDecimal salary;
-	
+
 	@Column(name = "image", length = 500)
 	private String image;
 

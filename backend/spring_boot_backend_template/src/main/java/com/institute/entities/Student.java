@@ -62,6 +62,4 @@ public class Student extends BaseEntity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Marks> marks = new HashSet<Marks>();
 
-
-
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "admin")
 @Getter
 @Setter
-@ToString(exclude = "password")
+@ToString
 public class Admin extends BaseEntity {
 
 	@Column(name = "name", length = 15, nullable = false )
@@ -23,15 +23,15 @@ public class Admin extends BaseEntity {
 
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
-	
+
 	@Column(name = "address", length = 255)
 	private String address;
-	
-	@Enumerated(EnumType.STRING) 
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "gender", length = 15, nullable = false)
 	private Gender gender;
-	
-	@Enumerated(EnumType.STRING) 
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status", length = 15, nullable = false)
 	private Status status = Status.ACTIVE;
 
