@@ -22,13 +22,7 @@ public class Admin extends BaseEntity {
 	private String name;
 
 	@Column(name = "phone_number", length = 15)
-	private String phoneNumber;		
-	
-	@Column(name = "email", length = 100, nullable = false, unique = true)
-	private String email;
-	
-	@Column(name = "password", length = 255, nullable = false)
-	private String password;
+	private String phoneNumber;
 	
 	@Column(name = "address", length = 255)
 	private String address;
@@ -42,6 +36,10 @@ public class Admin extends BaseEntity {
 	private Status status = Status.ACTIVE;
 
 	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Notice> notices = new ArrayList<Notice>();
+	private List<Notice> notices = new ArrayList<>();
+
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private Login user;
 
 }
