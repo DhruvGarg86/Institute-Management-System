@@ -2,14 +2,19 @@ package com.institute.entities;
 
 import java.time.LocalDate;
 
-import com.institute.entities.enums.*;
-import jakarta.persistence.*;
+import com.institute.entities.enums.FeeStatus;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "fee")

@@ -41,4 +41,4 @@ public class Login extends BaseEntity {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Admin admin;
-}
+

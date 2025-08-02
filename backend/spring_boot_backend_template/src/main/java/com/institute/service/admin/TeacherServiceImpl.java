@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.institute.dao.LoginDao;
 import lombok.AllArgsConstructor;
+import com.institute.dto.teacher.TeacherProfileDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,16 @@ public class TeacherServiceImpl implements TeacherService {
 		teacherDao.save(teacher);
 		return new ApiResponse("Teacher id : " + id + "successfully updated");			
 
+	}
+
+	@Override
+	public TeacherProfileDTO findTeacherById(Long teacherId) {
+		Teacher entity = teacherDao.findById(teacherId)
+				.orElseThrow(() -> new ResourceNotFoundException("No teacher exist with id: " + teacherId));
+
+		TeacherProfileDTO teacherProfileDTO = modelMapper.map(entity, TeacherProfileDTO.class);
+
+		return teacherProfileDTO;
 	}
 }
 

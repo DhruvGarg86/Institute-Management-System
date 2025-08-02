@@ -4,18 +4,6 @@ import com.institute.dao.*;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.*;
 import com.institute.entities.*;
-import com.institute.entities.enums.Gender;
-import com.institute.entities.enums.Role;
-import com.institute.entities.enums.Status;
-import com.institute.exception.customexceptions.ApiException;
-import com.institute.exception.customexceptions.ResourceNotFoundException;
-import com.institute.service.admin.StudentService;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +11,39 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.institute.dao.CourseDao;
+import com.institute.dao.FeeDao;
+import com.institute.dao.MarksDao;
+import com.institute.dao.StudentDao;
+import com.institute.dto.ApiResponse;
+import com.institute.dto.admin.ActiveStudentsDto;
+import com.institute.dto.admin.AddStudentDto;
+import com.institute.dto.admin.FeeResponseDto;
+import com.institute.dto.admin.FeeUpdateRequest;
+import com.institute.dto.admin.MarksDetailsDto;
+import com.institute.dto.admin.StudentDetailsDTO;
+import com.institute.dto.admin.StudentMarksResponseDto;
+import com.institute.dto.admin.StudentPercentageDto;
+import com.institute.dto.admin.TopperStudentDTO;
+import com.institute.dto.admin.TopperStudentResponseDto;
+import com.institute.dto.admin.UpdateStudentRequestDto;
+import com.institute.entities.Course;
+import com.institute.entities.Fee;
+import com.institute.entities.Marks;
+import com.institute.entities.Student;
+import com.institute.entities.enums.Gender;
+import com.institute.entities.enums.Role;
+import com.institute.entities.enums.Status;
+import com.institute.exception.customexceptions.ApiException;
+import com.institute.exception.customexceptions.ResourceNotFoundException;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

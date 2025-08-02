@@ -7,6 +7,7 @@ import com.institute.dto.ApiResponse;
 import com.institute.dto.teacher.AddNewTeacherDTO;
 import com.institute.dto.teacher.DisplayTeacherDTO;
 import com.institute.dto.teacher.TeacherAttendanceDTO;
+import com.institute.dto.teacher.TeacherProfileDTO;
 
 public interface TeacherService {
 	ApiResponse addNewTeacher(AddNewTeacherDTO addTeacher);
@@ -17,4 +18,5 @@ public interface TeacherService {
 
 	ApiResponse editTeacherById(AdminEditTeacherDTO teacher, Long id);
 
+	TeacherProfileDTO findTeacherById(Long teacherId);
 }

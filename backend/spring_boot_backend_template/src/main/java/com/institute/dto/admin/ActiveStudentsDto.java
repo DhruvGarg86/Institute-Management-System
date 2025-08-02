@@ -1,12 +1,5 @@
 package com.institute.dto.admin;
 
-import com.institute.entities.Attendance;
-import com.institute.entities.Course;
-import com.institute.entities.Fee;
-import com.institute.entities.Marks;
-import com.institute.entities.enums.Gender;
-import com.institute.entities.enums.Status;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
