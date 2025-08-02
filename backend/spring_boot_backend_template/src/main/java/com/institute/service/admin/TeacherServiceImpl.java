@@ -3,8 +3,9 @@ package com.institute.service.admin;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
+import com.institute.dao.LoginDao;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,28 +21,21 @@ import com.institute.exception.customexceptions.ApiException;
 import com.institute.exception.customexceptions.ResourceNotFoundException;
 
 import jakarta.transaction.Transactional;
-// Define or import SubjectDTO and TeacherAttendanceDTO
-// import com.institute.dto.teacher.SubjectDTO; // Remove this if SubjectDTO does not exist or is not needed
 import com.institute.dto.teacher.TeacherAttendanceDTO;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	private final TeacherDao teacherDao;
 	private final ModelMapper modelMapper;
-
-	public TeacherServiceImpl(TeacherDao teacherDao, ModelMapper modelMapper) {
-		this.teacherDao = teacherDao;
-		this.modelMapper = modelMapper;
-	}
-
-
+	private final LoginDao loginDao;
 
 	@Override
 	public ApiResponse addNewTeacher(AddNewTeacherDTO addTeacher) {
-		if (teacherDao.existsByEmail(addTeacher.getEmail())) {
+		if (loginDao.existsByEmail(addTeacher.getEmail())) {
 			throw new ApiException("Duplicate email");
 		}
 		Teacher entity = modelMapper.map(addTeacher, Teacher.class);
@@ -57,42 +51,31 @@ public class TeacherServiceImpl implements TeacherService {
 				.toList();
 	}
 
+	@Override
 	public List<TeacherAttendanceDTO> teacherAttendance() {
-	    List<Object[]> results = teacherDao.findAllTeachersWithLatestAttendance();
-
-	    return results.stream().map(obj -> {
-	        TeacherAttendanceDTO dto = new TeacherAttendanceDTO();
-	        dto.setImage((String) obj[0]);
-	        dto.setName((String) obj[1]);
-	        dto.setEmail((String) obj[2]);
-	        dto.setJoiningDate((LocalDate) obj[3]);
-	        dto.setPhoneNumber((String) obj[4]);
-	        dto.setStatus((Status) obj[5]);
-	        dto.setId((Long) obj[6]);                        
-	        dto.setAttendancePercentage((BigDecimal) obj[7]); 
-	        return dto;
-	    }).toList();
+	    return teacherDao.findAllTeachersWithLatestAttendance();
 	}
 
 
-
-
 	@Override
-	public ApiResponse editTeacherById(AdminEditTeacherDTO teacher, Long id) {
-		Teacher entity = teacherDao.findById(id)
+	public ApiResponse editTeacherById(AdminEditTeacherDTO teacherDto, Long id) {
+		Teacher teacher = teacherDao.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No teacher exist with id: " + id));
-		entity.setName(teacher.getName());
-		entity.setPhoneNumber(teacher.getPhoneNumber());
-		entity.setEmail(teacher.getEmail());
-		entity.setPassword(teacher.getPassword());
-		entity.setSalary(teacher.getSalary());
-		entity.setJoiningDate(teacher.getJoiningDate());
-		entity.setAddress(teacher.getAddress());
-		entity.setGender(teacher.getGender());
-		entity.setStatus(teacher.getStatus());
-		entity.setImage(teacher.getImage());
+		teacher.setName(teacherDto.getName());
+		teacher.setPhoneNumber(teacherDto.getPhoneNumber());
+		teacher.setSalary(teacherDto.getSalary());
+		teacher.setJoiningDate(teacherDto.getJoiningDate());
+		teacher.setAddress(teacherDto.getAddress());
+		teacher.setGender(teacherDto.getGender());
+		teacher.setStatus(teacherDto.getStatus());
+		teacher.setImage(teacherDto.getImage());
 
-		teacherDao.save(entity);
+		if (teacher.getUser() != null) {
+			teacher.getUser().setEmail(teacherDto.getEmail());
+			teacher.getUser().setPassword(teacherDto.getPassword());
+		}
+
+		teacherDao.save(teacher);
 		return new ApiResponse("Teacher id : " + id + "successfully updated");			
 
 	}

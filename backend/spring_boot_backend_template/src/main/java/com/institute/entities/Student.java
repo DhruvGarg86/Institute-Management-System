@@ -25,12 +25,6 @@ public class Student extends BaseEntity {
     @Column(name = "phone_number", length = 15)
     private String phoneNumber;
 
-    @Column(name = "email", unique = true, nullable = false, length = 100)
-    private String email;
-    
-    @Column(name = "password", nullable = false, length = 255)
-    private String password;
-
     @Column(name = "address", length = 255)
     private String address;
 
@@ -51,6 +45,10 @@ public class Student extends BaseEntity {
     @Column(name = "admission_date")
     private LocalDate admissionDate;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Login user;
+
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
@@ -63,7 +61,5 @@ public class Student extends BaseEntity {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Marks> marks = new HashSet<Marks>();
-
-
 
 }

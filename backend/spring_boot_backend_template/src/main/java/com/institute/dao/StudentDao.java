@@ -18,7 +18,6 @@ import java.util.Optional;
 public interface StudentDao extends JpaRepository<Student, Long> {
     long countByStatus(Status status);
     List<Student> findByStatusAndIsDeletedFalse(Status status);
-    boolean existsByEmail(String email);
     boolean existsByIdAndIsDeletedFalse(Long id);
     Optional<Student> findByIdAndIsDeletedFalse(Long id);
 
