@@ -15,33 +15,31 @@ import java.util.List;
 @Table(name = "admin")
 @Getter
 @Setter
-@ToString(exclude = "password")
+@ToString
 public class Admin extends BaseEntity {
 
 	@Column(name = "name", length = 15, nullable = false )
 	private String name;
 
 	@Column(name = "phone_number", length = 15)
-	private String phoneNumber;		
-	
-	@Column(name = "email", length = 100, nullable = false, unique = true)
-	private String email;
-	
-	@Column(name = "password", length = 255, nullable = false)
-	private String password;
-	
+	private String phoneNumber;
+
 	@Column(name = "address", length = 255)
 	private String address;
-	
-	@Enumerated(EnumType.STRING) 
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "gender", length = 15, nullable = false)
 	private Gender gender;
-	
-	@Enumerated(EnumType.STRING) 
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status", length = 15, nullable = false)
 	private Status status = Status.ACTIVE;
 
 	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Notice> notices = new ArrayList<Notice>();
+	private List<Notice> notices = new ArrayList<>();
+
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private Login user;
 
 }

@@ -3,6 +3,7 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
+import com.institute.security.AuthUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,19 +51,19 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudentDetails());
     }
 
-    @DeleteMapping("/deleteStudent/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.deleteStudentById(id));
+    @DeleteMapping("/deleteStudent")
+    public ResponseEntity<?> deleteStudent() {
+        return ResponseEntity.ok(studentService.deleteStudentById(AuthUtil.getCurrentUserId()));
     }
 
-    @GetMapping("/getMarks/{id}")
-    public ResponseEntity<?> getStudentMarks(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(studentService.getStudentWithMarks(id));
+    @GetMapping("/getMarks")
+    public ResponseEntity<?> getStudentMarks() {
+        return ResponseEntity.ok(studentService.getStudentWithMarks(AuthUtil.getCurrentUserId()));
     }
 
-    @PutMapping("/updateStudent/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody UpdateStudentRequestDto request) {
-        return ResponseEntity.ok(studentService.updateStudent(id, request));
+    @PutMapping("/updateStudent")
+    public ResponseEntity<?> updateStudent(@RequestBody UpdateStudentRequestDto request) {
+        return ResponseEntity.ok(studentService.updateStudent(AuthUtil.getCurrentUserId(), request));
     }
 
     @GetMapping("/toppers")
@@ -82,10 +83,10 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudentFeeDetails());
     }
 
-    @PutMapping("/updateFee/{studentId}")
-    public ResponseEntity<?> updateFeeByStudentId(@PathVariable Long studentId,
+    @PutMapping("/updateFee")
+    public ResponseEntity<?> updateFeeByStudentId(
                                             @RequestBody FeeUpdateRequest dto) {
-        return ResponseEntity.ok(studentService.updateFee(studentId, dto));
+        return ResponseEntity.ok(studentService.updateFee(AuthUtil.getCurrentUserId(), dto));
     }
 
 }

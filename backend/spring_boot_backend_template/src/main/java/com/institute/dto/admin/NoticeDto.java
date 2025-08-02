@@ -1,12 +1,12 @@
 package com.institute.dto.admin;
 
+import java.time.LocalDate;
+
 import com.institute.entities.enums.Audience;
-import jakarta.persistence.Column;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter

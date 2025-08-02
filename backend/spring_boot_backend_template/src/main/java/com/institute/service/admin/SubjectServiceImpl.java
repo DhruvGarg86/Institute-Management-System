@@ -86,26 +86,26 @@ public class SubjectServiceImpl implements SubjectService {
     // ---------------------- UPDATE SUBJECT ----------------------
     @Override
     public ApiResponse updateSubjectsById(Long subjectId, SubjectDto dto) {
-        Subject subject = subjectDao.findById(subjectId)
-                .orElseThrow(() -> new ApiException("Subject not found"));
+    	Subject subject = subjectDao.findByIdAndIsDeletedFalse(subjectId)
+    		    .orElseThrow(() -> new ApiException("Subject not found or has been deleted."));
+
 
         if (subject.getStatus() != Status.ACTIVE) {
             throw new ApiException("Cannot update an inactive subject.");
         }
 
         subject.setName(dto.getName());
-        subject.setCode(dto.getCode());
+        subject.setCode(String.valueOf(dto.getCode())); 
         subject.setDescription(dto.getDescription());
 
-        // Optional: allow status update if needed
         if (dto.getStatus() != null) {
             subject.setStatus(dto.getStatus());
         }
 
         subjectDao.save(subject);
-
         return new ApiResponse("Subject updated successfully.");
     }
+
 
     // ---------------------- DELETE SUBJECT (Soft Delete) ----------------------
     @Override
@@ -113,15 +113,12 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subject = subjectDao.findById(subjectId)
                 .orElseThrow(() -> new ApiException("Subject not found"));
 
-        // Prevents deleting ACTIVE subjects
         if (subject.getStatus() == Status.ACTIVE) {
             throw new ApiException("Cannot delete subject: status is ACTIVE. Please mark it as INACTIVE first.");
         }
 
-        // Ensure status is INACTIVE and perform soft delete logic
         if (subject.getStatus() == Status.INACTIVE) {
-            subject.setDeleted(true); // Only if you have an `isDeleted` flag
-            // Keep status as INACTIVE (do NOT set to null)
+            subject.setDeleted(true); 
             subjectDao.save(subject);
             return new ApiResponse("Subject soft-deleted successfully.");
         }

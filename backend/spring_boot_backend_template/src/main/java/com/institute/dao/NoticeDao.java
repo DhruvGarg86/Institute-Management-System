@@ -1,18 +1,8 @@
 package com.institute.dao;
 
-import com.institute.entities.Notice;
-import com.institute.entities.enums.Status;
-
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.institute.dto.admin.NoticeDto;
-import com.institute.entities.Marks;
-import com.institute.entities.Notice;
-import com.institute.entities.enums.Audience;
-import com.institute.entities.enums.Status;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.SubjectDto;
 import com.institute.service.admin.SubjectService;
 
@@ -47,17 +49,23 @@ public class SubjectController {
 	
 	@PutMapping("/edit-subject/{subjectId}")
 	@Operation(summary = "Update subject", description = "Updates the details of a subject by its ID.")
-	public ResponseEntity<?> editSubjectByID(
+	public ResponseEntity<?> editSubjectById(
 	        @PathVariable Long subjectId,
 	        @Valid @RequestBody SubjectDto dto) {
 	    return ResponseEntity.ok(subjectService.updateSubjectsById(subjectId, dto));
 	}
 
-	@DeleteMapping("/{subjectId}")
+	@DeleteMapping("/delete-subject/{subjectId}")
 	@Operation(summary = "Soft delete subject", description = "Soft deletes the subject if its status is INACTIVE.")
-	public ResponseEntity<?> deleteSubject(@PathVariable Long subjectId) {
-	    return ResponseEntity.ok(subjectService.deleteSubjectsById(subjectId));
+	public ResponseEntity<ApiResponse> deleteSubjectById(@PathVariable Long subjectId) {
+	    ApiResponse response = subjectService.deleteSubjectsById(subjectId);
+	    
+	    // Use 200 OK for successful deletion with a message body
+	    HttpStatus status = response.getMessage().equalsIgnoreCase("Subject deleted successfully")
+	            ? HttpStatus.OK
+	            : HttpStatus.BAD_REQUEST;
+
+	    return ResponseEntity.status(status).body(response);
 	}
-// ------------------------------------------------------------------------------------------------
 		
 }

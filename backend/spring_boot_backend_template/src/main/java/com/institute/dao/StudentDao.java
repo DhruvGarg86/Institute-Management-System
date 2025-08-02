@@ -1,24 +1,21 @@
 package com.institute.dao;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
 import com.institute.dto.admin.StudentPercentageDto;
 import com.institute.dto.admin.TopperStudentResponseDto;
 import com.institute.entities.Student;
 import com.institute.entities.enums.Status;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface StudentDao extends JpaRepository<Student, Long> {
     long countByStatus(Status status);
     List<Student> findByStatusAndIsDeletedFalse(Status status);
-    boolean existsByEmail(String email);
     boolean existsByIdAndIsDeletedFalse(Long id);
     Optional<Student> findByIdAndIsDeletedFalse(Long id);
 
