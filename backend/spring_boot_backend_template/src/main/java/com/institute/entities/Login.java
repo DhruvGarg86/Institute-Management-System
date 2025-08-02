@@ -3,9 +3,7 @@ package com.institute.entities;
 import com.institute.entities.enums.Role;
 import com.institute.entities.enums.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "login", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString(exclude = "password")
 public class Login extends BaseEntity {
 
@@ -32,4 +32,13 @@ public class Login extends BaseEntity {
 
 	@Column(name = "last_login")
 	private LocalDateTime lastLogin;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Student student;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Teacher teacher;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Admin admin;
 }

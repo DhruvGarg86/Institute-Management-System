@@ -9,14 +9,7 @@ import java.util.Set;
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,12 +23,6 @@ public class Teacher extends BaseEntity {
 
 	@Column(name = "name", nullable = false, length = 50)
 	private String name;
-
-	@Column(name = "email", unique = true, nullable = false, length = 100)
-	private String email;
-
-	@Column(name = "password", nullable = false, length = 255)
-	private String password;
 
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
@@ -68,6 +55,10 @@ public class Teacher extends BaseEntity {
 	
 	@Column(name = "image", length = 500)
 	private String image;
+
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private Login user;
 
 	@OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Attendance attendance;
