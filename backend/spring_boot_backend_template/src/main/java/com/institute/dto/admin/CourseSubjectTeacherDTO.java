@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class CourseSubjectTeacherDTO {
 
-    // Optional during creation, useful only for updates or DB reads
     private Long id;
 
     private Long courseId;

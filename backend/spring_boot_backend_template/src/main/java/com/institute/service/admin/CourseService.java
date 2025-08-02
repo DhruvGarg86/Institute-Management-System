@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 public interface CourseService {
 	
 	List<CourseDto> getAllCourses();
-	ApiResponse addcourse(@Valid CourseDto courseDto);
+	ApiResponse addCourse(@Valid CourseDto courseDto);
 	ApiResponse updateCoursesById(Long courseId, @Valid CourseDto dto);
 	ApiResponse deleteCourseById(Long courseId);
 
