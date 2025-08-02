@@ -1,13 +1,5 @@
 package com.institute.controllers;
 
-import com.institute.dao.LoginDao;
-import com.institute.dto.AuthRequest;
-import com.institute.dto.AuthResponse;
-import com.institute.dto.RegisterRequest;
-import com.institute.entities.Login;
-import com.institute.security.CustomUserDetails;
-import com.institute.security.JwtUtil;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.institute.dao.LoginDao;
+import com.institute.dto.AuthRequest;
+import com.institute.dto.AuthResponse;
+import com.institute.dto.RegisterRequest;
+import com.institute.entities.Login;
+import com.institute.security.CustomUserDetails;
+import com.institute.security.JwtUtil;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")

@@ -3,7 +3,7 @@ package com.institute.dao;
 import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.teacher.TeacherAttendanceDTO;
 import com.institute.entities.Teacher;
-import com.institute.entities.enums.Status
+import com.institute.entities.enums.Status;
 import java.util.List;
 import java.util.Optional;
 

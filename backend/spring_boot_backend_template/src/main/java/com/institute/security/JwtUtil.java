@@ -19,7 +19,7 @@ public class JwtUtil {
     private final String SECRET_KEY = "3xT9k#7vFz!dL@qR1pXe$LuWz%gVtNcS";
     private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
-    public String generateToken(UserDetails userDetails, String role , Long userId) {
+    public String generateToken(UserDetails userDetails, String role, Long userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
         claims.put("id", userId);
@@ -46,7 +46,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
