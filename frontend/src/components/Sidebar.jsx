@@ -102,19 +102,19 @@ function Sidebar() {
 
         {/* Notices */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingFive">
+          <h2 className="accordion-header" id="headingNotices">
             <button
               className={`accordion-button collapsed ${location.pathname.includes('notice') ? 'active-section' : ''}`}
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#collapseFive"
+              data-bs-target="#collapseNotices"
               aria-expanded="false"
-              aria-controls="collapseFive"
+              aria-controls="collapseNotices"
             >
               Notices
             </button>
           </h2>
-          <div id="collapseFive" className="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionPanelsStayOpenExample">
+          <div id="collapseNotices" className="accordion-collapse collapse" aria-labelledby="headingNotices" data-bs-parent="#accordionPanelsStayOpenExample">
             <div className="accordion-body">
               <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
                 <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-notice')}>Add New Notice</button></li>
@@ -123,6 +123,54 @@ function Sidebar() {
             </div>
           </div>
         </div>
+
+        {/* Subjects */}
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingSubjects">
+            <button
+              className={`accordion-button collapsed ${location.pathname.includes('subject') ? 'active-section' : ''}`}
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseSubjects"
+              aria-expanded="false"
+              aria-controls="collapseSubjects"
+            >
+              Subjects
+            </button>
+          </h2>
+          <div id="collapseSubjects" className="accordion-collapse collapse" aria-labelledby="headingSubjects" data-bs-parent="#accordionPanelsStayOpenExample">
+            <div className="accordion-body">
+              <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/add-subject')}>Add New Subject</button></li>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/display-subjects')}>Display All Subjects</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Complaints */}
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingComplaints">
+            <button
+              className={`accordion-button collapsed ${location.pathname.includes('complaint') ? 'active-section' : ''}`}
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseComplaints"
+              aria-expanded="false"
+              aria-controls="collapseComplaints"
+            >
+              Complaints
+            </button>
+          </h2>
+          <div id="collapseComplaints" className="accordion-collapse collapse" aria-labelledby="headingComplaints" data-bs-parent="#accordionPanelsStayOpenExample">
+            <div className="accordion-body">
+              <ul style={{ listStyleType: 'none' }} className='sidebar-inner'>
+                <li><button type="button" className='sidebar-inner-button' onClick={() => navigate('/admin/display-complaints')}>Display All Complaints</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
 
         {/* Profile - pinned at bottom */}
         <div className="accordion-item" style={{ marginTop: 'auto' }}>

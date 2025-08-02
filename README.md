@@ -112,6 +112,8 @@
 
 ### 2nd July — Backend/API - Image Path (Admin)
 - Fixed 'Teacher APIs' with dto.
+- Added frontend pages for 'Display Complaint' and 'Update Complaint'
+- Added 'Subject' and 'Course' pages to the sidebar/admin.
 ---
 
 *For detailed technical and UI design documentation, see the project’s `/Documentation` folder.*
