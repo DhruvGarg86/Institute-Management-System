@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.institute.entities.enums.Gender;
@@ -62,4 +63,13 @@ public class Student extends BaseEntity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Marks> marks = new HashSet<Marks>();
 
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Complaints> complaints;
+
+
+
 }
+
+
+
