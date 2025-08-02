@@ -1,15 +1,15 @@
 package com.institute.controllers.teacher;
 
-import com.institute.service.admin.StudentService;
-import com.institute.service.admin.TeacherService;
-import com.institute.service.teacher.TeacherOwnService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.institute.service.admin.StudentService;
+import com.institute.service.teacher.TeacherOwnService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/teacher/dashboard")

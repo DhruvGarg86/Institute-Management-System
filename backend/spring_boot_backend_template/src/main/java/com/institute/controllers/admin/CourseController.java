@@ -42,7 +42,7 @@ public class CourseController {
 		@Operation(description = "add new course")
 		public ResponseEntity<?> addNewCourse(@Valid @RequestBody CourseDto CourseDto) {
 		    return ResponseEntity.status(HttpStatus.CREATED)
-		                         .body(courseService.addcourse(CourseDto));
+		                         .body(courseService.addCourse(CourseDto));
 		}
 		
 		@PutMapping("/edit-course/{courseId}")
