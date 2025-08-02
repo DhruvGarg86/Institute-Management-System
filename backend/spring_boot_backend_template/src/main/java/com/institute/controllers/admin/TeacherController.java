@@ -2,6 +2,7 @@ package com.institute.controllers.admin;
 
 import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.teacher.AddNewTeacherDTO;
+import com.institute.security.AuthUtil;
 import com.institute.service.admin.TeacherService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,10 +33,10 @@ public class TeacherController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
 	}
 	
-	@PutMapping("/edit-teacher/{id}")
+	@PutMapping("/edit-teacher")
 	@Operation(summary="Admin-teacher-EditTeacher")
-	public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher, @PathVariable Long id){
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, id));
+	public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher){
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, AuthUtil.getCurrentUserId()));
 	}
 	
 	@GetMapping("/display-teachers")

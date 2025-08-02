@@ -45,6 +45,12 @@ public class JwtUtil {
         return resolver.apply(claims);
     }
 
+    public Long extractId(String token) {
+        final Claims claims = extractAllClaims(token);
+        return claims.get("id", Long.class);  //  Extract ID from claims
+    }
+
+
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
