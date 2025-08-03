@@ -1,11 +1,12 @@
+
 .col-2-5 {
-  flex: 0 0 20%;
-  max-width: 20%;
+  flex: 0 0 15%;
+  max-width: 15%;
 }
 
 .col-7-5 {
-  flex: 0 0 80%;
-  max-width: 80%; 
+  flex: 0 0 85%;
+  max-width: 85%; 
 }
 
 .student-profile-card{

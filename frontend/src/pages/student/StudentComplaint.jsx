@@ -7,12 +7,12 @@ import StudentMarksCard from "../../pages/student/StudentMarksCard";
 import StudentNavbar from "../../pages/student/StudentNavbar";
 import Footer from "../../components/Footer";
 
-function StudentDashboard() {
+function StudentComplaint() {
   return (
     <>
       <StudentNavbar />
 
-      <div className="d-flex vh-100 bg-light text-dark mt-1">
+      <div className="d-flex vh-100 bg-light text-dark mt-4">
         {/* Sidebar - Left Section */}
         {/* Using a 2-column layout for the sidebar, responsive on medium screens and up */}
         <div className="d-none d-md-flex col-2 bg-white px-2 flex-column">
@@ -58,4 +58,4 @@ function StudentDashboard() {
   );
 }
 
-export default StudentDashboard;
+export default StudentComplaint;
