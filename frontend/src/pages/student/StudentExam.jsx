@@ -27,10 +27,10 @@ function StudentExam() {
       <StudentNavbar />
       <div className="container-fluid mt-4">
         <div className="row">
-          <div className="col-2-5">
+          <div className="col-2 px-2">
             <StudentSidebar />
           </div>
-          <div className="col-7-5">
+          <div className="col-10">
             <h2 className="text-center mt-4">Exam Dashboard</h2>
 
             {/* Timetable Section */}

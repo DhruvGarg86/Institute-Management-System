@@ -44,6 +44,7 @@ import StudentFee from './pages/student/StudentFee';
 import Student_Attendance from './pages/student/Student_Attendance';
 import StudentExam from './pages/student/StudentExam';
 import Registration from './pages/student/Registration';
+import StudentComplaint from './pages/student/StudentComplaint';
 
 function App() {
   return (
@@ -190,6 +191,7 @@ function App() {
           path='/student/attendance'
           element={<Student_Attendance />}
         />
+        <Route path='/student/complaint' element={<StudentComplaint />}></Route>
         <Route
           path='/student/profile'
           element={<StudentProfile />}

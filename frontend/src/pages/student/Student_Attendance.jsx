@@ -42,10 +42,10 @@ function StudentAttendance() {
       <StudentNavbar />
       <div className="container-fluid flex-grow-1 mt-4">
         <div className="row">
-          <div className="col-2-5">
+          <div className="col-2 px-2">
             <StudentSidebar />
           </div>
-          <div className="col-7-5">
+          <div className="col-10">
             <h2 className="mb-4 text-center">Student Attendance</h2>
 
             <div className="table-responsive">
