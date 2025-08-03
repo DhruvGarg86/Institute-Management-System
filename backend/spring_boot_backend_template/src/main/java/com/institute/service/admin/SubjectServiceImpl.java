@@ -95,7 +95,7 @@ public class SubjectServiceImpl implements SubjectService {
         }
 
         subject.setName(dto.getName());
-        subject.setCode(String.valueOf(dto.getCode())); 
+        subject.setCode(Integer.valueOf(String.valueOf(dto.getCode())));
         subject.setDescription(dto.getDescription());
 
         if (dto.getStatus() != null) {

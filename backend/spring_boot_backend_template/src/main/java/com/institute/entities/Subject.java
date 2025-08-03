@@ -21,8 +21,8 @@ public class Subject extends BaseEntity {
 	@Column(name = "name", length = 50, nullable = false, unique = true)
 	private String name;
 
-	@Column(name = "code", length = 20, nullable = false, unique = true)
-	private String code; 
+	@Column(name = "code", nullable = false, unique = true)
+	private Integer code;
 
 	@Column(name = "description", length = 255)
 	private String description;
