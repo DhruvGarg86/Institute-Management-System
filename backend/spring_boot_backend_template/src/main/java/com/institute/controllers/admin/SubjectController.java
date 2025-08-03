@@ -2,6 +2,7 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +22,7 @@ import com.institute.service.admin.SubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:5173")
