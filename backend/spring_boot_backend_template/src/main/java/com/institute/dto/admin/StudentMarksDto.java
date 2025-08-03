@@ -1,16 +1,10 @@
 package com.institute.dto.admin;
 
-import com.institute.entities.Attendance;
-import com.institute.entities.Course;
-import com.institute.entities.Fee;
-import com.institute.entities.Marks;
-import com.institute.entities.enums.Gender;
-import com.institute.entities.enums.Status;
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.institute.entities.Marks;
 
 public class StudentMarksDto {
 

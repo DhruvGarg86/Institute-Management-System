@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.institute.entities.enums.Gender;
@@ -24,12 +25,6 @@ public class Student extends BaseEntity {
 
     @Column(name = "phone_number", length = 15)
     private String phoneNumber;
-
-    @Column(name = "email", unique = true, nullable = false, length = 100)
-    private String email;
-    
-    @Column(name = "password", nullable = false, length = 255)
-    private String password;
 
     @Column(name = "address", length = 255)
     private String address;
@@ -51,6 +46,10 @@ public class Student extends BaseEntity {
     @Column(name = "admission_date")
     private LocalDate admissionDate;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Login user;
+
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
@@ -65,5 +64,12 @@ public class Student extends BaseEntity {
     private Set<Marks> marks = new HashSet<Marks>();
 
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Complaints> complaints;
+
+
 
 }
+
+
+

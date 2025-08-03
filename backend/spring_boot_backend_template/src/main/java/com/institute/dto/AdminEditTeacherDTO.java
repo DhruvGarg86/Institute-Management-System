@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import com.institute.entities.enums.Gender;
 import com.institute.entities.enums.Status;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 

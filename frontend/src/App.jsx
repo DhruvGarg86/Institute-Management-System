@@ -22,6 +22,8 @@ import AddSubject from './pages/admin/AddSubject';
 import EditSubject from './pages/admin/EditSubject';
 import AddCourse from './pages/admin/AddCourse';
 import EditCourse from './pages/admin/EditCourse';
+import DisplayComplaint from './pages/admin/DisplayComplaints';
+import EditComplaint from './pages/admin/EditComplaint';
 
 // TEACHER IMPORTS
 import TeacherDashboard from './pages/teacher/TeacherDashboard'
@@ -139,6 +141,14 @@ function App() {
         <Route
           path='/admin/edit-course/:id'
           element={<EditCourse />}
+        />
+        <Route 
+        path='/admin/display-complaints'
+        element = {<DisplayComplaint/>}
+        />
+        <Route 
+        path='/admin/edit-complaint/:id'
+        element = {<EditComplaint/>}
         />
 
         {/* *****************************TEACHER ROUTES***********************************  */}

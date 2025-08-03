@@ -1,26 +1,9 @@
 package com.institute.service.admin;
 
-import com.institute.dao.CourseDao;
-import com.institute.dao.FeeDao;
-import com.institute.dao.MarksDao;
+import com.institute.dao.*;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.*;
-import com.institute.entities.Course;
-import com.institute.entities.Fee;
-import com.institute.entities.Marks;
-import com.institute.entities.Student;
-import com.institute.entities.enums.Gender;
-import com.institute.entities.enums.Status;
-import com.institute.dao.StudentDao;
-import com.institute.exception.customexceptions.ApiException;
-import com.institute.exception.customexceptions.ResourceNotFoundException;
-import com.institute.service.admin.StudentService;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
+import com.institute.entities.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,6 +11,39 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.institute.dao.CourseDao;
+import com.institute.dao.FeeDao;
+import com.institute.dao.MarksDao;
+import com.institute.dao.StudentDao;
+import com.institute.dto.ApiResponse;
+import com.institute.dto.admin.ActiveStudentsDto;
+import com.institute.dto.admin.AddStudentDto;
+import com.institute.dto.admin.FeeResponseDto;
+import com.institute.dto.admin.FeeUpdateRequest;
+import com.institute.dto.admin.MarksDetailsDto;
+import com.institute.dto.admin.StudentDetailsDTO;
+import com.institute.dto.admin.StudentMarksResponseDto;
+import com.institute.dto.admin.StudentPercentageDto;
+import com.institute.dto.admin.TopperStudentDTO;
+import com.institute.dto.admin.TopperStudentResponseDto;
+import com.institute.dto.admin.UpdateStudentRequestDto;
+import com.institute.entities.Course;
+import com.institute.entities.Fee;
+import com.institute.entities.Marks;
+import com.institute.entities.Student;
+import com.institute.entities.enums.Gender;
+import com.institute.entities.enums.Role;
+import com.institute.entities.enums.Status;
+import com.institute.exception.customexceptions.ApiException;
+import com.institute.exception.customexceptions.ResourceNotFoundException;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +54,7 @@ public class StudentServiceImpl implements StudentService {
     private final MarksDao marksDao;
     private final ModelMapper modelMapper;
     private final FeeDao feeDao;
+    private final LoginDao loginDao;
 
     @Value("${upload.path}")
     private String uploadDir;
@@ -70,26 +87,35 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public AddStudentDto addStudent(AddStudentDto dto, MultipartFile imageFile) {
-        if (studentDao.existsByEmail(dto.getEmail())) {
-            throw new ApiException("Email already exists.");
+        //  Check if email already exists in login table
+        if (loginDao.existsByEmail(dto.getEmail())) {
+            throw new ApiException("Student already exists.");
         }
 
+        //  Find course
         Course course = courseDao.findByName(dto.getCourseName())
                 .orElseThrow(() -> new ApiException("Course not found"));
 
+        // Create Login first
+        Login login = new Login();
+        login.setEmail(dto.getEmail());
+        login.setRole(Role.STUDENT);
+
+        // Create Student and link Login
         Student student = new Student();
         student.setName(dto.getName());
         student.setPhoneNumber(dto.getPhoneNumber());
-        student.setEmail(dto.getEmail());
         student.setAddress(dto.getAddress());
         student.setDob(LocalDate.parse(dto.getDob()));
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
-        student.setPassword("default123"); // or generate a secure one
+        student.setUser(login); // Link login with student
+        login.setStudent(student); // Back reference
 
-        // Image handling
+        //  Handle image
         if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 Path filePath = Paths.get(uploadDir, imageFile.getOriginalFilename());
@@ -100,7 +126,9 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
+
         Student saved = studentDao.save(student);
+
 
         dto.setImagePath(saved.getImagePath());
         return dto;
@@ -115,7 +143,7 @@ public class StudentServiceImpl implements StudentService {
         return new TopperStudentDTO(
                 student.getCourse().getName(),
                 student.getName(),
-                student.getEmail(),
+                student.getUser().getEmail(),
                 student.getImagePath(),
                 student.getGender()
         );
@@ -174,7 +202,7 @@ public class StudentServiceImpl implements StudentService {
         return new StudentMarksResponseDto(
                 student.getId(),
                 student.getName(),
-                student.getEmail(),
+                student.getUser().getEmail(),
                 student.getImagePath(),
                 student.getDob(),
                 student.getCourse().getName(),

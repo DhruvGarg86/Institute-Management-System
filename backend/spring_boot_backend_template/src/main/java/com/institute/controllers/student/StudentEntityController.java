@@ -2,6 +2,7 @@ package com.institute.controllers.student;
 
 import com.institute.dto.student.StudentAttendanceDto;
 import com.institute.dto.student.StudentFeeDto;
+import com.institute.security.AuthUtil;
 import com.institute.service.student.StudentAttendanceService;
 import com.institute.service.student.StudentEntityService;
 import com.institute.service.student.StudentFeeService;
@@ -34,10 +35,10 @@ public class StudentEntityController {
     }
 
 //	.....................................fee controller ...........................................
-	@GetMapping("/fee/{studentId}")
+	@GetMapping("/fee")
 	@Operation(description = "student fee checking ")
-	public ResponseEntity<?> displayStudentFees(@PathVariable Long studentId){
-		StudentFeeDto studentFee = studentFeeService.displayStudentFee(studentId);
+	public ResponseEntity<?> displayStudentFees(){
+		StudentFeeDto studentFee = studentFeeService.displayStudentFee(AuthUtil.getCurrentUserId());
 		return ResponseEntity.ok(studentFee);
 	}
 	
@@ -49,23 +50,23 @@ public class StudentEntityController {
 		return ResponseEntity.ok(studentAttendance);
 	}
 	
-	@GetMapping("/attendance/{studentId}")
+	@GetMapping("/attendance")
 	@Operation(description = "student attendance checking")
-	public ResponseEntity<?> displayStudentAttendancePercentage(@PathVariable Long studentId){
-		Optional<StudentAttendanceDto> studentAttendance = studentAttendanceService.displayStudentAttendance(studentId);
+	public ResponseEntity<?> displayStudentAttendancePercentage(){
+		Optional<StudentAttendanceDto> studentAttendance = studentAttendanceService.displayStudentAttendance(AuthUtil.getCurrentUserId());
 		return ResponseEntity.ok(studentAttendance);
 	}
 	
 //	.......................student marks controller for student marks page and student dashboard..........................
-	@GetMapping("/dashboard/{studentId}/marks")
+	@GetMapping("/dashboard/marks")
     @Operation(description = "Fetch student exam marks by student ID for student dashboard")
-    public ResponseEntity<?> displayStudentMarksDashboard(@PathVariable Long studentId) {
-        return ResponseEntity.ok(studentMarksService.getStudentMarks(studentId));
+    public ResponseEntity<?> displayStudentMarksDashboard() {
+        return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
     }
 	
-	@GetMapping("/exam/{studentId}")
+	@GetMapping("/exam")
     @Operation(description = "Fetch student exam marks by student ID")
-    public ResponseEntity<?> displayStudentMarks(@PathVariable Long studentId) {
-        return ResponseEntity.ok(studentMarksService.getStudentMarks(studentId));
+    public ResponseEntity<?> displayStudentMarks() {
+        return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
     }
 }
