@@ -157,7 +157,7 @@ function TeacherSidebar() {
             <div className="accordion-body">
               <ul style={{ listStyleType: "none" }} className="sidebar-inner">
                 <li>
-                  <button type="button" className="sidebar-inner-button">
+                  <button type="button" className="sidebar-inner-button" onClick={() => navigate("/teacher/display-course")}>
                     Display All Courses
                   </button>
                 </li>
