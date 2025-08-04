@@ -34,9 +34,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**", "/register", "/login")
                         .permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/student/**").hasRole("STUDENT")
-                        .requestMatchers("/teacher/**").hasRole("TEACHER")
+                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/student/**").permitAll()
+                        .requestMatchers("/teacher/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
