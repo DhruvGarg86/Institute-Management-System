@@ -6,6 +6,7 @@ import StudentAttendanceCard from "../../pages/student/StudentAttendanceCard";
 import StudentMarksCard from "../../pages/student/StudentMarksCard";
 import StudentNavbar from "../../pages/student/StudentNavbar";
 import Footer from "../../components/Footer";
+import "./Student-module.css";
 
 function StudentDashboard() {
   return (
@@ -25,7 +26,7 @@ function StudentDashboard() {
         <main className="col-12 col-md-10 d-flex flex-column p-2 overflow-auto">
           <div className="d-flex flex-grow-1 flex-column flex-md-row">
             {/* Left Column (Notice Board) */}
-            <div className="col-12 col-md-7 bg-white p-2 rounded-4 shadow d-flex flex-column my-2">
+            <div className="col-12 col-md-7 bg-white p-4 rounded-4 shadow d-flex flex-column my-2">
               <h2 className="fs-4 fw-semibold mb-4">Notice Board</h2>
               <div className="flex-grow-1 overflow-y-scroll">
                 {notices && <NoticeList notices={notices} />}
@@ -35,7 +36,7 @@ function StudentDashboard() {
             {/* Right Column (Charts) */}
             <div className="col-12 col-md-5 d-flex flex-column p-2">
               {/* Upper Component (Attendance Pie Chart) */}
-              <div className="flex-grow-1 bg-white p-4 rounded-4 shadow d-flex flex-column mb-3">
+              <div className="flex-grow-1 bg-white p-4 rounded-4 shadow d-flex flex-column mb-2">
                 <h2 className="fs-4 fw-semibold">Attendance</h2>
                 <div className="flex-grow-1 d-flex w-100 align-items-center justify-content-center">
                   <StudentAttendanceCard />
@@ -53,7 +54,6 @@ function StudentDashboard() {
           </div>
         </main>
       </div>
-      <Footer />
     </>
   );
 }

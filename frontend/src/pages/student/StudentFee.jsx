@@ -28,7 +28,7 @@ function StudentFee() {
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-4">
+      <div className="container-fluid mt-2">
         <div className="row">
           <div className="col-2 px-2">
             <StudentSidebar />

@@ -9,7 +9,7 @@ const MyPieChart = ({ data }) => (
         data={data}
         startAngle={0}
         endAngle={360}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+        margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
         innerRadius={0}
         padAngle={0.8}
         cornerRadius={3}

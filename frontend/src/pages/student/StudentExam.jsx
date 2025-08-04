@@ -4,109 +4,104 @@ import StudentSidebar from "../../components/StudentSidebar";
 import Footer from "../../components/Footer";
 
 function StudentExam() {
-  // Dummy data
-  const timetable = [
-    { day: "Monday", subject: "Java", time: "2:00 PM - 3:00 PM" },
-    { day: "Monday", subject: "DSA", time: "3:15 PM - 4:15 PM" },
-    { day: "Monday", subject: "DBMS", time: "4:30 PM - 5:30 PM" },
-  ];
-
-  const upcomingExams = [
-    
-    { subject: "Core Java", date: "2025-08-05", time: "10:00 AM" },
-    { subject: "DSA", date: "2025-08-07", time: "1:00 PM" },
-  ];
-
-  const pastResults = [
-    { subject: "Web Tech", score: "85", grade: "A" },
-    { subject: "DBMS", score: "78", grade: "B+" },
-  ];
+  // Dummy student marks data
+  const studentData = {
+    studentName: "Shreyansh Bhardwaj",
+    courseId: 101,
+    courseName: "PG-DAC",
+    subjectMarks: [
+      { subjectName: "Math", marksObtained: 85, maxMarks: 100 },
+      { subjectName: "Science", marksObtained: 90, maxMarks: 100 },
+      { subjectName: "English", marksObtained: 78, maxMarks: 100 },
+      { subjectName: "History", marksObtained: 70, maxMarks: 100 },
+    ],
+    totalMarksObtained: 323,
+    totalMarks: 400,
+    percentage: 80.75,
+  };
 
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-4">
+      <div className="container-fluid mt-2">
         <div className="row">
           <div className="col-2 px-2">
             <StudentSidebar />
           </div>
+
           <div className="col-10">
-            <h2 className="text-center mt-4">Exam Dashboard</h2>
+            <h2 className="mb-4 student-center">Exam Result</h2>
+            <div className="mb-3">
+              <p><strong>Student Name:</strong> {studentData.studentName}</p>
+              <p><strong>Course:</strong> {studentData.courseName}</p>
+            </div>
 
-            {/* Timetable Section */}
-            <div className="card shadow p-4 my-3">
-              <h4 className="mb-3">Timetable</h4>
-              <table className="table table-bordered">
-                <thead className="table-light">
+            <div className="table-responsive">
+              <table className="table table-bordered table-hover table-striped">
+                <thead className="table-primary">
                   <tr>
-                    <th>Day</th>
                     <th>Subject</th>
-                    <th>Time</th>
+                    <th>Marks Obtained</th>
+                    <th>Max Marks</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {timetable.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>{item.day}</td>
-                      <td>{item.subject}</td>
-                      <td>{item.time}</td>
-                    </tr>
-                  ))}
+                  {studentData.subjectMarks.map((subject, index) => {
+                    const status =
+                      subject.marksObtained >= subject.maxMarks * 0.4
+                        ? "Pass"
+                        : "Fail";
+
+                    return (
+                      <tr key={index}>
+                        <td>{subject.subjectName}</td>
+                        <td>{subject.marksObtained}</td>
+                        <td>{subject.maxMarks}</td>
+                        <td>
+                          <span
+                            className={`badge ${
+                              status === "Pass"
+                                ? "bg-success"
+                                : "bg-danger"
+                            }`}
+                          >
+                            {status}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
 
-            {/* Upcoming Exams Section */}
-            <div className="card shadow p-4 my-3">
-              <h4 className="mb-3">Upcoming Exams</h4>
-              <table className="table table-bordered">
-                <thead className="table-light">
-                  <tr>
-                    <th>Subject</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {upcomingExams.map((exam, idx) => (
-                    <tr key={idx}>
-                      <td>{exam.subject}</td>
-                      <td>{exam.date}</td>
-                      <td>{exam.time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Past Results Section */}
-            <div className="card shadow p-4 my-3">
-              <h4 className="mb-3">Past Results</h4>
-              <table className="table table-bordered">
-                <thead className="table-light">
-                  <tr>
-                    <th>Subject</th>
-                    <th>Score</th>
-                    <th>Grade</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pastResults.map((result, idx) => (
-                    <tr key={idx}>
-                      <td>{result.subject}</td>
-                      <td>{result.score}</td>
-                      <td>{result.grade}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="row mt-4">
+              <div className="col-md-4">
+                <div className="card p-3 text-center">
+                  <p className="mb-1 text-muted">Total Marks</p>
+                  <h5>{studentData.totalMarks}</h5>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card p-3 text-center">
+                  <p className="mb-1 text-muted">Marks Obtained</p>
+                  <h5>{studentData.totalMarksObtained}</h5>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card p-3 text-center">
+                  <p className="mb-1 text-muted">Percentage</p>
+                  <h5>{studentData.percentage}%</h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 }
 
-export default StudentExam
+export default StudentExam;

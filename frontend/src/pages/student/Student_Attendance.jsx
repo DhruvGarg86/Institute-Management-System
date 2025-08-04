@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import StudentSidebar from "../../components/StudentSidebar";
-import "./Student.module.css";
+import "./Student-module.css";
 import Footer from "../../components/Footer";
 import StudentNavbar from "./StudentNavbar";
-
 
 function StudentAttendance() {
   const student = {
@@ -40,7 +39,7 @@ function StudentAttendance() {
     // 👇 Full-page flex container
     <div className="d-flex flex-column min-vh-100">
       <StudentNavbar />
-      <div className="container-fluid flex-grow-1 mt-4">
+      <div className="container-fluid flex-grow-1 mt-2">
         <div className="row">
           <div className="col-2 px-2">
             <StudentSidebar />
@@ -133,9 +132,6 @@ function StudentAttendance() {
           </div>
         </div>
       </div>
-
-      {/* 👇 Footer always at the bottom */}
-      <Footer />
     </div>
   );
 }
