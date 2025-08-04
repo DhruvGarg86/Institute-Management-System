@@ -1,23 +1,11 @@
 import React from "react";
 import Notice from "./Notice";
-import styles from "./Notice.module.css";
-
-const NoticeList = ({ notices }) => {
-  return (
-    <>
-      <div className={`p-3 ${styles.bgColor}`}>
-        <h1>NOTICES</h1>
-        <div
-          className="notice-list overflow-auto"
-          style={{ maxHeight: "500px" }}
-        >
-          {notices.map((notice) => (
-            <Notice key={notice._id} notice={notice} />
-          ))}
-        </div>
-      </div>
-    </>
-  );
-};
+const NoticeList = ({ notices }) => (
+  <div className="space-y-4 p-4">
+    {notices.map((notice) => (
+      <Notice key={notice._id} notice={notice} />
+    ))}
+  </div>
+);
 
 export default NoticeList;
