@@ -1,11 +1,32 @@
+/* @tailwind utilities; */
+
+
+.student-profile-card{
+    margin: 20px;
+    width: 50rem;
+}
+
+.student-center{
+    margin: 10px;
+    text-align: center;
+}
+
+.student-fee{
+    margin: 20px;
+    width: 80%;
+}
+
+.main-content-height {
+    height: calc(100vh - 72px); /* Adjust based on header height */
+}
 .col-2-5 {
-  flex: 0 0 20%;
-  max-width: 20%;
+  flex: 0 0 15%;
+  max-width: 15%;
 }
 
 .col-7-5 {
-  flex: 0 0 80%;
-  max-width: 80%; 
+  flex: 0 0 85%;
+  max-width: 85%; 
 }
 
 .student-profile-card{

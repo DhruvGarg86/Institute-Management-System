@@ -25,10 +25,10 @@ public class TeacherProfileController {
         return ResponseEntity.ok(teacherService.findTeacherById(teacherId));
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/edit/{teacherId}")
 //    Re-using AdminEditTeacherDTO
-    public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, AuthUtil.getCurrentUserId()));
+    public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher, @PathVariable Long teacherId){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, teacherId));
     }
 
 }

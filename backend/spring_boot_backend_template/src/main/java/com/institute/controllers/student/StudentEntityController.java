@@ -9,64 +9,70 @@ import com.institute.service.student.StudentFeeService;
 import com.institute.service.student.StudentMarksService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/student")
 @AllArgsConstructor
 public class StudentEntityController {
 
-    private final StudentEntityService studentEntityService;
-    private StudentFeeService studentFeeService;
+	private final StudentEntityService studentEntityService;
+	private final StudentFeeService studentFeeService;
 	private final StudentAttendanceService studentAttendanceService;
 	private final StudentMarksService studentMarksService;
 
-    @GetMapping("/notice")
-    public ResponseEntity<?> getNoticesForStudents() {
-        return ResponseEntity.ok(studentEntityService.getStudentNotices());
-    }
+	// 📝 Get all notices for logged-in student
+	@GetMapping("/notice")
+	public ResponseEntity<?> getNoticesForStudents() {
+		return ResponseEntity.ok(studentEntityService.getStudentNotices());
+	}
 
-//	.....................................fee controller ...........................................
+	// 💰 Student fee info
 	@GetMapping("/fee")
-	@Operation(description = "student fee checking ")
-	public ResponseEntity<?> displayStudentFees(){
+	@Operation(description = "Student fee details")
+	public ResponseEntity<?> displayStudentFees() {
 		StudentFeeDto studentFee = studentFeeService.displayStudentFee(AuthUtil.getCurrentUserId());
 		return ResponseEntity.ok(studentFee);
 	}
-	
-//	.............student attendance controller for student attendance page and student dashborad .................................. 
-	@GetMapping("/dashboard/{studentId}/attendance")
-	@Operation(description = "student attendance checking")
-	public ResponseEntity<?> displayStudentAttendancePercentageDashboard(@PathVariable Long studentId){
-		Optional<StudentAttendanceDto> studentAttendance = studentAttendanceService.displayStudentAttendance(studentId);
+
+	// 📊 Dashboard attendance
+	@GetMapping("/dashboard/attendance")
+	@Operation(description = "Student dashboard attendance")
+	public ResponseEntity<?> displayStudentAttendancePercentageDashboard() {
+		Optional<StudentAttendanceDto> studentAttendance =
+				studentAttendanceService.displayStudentAttendance(AuthUtil.getCurrentUserId());
 		return ResponseEntity.ok(studentAttendance);
 	}
-	
+
+	// 📅 Full attendance page
 	@GetMapping("/attendance")
-	@Operation(description = "student attendance checking")
-	public ResponseEntity<?> displayStudentAttendancePercentage(){
-		Optional<StudentAttendanceDto> studentAttendance = studentAttendanceService.displayStudentAttendance(AuthUtil.getCurrentUserId());
+	@Operation(description = "Student attendance full details")
+	public ResponseEntity<?> displayStudentAttendancePercentage() {
+		Optional<StudentAttendanceDto> studentAttendance =
+				studentAttendanceService.displayStudentAttendance(AuthUtil.getCurrentUserId());
 		return ResponseEntity.ok(studentAttendance);
 	}
-	
-//	.......................student marks controller for student marks page and student dashboard..........................
+
+	// 🧪 Dashboard exam marks
 	@GetMapping("/dashboard/marks")
-    @Operation(description = "Fetch student exam marks by student ID for student dashboard")
-    public ResponseEntity<?> displayStudentMarksDashboard() {
-        return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
-    }
-	
+	@Operation(description = "Fetch student exam marks for dashboard")
+	public ResponseEntity<?> displayStudentMarksDashboard() {
+		return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
+	}
+
+	// 🧾 All exam marks
 	@GetMapping("/exam")
-    @Operation(description = "Fetch student exam marks by student ID")
-    public ResponseEntity<?> displayStudentMarks() {
-        return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
-    }
+	@Operation(description = "Fetch full exam marks for student")
+	public ResponseEntity<?> displayStudentMarks() {
+		return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
+	}
 }

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { FaUpload } from "react-icons/fa";
 import defaultPhoto from "../../assets/student_profile_photo.jpg"; // adjust based on your structure
-import Navbar from "../../components/Navbar";
 import StudentSidebar from "../../components/StudentSidebar";
-import "./Student.module.css";
-import Footer from "../../components/Footer";
+import "./Student-module.css";
 import StudentNavbar from "./StudentNavbar";
-
 
 function StudentProfile() {
   const [formData, setFormData] = useState({
@@ -101,19 +98,19 @@ function StudentProfile() {
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-4">
+      <div className="container-fluid mt-2">
         <div className="row">
-          <div className="col-2-5">
+          <div className="col-2 px-2">
             <StudentSidebar />
           </div>
-          <div className="col-7-5">
+          <div className="col-10">
             <div>
-              <h2 className="text-center mt-4 student-center">Profile</h2>
+              <h2 className="text-center student-center">Profile</h2>
             </div>
-            <div className="container-fluid mt-4 d-flex justify-content-center">
+            <div className="container-fluid mt-2 d-flex justify-content-center">
               <div
                 className="card shadow p-4"
-                style={{ maxWidth: "700px", width: "100%" }}
+                style={{ maxWidth: "900px", width: "100%" }}
               >
                 <form onSubmit={handleSubmit} className="row g-3">
                   {/* Profile Photo Upload */}
@@ -291,7 +288,6 @@ function StudentProfile() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

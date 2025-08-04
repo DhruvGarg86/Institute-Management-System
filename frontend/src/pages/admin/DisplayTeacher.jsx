@@ -9,7 +9,8 @@ import {
 } from '@syncfusion/ej2-react-grids';
 import { toast } from 'react-toastify';
 import { deleteTeacherById, getAllTeachers } from '../../services/Admin/Teacher';
-
+import { getAllTeachers } from '../../services/Admin/Teacher';
+import TeacherSidebar from '../teacher/TeacherSidebar';
 
 function DisplayTeacher() {
 
@@ -57,7 +58,7 @@ function DisplayTeacher() {
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
                     <div className="col-2-5 admin-dashboard-first">
-                        <Sidebar />
+                        <TeacherSidebar />
                     </div>
                     <div className="col-7-5 admin-dashboard-second p-4">
                         <div className="card p-4 shadow">

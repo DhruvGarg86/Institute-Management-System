@@ -1,25 +1,12 @@
 import React from "react";
-import { CardComponent } from "@syncfusion/ej2-react-layouts";
-import { ProgressBarComponent } from "@syncfusion/ej2-react-progressbar";
+import MyPieChart from "./MyPieChart";
+import pieData from "../../data/pieData";
 
 function StudentAttendanceCard() {
   return (
-    <CardComponent
-      style={{ backgroundColor: "#eaebef" }}
-      className="w-100"
-      header={{ text: "ATTENDANCE" }}
-    >
-      <div className="text-center p-3">
-        <h3>68%</h3>
-        <ProgressBarComponent
-          id="percentage"
-          type="Linear"
-          height="20"
-          value={68}
-          showProgressValue={true}
-        />
-      </div>
-    </CardComponent>
+    <div style={{ height: "300px" }} className="text-center w-100">
+      <MyPieChart data={pieData} />
+    </div>
   );
 }
 

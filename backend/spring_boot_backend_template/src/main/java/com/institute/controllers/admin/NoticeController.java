@@ -1,5 +1,6 @@
 package com.institute.controllers.admin;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +16,7 @@ import com.institute.dto.AdminAddNoticeDTO;
 import com.institute.service.admin.NoticeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
-
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
