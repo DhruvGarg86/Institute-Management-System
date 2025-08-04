@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { FaUpload } from "react-icons/fa";
 import defaultPhoto from "../../assets/student_profile_photo.jpg"; // adjust based on your structure
-import Navbar from "../../components/Navbar";
 import StudentSidebar from "../../components/StudentSidebar";
-import "./Student.module.css";
-import Footer from "../../components/Footer";
+import "./Student-module.css";
 import StudentNavbar from "./StudentNavbar";
 
 function StudentProfile() {
@@ -100,7 +98,7 @@ function StudentProfile() {
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-4">
+      <div className="container-fluid mt-2">
         <div className="row">
           <div className="col-2 px-2">
             <StudentSidebar />
@@ -290,7 +288,6 @@ function StudentProfile() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

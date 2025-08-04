@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import profileImg from "../assets/profile.svg";
+import StudentComplaintForm from "../pages/student/StudentAddComplaint";
 
 function StudentSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isComplaintOpen, setIsComplaintOpen] = useState(false);
+  const [showComplaintForm, setShowComplaintForm] = useState(false);
 
   return (
     <div
@@ -74,10 +75,16 @@ function StudentSidebar() {
                   <button
                     type="button"
                     className="sidebar-inner-button"
-                    onClick={() => navigate("/student/add-complaint")}
+                    onClick={() => setShowComplaintForm(true)}
                   >
                     Add Complaint
                   </button>
+
+                  {showComplaintForm && (
+                    <StudentComplaintForm
+                      onClose={() => setShowComplaintForm(false)}
+                    />
+                  )}
                 </li>
                 <li>
                   <button

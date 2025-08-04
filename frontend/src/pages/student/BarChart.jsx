@@ -13,7 +13,7 @@ const BarChart = ({ data }) => {
         data={data}
         keys={["marks"]} // The key in each data object that holds the numerical value
         indexBy="subject" // The key in each data object that holds the category name
-        margin={{ top: 20, right: 60, bottom: 30, left: 60 }}
+        margin={{ top: 10, right: 20, bottom: 40, left: 60 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
