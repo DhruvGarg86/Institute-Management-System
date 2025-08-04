@@ -19,8 +19,7 @@ import lombok.ToString;
 @Table(name = "teachers")
 @Getter
 @Setter
-
-@ToString(exclude = "attendance,subjects,courseSubjectTeachers")
+@ToString(exclude = "password,attendance,courseSubjectTeachers")
 @JsonIgnoreProperties({"attendance,subjects,courseSubjectTeachers"})
 public class Teacher extends BaseEntity {
 
@@ -56,9 +55,6 @@ public class Teacher extends BaseEntity {
 
 	@OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Attendance attendance;
-
-	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Subject> subjects;
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();

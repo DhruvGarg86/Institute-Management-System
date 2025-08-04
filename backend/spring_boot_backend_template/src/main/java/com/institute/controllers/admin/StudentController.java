@@ -1,14 +1,11 @@
 package com.institute.controllers.admin;
 
-
 import java.util.List;
 
-import com.institute.security.AuthUtil;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,9 +19,17 @@ import com.institute.dto.admin.FeeUpdateRequest;
 import com.institute.dto.admin.StudentPercentageDto;
 import com.institute.dto.admin.TopperStudentResponseDto;
 import com.institute.dto.admin.UpdateStudentRequestDto;
+import com.institute.security.AuthUtil;
 import com.institute.service.admin.StudentService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.Parameter;
+
 import lombok.AllArgsConstructor;
+
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/admin/student")
@@ -38,12 +43,22 @@ public class StudentController {
         return ResponseEntity.ok(studentService.allActiveStudents());
     }
 
-    @PostMapping("/addStudent")
+    @Operation(summary = "Add a student with profile image")
+    @PostMapping(value = "/addStudent", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AddStudentDto> addStudent(
-            @RequestPart("student") AddStudentDto dto,
-            @RequestPart("image") MultipartFile imageFile
+        @Parameter(
+            description = "Student JSON object",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AddStudentDto.class))
+        )
+        @RequestPart("student") AddStudentDto student,
+
+        @Parameter(
+            description = "Profile image file",
+            content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+        )
+        @RequestPart(value = "image", required = false) MultipartFile image
     ) {
-        AddStudentDto saved = studentService.addStudent(dto, imageFile);
+        AddStudentDto saved = studentService.addStudent(student, image);
         return ResponseEntity.ok(saved);
     }
 
@@ -69,14 +84,12 @@ public class StudentController {
 
     @GetMapping("/toppers")
     public ResponseEntity<List<TopperStudentResponseDto>> getToppersByCourse() {
-        List<TopperStudentResponseDto> toppers = studentService.getTopperStudentsByCourse();
-        return ResponseEntity.ok(toppers);
+        return ResponseEntity.ok(studentService.getTopperStudentsByCourse());
     }
 
     @GetMapping("/allStudentsPercentage")
     public ResponseEntity<List<StudentPercentageDto>> getStudentPercentages() {
-        List<StudentPercentageDto> data = studentService.getAllStudentPercentages();
-        return ResponseEntity.ok(data);
+        return ResponseEntity.ok(studentService.getAllStudentPercentages());
     }
 
     @GetMapping("/allStudentsFeeDetails")
@@ -85,9 +98,7 @@ public class StudentController {
     }
 
     @PutMapping("/updateFee")
-    public ResponseEntity<?> updateFeeByStudentId(
-                                            @RequestBody FeeUpdateRequest dto) {
+    public ResponseEntity<?> updateFeeByStudentId(@RequestBody FeeUpdateRequest dto) {
         return ResponseEntity.ok(studentService.updateFee(AuthUtil.getCurrentUserId(), dto));
     }
-
 }

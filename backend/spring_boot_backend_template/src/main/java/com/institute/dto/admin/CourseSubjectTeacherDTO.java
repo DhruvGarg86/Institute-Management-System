@@ -8,10 +8,6 @@ import lombok.Setter;
 @Setter
 public class CourseSubjectTeacherDTO {
 
-    private Long id;
-
-    private Long courseId;
-
     @NotNull(message = "Subject ID is required")
     private Long subjectId;
 
