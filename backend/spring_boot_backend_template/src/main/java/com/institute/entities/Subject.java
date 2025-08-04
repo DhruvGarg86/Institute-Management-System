@@ -38,8 +38,4 @@ public class Subject extends BaseEntity {
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 	
-	@ManyToOne
-	@JoinColumn(name = "teacher_id") // FK column in subject table
-	private Teacher teacher;
-
 }

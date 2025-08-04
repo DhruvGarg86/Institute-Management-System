@@ -67,7 +67,11 @@ public class Student extends BaseEntity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Complaints> complaints;
 
-
+    public String getEncodedPassword(String name)
+    {
+        String defaultName = name + "@123";
+        return defaultName;
+    }
 
 }
 

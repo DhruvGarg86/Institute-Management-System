@@ -1,9 +1,44 @@
-import React from 'react'
+import { useState } from 'react'
 import studyImg from '../../assets/study.svg';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { getLogin } from '../../services/Login';
 
 function Login() {
     const navigate = useNavigate();
+
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = async () => {
+        if (name === '' && password === '') {
+            toast.error("Please enter email and password");
+            return;
+        } else if (name === '') {
+            toast.error("Please enter email");
+            return;
+        } else if (password === '') {
+            toast.error("Please enter password");
+            return;
+        }
+
+        try {
+            const response = await getLogin(name, password);
+            if (response.status === 200) {
+                toast.success("Welcome");
+                navigate("/admin/dashboard");
+            } else {
+                toast.error("Invalid email or password");
+            }
+
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                toast.error(error.response.data || "Invalid email or password");
+            } else {
+                toast.error("Unable to login");
+            }
+        }
+    };
     return (
         <div>
             <div className="container-fluid admin-login-page-container">
@@ -21,13 +56,15 @@ function Login() {
                         <div className="login-box">
                             <h3>LOGIN</h3>
                             <h5>Enter your account details  </h5>
-                            <input type="text" name="" placeholder="Email ID" className="admin-login-page-second-login-box" /><br />
-                            <input type="password" name="" placeholder="Password" className="admin-login-page-second-login-box" />
+                            <input type="text" name="" placeholder="Email ID"
+                                className="admin-login-page-second-login-box" onChange={(e) => setName(e.target.value)} /><br />
+                            <input type="password" name="" placeholder="Password"
+                                className="admin-login-page-second-login-box" onChange={(e) => setPassword(e.target.value)} />
                             <div>
-                                <button onClick={() => navigate("/admin/dashboard")}
+                                <button onClick={() => handleLogin()}
                                     className="admin-login-page-second-button">LOGIN</button>
                             </div>
-                            <p style={{ marginTop: '20px', fontSize: '15px'     }}>
+                            <p style={{ marginTop: '20px', fontSize: '15px' }}>
                                 Don't have an account?{' '}
                                 <Link to="/register" style={{ color: '#4361e5', fontWeight: 'bold', textDecoration: 'none' }}>
                                     Register Here!

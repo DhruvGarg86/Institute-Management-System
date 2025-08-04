@@ -40,18 +40,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/student/**").permitAll()
                         .requestMatchers("/teacher/**").permitAll()
+                        .requestMatchers("/image/**").permitAll()
+                        .requestMatchers("/TeacherImages/**").permitAll()
+                          .anyRequest().authenticated()
 
-                        .requestMatchers(
-                                "/auth/login",
-                                "/auth/register",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
-                        ).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/student/**").hasRole("STUDENT")
-                        .requestMatchers("/teacher/**").hasRole("TEACHER")
-
-                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

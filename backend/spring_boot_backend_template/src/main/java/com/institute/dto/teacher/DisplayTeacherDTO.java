@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DisplayTeacherDTO {
-	
+
 	private Long id;
 	private String name;
 	private String phoneNumber;

@@ -19,8 +19,7 @@ import lombok.ToString;
 @Table(name = "teachers")
 @Getter
 @Setter
-
-@ToString(exclude = "password,attendance,subjects,courseSubjectTeachers")
+@ToString(exclude = "password,attendance,courseSubjectTeachers")
 @JsonIgnoreProperties({"attendance,subjects,courseSubjectTeachers"})
 public class Teacher extends BaseEntity {
 
@@ -41,17 +40,8 @@ public class Teacher extends BaseEntity {
 	@Column(name = "status", nullable = false, length = 10)
 	private Status status = Status.ACTIVE;
 
-	@Column(name = "dob")
-	private LocalDate dob;
-
 	@Column(name = "joining_date")
 	private LocalDate joiningDate;
-
-	@Column(name = "qualification", length = 100)
-	private String qualification;
-
-	@Column(name = "experience", length = 100)
-	private String experience;
 
 	@Column(name = "salary", precision = 10, scale = 2)
 	private  BigDecimal salary;
@@ -67,10 +57,12 @@ public class Teacher extends BaseEntity {
 	private Attendance attendance;
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Subject> subjects;
-
-	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
+	public String getEncodedPassword(String name)
+	{
+		String defaultName = name + "@123";
+		return defaultName;
+	}
 
 }

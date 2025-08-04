@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { FiEdit } from "react-icons/fi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import defaultImg from "../../assets/elon.jpeg"; // fallback image
+import { fetchProfile } from "../../services/Admin/Profile";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
-    const [profileImg, setProfileImg] = useState(defaultImg);
 
-    // Handle Image Upload
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setProfileImg(imageUrl);
+    // const [profileImg, setProfileImg] = useState('');
+    const [profile, setProfile] = useState({
+        name: "",
+        email: "",
+        address: "",
+        phoneNumber: "",
+        gender: "",
+        image: null
+    });
+    const navigate = useNavigate();
+
+    const getProfile = async () => {
+        try {
+            const response = await fetchProfile(1);
+            setProfile(response);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
         }
-    };
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, []);
 
     return (
         <>
@@ -30,32 +46,21 @@ function Profile() {
                     <div className="col-7-5 admin-dashboard-second d-flex justify-content-center">
                         <div className="profile-card">
 
-                            {/*Profile Image Section */}
+                            {/* Profile Image Section */}
                             <div className="profile-image-container">
-                                <img src={profileImg} alt="Profile" className="profile-image" />
-                                
-                                {/* Hidden file input */}
+                                <img src={profile.image} alt="Profile" className="profile-image" />
+
                                 <input
                                     type="file"
                                     id="profileImageInput"
                                     accept="image/*"
                                     style={{ display: "none" }}
-                                    onChange={handleImageUpload}
                                 />
-
-                                {/* Hover Overlay */}
-                                <div
-                                    className="edit-overlay"
-                                    onClick={() => document.getElementById("profileImageInput").click()}
-                                >
-                                    <FiEdit className="overlay-icon" />
-                                </div>
                             </div>
 
                             {/* Name & Username */}
-                            <h2 className="profile-name mb-3">Jessica Alba</h2>
+                            <h2 className="profile-name mb-3">{profile.name}</h2>
                             <p className="profile-username">
-                                @jennywilson <FiEdit className="edit-icon me-3" />
                                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon" id="social-icon-facebook">
                                     <FaFacebookF />
                                 </a>
@@ -70,38 +75,44 @@ function Profile() {
                                 </a>
                             </p>
 
-                            {/* Info Fields */}
+                            {/* Profile Info */}
                             <div className="profile-info mt-4">
                                 <div className="profile-field">
                                     <span className="field-label">Username</span>
-                                    <span className="field-value">Jenny Wilson</span>
-                                    <FiEdit className="edit-icon" />
+                                    <span className="field-value">{profile.name}</span>
                                 </div>
 
                                 <div className="profile-field">
                                     <span className="field-label">Email</span>
-                                    <span className="field-value">jenny@gmail.com</span>
-                                    <FiEdit className="edit-icon" />
+                                    <span className="field-value">{profile.email}</span>
                                 </div>
 
                                 <div className="profile-field">
                                     <span className="field-label">Address</span>
-                                    <span className="field-value">New York, USA</span>
-                                    <FiEdit className="edit-icon" />
+                                    <span className="field-value">{profile.address}</span>
                                 </div>
 
                                 <div className="profile-field">
-                                    <span className="field-label">Nickname</span>
-                                    <span className="field-value">Sky Angel</span>
-                                    <FiEdit className="edit-icon" />
+                                    <span className="field-label">Phone Number</span>
+                                    <span className="field-value">+91 {profile.phoneNumber}</span>
                                 </div>
 
                                 <div className="profile-field">
-                                    <span className="field-label">DOB</span>
-                                    <span className="field-value">April 28, 1981</span>
-                                    <FiEdit className="edit-icon" />
+                                    <span className="field-label">Gender</span>
+                                    <span className="field-value">{profile.gender}</span>
                                 </div>
                             </div>
+
+                            <div className="text-center mt-3 mb-2">
+                                <button
+                                    className="edit-profile-btn"
+                                    onClick={() => navigate('/admin/profile-edit/1')}
+                                >
+                                    <FiEdit style={{ marginRight: "5px" }} /> Edit Profile
+                                </button>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
