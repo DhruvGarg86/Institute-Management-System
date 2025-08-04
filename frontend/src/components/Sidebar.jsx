@@ -176,9 +176,9 @@ function Sidebar() {
         <div className="accordion-item" style={{ marginTop: 'auto' }}>
           <h2 className="accordion-header" id="headingSix">
             <button
-              className={`accordion-button sidebar-profile ${location.pathname === '/admin/profile' ? 'active-section' : ''}`}
+              className={`accordion-button sidebar-profile ${location.pathname === '/admin/profile/:id' ? 'active-section' : ''}`}
               type="button"
-              onClick={() => navigate('/admin/profile')}
+              onClick={() => navigate('/admin/profile/1')}
             >
               <img src={profileImg} alt="Profile"
                 style={{

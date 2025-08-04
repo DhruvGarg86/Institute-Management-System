@@ -1,8 +1,8 @@
-import { Route, Routes } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, Zoom } from 'react-toastify';
+import { Route, Routes } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, Zoom } from "react-toastify";
 
-import Home from './pages/Home';
+import Home from "./pages/Home";
 
 // ADMIN IMPORTS
 import Login from './pages/admin/Login';
@@ -18,43 +18,65 @@ import TeacherAttendance from './pages/admin/TeacherAttendance';
 import AddNotice from './pages/admin/AddNotice';
 import DisplayNotice from './pages/admin/DisplayNotice';
 import Profile from './pages/admin/Profile';
+import ProfileEdit from './pages/admin/ProfileEdit';
 import AddSubject from './pages/admin/AddSubject';
 import EditSubject from './pages/admin/EditSubject';
 import AddCourse from './pages/admin/AddCourse';
 import EditCourse from './pages/admin/EditCourse';
 import DisplayComplaint from './pages/admin/DisplayComplaints';
 import EditComplaint from './pages/admin/EditComplaint';
+import Login from "./pages/admin/Login";
+import Dashboard from "./pages/admin/Dashboard";
+import AddStudent from "./pages/admin/AddStudent";
+import EditStudent from "./pages/admin/EditStudent";
+import StudentMarks from "./pages/admin/StudentMarks";
+import DisplayStudent from "./pages/admin/DisplayStudent";
+import AddTeacher from "./pages/admin/AddTeacher";
+import DisplayTeacher from "./pages/admin/DisplayTeacher";
+import EditTeacher from "./pages/admin/EditTeacher";
+import TeacherAttendance from "./pages/admin/TeacherAttendance";
+import AddNotice from "./pages/admin/AddNotice";
+import DisplayNotice from "./pages/admin/DisplayNotice";
+import Profile from "./pages/admin/Profile";
+import AddSubject from "./pages/admin/AddSubject";
+import EditSubject from "./pages/admin/EditSubject";
+import AddCourse from "./pages/admin/AddCourse";
+import EditCourse from "./pages/admin/EditCourse";
+import DisplayComplaint from "./pages/admin/DisplayComplaints";
+import EditComplaint from "./pages/admin/EditComplaint";
+import DisplayCourse from "./pages/admin/DisplayCourse";
+import DisplaySubject from "./pages/admin/DisplaySubject";
 
 // TEACHER IMPORTS
-import TeacherDashboard from './pages/teacher/TeacherDashboard'
-import TeacherAddNotice from './pages/teacher/TeacherAddNotice'
-import TeacherDisplayNotice from './pages/teacher/TeacherDisplayNotice'
-import TeacherProfile from './pages/teacher/TeacherProfile';
-import TeacherDisplayStudent from './pages/teacher/TeacherDisplayStudent'
-import TeacherStudentAttendance from './pages/teacher/TeacherStudentAttendance'
-import TeacherStudentMarks from './pages/teacher/TeacherStudentMarks';
-import TeacherStudentMarksOverview from './pages/teacher/TeacherStudentMarksOverview';
+import TeacherDashboard from "./pages/teacher/TeacherDashboard";
+import TeacherAddNotice from "./pages/teacher/TeacherAddNotice";
+import TeacherDisplayNotice from "./pages/teacher/TeacherDisplayNotice";
+import TeacherProfile from "./pages/teacher/TeacherProfile";
+import TeacherDisplayStudent from "./pages/teacher/TeacherDisplayStudent";
+import TeacherStudentAttendance from "./pages/teacher/TeacherStudentAttendance";
+import TeacherStudentMarks from "./pages/teacher/TeacherStudentMarks";
+import TeacherStudentMarksOverview from "./pages/teacher/TeacherStudentMarksOverview";
+import TeacherDisplayTeacher from "./pages/teacher/TeacherDisplayTeacher";
+import TeacherDisplayCourse from "./pages/teacher/TeacherDisplayCourse";
 
 // STUDENT IMPORTS
-import StudentMarksOverview from './pages/admin/StudentMarksOverview';
-import StudentAttendance from './pages/admin/StudentAttendance';
-import StudentLogin from './pages/student/StudentLogin';
-import StudentDashboard from './pages/student/StudentDashboard';
-import StudentFees from './pages/admin/StudentFees';
-import StudentProfile from './pages/student/StudentProfile';
-import StudentFee from './pages/student/StudentFee';
-import Student_Attendance from './pages/student/Student_Attendance';
-import StudentExam from './pages/student/StudentExam';
-import Registration from './pages/student/Registration';
+import StudentMarksOverview from "./pages/admin/StudentMarksOverview";
+import StudentAttendance from "./pages/admin/StudentAttendance";
+import StudentLogin from "./pages/student/StudentLogin";
+import StudentDashboard from "./pages/student/StudentDashboard";
+import StudentFees from "./pages/admin/StudentFees";
+import StudentProfile from "./pages/student/StudentProfile";
+import StudentFee from "./pages/student/StudentFee";
+import Student_Attendance from "./pages/student/Student_Attendance";
+import StudentExam from "./pages/student/StudentExam";
+import Registration from "./pages/student/Registration";
+import StudentComplaint from "./pages/student/StudentComplaint";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route
-          path='/'
-          element={<Home />}
-        />
+        <Route path="/" element={<Home />} />
         {/* *****************************ADMIN ROUTES***********************************  */}
         <Route
           path='/login'
@@ -65,13 +87,16 @@ function App() {
           element={<Dashboard />}
         />
         <Route
-          path='/admin/profile'
+          path='/admin/profile/:id'
           element={<Profile />}
         />
-
         <Route
-        path='/register'
-        element={<Registration />}
+          path='/admin/profile-edit/:id'
+          element={<ProfileEdit />}
+        />
+        <Route
+          path='/register'
+          element={<Registration />}
         />
         <Route
           path='/admin/add-student'
@@ -87,36 +112,36 @@ function App() {
         />
         <Route
           path='/admin/student-attendance'
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/profile" element={<Profile />} />
+
+        <Route path="/register" element={<Registration />} />
+        <Route path="/admin/add-student" element={<AddStudent />} />
+        <Route path="/admin/display-students" element={<DisplayStudent />} />
+        <Route path="/admin/edit-student/:id" element={<EditStudent />} />
+        <Route
+          path="/admin/student-attendance"
           element={<StudentAttendance />}
         />
+        <Route path="/admin/student-marks" element={<StudentMarksOverview />} />
+        <Route path="/admin/student-marks/:id" element={<StudentMarks />} />
+        <Route path="/admin/student-fees" element={<StudentFees />} />
+        <Route path="/admin/add-teacher" element={<AddTeacher />} />
+        <Route path="/admin/display-teachers" element={<DisplayTeacher />} />
+        <Route path="/admin/edit-teacher/:id" element={<EditTeacher />} />
         <Route
-          path='/admin/student-marks'
-          element={<StudentMarksOverview />}
-        />
-        <Route
-          path='/admin/student-marks/:id'
-          element={<StudentMarks />}
-        />
-        <Route
-          path='/admin/student-fees'
-          element={<StudentFees />}
-        />
-        <Route
-          path='/admin/add-teacher'
-          element={<AddTeacher />}
-        />
-        <Route
-          path='/admin/display-teachers'
-          element={<DisplayTeacher />}
-        />
-        <Route
-          path='/admin/edit-teacher/:id'
-          element={<EditTeacher />}
-        />
-        <Route
-          path='/admin/teacher-attendance'
+          path="/admin/teacher-attendance"
           element={<TeacherAttendance />}
         />
+        <Route path="/admin/add-notice" element={<AddNotice />} />
+        <Route path="/admin/display-notices" element={<DisplayNotice />} />
+        <Route path="/admin/add-subject" element={<AddSubject />} />
+        <Route path="/admin/display-subjects" element={<DisplaySubject />} />
+        <Route path="/admin/edit-subject/:id" element={<EditSubject />} />
+        <Route path="/admin/add-course" element={<AddCourse />} />
+        <Route path="/admin/display-courses" element={<DisplayCourse />} />
+        <Route path="/admin/edit-course/:id" element={<EditCourse />} />
         <Route
           path='/admin/add-notice'
           element={<AddNotice />}
@@ -141,81 +166,67 @@ function App() {
           path='/admin/edit-course/:id'
           element={<EditCourse />}
         />
-        <Route 
-        path='/admin/display-complaints'
-        element = {<DisplayComplaint/>}
+        <Route
+          path='/admin/display-complaints'
+          element={<DisplayComplaint />}
         />
-        <Route 
-        path='/admin/edit-complaint/:id'
-        element = {<EditComplaint/>}
+        <Route
+          path='/admin/edit-complaint/:id'
+          element={<EditComplaint />}
+          path="/admin/display-complaints"
+          element={<DisplayComplaint />}
         />
+        <Route path="/admin/edit-complaint/:id" element={<EditComplaint />} />
 
         {/* *****************************TEACHER ROUTES***********************************  */}
+        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+        <Route path="/teacher/profile" element={<TeacherProfile />} />
+        <Route path="/teacher/add-notice" element={<TeacherAddNotice />} />
         <Route
-          path='/teacher/dashboard'
-          element={<TeacherDashboard />}
-        />
-
-        <Route
-          path='/teacher/profile'
-          element={<TeacherProfile />}
-        />
-
-        <Route
-          path='/teacher/add-notice'
-          element={<TeacherAddNotice />}
-        />
-
-        <Route
-          path='/teacher/display-notice'
+          path="/teacher/display-notice"
           element={<TeacherDisplayNotice />}
         />
+        <Route
+          path="/teacher/display-course"
+          element={<TeacherDisplayCourse />}
+        />
 
         <Route
-          path='/teacher/display-students'
+          path="/teacher/display-students"
           element={<TeacherDisplayStudent />}
         />
 
         <Route
-          path='/teacher/student-attendance'
+          path="/teacher/display-teachers"
+          element={<TeacherDisplayTeacher />}
+        />
+
+        <Route
+          path="/teacher/student-attendance"
           element={<TeacherStudentAttendance />}
         />
 
         <Route
-          path='/teacher/student-marks/:id'
+          path="/teacher/student-marks/:id"
           element={<TeacherStudentMarks />}
         />
 
         <Route
-          path='/teacher/student-marks'
+          path="/teacher/student-marks"
           element={<TeacherStudentMarksOverview />}
         />
 
         {/* *****************************STUDENT ROUTES***********************************  */}
+        <Route path="/student/fee" element={<StudentFee />} />
+        <Route path="/student/attendance" element={<Student_Attendance />} />
         <Route
-          path='/student/fee'
-          element={<StudentFee />}
-        />
-        <Route
-          path='/student/attendance'
-          element={<Student_Attendance />}
-        />
-        <Route
-          path='/student/profile'
-          element={<StudentProfile />}
-        />
-        <Route
-          path='/student/exam'
-          element={<StudentExam />}
-        />
-        <Route
-          path='/student/login'
-          element={<StudentLogin />}
-        />
-        <Route
-          path='/student/dashboard'
-          element={<StudentDashboard />}
+          path="/student/display-complaints"
+          element={<StudentComplaint />}
         ></Route>
+        <Route path="/student/profile" element={<StudentProfile />} />
+        <Route path="/student/exam" element={<StudentExam />} />
+        <Route path="/student/login" element={<StudentLogin />} />
+        <Route path="/student/dashboard" element={<StudentDashboard />}></Route>
       </Routes>
 
       <ToastContainer
@@ -232,7 +243,7 @@ function App() {
         transition={Zoom}
       />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

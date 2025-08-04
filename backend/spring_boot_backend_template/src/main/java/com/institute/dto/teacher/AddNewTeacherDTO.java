@@ -1,5 +1,6 @@
 package com.institute.dto.teacher;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.institute.entities.enums.Gender;
@@ -19,7 +20,7 @@ public class AddNewTeacherDTO {
 	
 	private String password;
 	
-	private double salary;
+	private BigDecimal salary;
 
 	private LocalDate joiningDate;
 	

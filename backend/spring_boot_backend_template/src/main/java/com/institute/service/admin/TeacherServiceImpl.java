@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.institute.dao.LoginDao;
+import com.institute.dto.teacher.*;
+import com.institute.entities.Login;
+import com.institute.entities.enums.Role;
 import lombok.AllArgsConstructor;
-import com.institute.dto.teacher.TeacherProfileDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +16,12 @@ import org.springframework.stereotype.Service;
 import com.institute.dao.TeacherDao;
 import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.ApiResponse;
-import com.institute.dto.teacher.AddNewTeacherDTO;
-import com.institute.dto.teacher.DisplayTeacherDTO;
 import com.institute.entities.Teacher;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 import com.institute.exception.customexceptions.ResourceNotFoundException;
 
 import jakarta.transaction.Transactional;
-import com.institute.dto.teacher.TeacherAttendanceDTO;
 
 @Service
 @Transactional
@@ -39,16 +38,38 @@ public class TeacherServiceImpl implements TeacherService {
 		if (loginDao.existsByEmail(addTeacher.getEmail())) {
 			throw new ApiException("Duplicate email");
 		}
-		Teacher entity = modelMapper.map(addTeacher, Teacher.class);
-		teacherDao.save(entity);
+		Login login = new Login();
+		login.setEmail(addTeacher.getEmail());
+		login.setPassword(addTeacher.getPassword());
+		login.setRole(Role.TEACHER);
+		login.setStatus(Status.ACTIVE);
+
+		loginDao.save(login);
+
+		Teacher teacher = new Teacher();
+		teacher.setName(addTeacher.getName());
+		teacher.setPhoneNumber(addTeacher.getPhoneNumber());
+		teacher.setSalary(addTeacher.getSalary());
+		teacher.setJoiningDate(addTeacher.getJoiningDate());
+		teacher.setAddress(addTeacher.getAddress());
+		teacher.setGender(addTeacher.getGender());
+		teacher.setImage(addTeacher.getImage());
+		teacher.setUser(login);  // Link Login with Teacher
+		teacherDao.save(teacher);
 		return new ApiResponse("New Teacher Added");
 	}
-	
+
 	@Override
 	public List<DisplayTeacherDTO> displayTeachers() {
 		return teacherDao.findByStatus(Status.ACTIVE)
 				.stream()
-				.map(teacher -> modelMapper.map(teacher, DisplayTeacherDTO.class))
+				.map(teacher -> {
+					DisplayTeacherDTO dto = modelMapper.map(teacher, DisplayTeacherDTO.class);
+					if (teacher.getUser() != null) {
+						dto.setEmail(teacher.getUser().getEmail());
+					}
+					return dto;
+				})
 				.toList();
 	}
 
@@ -62,6 +83,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public ApiResponse editTeacherById(AdminEditTeacherDTO teacherDto, Long id) {
 		Teacher teacher = teacherDao.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No teacher exist with id: " + id));
+
 		teacher.setName(teacherDto.getName());
 		teacher.setPhoneNumber(teacherDto.getPhoneNumber());
 		teacher.setSalary(teacherDto.getSalary());
@@ -72,14 +94,20 @@ public class TeacherServiceImpl implements TeacherService {
 		teacher.setImage(teacherDto.getImage());
 
 		if (teacher.getUser() != null) {
+//			HOw to send steucture message back, instead of auto generated on duplicate email?
+//			if(loginDao.existsByEmail(teacherDto.getEmail())){
+//				throw new ApiException("Email id already exists");
+//			}
 			teacher.getUser().setEmail(teacherDto.getEmail());
 			teacher.getUser().setPassword(teacherDto.getPassword());
+		} else {
+			throw new ApiException("Teacher has no linked login user account");
 		}
 
 		teacherDao.save(teacher);
-		return new ApiResponse("Teacher id : " + id + "successfully updated");			
-
+		return new ApiResponse("Teacher id : " + id + " successfully updated");
 	}
+
 
 	@Override
 	public TeacherProfileDTO findTeacherById(Long teacherId) {
@@ -89,6 +117,20 @@ public class TeacherServiceImpl implements TeacherService {
 		TeacherProfileDTO teacherProfileDTO = modelMapper.map(entity, TeacherProfileDTO.class);
 
 		return teacherProfileDTO;
+	}
+
+	@Override
+	public ApiResponse softDeleteTeacher(AdminDeleteTeacherDTO teacher, Long id) {
+		Teacher entity = teacherDao.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No teacher exists with id: " + id));
+		entity.setStatus(teacher.getStatus());
+
+		if (entity.getUser() != null) {
+			entity.getUser().setStatus(teacher.getStatus());
+		}
+
+		teacherDao.save(entity);
+		return new ApiResponse("Teacher id: " + id + " deleted successfully");
 	}
 }
 

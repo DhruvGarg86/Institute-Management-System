@@ -36,7 +36,7 @@ function DisplayNotice() {
             fetchNotices();
             setShowModal(false);
             setSelectedNotice(null);
-            toast.success("Notice deleted successfully");
+            toast.info("Notice deleted successfully");
         } catch (error) {
             console.error("Error deleting notice:", error);
         }

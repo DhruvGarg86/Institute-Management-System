@@ -8,9 +8,9 @@ import {
     ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject
 } from '@syncfusion/ej2-react-grids';
 import { toast } from 'react-toastify';
+import { deleteTeacherById, getAllTeachers } from '../../services/Admin/Teacher';
 import { getAllTeachers } from '../../services/Admin/Teacher';
-
-
+import TeacherSidebar from '../teacher/TeacherSidebar';
 
 function DisplayTeacher() {
 
@@ -19,6 +19,7 @@ function DisplayTeacher() {
 
     const [teachers, setTeachers] = useState([]);
 
+    // Function to load all teachers
     const loadAllTeachers = async () => {
         try {
             const data = await getAllTeachers();
@@ -35,18 +36,29 @@ function DisplayTeacher() {
         }
     };
 
+    // Call the loadAllTeachers function when the component mounts
     useEffect(() => {
         loadAllTeachers();
     }, []);
 
-
+    // Function to SOFT delete a teacher
+    const deleteTeacher = async (id) => {
+        try {
+            await deleteTeacherById(id);
+            toast.success("Teacher deleted successfully");
+            loadAllTeachers();
+        } catch (error) {
+            console.error("Error deleting teacher:", error); // For debugging purposes only
+            toast.error("Failed to delete teachers. Please try again later.");
+        }
+    }
     return (
         <>
             <Navbar />
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
                     <div className="col-2-5 admin-dashboard-first">
-                        <Sidebar />
+                        <TeacherSidebar />
                     </div>
                     <div className="col-7-5 admin-dashboard-second p-4">
                         <div className="card p-4 shadow">
@@ -97,7 +109,7 @@ function DisplayTeacher() {
                                                     </button>
                                                     <button
                                                         className="btn btn-sm btn-light text-danger"
-                                                        onClick={() => navigate(`Delete action for:/${props.id}`)}
+                                                        onClick={() => deleteTeacher(props.id)}
                                                     >
                                                         <FaTrash />
                                                     </button>

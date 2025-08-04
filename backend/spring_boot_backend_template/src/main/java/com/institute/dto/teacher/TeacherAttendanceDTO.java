@@ -22,4 +22,16 @@ public class TeacherAttendanceDTO {
 	private String phoneNumber;
 	private BigDecimal attendancePercentage;
 	private Status status;
+
+	public TeacherAttendanceDTO(String image, String name, String email, LocalDate joiningDate,
+								String phoneNumber, Status status, Long id, BigDecimal attendancePercentage) {
+		this.image = image;
+		this.name = name;
+		this.email = email;
+		this.joiningDate = joiningDate;
+		this.phoneNumber = phoneNumber;
+		this.status = status;
+		this.id = id;
+		this.attendancePercentage = attendancePercentage;
+	}
 }

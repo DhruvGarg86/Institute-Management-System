@@ -28,12 +28,12 @@ function StudentFee() {
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-4">
+      <div className="container-fluid mt-2">
         <div className="row">
-          <div className="col-2-5">
+          <div className="col-2 px-2">
             <StudentSidebar />
           </div>
-          <div className="col-7-5">
+          <div className="col-10">
             <h2 className="mb-4 student-center">Fee Details</h2>
             <div className="table-responsive">
               <table className="table table-bordered table-hover table-striped">

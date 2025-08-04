@@ -22,7 +22,7 @@ function Navbar() {
                         </button>
                     </div>
                     <div className='navbar-second-part'>
-                        <span className='navbar-second-part-admin-name'><a href='/admin/profile' style={{ textDecoration: 'none', color: 'black' }}>Dhruv Garg</a></span>
+                        <span className='navbar-second-part-admin-name' style={{ textDecoration: 'none', color: 'black', cursor: 'pointer' }} onClick={() => navigate("/admin/profile/1")}>Dhruv Garg</span>
                         <RiLogoutCircleRLine size={24} className='admin-navbar-logout'
                             onClick={() => handleLogout()}
                         />

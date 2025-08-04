@@ -2,6 +2,7 @@ package com.institute.controllers.admin;
 
 import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.teacher.AddNewTeacherDTO;
+import com.institute.dto.teacher.AdminDeleteTeacherDTO;
 import com.institute.security.AuthUtil;
 import com.institute.service.admin.TeacherService;
 
@@ -34,12 +35,18 @@ public class TeacherController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.addNewTeacher(teacher));
 	}
 	
-	@PutMapping("/edit-teacher")
+	@PutMapping("/edit-teacher/{id}")
 	@Operation(summary="Admin-teacher-EditTeacher")
-	public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher){
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, AuthUtil.getCurrentUserId()));
+	public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher, @PathVariable Long id){
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, id));
 	}
-	
+
+	@PutMapping("/delete-teacher/{id}")
+	@Operation(summary = "Admin-teacher-SOFT DELETE TEACHER")
+	public ResponseEntity<?> deleteTeacher(@RequestBody AdminDeleteTeacherDTO teacher, @PathVariable Long id){
+		return ResponseEntity.status(HttpStatus.OK).body(teacherService.softDeleteTeacher(teacher, id));
+	}
+
 	@GetMapping("/display-teachers")
 	@Operation(summary="Admin-teacher-DisplayAllTeacher")
 	public ResponseEntity<?> displayAllTeachers(){
