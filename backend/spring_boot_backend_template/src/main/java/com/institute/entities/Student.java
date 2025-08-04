@@ -29,8 +29,8 @@ public class Student extends BaseEntity {
     @Column(name = "address", length = 255)
     private String address;
 
-    @Column(name = "image_path", length = 255)
-    private String imagePath;
+    @Column(name = "image", length = 500)
+    private String image;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false, length = 10)
