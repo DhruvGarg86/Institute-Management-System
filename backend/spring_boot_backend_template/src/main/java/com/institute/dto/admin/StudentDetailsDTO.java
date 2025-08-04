@@ -17,6 +17,6 @@ public class StudentDetailsDTO {
     private LocalDate dob;
     private String address;
     private String courseName;
-    private String imagePath;
+    private String image;
     private Status status;
 }

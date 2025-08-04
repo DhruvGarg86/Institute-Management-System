@@ -94,7 +94,7 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public AddStudentDto addStudent(AddStudentDto dto, MultipartFile imageFile) {
+    public AddStudentDto addStudent(AddStudentDto dto) {
         //  Check if email already exists in login table
         if (loginDao.existsByEmail(dto.getEmail())) {
             throw new ApiException("Student already exists.");
@@ -114,6 +114,7 @@ public class StudentServiceImpl implements StudentService {
         student.setDob(LocalDate.parse(dto.getDob()));
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
+        student.setImage(dto.getImage());
 
         // Create Login first
         Login login = new Login();
@@ -124,22 +125,7 @@ public class StudentServiceImpl implements StudentService {
         student.setUser(login); // Link login with student
         login.setStudent(student); // Back reference
 
-        //  Handle image
-        if (imageFile != null && !imageFile.isEmpty()) {
-            try {
-                Path filePath = Paths.get(uploadDir, imageFile.getOriginalFilename());
-                Files.copy(imageFile.getInputStream(), filePath);
-                student.setImagePath(imageFile.getOriginalFilename());
-            } catch (Exception e) {
-                throw new ApiException("Image upload failed.");
-            }
-        }
-
-
         Student saved = studentDao.save(student);
-
-
-        dto.setImagePath(saved.getImagePath());
         return dto;
     }
 
@@ -153,7 +139,7 @@ public class StudentServiceImpl implements StudentService {
                 student.getCourse().getName(),
                 student.getName(),
                 student.getUser().getEmail(),
-                student.getImagePath(),
+                student.getImage(),
                 student.getGender()
         );
     }
@@ -169,7 +155,7 @@ public class StudentServiceImpl implements StudentService {
                 s.getDob(),
                 s.getAddress(),
                 s.getCourse().getName(),
-                s.getImagePath(),
+                s.getImage(),
                 s.getStatus()
         )).collect(Collectors.toList());
     }
@@ -212,7 +198,7 @@ public class StudentServiceImpl implements StudentService {
                 student.getId(),
                 student.getName(),
                 student.getUser().getEmail(),
-                student.getImagePath(),
+                student.getImage(),
                 student.getDob(),
                 student.getCourse().getName(),
                 marksDetails

@@ -14,7 +14,7 @@ public class FeeResponseDto {
 
     private Long studentId;
     private String studentName;
-    private String profilePicture;
+    private String image;
     private String courseName;
     private LocalDate dueDate;
     private Double totalAmount;
