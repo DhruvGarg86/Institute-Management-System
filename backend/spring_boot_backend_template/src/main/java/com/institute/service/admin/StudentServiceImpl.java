@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,12 +52,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
+    @Autowired
     private final StudentDao studentDao;
     private final CourseDao courseDao;
     private final MarksDao marksDao;
     private final ModelMapper modelMapper;
     private final FeeDao feeDao;
     private final LoginDao loginDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${upload.path}")
     private String uploadDir;
@@ -99,10 +104,7 @@ public class StudentServiceImpl implements StudentService {
         Course course = courseDao.findByName(dto.getCourseName())
                 .orElseThrow(() -> new ApiException("Course not found"));
 
-        // Create Login first
-        Login login = new Login();
-        login.setEmail(dto.getEmail());
-        login.setRole(Role.STUDENT);
+
 
         // Create Student and link Login
         Student student = new Student();
@@ -112,6 +114,13 @@ public class StudentServiceImpl implements StudentService {
         student.setDob(LocalDate.parse(dto.getDob()));
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
+
+        // Create Login first
+        Login login = new Login();
+        login.setEmail(dto.getEmail());
+        login.setPassword(passwordEncoder.encode(student.getEncodedPassword(dto.getName())));
+        login.setRole(Role.STUDENT);
+
         student.setUser(login); // Link login with student
         login.setStudent(student); // Back reference
 

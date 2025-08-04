@@ -4,8 +4,7 @@ import { ToastContainer, Zoom } from "react-toastify";
 
 import Home from "./pages/Home";
 
-// ADMIN IMPORTS
-import Login from './pages/admin/Login';
+// ADMIN IMPORTSimport Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import AddStudent from './pages/admin/AddStudent';
 import EditStudent from './pages/admin/EditStudent';
@@ -26,26 +25,8 @@ import EditCourse from './pages/admin/EditCourse';
 import DisplayComplaint from './pages/admin/DisplayComplaints';
 import EditComplaint from './pages/admin/EditComplaint';
 import Login from "./pages/admin/Login";
-import Dashboard from "./pages/admin/Dashboard";
-import AddStudent from "./pages/admin/AddStudent";
-import EditStudent from "./pages/admin/EditStudent";
-import StudentMarks from "./pages/admin/StudentMarks";
-import DisplayStudent from "./pages/admin/DisplayStudent";
-import AddTeacher from "./pages/admin/AddTeacher";
-import DisplayTeacher from "./pages/admin/DisplayTeacher";
-import EditTeacher from "./pages/admin/EditTeacher";
-import TeacherAttendance from "./pages/admin/TeacherAttendance";
-import AddNotice from "./pages/admin/AddNotice";
-import DisplayNotice from "./pages/admin/DisplayNotice";
-import Profile from "./pages/admin/Profile";
-import AddSubject from "./pages/admin/AddSubject";
-import EditSubject from "./pages/admin/EditSubject";
-import AddCourse from "./pages/admin/AddCourse";
-import EditCourse from "./pages/admin/EditCourse";
-import DisplayComplaint from "./pages/admin/DisplayComplaints";
-import EditComplaint from "./pages/admin/EditComplaint";
-import DisplayCourse from "./pages/admin/DisplayCourse";
-import DisplaySubject from "./pages/admin/DisplaySubject";
+import DisplayCourse from './pages/admin/DisplayCourse';
+import DisplaySubject from './pages/admin/DisplaySubject';
 
 // TEACHER IMPORTS
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
@@ -112,6 +93,8 @@ function App() {
         />
         <Route
           path='/admin/student-attendance'
+          element={<StudentAttendance />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/profile" element={<Profile />} />
@@ -173,6 +156,8 @@ function App() {
         <Route
           path='/admin/edit-complaint/:id'
           element={<EditComplaint />}
+        />
+        <Route
           path="/admin/display-complaints"
           element={<DisplayComplaint />}
         />

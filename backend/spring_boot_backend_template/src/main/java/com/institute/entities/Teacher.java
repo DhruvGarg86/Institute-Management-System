@@ -59,5 +59,10 @@ public class Teacher extends BaseEntity {
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();
 
+	public String getEncodedPassword(String name)
+	{
+		String defaultName = name + "@123";
+		return defaultName;
+	}
 
 }

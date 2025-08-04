@@ -13,20 +13,18 @@ import lombok.Setter;
 
 public class AddNewTeacherDTO {
 	private String name;
-	
+
 	private String phoneNumber;
-	
+
 	private String email;
-	
-	private String password;
-	
+
 	private BigDecimal salary;
 
 	private LocalDate joiningDate;
-	
+
 	private String address;
-	
+
 	private Gender gender;
-	
-	private String image;	
+
+	private String image;
 }

@@ -19,9 +19,7 @@ public class AdminEditTeacherDTO {
 	private String phoneNumber;
 	
 	private String email;
-	
-	private String password;
-	
+
 	private BigDecimal salary;
 
 	private LocalDate joiningDate;
