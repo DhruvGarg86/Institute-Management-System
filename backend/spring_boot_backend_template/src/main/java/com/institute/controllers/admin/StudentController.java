@@ -4,6 +4,7 @@ package com.institute.controllers.admin;
 import java.util.List;
 
 import com.institute.security.AuthUtil;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ import com.institute.dto.admin.UpdateStudentRequestDto;
 import com.institute.service.admin.StudentService;
 
 import lombok.AllArgsConstructor;
-
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/admin/student")
 @AllArgsConstructor
