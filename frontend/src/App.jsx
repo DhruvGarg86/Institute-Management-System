@@ -37,6 +37,7 @@ import TeacherStudentAttendance from "./pages/teacher/TeacherStudentAttendance";
 import TeacherStudentMarks from "./pages/teacher/TeacherStudentMarks";
 import TeacherStudentMarksOverview from "./pages/teacher/TeacherStudentMarksOverview";
 import TeacherDisplayTeacher from "./pages/teacher/TeacherDisplayTeacher";
+import TeacherDisplayCourse from "./pages/teacher/TeacherDisplayCourse";
 
 // STUDENT IMPORTS
 import StudentMarksOverview from "./pages/admin/StudentMarksOverview";
@@ -95,14 +96,15 @@ function App() {
 
         {/* *****************************TEACHER ROUTES***********************************  */}
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
-
         <Route path="/teacher/profile" element={<TeacherProfile />} />
-
         <Route path="/teacher/add-notice" element={<TeacherAddNotice />} />
-
         <Route
           path="/teacher/display-notice"
           element={<TeacherDisplayNotice />}
+        />
+        <Route
+          path="/teacher/display-course"
+          element={<TeacherDisplayCourse />}
         />
 
         <Route
@@ -110,7 +112,10 @@ function App() {
           element={<TeacherDisplayStudent />}
         />
 
-        <Route path="/teacher/display-teachers" element={<TeacherDisplayTeacher />} />
+        <Route
+          path="/teacher/display-teachers"
+          element={<TeacherDisplayTeacher />}
+        />
 
         <Route
           path="/teacher/student-attendance"
