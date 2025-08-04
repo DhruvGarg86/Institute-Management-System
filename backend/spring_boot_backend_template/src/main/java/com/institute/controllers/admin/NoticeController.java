@@ -38,7 +38,7 @@ public class NoticeController {
 	}
 	
 	@DeleteMapping("/delete-notice/{id}")
-	@Operation(summary = "Admin-Panel-DeleteNotice SOFT DELETE")
+	@Operation(summary = "Admin-Panel-DeleteNotice HARD DELETE")
 	public ResponseEntity<?> deleteNotice(@PathVariable Long id){
 		return ResponseEntity.ok(noticeService.deleteNotice(id));
 	}

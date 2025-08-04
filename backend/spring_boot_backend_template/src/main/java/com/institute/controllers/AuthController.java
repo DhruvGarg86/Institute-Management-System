@@ -1,5 +1,13 @@
 package com.institute.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
+
 import com.institute.dao.LoginDao;
 import com.institute.dto.AuthRequest;
 import com.institute.dto.AuthResponse;
@@ -20,6 +28,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 @AllArgsConstructor
 public class AuthController {
 

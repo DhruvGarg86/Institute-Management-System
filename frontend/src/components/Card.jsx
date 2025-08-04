@@ -1,5 +1,5 @@
 import React from 'react'
-import laptopImg from '../assets/laptop.svg'
+import laptopImg from '../assets/profile.svg'
 import '../../src/index.css'
 
 function Card() {

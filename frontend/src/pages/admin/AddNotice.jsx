@@ -1,9 +1,9 @@
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
-import { RichTextEditorComponent, Toolbar, HtmlEditor, Inject } from '@syncfusion/ej2-react-richtexteditor';
+import { RichTextEditorComponent, Toolbar, HtmlEditor, Inject, QuickToolbar } from '@syncfusion/ej2-react-richtexteditor';
 import { useRef, useState } from 'react';
-// import { addNoticeByAdmin, uploadNoticeFile } from '../../services/Admin/Notices';
+import { addNoticeByAdmin } from '../../services/Admin/Notices';
 
 function AddNotice() {
     const [role, setRole] = useState('');
@@ -39,10 +39,11 @@ function AddNotice() {
             setTitle('');
             setRole('');
             setFile(null);
-            editorRef.current.setHtml('');
-            editorRef.current.refresh();
+            editorRef.current.value = '';
+            editorRef.current.dataBind();
         } catch (error) {
             toast.error('Failed to add notice');
+            console.log("Error: ", error);
         }
     };
 
@@ -92,11 +93,11 @@ function AddNotice() {
                                             ref={editorRef}
                                             toolbarSettings={{
                                                 items: [
-                                                    'Bold', 'Italic', 'Underline', 'StrikeThrough', 'FontName', 'FontSize', 'LowerCase',
+                                                    'Bold', 'Italic', 'Underline', 'StrikeThrough', 'LowerCase',
                                                     'UpperCase', '|', 'Formats', 'Alignments', 'OrderedList', 'UnorderedList'
                                                 ]
                                             }}>
-                                            <Inject services={[Toolbar, HtmlEditor]} />
+                                            <Inject services={[Toolbar, HtmlEditor, QuickToolbar]} />
                                         </RichTextEditorComponent>
                                     </div>
                                 </div>

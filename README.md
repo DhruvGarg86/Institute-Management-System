@@ -110,10 +110,21 @@
 
 ## August 2025
 
-### 2nd July — Backend/API - Image Path (Admin)
+### 2nd July — Backend/API (Admin)
 - Fixed 'Teacher APIs' with dto.
 - Added frontend pages for 'Display Complaint' and 'Update Complaint'
-- Added 'Subject' and 'Course' pages to the sidebar/admin.
+- Added 'Subject' and 'Course' pages to the sidebar/admin in frontend.
+
+### 2nd July — Backend + Frontend Integration
+- 'DisplayTeacher' and 'AddTeacher' made consistent with 'Login' table.
+- Created 'Profile' and 'EditProfile' page for admin.
+- Created 'Teacher' service for calling backend APIs
+- Created a separate backend API for storing the images in particular folder on local-disk and return the path of the image.
+- Connected 'AdminProfile' frontend with backend along with image upload support.
+
+### 3rd July — Backend + Frontend Integration
+- 'AdminDashboard' integration completed except 'TopStudent'.
+- 'AddNotice' upload yet to be configured for Amazon S3 bucket Service.
 ---
 
 *For detailed technical and UI design documentation, see the project’s `/Documentation` folder.*
