@@ -18,6 +18,7 @@ import TeacherAttendance from './pages/admin/TeacherAttendance';
 import AddNotice from './pages/admin/AddNotice';
 import DisplayNotice from './pages/admin/DisplayNotice';
 import Profile from './pages/admin/Profile';
+import ProfileEdit from './pages/admin/ProfileEdit';
 import AddSubject from './pages/admin/AddSubject';
 import EditSubject from './pages/admin/EditSubject';
 import AddCourse from './pages/admin/AddCourse';
@@ -65,13 +66,16 @@ function App() {
           element={<Dashboard />}
         />
         <Route
-          path='/admin/profile'
+          path='/admin/profile/:id'
           element={<Profile />}
         />
-
         <Route
-        path='/register'
-        element={<Registration />}
+          path='/admin/profile-edit/:id'
+          element={<ProfileEdit />}
+        />
+        <Route
+          path='/register'
+          element={<Registration />}
         />
         <Route
           path='/admin/add-student'
@@ -141,13 +145,13 @@ function App() {
           path='/admin/edit-course/:id'
           element={<EditCourse />}
         />
-        <Route 
-        path='/admin/display-complaints'
-        element = {<DisplayComplaint/>}
+        <Route
+          path='/admin/display-complaints'
+          element={<DisplayComplaint />}
         />
-        <Route 
-        path='/admin/edit-complaint/:id'
-        element = {<EditComplaint/>}
+        <Route
+          path='/admin/edit-complaint/:id'
+          element={<EditComplaint />}
         />
 
         {/* *****************************TEACHER ROUTES***********************************  */}

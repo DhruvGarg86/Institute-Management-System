@@ -72,7 +72,7 @@ function TeacherAttendance() {
                                 }}
                             >
                                 <ColumnsDirective>
-                                    <ColumnDirective field='image' headerText='Profile' width={50} allowFiltering={false} allowSorting={false}
+                                    <ColumnDirective field='image' headerText='Profile' width={50} allowFiltering={false} allowSorting={false} allowSearching={false}
                                         template={(props) => (
                                             <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '30px', width: '30px', objectFit: 'cover' }} />
                                         )} />

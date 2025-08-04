@@ -34,10 +34,13 @@ public class SecurityConfig {
                                 "/v3/api-docs/**", "/register", "/login")
                         .permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/student/**").hasRole("STUDENT")
-                        .requestMatchers("/teacher/**").hasRole("TEACHER")
-                        .anyRequest().authenticated()
+                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/student/**").permitAll()
+                        .requestMatchers("/teacher/**").permitAll()
+                        .requestMatchers("/image/**").permitAll()
+                        .requestMatchers("/TeacherImages/**").permitAll()
+
+                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

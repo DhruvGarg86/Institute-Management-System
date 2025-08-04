@@ -21,6 +21,9 @@ public class Admin extends BaseEntity {
 	@Column(name = "name", length = 15, nullable = false )
 	private String name;
 
+	@Column(name = "image", length = 500)
+	private String image;
+
 	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 
