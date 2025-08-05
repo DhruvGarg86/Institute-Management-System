@@ -18,7 +18,7 @@ public class StudentMarksResponseDto {
     private Long studentId;
     private String name;
     private String email;
-    private String imagePath;
+    private String image;
     private LocalDate dob;
     private String courseName;
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StudentService {
     List<ActiveStudentsDto> allActiveStudents();
-    AddStudentDto addStudent(AddStudentDto studentDTO, MultipartFile imageFile);
+    AddStudentDto addStudent(AddStudentDto studentDTO);
     TopperStudentDTO getTopperStudent();
     List<StudentDetailsDTO> getAllStudentDetails();
     ApiResponse deleteStudentById(Long id);

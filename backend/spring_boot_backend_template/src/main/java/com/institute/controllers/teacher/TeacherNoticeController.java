@@ -19,11 +19,4 @@ public class TeacherNoticeController {
     public ResponseEntity<?> getNotices(){
         return ResponseEntity.ok(noticeService.getAllNotices());
     }
-
-    @PostMapping("/add-notice")
-    @Operation(summary = "Teacher-Panel-AddNotice")
-    public ResponseEntity<?> addNotice(@RequestBody AdminAddNoticeDTO dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(noticeService.addNotice(dto));
-
-    }
 }

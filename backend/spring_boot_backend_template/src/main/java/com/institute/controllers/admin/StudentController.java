@@ -4,14 +4,7 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.institute.dto.admin.AddStudentDto;
@@ -45,20 +38,8 @@ public class StudentController {
 
     @Operation(summary = "Add a student with profile image")
     @PostMapping(value = "/addStudent", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AddStudentDto> addStudent(
-        @Parameter(
-            description = "Student JSON object",
-            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AddStudentDto.class))
-        )
-        @RequestPart("student") AddStudentDto student,
-
-        @Parameter(
-            description = "Profile image file",
-            content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-        )
-        @RequestPart(value = "image", required = false) MultipartFile image
-    ) {
-        AddStudentDto saved = studentService.addStudent(student, image);
+    public ResponseEntity<AddStudentDto> addStudent(@RequestBody AddStudentDto dto){
+        AddStudentDto saved = studentService.addStudent(dto);
         return ResponseEntity.ok(saved);
     }
 
@@ -72,9 +53,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.deleteStudentById(AuthUtil.getCurrentUserId()));
     }
 
-    @GetMapping("/getMarks")
-    public ResponseEntity<?> getStudentMarks() {
-        return ResponseEntity.ok(studentService.getStudentWithMarks(AuthUtil.getCurrentUserId()));
+    @GetMapping("/getMarks/{studentId}")
+    public ResponseEntity<?> getStudentMarks(@PathVariable Long studentId) {
+        return ResponseEntity.ok(studentService.getStudentWithMarks(studentId));
     }
 
     @PutMapping("/updateStudent")

@@ -19,7 +19,10 @@ public class ImageController {
     private final FileService fileService;
 
     @Value("${project.image}")
-    private String path;
+    private String imagePath;
+
+    @Value("${project.pdf}")
+    private String pdfPath;
 
     public ImageController(FileService fileService) {
         this.fileService = fileService;
@@ -30,7 +33,7 @@ public class ImageController {
     )
     public ResponseEntity<ImageResponse> uploadImage(@RequestParam("image") MultipartFile image) {
         try {
-            String fileName = fileService.uploadImages(path, image);
+            String fileName = fileService.uploadImages(imagePath, image);
 
             // URL to access image
             String relativePath = "/TeacherImages/" + fileName;
@@ -39,6 +42,21 @@ public class ImageController {
 
         } catch (IOException e) {
             return new ResponseEntity<>(new ImageResponse(null, "Image upload failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping(value = "/upload-pdf", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ImageResponse> uploadPdf(@RequestParam("pdf") MultipartFile pdf) {
+        try {
+            if (pdf.getContentType() == null || !pdf.getContentType().equalsIgnoreCase("application/pdf")) {
+                return new ResponseEntity<>(new ImageResponse(null, "Only PDF files are allowed"), HttpStatus.BAD_REQUEST);
+            }
+
+            String fileName = fileService.uploadPdfs(pdfPath, pdf);
+            String relativePath = "/NoticePDFs/" + fileName;
+
+            return new ResponseEntity<>(new ImageResponse(relativePath, "PDF uploaded successfully"), HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(new ImageResponse(null, "PDF upload failed"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const navigate = useNavigate();
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-    const handleLogout = () => {
-        setTimeout(() => {
-            navigate("/login");
-        }, 500); // in ms
+    const handleLogOut = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        navigate("/login");
     };
 
     return (
@@ -22,16 +23,36 @@ function Navbar() {
                         </button>
                     </div>
                     <div className='navbar-second-part'>
-                        <span className='navbar-second-part-admin-name' style={{ textDecoration: 'none', color: 'black', cursor: 'pointer' }} onClick={() => navigate("/admin/profile/1")}>Dhruv Garg</span>
-                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout'
-                            onClick={() => handleLogout()}
+                        <span
+                            className='navbar-second-part-admin-name'
+                            style={{ textDecoration: 'none', color: 'black', cursor: 'pointer' }}
+                            onClick={() => navigate("/admin/profile/1")}
+                        >
+                            Dhruv Garg
+                        </span>
+                        <RiLogoutCircleRLine
+                            size={24}
+                            className='admin-navbar-logout'
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => setShowLogoutModal(true)}
                         />
                     </div>
-
                 </div>
             </nav>
+
+            {showLogoutModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h5>Are you sure you want to logout?</h5>
+                        <div className="mt-3 d-flex justify-content-center gap-3">
+                            <button className="btn btn-danger custom-button" onClick={handleLogOut}>Yes, Logout</button>
+                            <button className="btn btn-secondary custom-button" onClick={() => setShowLogoutModal(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

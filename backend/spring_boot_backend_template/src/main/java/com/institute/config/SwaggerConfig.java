@@ -12,5 +12,5 @@ import org.springframework.context.annotation.Configuration;
         bearerFormat = "JWT"
 )
 public class SwaggerConfig {
-    // This enables JWT Bearer token support in Swagger UI 🔒
+
 }

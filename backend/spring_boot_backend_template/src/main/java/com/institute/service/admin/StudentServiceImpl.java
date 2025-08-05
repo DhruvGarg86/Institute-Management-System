@@ -2,29 +2,20 @@ package com.institute.service.admin;
 
 import com.institute.dao.*;
 import com.institute.dto.ApiResponse;
-import com.institute.dto.admin.*;
 import com.institute.entities.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.institute.dao.CourseDao;
 import com.institute.dao.FeeDao;
 import com.institute.dao.MarksDao;
 import com.institute.dao.StudentDao;
-import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.ActiveStudentsDto;
 import com.institute.dto.admin.AddStudentDto;
 import com.institute.dto.admin.FeeResponseDto;
@@ -45,7 +36,6 @@ import com.institute.entities.enums.Role;
 import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 import com.institute.exception.customexceptions.ResourceNotFoundException;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -94,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public AddStudentDto addStudent(AddStudentDto dto, MultipartFile imageFile) {
+    public AddStudentDto addStudent(AddStudentDto dto) {
         //  Check if email already exists in login table
         if (loginDao.existsByEmail(dto.getEmail())) {
             throw new ApiException("Student already exists.");
@@ -114,6 +104,7 @@ public class StudentServiceImpl implements StudentService {
         student.setDob(LocalDate.parse(dto.getDob()));
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
+        student.setImagePath(dto.getImage());
 
         // Create Login first
         Login login = new Login();
@@ -124,22 +115,7 @@ public class StudentServiceImpl implements StudentService {
         student.setUser(login); // Link login with student
         login.setStudent(student); // Back reference
 
-        //  Handle image
-        if (imageFile != null && !imageFile.isEmpty()) {
-            try {
-                Path filePath = Paths.get(uploadDir, imageFile.getOriginalFilename());
-                Files.copy(imageFile.getInputStream(), filePath);
-                student.setImagePath(imageFile.getOriginalFilename());
-            } catch (Exception e) {
-                throw new ApiException("Image upload failed.");
-            }
-        }
-
-
         Student saved = studentDao.save(student);
-
-
-        dto.setImagePath(saved.getImagePath());
         return dto;
     }
 

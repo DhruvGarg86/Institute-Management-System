@@ -51,8 +51,15 @@ public class TeacherController {
 	@Operation(summary="Admin-teacher-DisplayAllTeacher")
 	public ResponseEntity<?> displayAllTeachers(){
 		return ResponseEntity.ok(teacherService.displayTeachers());
-  }
-	
+  	}
+
+	@GetMapping("/display-teacher/{id}")
+	@Operation(summary="Admin-teacher-displayTeacherByID")
+	public ResponseEntity<?> getTeacherById(@PathVariable Long id){
+		return ResponseEntity.ok(teacherService.getTeacher(id));
+	}
+
+
 	@GetMapping("/teacher-attendance")
 	@Operation(summary="Admin-teacher-DisplayTeacherAttendance")
 	public ResponseEntity<?> displayAllTeacherAttendance(){

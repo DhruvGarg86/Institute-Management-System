@@ -100,16 +100,19 @@ function DisplayNotice() {
                                             })}
                                         </span>
                                         <div className="notice-description mt-2" dangerouslySetInnerHTML={{ __html: notice.description }} />
-                                        <div className="notice-description-link mt-2">
-                                            <a
-                                                href={notice.filePath}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="admin-dashboard-notice-link"
-                                            >
-                                                Notice if PDF/Image is available
-                                            </a>
-                                        </div>
+                                        {notice.filePath && (
+                                            <div className="notice-description-link mt-2">
+                                                <a
+                                                    href={notice.filePath}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="admin-dashboard-notice-link"
+                                                >
+                                                    Click here to see PDF!
+                                                </a>
+                                            </div>
+                                        )}
+
                                     </div>
                                 </div>
                             ))}

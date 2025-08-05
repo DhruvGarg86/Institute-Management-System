@@ -20,16 +20,10 @@ function DisplayTeacher() {
 
     const [teachers, setTeachers] = useState([]);
 
-    // Function to load all teachers
     const loadAllTeachers = async () => {
         try {
             const data = await getAllTeachers();
-            const formattedData = data.map(teacher => (
-                {
-                    ...teacher, subjects: teacher.subjects.map(sub => sub.name).join(",")
-                }
-            ));
-            setTeachers(formattedData);
+            setTeachers(data);
             console.log(data);
         } catch (error) {
             console.error("Error loading teachers:", error); // For debugging purposes only
@@ -83,15 +77,16 @@ function DisplayTeacher() {
                             >
 
                                 <ColumnsDirective>
-                                    <ColumnDirective field='image' headerText='Profile' width='60' allowSorting={false} template={(props) => (
-                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '40px', width: '40px', objectFit: 'cover' }} />
+                                    <ColumnDirective field='image' headerText='Profile' width='60' allowSorting={false}
+                                    template={(props) => (
+                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '38px', width: '38px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="Center" width='87' />
                                     <ColumnDirective field='phoneNumber' headerText='Contact' textAlign="Center" width='80' />
                                     <ColumnDirective field='address' headerText='Address' width='110' />
                                     <ColumnDirective field='email' headerText='Email' textAlign="Center" width='130' />
                                     <ColumnDirective field='joiningDate' headerText='Joining' textAlign="Center" width='75' />
-                                    <ColumnDirective field='subjects' headerText='Subject' width='95' />
+                                    <ColumnDirective field='status' headerText='Status' width='95' />
                                     <ColumnDirective headerText='Action' width='60'
                                         template={(props) => {
                                             return (
