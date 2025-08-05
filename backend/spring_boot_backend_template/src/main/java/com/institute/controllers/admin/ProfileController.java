@@ -1,10 +1,7 @@
 package com.institute.controllers.admin;
 
-import com.institute.dto.AdminEditTeacherDTO;
 import com.institute.dto.admin.AdminProfileDTO;
-import com.institute.security.AuthUtil;
 import com.institute.service.admin.AdminService;
-import com.institute.service.admin.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

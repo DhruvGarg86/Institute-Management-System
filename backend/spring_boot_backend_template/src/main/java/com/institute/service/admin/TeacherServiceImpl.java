@@ -65,7 +65,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public List<DisplayTeacherDTO> displayTeachers() {
-		return teacherDao.findByStatus(Status.ACTIVE)
+		return teacherDao.findAllByOrderByUpdatedAtDesc()
 				.stream()
 				.map(teacher -> {
 					DisplayTeacherDTO dto = modelMapper.map(teacher, DisplayTeacherDTO.class);
@@ -76,6 +76,7 @@ public class TeacherServiceImpl implements TeacherService {
 				})
 				.toList();
 	}
+
 
 	@Override
 	public List<TeacherAttendanceDTO> teacherAttendance() {
@@ -135,6 +136,17 @@ public class TeacherServiceImpl implements TeacherService {
 
 		teacherDao.save(entity);
 		return new ApiResponse("Teacher id: " + id + " deleted successfully");
+	}
+
+	@Override
+	public AdminEditTeacherDTO getTeacher(Long id) {
+		Teacher entity = teacherDao.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("teacher not found with id: " + id));
+
+		AdminEditTeacherDTO dto = modelMapper.map(entity, AdminEditTeacherDTO.class);
+		dto.setEmail(entity.getUser().getEmail());
+
+		return dto;
 	}
 }
 

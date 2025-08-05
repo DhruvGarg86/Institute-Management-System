@@ -7,4 +7,5 @@ import java.io.IOException;
 
 public interface FileService{
     String uploadImages(String path, MultipartFile file) throws IOException;
+    String uploadPdfs(String path, MultipartFile file) throws IOException;
 }

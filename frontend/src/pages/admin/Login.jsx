@@ -25,8 +25,22 @@ function Login() {
         try {
             const response = await getLogin(name, password);
             if (response.status === 200) {
+                const { token, role } = response.data;
+
+                localStorage.setItem("token", token);
+                localStorage.setItem("role", role);
+
                 toast.success("Welcome");
-                navigate("/admin/dashboard");
+                
+                if (role === 'ADMIN') {
+                    navigate("/admin/dashboard");
+                } else if (role === 'STUDENT') {
+                    navigate("/student/dashboard");
+                } else if (role === 'TEACHER') {
+                    navigate("/teacher/dashboard");
+                } else {
+                    navigate("/login");
+                }
             } else {
                 toast.error("Invalid email or password");
             }
@@ -39,6 +53,9 @@ function Login() {
             }
         }
     };
+
+   
+
     return (
         <div>
             <div className="container-fluid admin-login-page-container">

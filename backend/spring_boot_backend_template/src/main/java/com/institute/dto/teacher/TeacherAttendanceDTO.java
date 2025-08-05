@@ -11,17 +11,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class TeacherAttendanceDTO {
 
-	private Long id;
 	private String image;
 	private String name;
 	private String email;
 	private LocalDate joiningDate;
 	private String phoneNumber;
-	private BigDecimal attendancePercentage;
 	private Status status;
+	private Long id;
+	private BigDecimal attendancePercentage;
 
 	public TeacherAttendanceDTO(String image, String name, String email, LocalDate joiningDate,
 								String phoneNumber, Status status, Long id, BigDecimal attendancePercentage) {
