@@ -39,7 +39,7 @@ public class StudentController {
     }
 
     @Operation(summary = "Add a student with profile image")
-    @PostMapping(value = "/addStudent", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/addStudent")
     public ResponseEntity<AddStudentDto> addStudent(@RequestBody AddStudentDto dto){
         AddStudentDto saved = studentService.addStudent(dto);
         return ResponseEntity.ok(saved);
@@ -60,9 +60,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentWithMarks(studentId));
     }
 
-    @PutMapping("/updateStudent")
-    public ResponseEntity<?> updateStudent(@RequestBody UpdateStudentRequestDto request) {
-        return ResponseEntity.ok(studentService.updateStudent(AuthUtil.getCurrentUserId(), request));
+    @PutMapping("/updateStudent/{studentId}")
+    public ResponseEntity<?> updateStudent(@PathVariable Long studentId, @RequestBody UpdateStudentRequestDto request) {
+        return ResponseEntity.ok(studentService.updateStudent(studentId, request));
     }
 
     @GetMapping("/toppers")

@@ -10,5 +10,6 @@ public interface SubjectService {
 	ApiResponse addSubject(SubjectDto subject);
 	ApiResponse updateSubjectsById(Long subjectId, SubjectDto dto);
 	List<SubjectDto> getAllSubjects();
+	SubjectDto getSubjectById(Long id);
 
 }

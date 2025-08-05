@@ -67,4 +67,12 @@ public class SubjectServiceImpl implements SubjectService {
             return new ApiResponse("Subject is deleted (soft deleted)");
         }    
     }
+
+    @Override
+    public SubjectDto getSubjectById(Long id) {
+        Subject subject = subjectDao.findById(id)
+                .orElseThrow(() -> new ApiException("Subject not found with ID: " + id));
+
+        return modelMapper.map(subject, SubjectDto.class);
+    }
 }

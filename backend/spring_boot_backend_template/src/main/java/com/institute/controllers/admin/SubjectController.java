@@ -69,3 +69,12 @@ public class SubjectController {
         return ResponseEntity.ok(response);
     }
 }
+
+	@GetMapping("/getSubjectById/{id}")
+	public ResponseEntity<SubjectDto> getSubjectById(@PathVariable Long id) {
+		SubjectDto subject = subjectService.getSubjectById(id);
+		return ResponseEntity.ok(subject);
+	}
+
+	
+}
