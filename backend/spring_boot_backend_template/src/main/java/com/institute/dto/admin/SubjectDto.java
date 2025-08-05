@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class SubjectDto {
 
+    private Long id;
+
     @Min(value = 1, message = "Code must be a positive integer")
     @Max(value = 9999, message = "Code must not exceed 4 digits")
     private Integer code;

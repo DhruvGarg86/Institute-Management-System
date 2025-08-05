@@ -10,6 +10,7 @@ public interface SubjectService {
 	ApiResponse deleteSubjectsById(Long subjectId);
 	ApiResponse addSubject(SubjectDto subject);
 	ApiResponse updateSubjectsById(Long subjectId, SubjectDto dto);
+	SubjectDto getSubjectById(Long id);
 	List<SubjectMappingDetailsDTO> getAllMappedSubjectDetails();
 
 }

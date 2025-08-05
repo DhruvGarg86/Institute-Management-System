@@ -72,6 +72,14 @@ public class SubjectController {
                 ? HttpStatus.OK
                 : HttpStatus.BAD_REQUEST;
 
-        return ResponseEntity.status(status).body(response);
-    }
+	    return ResponseEntity.status(status).body(response);
+	}
+
+	@GetMapping("/getSubjectById/{id}")
+	public ResponseEntity<SubjectDto> getSubjectById(@PathVariable Long id) {
+		SubjectDto subject = subjectService.getSubjectById(id);
+		return ResponseEntity.ok(subject);
+	}
+
+	
 }
