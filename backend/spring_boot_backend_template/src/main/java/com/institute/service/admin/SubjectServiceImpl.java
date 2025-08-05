@@ -9,7 +9,6 @@ import com.institute.dao.SubjectDao;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.SubjectDto;
 import com.institute.entities.Subject;
-import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 
 import jakarta.transaction.Transactional;
@@ -27,7 +26,6 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<SubjectDto> getAllSubjects() {
         return subjectDao.findAll().stream()
-                .filter(subject -> subject.getStatus() == Status.ACTIVE || subject.getStatus() == Status.INACTIVE)
                 .map(subject -> modelMapper.map(subject, SubjectDto.class))
                 .toList();
     }
@@ -39,7 +37,6 @@ public class SubjectServiceImpl implements SubjectService {
             throw new ApiException("Duplicate subject name");
 
         Subject subject = modelMapper.map(dto, Subject.class);
-        subject.setStatus(dto.getStatus() != null ? dto.getStatus() : Status.ACTIVE);
         subjectDao.save(subject);
 
         return new ApiResponse("New subject added with ID: " + subject.getId());
@@ -49,20 +46,9 @@ public class SubjectServiceImpl implements SubjectService {
     public ApiResponse updateSubjectsById(Long subjectId, SubjectDto dto) {
     	Subject subject = subjectDao.findByIdAndIsDeletedFalse(subjectId)
     		    .orElseThrow(() -> new ApiException("Subject not found or has been deleted."));
-
-
-        if (subject.getStatus() != Status.ACTIVE) {
-            throw new ApiException("Cannot update an inactive subject.");
-        }
-
         subject.setName(dto.getName());
         subject.setCode(Integer.valueOf(String.valueOf(dto.getCode())));
         subject.setDescription(dto.getDescription());
-
-        if (dto.getStatus() != null) {
-            subject.setStatus(dto.getStatus());
-        }
-
         subjectDao.save(subject);
         return new ApiResponse("Subject updated successfully.");
     }
@@ -73,16 +59,14 @@ public class SubjectServiceImpl implements SubjectService {
     public ApiResponse deleteSubjectsById(Long subjectId) {
         Subject subject = subjectDao.findById(subjectId)
                 .orElseThrow(() -> new ApiException("Subject not found"));
-
-        if (subject.getStatus() == Status.ACTIVE) {
-            throw new ApiException("Cannot delete subject: status is ACTIVE. Please mark it as INACTIVE first.");
+        if (subject.isDeleted() == true) {
+            return new ApiResponse("Subject is already soft-deleted successfully.");
+        }
+        else {
+        	subject.setDeleted(true); 
+            subjectDao.save(subject);
+            return new ApiResponse("Subject is deleted (soft deleted)");
         }
         
-        if (subject.getStatus() == Status.INACTIVE) {
-            subject.setDeleted(true); 
-            subjectDao.save(subject);
-            return new ApiResponse("Subject soft-deleted successfully.");
-        }
-        return new ApiResponse("Subject is already deleted or status is invalid.");
     }
 }

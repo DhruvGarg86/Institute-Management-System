@@ -1,15 +1,18 @@
 package com.institute.entities;
 
-import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-
-import com.institute.entities.enums.Status;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -26,11 +29,6 @@ public class Subject extends BaseEntity {
 
 	@Column(name = "description", length = 255)
 	private String description;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", length = 10, nullable = false)
-	private Status status = Status.ACTIVE;
-
 
 	@OneToOne(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Marks marks;

@@ -13,5 +13,4 @@ public interface CourseService {
 	ApiResponse addCourse(@Valid CourseDto courseDto);
 	ApiResponse updateCoursesById(Long courseId, @Valid CourseDto dto);
 	ApiResponse deleteCourseById(Long courseId);
-
 }

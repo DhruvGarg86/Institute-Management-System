@@ -14,5 +14,7 @@ public interface CourseSubjectTeacherDao extends JpaRepository<CourseSubjectTeac
     void deleteAllBySubject(Subject subject);
     List<CourseSubjectTeacher> findByCourseIdAndIsDeletedFalse(Long courseId);
     Optional<CourseSubjectTeacher> findByCourseIdAndSubjectIdAndTeacherId(Long courseId, Long subjectId, Long teacherId);
+	List<CourseSubjectTeacher> findByTeacherIdAndIsDeletedFalse(Long teacherId);
+	List<CourseSubjectTeacher> findBySubjectIdAndIsDeletedFalse(Long subjectId);
 
 }
