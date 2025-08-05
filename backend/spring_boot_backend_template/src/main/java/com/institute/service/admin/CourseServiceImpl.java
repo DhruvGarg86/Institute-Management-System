@@ -166,17 +166,29 @@ public class CourseServiceImpl implements CourseService {
                 throw new ApiException("Duplicate subject-teacher pair: subject " + subjectId + ", teacher " + teacherId);
             }
 
-            Optional<CourseSubjectTeacher> existing = courseSubjectTeacherDao
-                    .findByCourseIdAndSubjectIdAndTeacherId(course.getId(), subjectId, teacherId)
-                    .filter(cst -> !cst.isDeleted());
+            // Look up the mapping regardless of deleted flag
+            Optional<CourseSubjectTeacher> existingOpt =
+                    courseSubjectTeacherDao.findByCourseIdAndSubjectIdAndTeacherId(course.getId(), subjectId, teacherId);
 
-            CourseSubjectTeacher cst = existing.orElseGet(CourseSubjectTeacher::new);
+            CourseSubjectTeacher cst;
+            if (existingOpt.isPresent()) {
+                // Re-use existing DB row (reactivate it)
+                cst = existingOpt.get();
+                cst.setDeleted(false);
+            } else {
+                // create new mapping if none exists in DB
+                cst = new CourseSubjectTeacher();
+                cst.setCourse(course);
+                cst.setSubject(subject);
+                cst.setTeacher(teacher);
+                cst.setDeleted(false);
+            }
+
+            // ensure relationship is set correctly
             cst.setCourse(course);
-            cst.setSubject(subject);
-            cst.setTeacher(teacher);
-            cst.setDeleted(false);
             cstSet.add(cst);
         }
         return cstSet;
     }
+
 }

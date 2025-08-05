@@ -22,7 +22,7 @@ public interface StudentDao extends JpaRepository<Student, Long> {
     @Query("""
     SELECT new com.institute.dto.admin.TopperStudentResponseDto(
         s.name,
-        s.image,
+        s.imagePath,
         c.name,
         (SUM(m.marksObtained * 1.0) / SUM(m.totalMarks)) * 100
     )

@@ -71,8 +71,7 @@ public class CourseController {
     @Operation(summary = "Update course status", description = "Changes the status (ACTIVE/INACTIVE) of a course")
     public ResponseEntity<ApiResponse> updateCourseStatusById(
             @PathVariable Long courseId,
-            @Valid @RequestBody CourseStatusUpdateDto statusDto,
-            @AuthenticationPrincipal(expression = "id") Long userId
+            @Valid @RequestBody CourseStatusUpdateDto statusDto
     ) {
         ApiResponse response = courseService.updateCourseStatus(courseId, statusDto.getStatus());
         return ResponseEntity.ok(response);
