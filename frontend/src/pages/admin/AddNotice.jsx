@@ -3,47 +3,60 @@ import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
 import { RichTextEditorComponent, Toolbar, HtmlEditor, Inject, QuickToolbar } from '@syncfusion/ej2-react-richtexteditor';
 import { useRef, useState } from 'react';
-import { addNoticeByAdmin } from '../../services/Admin/Notices';
+import { submitNotice, uploadPdf } from '../../services/Admin/Notices';
+import { useNavigate } from 'react-router-dom';
 
 function AddNotice() {
-    const [role, setRole] = useState('');
-    const [title, setTitle] = useState('');
-    const [file, setFile] = useState(null);
+    const [notice, setNotice] = useState({
+        adminId: '1',
+        audience: '',
+        title: '',
+        date: new Date().toISOString().split('T')[0],
+        description: '',
+        filePath: '',
+    });
 
     const editorRef = useRef(null);
+    const navigate = useNavigate();
+
+    const handlePdfUpload = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            try {
+                const res = await uploadPdf(file);
+                setNotice(prev => ({ ...prev, filePath: res.fileName }));
+                toast.success("PDF uploaded successfully");
+            } catch (error) {
+                console.log(error);
+                toast.error("PDF upload failed");
+            }
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setNotice(prev => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const descValue = editorRef.current.getHtml();
+        const descriptionValue = editorRef.current.getHtml();
 
         try {
-            // Upload file if present
-            // let uploadFilePath = null;
-            // if (file) {
-            //     uploadFilePath = await uploadNoticeFile(file);
-            // }
-
-            const noticeData = {
-                adminId: 1,
-                audience: role,
-                title: title,
-                date: new Date().toISOString().split('T')[0],
-                description: descValue,
-                // filePath: uploadFilePath || null
+            const updatedNotice = {
+                ...notice,
+                description: descriptionValue,
             };
 
-            await addNoticeByAdmin(noticeData);
-            toast.success('Notice added successfully!');
-
-            setTitle('');
-            setRole('');
-            setFile(null);
+            await submitNotice(updatedNotice);
+            toast.success("Notice added successfully");
             editorRef.current.value = '';
             editorRef.current.dataBind();
+            navigate("/admin/display-notices");
         } catch (error) {
-            toast.error('Failed to add notice');
-            console.log("Error: ", error);
+            console.log(error);
+            toast.error("Unable to add notice");
         }
     };
 
@@ -62,8 +75,14 @@ function AddNotice() {
                             <form onSubmit={handleSubmit} encType="multipart/form-data">
                                 <div className="mb-3">
                                     <label className="form-label">Role</label>
-                                    <select name="role" className="form-select" required value={role} onChange={(e) => setRole(e.target.value)}>
-                                        <option value="">Select Status</option>
+                                    <select
+                                        name="audience"
+                                        className="form-select"
+                                        required
+                                        value={notice.audience}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Select Audience</option>
                                         <option value="STUDENT">Students</option>
                                         <option value="TEACHER">Teachers</option>
                                         <option value="ALL">All</option>
@@ -72,7 +91,14 @@ function AddNotice() {
 
                                 <div className="mb-3">
                                     <label className="form-label">Title</label>
-                                    <input name="title" type="text" className="form-control" required value={title} onChange={(e) => setTitle(e.target.value)} />
+                                    <input
+                                        name="title"
+                                        type="text"
+                                        className="form-control"
+                                        required
+                                        value={notice.title}
+                                        onChange={handleChange}
+                                    />
                                 </div>
 
                                 <div className="mb-3">
@@ -88,28 +114,26 @@ function AddNotice() {
 
                                 <div className="mb-3">
                                     <label className="form-label">Description</label>
-                                    <div name="description">
-                                        <RichTextEditorComponent
-                                            ref={editorRef}
-                                            toolbarSettings={{
-                                                items: [
-                                                    'Bold', 'Italic', 'Underline', 'StrikeThrough', 'LowerCase',
-                                                    'UpperCase', '|', 'Formats', 'Alignments', 'OrderedList', 'UnorderedList'
-                                                ]
-                                            }}>
-                                            <Inject services={[Toolbar, HtmlEditor, QuickToolbar]} />
-                                        </RichTextEditorComponent>
-                                    </div>
+                                    <RichTextEditorComponent
+                                        ref={editorRef}
+                                        toolbarSettings={{
+                                            items: [
+                                                'Bold', 'Italic', 'Underline', 'StrikeThrough', 'LowerCase',
+                                                'UpperCase', '|', 'Formats', 'Alignments', 'OrderedList', 'UnorderedList'
+                                            ]
+                                        }}
+                                    >
+                                        <Inject services={[Toolbar, HtmlEditor, QuickToolbar]} />
+                                    </RichTextEditorComponent>
                                 </div>
 
-                                {/* File Upload */}
                                 <div className="mb-3">
                                     <label className="form-label">Attach PDF</label>
                                     <input
                                         type="file"
-                                        accept=".pdf, image/*"
+                                        accept=".pdf"
                                         className="form-control"
-                                        onChange={(e) => setFile(e.target.files[0])}
+                                        onChange={handlePdfUpload}
                                     />
                                 </div>
 

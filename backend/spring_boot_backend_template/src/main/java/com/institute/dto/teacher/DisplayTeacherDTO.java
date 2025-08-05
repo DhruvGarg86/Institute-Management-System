@@ -25,5 +25,4 @@ public class DisplayTeacherDTO {
 	private LocalDate joiningDate;
 	private Status status;
 	private String image;
-	private List<DisplayTeacherSubjectDTO> subjects;
 }

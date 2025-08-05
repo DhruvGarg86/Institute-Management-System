@@ -6,19 +6,14 @@ import { MdMenuBook } from "react-icons/md";
 import Card from "../../components/Card";
 import { toast } from "react-toastify";
 import {
-  getAllNotices,
-  getTopStudent,
-  getTotalCourses,
-  getTotalStudents,
-  getTotalTeachers,
-} from "../../services/Admin/Dashboard";
+  getAllNotices, getTotalCourses, getTotalStudents, getTotalTeachers} from "../../services/Admin/Dashboard";
 
 function Dashboard() {
   const [tstudent, setTstudent] = useState("");
   const [tteacher, setTteacher] = useState("");
   const [tcourse, setTcourse] = useState("");
-  const [notice, setNotice] = useState([]); 
-  const [topstudent, setTopstudent] = useState("");
+  const [notice, setNotice] = useState([]);
+
 
   // Fetch Total Students
   useEffect(() => {
@@ -76,19 +71,7 @@ function Dashboard() {
     fetchNotices();
   }, []);
 
-  // Fetch Top Student (future use)
-  useEffect(() => {
-    const fetchTopStudent = async () => {
-      try {
-        const data = await getTopStudent();
-        setTopstudent(data);
-      } catch (error) {
-        console.log(error)
-        toast.error("Unable to load top student");
-      }
-    };
-    fetchTopStudent();
-  }, []);
+
 
   return (
     <>
@@ -156,11 +139,11 @@ function Dashboard() {
                         key={n.id}
                       >
                         <div className="row2-second-notice-item">
-                          <p style={{ fontWeight: "bold", marginBottom: "-2px" }}>{n.date}</p>
                           <p
-                            style={{ fontSize: "0.9rem", marginBottom: "20px" }}
-                            dangerouslySetInnerHTML={{ __html: n.description }}
+                            style={{ fontSize: "1rem", marginBottom: '0px', fontWeight: "bold" }}
+                            dangerouslySetInnerHTML={{ __html: n.title }}
                           />
+                          <p style={{  marginBottom: "20px" }}>{n.date}</p>
                         </div>
                       </a>
                     ))

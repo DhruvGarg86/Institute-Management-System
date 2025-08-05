@@ -142,7 +142,7 @@ function StudentAttendance() {
                                     <ColumnDirective field='name' headerText='Name' textAlign="center" width={50} />
                                     <ColumnDirective field='course' headerText='Course' width={40} />
                                     <ColumnDirective field='rollNo' headerText='Roll No.' textAlign="center" width={50} />
-                                    <ColumnDirective field='class' headerText='Class' width={50} />
+                                    {/* <ColumnDirective field='class' headerText='Class' width={50} /> */}
                                     <ColumnDirective
                                         field='attendance'
                                         headerText='Attendance'

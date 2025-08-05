@@ -34,13 +34,7 @@ public class TeacherProfileDTO {
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
-    private LocalDate dob;
-
     private LocalDate joiningDate;
-
-    private String qualification;
-
-    private String experience;
 
     private BigDecimal salary;
 

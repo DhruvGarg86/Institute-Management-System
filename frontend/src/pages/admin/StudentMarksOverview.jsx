@@ -215,7 +215,7 @@ function StudentMarksOverview() {
                                             <ColumnDirective field='name' headerText='Name' textAlign="center" width={'50'} />
                                             <ColumnDirective field='percentage' headerText='Percentage' textAlign="center" width={'50'} />
                                             <ColumnDirective field='rollNo' headerText='Roll No.' textAlign="center" width={'70'} />
-                                            <ColumnDirective field='class' headerText='Class' width={'50'} />
+                                            {/* <ColumnDirective field='class' headerText='Class' width={'50'} /> */}
                                         </ColumnsDirective>
                                         <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit]} />
                                     </GridComponent>
