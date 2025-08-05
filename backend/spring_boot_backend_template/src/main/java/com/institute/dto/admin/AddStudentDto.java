@@ -15,7 +15,7 @@ public class AddStudentDto {
     private String phoneNumber;
     private String email;
     private String address;
-    private String image;
+    private String imagePath;
     private String gender;
     private String dob;
     private String courseName;
