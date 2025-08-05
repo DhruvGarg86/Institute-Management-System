@@ -7,10 +7,12 @@ import java.util.List;
 import com.institute.dao.LoginDao;
 import com.institute.dto.teacher.*;
 import com.institute.entities.Login;
+import com.institute.entities.Student;
 import com.institute.entities.enums.Role;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.institute.dao.TeacherDao;
@@ -32,19 +34,13 @@ public class TeacherServiceImpl implements TeacherService {
 	private final TeacherDao teacherDao;
 	private final ModelMapper modelMapper;
 	private final LoginDao loginDao;
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public ApiResponse addNewTeacher(AddNewTeacherDTO addTeacher) {
 		if (loginDao.existsByEmail(addTeacher.getEmail())) {
 			throw new ApiException("Duplicate email");
 		}
-		Login login = new Login();
-		login.setEmail(addTeacher.getEmail());
-		login.setPassword(addTeacher.getPassword());
-		login.setRole(Role.TEACHER);
-		login.setStatus(Status.ACTIVE);
-
-		loginDao.save(login);
 
 		Teacher teacher = new Teacher();
 		teacher.setName(addTeacher.getName());
@@ -54,6 +50,14 @@ public class TeacherServiceImpl implements TeacherService {
 		teacher.setAddress(addTeacher.getAddress());
 		teacher.setGender(addTeacher.getGender());
 		teacher.setImage(addTeacher.getImage());
+
+		Login login = new Login();
+		login.setEmail(addTeacher.getEmail());
+		login.setPassword(passwordEncoder.encode(teacher.getEncodedPassword(addTeacher.getName())));
+		login.setRole(Role.TEACHER);
+		login.setStatus(Status.ACTIVE);
+		loginDao.save(login);
+
 		teacher.setUser(login);  // Link Login with Teacher
 		teacherDao.save(teacher);
 		return new ApiResponse("New Teacher Added");
@@ -94,21 +98,21 @@ public class TeacherServiceImpl implements TeacherService {
 		teacher.setImage(teacherDto.getImage());
 
 		if (teacher.getUser() != null) {
-//			HOw to send steucture message back, instead of auto generated on duplicate email?
-//			if(loginDao.existsByEmail(teacherDto.getEmail())){
-//				throw new ApiException("Email id already exists");
-//			}
-			teacher.getUser().setEmail(teacherDto.getEmail());
-			teacher.getUser().setPassword(teacherDto.getPassword());
-		} else {
-			throw new ApiException("Teacher has no linked login user account");
+			String newEmail = teacherDto.getEmail();
+			String currentEmail = teacher.getUser().getEmail();
+
+			if (!newEmail.equals(currentEmail) && loginDao.existsByEmail(newEmail)) {
+				throw new ApiException("Email id already exists");
+			}
+			else{
+				teacher.getUser().setEmail(newEmail);
+			}
+
+			teacherDao.save(teacher);
 		}
-
-		teacherDao.save(teacher);
 		return new ApiResponse("Teacher id : " + id + " successfully updated");
+
 	}
-
-
 	@Override
 	public TeacherProfileDTO findTeacherById(Long teacherId) {
 		Teacher entity = teacherDao.findById(teacherId)

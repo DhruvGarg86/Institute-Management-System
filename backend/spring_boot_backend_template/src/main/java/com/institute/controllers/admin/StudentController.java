@@ -45,20 +45,8 @@ public class StudentController {
 
     @Operation(summary = "Add a student with profile image")
     @PostMapping(value = "/addStudent", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AddStudentDto> addStudent(
-        @Parameter(
-            description = "Student JSON object",
-            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AddStudentDto.class))
-        )
-        @RequestPart("student") AddStudentDto student,
-
-        @Parameter(
-            description = "Profile image file",
-            content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-        )
-        @RequestPart(value = "image", required = false) MultipartFile image
-    ) {
-        AddStudentDto saved = studentService.addStudent(student, image);
+    public ResponseEntity<AddStudentDto> addStudent(@RequestBody AddStudentDto dto){
+        AddStudentDto saved = studentService.addStudent(dto);
         return ResponseEntity.ok(saved);
     }
 

@@ -32,8 +32,11 @@ function Login() {
             }
 
         } catch (error) {
-            console.log(error);
-            toast.error("Unable to login");
+            if (error.response && error.response.status === 401) {
+                toast.error(error.response.data || "Invalid email or password");
+            } else {
+                toast.error("Unable to login");
+            }
         }
     };
     return (
