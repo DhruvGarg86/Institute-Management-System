@@ -18,31 +18,25 @@ import {
 } from "@syncfusion/ej2-react-grids";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-// Dummy subject data
+// Updated dummy data as per SubjectDto
 const sampleSubjects = [
   {
-    id: 1,
+    code: "SUB101",
     name: "Mathematics",
-    code: "MATH101",
     description: "Basic Algebra and Calculus",
     status: "ACTIVE",
-    teacherName: "Dr. Mehta",
   },
   {
-    id: 2,
+    code: "SUB102",
     name: "Physics",
-    code: "PHY201",
     description: "Mechanics and Thermodynamics",
     status: "ACTIVE",
-    teacherName: "Prof. Rajan",
   },
   {
-    id: 3,
+    code: "SUB103",
     name: "English Literature",
-    code: "ENG301",
     description: "Poetry and Prose Analysis",
     status: "INACTIVE",
-    teacherName: "Ms. Isha Sharma",
   },
 ];
 
@@ -81,26 +75,17 @@ function DisplaySubject() {
                 }}
               >
                 <ColumnsDirective>
-                  <ColumnDirective
-                    field="name"
-                    headerText="Subject Name"
-                    width="130"
-                  />
                   <ColumnDirective field="code" headerText="Code" width="100" />
+                  <ColumnDirective field="name" headerText="Name" width="150" />
                   <ColumnDirective
                     field="description"
                     headerText="Description"
-                    width="200"
-                  />
-                  <ColumnDirective
-                    field="teacherName"
-                    headerText="Teacher"
-                    width="140"
+                    width="250"
                   />
                   <ColumnDirective
                     field="status"
                     headerText="Status"
-                    width="90"
+                    width="100"
                     textAlign="Center"
                   />
                   <ColumnDirective
@@ -111,7 +96,7 @@ function DisplaySubject() {
                         <button
                           className="btn btn-sm btn-light me-2 text-primary"
                           onClick={() =>
-                            navigate(`/admin/edit-subject/${props.id}`)
+                            navigate(`/admin/edit-subject/${props.code}`)
                           }
                         >
                           <FaEdit />
@@ -119,7 +104,7 @@ function DisplaySubject() {
                         <button
                           className="btn btn-sm btn-light text-danger"
                           onClick={() =>
-                            console.log("Delete subject:", props.id)
+                            console.log("Delete subject:", props.code)
                           }
                         >
                           <FaTrash />

@@ -59,7 +59,7 @@ function DisplayTeacher() {
             <div className="container-fluid admin-dashboard-container">
                 <div className="row admin-dashboard-row">
                     <div className="col-2-5 admin-dashboard-first">
-                        <TeacherSidebar />
+                        <Sidebar />
                     </div>
                     <div className="col-7-5 admin-dashboard-second p-4">
                         <div className="card p-4 shadow">
