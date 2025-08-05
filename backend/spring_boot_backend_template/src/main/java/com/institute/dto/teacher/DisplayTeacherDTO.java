@@ -1,9 +1,7 @@
 package com.institute.dto.teacher;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import com.institute.dto.DisplayTeacherSubjectDTO;
 import com.institute.entities.enums.Status;
 
 import lombok.AllArgsConstructor;

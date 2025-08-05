@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.CourseDto;
 import com.institute.dto.admin.CourseStatusUpdateDto;
+import com.institute.dto.admin.DisplayCourseSubjectTeacherDto;
 import com.institute.service.admin.CourseService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,10 +61,7 @@ public class CourseController {
     @Operation(summary = "Soft delete course", description = "Soft deletes the course if its status is INACTIVE.")
     public ResponseEntity<ApiResponse> deleteCourseById(@PathVariable Long courseId) {
         ApiResponse response = courseService.deleteCourseById(courseId);
-        HttpStatus status = response.getMessage().contains("successfully")
-                ? HttpStatus.OK
-                : HttpStatus.BAD_REQUEST;
-        return ResponseEntity.status(status).body(response);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update-course-status/{courseId}")
@@ -76,4 +73,12 @@ public class CourseController {
         ApiResponse response = courseService.updateCourseStatus(courseId, statusDto.getStatus());
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/display-course/{courseId}")
+    public ResponseEntity<?> getSubjectAndTeacherByCourseId(
+            @PathVariable Long courseId) {
+        DisplayCourseSubjectTeacherDto dto = courseService.getSubjectAndTeacherByCourseId(courseId);
+        return ResponseEntity.ok(dto);
+    }
+
 }

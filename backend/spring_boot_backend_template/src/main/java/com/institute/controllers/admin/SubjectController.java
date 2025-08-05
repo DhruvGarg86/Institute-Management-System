@@ -2,7 +2,6 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.SubjectDto;
-import com.institute.dto.admin.SubjectMappingDetailsDTO;
 import com.institute.service.admin.SubjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -38,13 +37,12 @@ public class SubjectController {
         description = "Returns a list of subject mappings along with related course and teacher names"
     )
     @GetMapping("/display-subject")
-    public ResponseEntity<List<SubjectMappingDetailsDTO>> getSubjectMappingDetails() {
-        List<SubjectMappingDetailsDTO> details = subjectService.getAllMappedSubjectDetails();
+    public ResponseEntity<?> getSubjectMappingDetails() {
+        List<SubjectDto> details = subjectService.getAllSubjects();
         
         if (details.isEmpty()) {
             return ResponseEntity.noContent().build();
-        }
-        
+        }     
         return ResponseEntity.ok(details);
     }
 
@@ -68,12 +66,9 @@ public class SubjectController {
     @Operation(summary = "Soft delete subject", description = "Soft deletes the subject if its status is INACTIVE.")
     public ResponseEntity<ApiResponse> deleteSubjectById(@PathVariable Long subjectId) {
         ApiResponse response = subjectService.deleteSubjectsById(subjectId);
-        HttpStatus status = response.getMessage().equalsIgnoreCase("Subject deleted successfully")
-                ? HttpStatus.OK
-                : HttpStatus.BAD_REQUEST;
-
-	    return ResponseEntity.status(status).body(response);
-	}
+        return ResponseEntity.ok(response);
+    }
+}
 
 	@GetMapping("/getSubjectById/{id}")
 	public ResponseEntity<SubjectDto> getSubjectById(@PathVariable Long id) {

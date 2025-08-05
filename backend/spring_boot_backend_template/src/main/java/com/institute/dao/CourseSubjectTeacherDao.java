@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.institute.dto.admin.SubjectMappingDetailsDTO;
-import com.institute.entities.*;
+import com.institute.entities.Course;
+import com.institute.entities.CourseSubjectTeacher;
+import com.institute.entities.Subject;
+import com.institute.entities.Teacher;
 
 @Repository
 public interface CourseSubjectTeacherDao extends JpaRepository<CourseSubjectTeacher, Long> {
