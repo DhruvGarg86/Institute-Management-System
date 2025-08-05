@@ -1,8 +1,6 @@
 package com.institute.service.admin;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -62,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
     public ApiResponse addCourse(@Valid CourseDto courseDto) {
         Course course = modelMapper.map(courseDto, Course.class);
         course.setDeleted(false);
-        Set<CourseSubjectTeacher> cstSet = cstMapping(courseDto.getCourseSubjectTeachers(), course);
+        Set<CourseSubjectTeacher> cstSet = cstMapping(courseDto.getCourseSubjectTeachers(), course, false);
         course.setCourseSubjectTeachers(cstSet);
         courseDao.save(course);
         return new ApiResponse("Course added successfully.");
@@ -72,14 +70,16 @@ public class CourseServiceImpl implements CourseService {
     public ApiResponse updateCoursesById(Long courseId, @Valid CourseDto dto) {
         Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course ID not found or it has been deleted: " + courseId));
-
+        Status previousStatus = course.getStatus();
         modelMapper.map(dto, course);
-
         List<CourseSubjectTeacher> existingMappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
         existingMappings.forEach(mapping -> mapping.setDeleted(true));
+        courseSubjectTeacherDao.saveAll(existingMappings);
 
-        Set<CourseSubjectTeacher> csts = cstMapping(dto.getCourseSubjectTeachers(), course);
-        course.getCourseSubjectTeachers().addAll(csts);
+        boolean reactivating = (previousStatus == Status.INACTIVE && course.getStatus() == Status.ACTIVE);
+
+        Set<CourseSubjectTeacher> updatedMappings = cstMapping(dto.getCourseSubjectTeachers(), course, reactivating);
+        course.setCourseSubjectTeachers(updatedMappings);
 
         courseDao.save(course);
         return new ApiResponse("Course updated successfully.");
@@ -98,50 +98,97 @@ public class CourseServiceImpl implements CourseService {
 
         List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
         mappings.forEach(mapping -> mapping.setDeleted(true));
+        courseSubjectTeacherDao.saveAll(mappings);
 
         return new ApiResponse("Course deleted successfully (soft delete).");
     }
 
-    private Set<CourseSubjectTeacher> cstMapping(List<CourseSubjectTeacherDTO> cstDtos, Course course) {
-        Set<Long> subjectIds = new HashSet<>();
-        Set<Long> teacherIds = new HashSet<>();
-        Set<CourseSubjectTeacher> cstSet = new HashSet<>();
+    @Override
+    public ApiResponse updateCourseStatus(Long courseId, Status status) {
+        Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
 
-        for (CourseSubjectTeacherDTO cstDto : cstDtos) {
-            Long subjectId = cstDto.getSubjectId();
-            Long teacherId = cstDto.getTeacherId();
+        Status oldStatus = course.getStatus();
 
-            if (!subjectDao.existsById(subjectId)) {
-                throw new ResourceNotFoundException("Subject ID not found: " + subjectId);
-            }
-
-            if (!teacherDao.existsById(teacherId)) {
-                throw new ResourceNotFoundException("Teacher ID not found: " + teacherId);
-            }
-
-            if (!teacherIds.add(teacherId)) {
-                throw new ApiException("Teacher ID " + teacherId + " is already assigned to a subject in this course.");
-            }
-
-            if (!subjectIds.add(subjectId)) {
-                throw new ApiException("Subject ID " + subjectId + " is already assigned to a teacher in this course.");
-            }
-
-            Subject subject = subjectDao.findById(subjectId)
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + subjectId));
-
-            Teacher teacher = teacherDao.findById(teacherId)
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with ID: " + teacherId));
-
-            CourseSubjectTeacher cst = new CourseSubjectTeacher();
-            cst.setCourse(course);
-            cst.setSubject(subject);
-            cst.setTeacher(teacher);
-            cst.setDeleted(false);
-
-            cstSet.add(cst);
+        if (oldStatus == status) {
+            return new ApiResponse("Status is already " + status);
         }
 
+        course.setStatus(status);
+
+        if (oldStatus == Status.INACTIVE && status == Status.ACTIVE) {
+            List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseId(courseId);
+            boolean modified = false;
+
+            for (CourseSubjectTeacher cst : mappings) {
+                if (cst.isDeleted()) {
+                    Subject subject = cst.getSubject();
+                    Teacher teacher = cst.getTeacher();
+                    if (!subject.isDeleted() && !teacher.isDeleted()) {
+                        cst.setDeleted(false);
+                        modified = true;
+                    }
+                }
+            }
+
+            if (modified) {
+                courseSubjectTeacherDao.saveAll(mappings);
+            }
+        }
+
+        courseDao.save(course);
+        return new ApiResponse("Course status updated to " + status);
+    }
+
+    private Set<CourseSubjectTeacher> cstMapping(List<CourseSubjectTeacherDTO> cstDtos, Course course, boolean reactivating) {
+        Set<String> seenPairs = new HashSet<>();
+        Set<CourseSubjectTeacher> cstSet = new HashSet<>();
+
+        for (CourseSubjectTeacherDTO dto : cstDtos) {
+            Long subjectId = dto.getSubjectId();
+            Long teacherId = dto.getTeacherId();
+
+            Subject subject = subjectDao.findById(subjectId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Subject not found: " + subjectId));
+            Teacher teacher = teacherDao.findById(teacherId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Teacher not found: " + teacherId));
+
+            if (subject.isDeleted() || teacher.isDeleted()) {
+                if (reactivating) {
+                    continue;
+                } else {
+                    throw new ApiException("Subject or Teacher is deleted: subject " + subjectId + ", teacher " + teacherId);
+                }
+            }
+
+            String key = subjectId + "-" + teacherId;
+            if (!seenPairs.add(key)) {
+                throw new ApiException("Duplicate subject-teacher pair: subject " + subjectId + ", teacher " + teacherId);
+            }
+
+            // Look up the mapping regardless of deleted flag
+            Optional<CourseSubjectTeacher> existingOpt =
+                    courseSubjectTeacherDao.findByCourseIdAndSubjectIdAndTeacherId(course.getId(), subjectId, teacherId);
+
+            CourseSubjectTeacher cst;
+            if (existingOpt.isPresent()) {
+                // Re-use existing DB row (reactivate it)
+                cst = existingOpt.get();
+                cst.setDeleted(false);
+            } else {
+                // create new mapping if none exists in DB
+                cst = new CourseSubjectTeacher();
+                cst.setCourse(course);
+                cst.setSubject(subject);
+                cst.setTeacher(teacher);
+                cst.setDeleted(false);
+            }
+
+            // ensure relationship is set correctly
+            cst.setCourse(course);
+            cstSet.add(cst);
+        }
         return cstSet;
     }
+
 }

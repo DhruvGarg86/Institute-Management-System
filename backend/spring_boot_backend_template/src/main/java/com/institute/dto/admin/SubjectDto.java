@@ -1,6 +1,5 @@
 package com.institute.dto.admin;
 
-import com.institute.entities.enums.Status;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,8 +24,5 @@ public class SubjectDto {
     @NotBlank(message = "Description is required")
     @Size(max = 255, message = "Description must not exceed 255 characters")
     private String description;
-
-    private Status status;
-
 
 }
