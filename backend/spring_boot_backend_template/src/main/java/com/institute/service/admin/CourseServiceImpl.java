@@ -70,11 +70,8 @@ public class CourseServiceImpl implements CourseService {
     public ApiResponse updateCoursesById(Long courseId, @Valid CourseDto dto) {
         Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course ID not found or it has been deleted: " + courseId));
-
-        Status previousStatus = course.getStatus(); // Detect reactivation
+        Status previousStatus = course.getStatus();
         modelMapper.map(dto, course);
-
-        // Soft-delete existing mappings
         List<CourseSubjectTeacher> existingMappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
         existingMappings.forEach(mapping -> mapping.setDeleted(true));
         courseSubjectTeacherDao.saveAll(existingMappings);
@@ -106,11 +103,43 @@ public class CourseServiceImpl implements CourseService {
         return new ApiResponse("Course deleted successfully (soft delete).");
     }
 
-    /**
-     * Builds course-subject-teacher mappings.
-     * - On course creation, throws error if subject or teacher is soft-deleted.
-     * - On reactivation, silently skips such mappings.
-     */
+    @Override
+    public ApiResponse updateCourseStatus(Long courseId, Status status) {
+        Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
+
+        Status oldStatus = course.getStatus();
+
+        if (oldStatus == status) {
+            return new ApiResponse("Status is already " + status);
+        }
+
+        course.setStatus(status);
+
+        if (oldStatus == Status.INACTIVE && status == Status.ACTIVE) {
+            List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseId(courseId);
+            boolean modified = false;
+
+            for (CourseSubjectTeacher cst : mappings) {
+                if (cst.isDeleted()) {
+                    Subject subject = cst.getSubject();
+                    Teacher teacher = cst.getTeacher();
+                    if (!subject.isDeleted() && !teacher.isDeleted()) {
+                        cst.setDeleted(false);
+                        modified = true;
+                    }
+                }
+            }
+
+            if (modified) {
+                courseSubjectTeacherDao.saveAll(mappings);
+            }
+        }
+
+        courseDao.save(course);
+        return new ApiResponse("Course status updated to " + status);
+    }
+
     private Set<CourseSubjectTeacher> cstMapping(List<CourseSubjectTeacherDTO> cstDtos, Course course, boolean reactivating) {
         Set<String> seenPairs = new HashSet<>();
         Set<CourseSubjectTeacher> cstSet = new HashSet<>();
@@ -124,16 +153,14 @@ public class CourseServiceImpl implements CourseService {
             Teacher teacher = teacherDao.findById(teacherId)
                     .orElseThrow(() -> new ResourceNotFoundException("Teacher not found: " + teacherId));
 
-            // Validate against deleted subject/teacher
             if (subject.isDeleted() || teacher.isDeleted()) {
                 if (reactivating) {
-                    continue; // skip silently
+                    continue;
                 } else {
                     throw new ApiException("Subject or Teacher is deleted: subject " + subjectId + ", teacher " + teacherId);
                 }
             }
 
-            // Prevent duplicate subject-teacher pair
             String key = subjectId + "-" + teacherId;
             if (!seenPairs.add(key)) {
                 throw new ApiException("Duplicate subject-teacher pair: subject " + subjectId + ", teacher " + teacherId);
@@ -148,10 +175,8 @@ public class CourseServiceImpl implements CourseService {
             cst.setSubject(subject);
             cst.setTeacher(teacher);
             cst.setDeleted(false);
-
             cstSet.add(cst);
         }
-
         return cstSet;
     }
 }

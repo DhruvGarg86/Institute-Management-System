@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TopperStudentResponseDto {
-
     private String studentName;
     private String image;
     private String courseName;
