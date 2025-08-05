@@ -114,7 +114,7 @@ public class StudentServiceImpl implements StudentService {
         student.setDob(LocalDate.parse(dto.getDob()));
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
-        student.setImage(dto.getImage());
+        student.setImagePath(dto.getImage());
 
         // Create Login first
         Login login = new Login();
@@ -139,7 +139,7 @@ public class StudentServiceImpl implements StudentService {
                 student.getCourse().getName(),
                 student.getName(),
                 student.getUser().getEmail(),
-                student.getImage(),
+                student.getImagePath(),
                 student.getGender()
         );
     }
@@ -155,7 +155,7 @@ public class StudentServiceImpl implements StudentService {
                 s.getDob(),
                 s.getAddress(),
                 s.getCourse().getName(),
-                s.getImage(),
+                s.getImagePath(),
                 s.getStatus()
         )).collect(Collectors.toList());
     }
@@ -198,7 +198,7 @@ public class StudentServiceImpl implements StudentService {
                 student.getId(),
                 student.getName(),
                 student.getUser().getEmail(),
-                student.getImage(),
+                student.getImagePath(),
                 student.getDob(),
                 student.getCourse().getName(),
                 marksDetails
