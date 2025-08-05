@@ -38,9 +38,9 @@ public class TeacherStudentController {
         return ResponseEntity.ok(teacherStudentService.getStudentsByTeacher(teacherId));
     }
 
-    @GetMapping("/marks")
-    public ResponseEntity<?> getStudentMarks() {
-        return ResponseEntity.ok(studentService.getStudentWithMarks(AuthUtil.getCurrentUserId()));
+    @GetMapping("/marks/{studentId}")
+    public ResponseEntity<?> getStudentMarks(@PathVariable Long studentId) {
+        return ResponseEntity.ok(studentService.getStudentWithMarks(studentId));
     }
 
     @GetMapping("/attendance")
