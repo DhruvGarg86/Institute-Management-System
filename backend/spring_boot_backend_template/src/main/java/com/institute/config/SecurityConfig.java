@@ -51,7 +51,9 @@ public class SecurityConfig {
                         .requestMatchers("/teacher/**").permitAll()
                         .requestMatchers("/image/**").permitAll()
                         .requestMatchers("/TeacherImages/**").permitAll()
-                          .anyRequest().authenticated()
+                        .requestMatchers("/NoticePDFs/**").permitAll()
+
+                        .anyRequest().authenticated()
 
                 )
                 .sessionManagement(session -> session

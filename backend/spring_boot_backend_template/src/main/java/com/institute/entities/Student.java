@@ -30,7 +30,7 @@ public class Student extends BaseEntity {
     private String address;
 
     @Column(name = "image", length = 500)
-    private String image;
+    private String imagePath;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false, length = 10)

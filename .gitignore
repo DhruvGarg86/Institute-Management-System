@@ -14,5 +14,6 @@ out/
 main/
 
 # Ignore uploaded images in public/uploads/
-public/TeacherImages/
-public/NoticePDFs/
+frontend/public/NoticePDFs/*
+frontend/public/TeacherImages/*
+
