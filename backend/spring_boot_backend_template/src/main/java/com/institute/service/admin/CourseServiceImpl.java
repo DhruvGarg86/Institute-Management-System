@@ -1,6 +1,11 @@
 package com.institute.service.admin;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -13,6 +18,8 @@ import com.institute.dao.TeacherDao;
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.CourseDto;
 import com.institute.dto.admin.CourseSubjectTeacherDTO;
+import com.institute.dto.admin.CourseSubjectTeacherResponseDto;
+import com.institute.dto.admin.DisplayCourseSubjectTeacherDto;
 import com.institute.entities.Course;
 import com.institute.entities.CourseSubjectTeacher;
 import com.institute.entities.Subject;
@@ -189,6 +196,32 @@ public class CourseServiceImpl implements CourseService {
             cstSet.add(cst);
         }
         return cstSet;
+    }
+
+    @Override
+    public DisplayCourseSubjectTeacherDto getSubjectAndTeacherByCourseId(Long courseId) {
+         courseDao.findByIdAndIsDeletedFalse(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
+        List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
+
+        Set<CourseSubjectTeacherResponseDto> mappingDtos = mappings.stream()
+                .filter(Objects::nonNull)
+                .filter(cst -> !cst.isDeleted())
+                .map(cst -> {
+                    Subject s = cst.getSubject();
+                    Teacher t = cst.getTeacher();
+                    return new CourseSubjectTeacherResponseDto(
+                            s != null ? s.getId() : null,
+                            s != null ? s.getName() : null,
+                            t != null ? t.getId() : null,
+                            t != null ? t.getName() : null
+                    );
+                })
+                .collect(Collectors.toCollection(LinkedHashSet::new)); // LinkedHashSet preserves insertion order
+
+        DisplayCourseSubjectTeacherDto dto = new DisplayCourseSubjectTeacherDto();
+        dto.setMappings(mappingDtos);
+        return dto;
     }
 
 }

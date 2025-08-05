@@ -1,16 +1,16 @@
 package com.institute.service.teacher;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.institute.dao.TeacherDao;
 import com.institute.dto.admin.StudentDetailsDTO;
-import com.institute.entities.Student;
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service

@@ -1,20 +1,13 @@
 package com.institute.service.admin;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.institute.dao.CourseSubjectTeacherDao;
 import com.institute.dao.SubjectDao;
 import com.institute.dto.ApiResponse;
-import com.institute.dto.admin.SubjectMappingDetailsDTO;
 import com.institute.dto.admin.SubjectDto;
-import com.institute.entities.CourseSubjectTeacher;
 import com.institute.entities.Subject;
 import com.institute.exception.customexceptions.ApiException;
 
@@ -28,31 +21,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectDao subjectDao;
     private final ModelMapper modelMapper;
-    private final CourseSubjectTeacherDao courseSubjectTeacherDao;
 
     // ---------------------- GET ALL subjects ----------------------
     @Override
-    public List<SubjectMappingDetailsDTO> getAllMappedSubjectDetails() {
-        List<CourseSubjectTeacher> allMappings = courseSubjectTeacherDao.findAll();
-
-        Map<Subject, List<CourseSubjectTeacher>> groupedBySubject = allMappings.stream()
-                .collect(Collectors.groupingBy(CourseSubjectTeacher::getSubject));
-        List<SubjectMappingDetailsDTO> result = new ArrayList<>();
-        for (Map.Entry<Subject, List<CourseSubjectTeacher>> entry : groupedBySubject.entrySet()) {
-            Subject subject = entry.getKey();
-            List<CourseSubjectTeacher> mappings = entry.getValue();
-            SubjectMappingDetailsDTO dto = modelMapper.map(subject, SubjectMappingDetailsDTO.class);
-            Set<String> courseNames = mappings.stream()
-                    .map(m -> m.getCourse().getName())
-                    .collect(Collectors.toSet());
-            Set<String> teacherNames = mappings.stream()
-                    .map(m -> m.getTeacher().getName())
-                    .collect(Collectors.toSet());
-            dto.setCourseNames(courseNames);
-            dto.setTeacherNames(teacherNames);
-            result.add(dto);
-        }
-        return result;
+    public List<SubjectDto> getAllSubjects() {
+        return subjectDao.findAll().stream()
+                .map(subject -> modelMapper.map(subject, SubjectDto.class))
+                .toList();
     }
     // ---------------------- ADD new SUBJECT ----------------------
     @Override
