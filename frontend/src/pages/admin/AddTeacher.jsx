@@ -24,6 +24,17 @@ function AddTeacher() {
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (file) {
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+            // Check file size
+            if (file.size > maxSize) {
+                toast.warning("File size exceeds 2MB. Please upload a smaller image.", {
+                    autoClose: 2000
+                });
+                e.target.value = "";
+                return;
+            }
+
             try {
                 const res = await uploadImage(file);
                 setTeacher(prev => ({ ...prev, image: res.fileName }));
@@ -105,7 +116,7 @@ function AddTeacher() {
                             </div>
 
                             <div className="col-md-6">
-                                <label className="form-label">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed)</sub>
+                                <label className="form-label">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed. File Size should be less than 2MB.)</sub>
                                 <input
                                     type="file"
                                     accept=".jpg, .jpeg, .png"

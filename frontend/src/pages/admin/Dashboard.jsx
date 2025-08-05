@@ -139,11 +139,11 @@ function Dashboard() {
                         key={n.id}
                       >
                         <div className="row2-second-notice-item">
-                          <p style={{ fontWeight: "bold", marginBottom: "-2px" }}>{n.date}</p>
                           <p
-                            style={{ fontSize: "0.9rem", marginBottom: "20px" }}
-                            dangerouslySetInnerHTML={{ __html: n.description }}
+                            style={{ fontSize: "1rem", marginBottom: '0px', fontWeight: "bold" }}
+                            dangerouslySetInnerHTML={{ __html: n.title }}
                           />
+                          <p style={{  marginBottom: "20px" }}>{n.date}</p>
                         </div>
                       </a>
                     ))
