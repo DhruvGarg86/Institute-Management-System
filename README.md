@@ -125,6 +125,9 @@
 ### 3rd July — Backend + Frontend Integration
 - 'AdminDashboard' integration completed except 'TopStudent'.
 - 'AddNotice' upload yet to be configured for Amazon S3 bucket Service.
+
+### 5th July — Backend + Frontend Integration
+- 'AdminDashboard', 'AddTeacher', 'DisplayTeachers', 'TeacherAttendance', 'AddNotice', 'DisplayAllNotices' 'Profile'(Admin) are completely integrated with file and pdf upload support, only left is to protect the routes.
 ---
 
 *For detailed technical and UI design documentation, see the project’s `/Documentation` folder.*

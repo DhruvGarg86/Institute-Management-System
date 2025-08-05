@@ -22,5 +22,5 @@ public interface NoticeDao extends JpaRepository<Notice, Long> {
 
     List<Notice> findByAudienceAndStatusOrderByDateDesc(Audience audience, Status status);
 
-	List<Notice> findByStatus(Status status);
+	List<Notice> findByStatusOrderByCreatedAtDesc(Status status);
 }

@@ -44,7 +44,7 @@ function AddStudent() {
                             </div>
 
                             <div className="col-md-6">
-                                <label className="form-label">Joining Date</label>
+                                <label className="form-label">Admission Date</label>
                                 <input type="date" name="joining_date" required className="form-control" />
                             </div>
 

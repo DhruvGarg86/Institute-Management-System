@@ -27,7 +27,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<AdminNoticeDTO> getAllNotices() {
-		return noticeDao.findByStatus(Status.ACTIVE)
+		return noticeDao.findByStatusOrderByCreatedAtDesc(Status.ACTIVE)
 				.stream()
 				.map(notice -> modelMapper.map(notice, AdminNoticeDTO.class))
 				.toList();

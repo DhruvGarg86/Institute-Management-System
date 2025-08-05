@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeacherDao extends JpaRepository<Teacher, Long> {
 
-	List<Teacher> findByStatus(Status status);
+	List<Teacher> findAllByOrderByUpdatedAtDesc();
 
 	Optional<Teacher> findById(Long id);
 

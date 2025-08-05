@@ -18,4 +18,6 @@ public interface TeacherService {
 	TeacherProfileDTO findTeacherById(Long teacherId);
 
 	ApiResponse softDeleteTeacher(AdminDeleteTeacherDTO teacher, Long id);
+
+	AdminEditTeacherDTO getTeacher(Long id);
 }
