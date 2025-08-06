@@ -1,17 +1,30 @@
-# ✅ Step 1: Use Java 21 base image
-FROM openjdk:21-jdk-slim
+# ---------- Stage 1: Build ----------
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
-# ✅ Step 2: Set the working directory inside the container
+# Set working directory inside the container
 WORKDIR /app
 
-# ✅ Step 3: Accept a build argument pointing to the JAR file
-ARG JAR_FILE=target/*.jar
+# Copy pom.xml and download dependencies first (optimize layer caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# ✅ Step 4: Copy the compiled JAR from the host to the container
-COPY ${JAR_FILE} app.jar
+# Copy the entire source code
+COPY . .
 
-# ✅ Step 5: Expose port 8080 (used for Spring Boot)
+# Build the application
+RUN mvn clean package -DskipTests
+
+# ---------- Stage 2: Run ----------
+FROM eclipse-temurin:21.0.5_9-jdk
+
+# Set working directory
+WORKDIR /app
+
+# Copy the jar from the build stage
+COPY --from=build /app/target/spring_boot_backend_template-0.0.1.jar app.jar
+
+# Expose the default Spring Boot port
 EXPOSE 8080
 
-# ✅ Step 6: Command to run the JAR when the container starts
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Run the jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
