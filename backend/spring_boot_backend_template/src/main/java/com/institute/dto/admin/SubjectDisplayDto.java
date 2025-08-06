@@ -9,7 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SubjectDto {
+public class SubjectDisplayDto {
+
+    private Long id;
     
     @Min(value = 1, message = "Code must be a positive integer")
     @Max(value = 9999, message = "Code must not exceed 4 digits")

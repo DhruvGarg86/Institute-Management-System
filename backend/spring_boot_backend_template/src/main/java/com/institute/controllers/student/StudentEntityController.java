@@ -1,21 +1,29 @@
 package com.institute.controllers.student;
 
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.institute.dto.student.StudentAttendanceDto;
 import com.institute.dto.student.StudentFeeDto;
 import com.institute.dto.student.StudentProfileDto;
 import com.institute.dto.student.UpdateStudentProfileDto;
-import com.institute.security.AuthUtil;
-import com.institute.service.student.*;
+import com.institute.service.student.StudentAttendanceService;
+import com.institute.service.student.StudentEntityService;
+import com.institute.service.student.StudentFeeService;
+import com.institute.service.student.StudentMarksService;
+import com.institute.service.student.StudentProfileService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
-import java.util.Optional;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
@@ -29,50 +37,48 @@ public class StudentEntityController {
 	private final StudentMarksService studentMarksService;
 	private final StudentProfileService studentProfileService;
 
-	// 📝 Get all notices for logged-in student
-	@GetMapping("/notice")
+	@GetMapping("/notice/{studentId}")
 	public ResponseEntity<?> getNoticesForStudents() {
 		return ResponseEntity.ok(studentEntityService.getStudentNotices());
 	}
 
-	// 💰 Student fee info
-	@GetMapping("/fee")
+	@GetMapping("/fee/{studentId}")
 	@Operation(description = "Student fee details")
-	public ResponseEntity<?> displayStudentFees() {
-		StudentFeeDto studentFee = studentFeeService.displayStudentFee(AuthUtil.getCurrentUserId());
+	public ResponseEntity<?> displayStudentFees(@PathVariable Long studentId) {
+		StudentFeeDto studentFee = studentFeeService.displayStudentFee(studentId);
 		return ResponseEntity.ok(studentFee);
 	}
 
 	// 📊 Dashboard attendance
-	@GetMapping("/dashboard/attendance")
+	@GetMapping("/dashboard/attendance/{studentId}")
 	@Operation(description = "Student dashboard attendance")
-	public ResponseEntity<?> displayStudentAttendancePercentageDashboard() {
+	public ResponseEntity<?> displayStudentAttendancePercentageDashboard(@PathVariable Long studentId) {
 		Optional<StudentAttendanceDto> studentAttendance =
-				studentAttendanceService.displayStudentAttendance(AuthUtil.getCurrentUserId());
+				studentAttendanceService.displayStudentAttendance(studentId);
 		return ResponseEntity.ok(studentAttendance);
 	}
 
 	// 📅 Full attendance page
-	@GetMapping("/attendance")
+	@GetMapping("/attendance/{studentId}")
 	@Operation(description = "Student attendance full details")
-	public ResponseEntity<?> displayStudentAttendancePercentage() {
+	public ResponseEntity<?> displayStudentAttendancePercentage(@PathVariable Long studentId) {
 		Optional<StudentAttendanceDto> studentAttendance =
-				studentAttendanceService.displayStudentAttendance(AuthUtil.getCurrentUserId());
+				studentAttendanceService.displayStudentAttendance(studentId);
 		return ResponseEntity.ok(studentAttendance);
 	}
 
 	// 🧪 Dashboard exam marks
-	@GetMapping("/dashboard/marks")
+	@GetMapping("/dashboard/marks/{studentId}")
 	@Operation(description = "Fetch student exam marks for dashboard")
-	public ResponseEntity<?> displayStudentMarksDashboard() {
-		return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
+	public ResponseEntity<?> displayStudentMarksDashboard(@PathVariable Long studentId) {
+		return ResponseEntity.ok(studentMarksService.getStudentMarks(studentId));
 	}
 
 	// 🧾 All exam marks
-	@GetMapping("/exam")
+	@GetMapping("/exam/{studentId}")
 	@Operation(description = "Fetch full exam marks for student")
-	public ResponseEntity<?> displayStudentMarks() {
-		return ResponseEntity.ok(studentMarksService.getStudentMarks(AuthUtil.getCurrentUserId()));
+	public ResponseEntity<?> displayStudentMarks(@PathVariable Long studentId) {
+		return ResponseEntity.ok(studentMarksService.getStudentMarks(studentId));
 	}
 
 	@GetMapping("/profile/{id}")

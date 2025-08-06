@@ -45,7 +45,7 @@ public class StudentFeeServiceImpl implements StudentFeeService {
         // Update the entity if the status has changed
         if (fee.getStatus() != updatedStatus) {
             fee.setStatus(updatedStatus);
-            feeDao.save(fee); // persist updated status
+            feeDao.save(fee); 
         }
 
         Student student = fee.getStudent();

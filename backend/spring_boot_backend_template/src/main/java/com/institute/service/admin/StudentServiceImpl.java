@@ -5,6 +5,7 @@ import com.institute.dto.ApiResponse;
 import com.institute.entities.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -105,6 +106,7 @@ public class StudentServiceImpl implements StudentService {
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
         student.setImagePath(dto.getImagePath());
+        student.setAdmissionDate(dto.getAdmissionDate());
 
         // Create Login first
         Login login = new Login();
@@ -223,7 +225,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<FeeResponseDto> getAllStudentFeeDetails() {
-        return List.of();
+        List<FeeResponseDto> fees = feeDao.findAllFeeDetails();
+        if (fees.isEmpty()) {
+            throw new ResourceNotFoundException("No fee details found");
+        }
+        return fees;
     }
 
     @Override
@@ -237,4 +243,18 @@ public class StudentServiceImpl implements StudentService {
 
         return new ApiResponse("Fee data updated successfully!");
     }
+
+	@Override
+	public Optional<AddStudentDto> getStudentDetailsById(Long id) {
+		Student student = studentDao.findById(id)
+		        .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+		    AddStudentDto dto = modelMapper.map(student, AddStudentDto.class);
+		    if (student.getUser() != null) {
+		        dto.setEmail(student.getUser().getEmail());
+		    }
+		    if (student.getCourse() != null) {
+		        dto.setCourseName(student.getCourse().getName());
+		    }
+		    return Optional.ofNullable(dto);
+	}
 }

@@ -2,6 +2,7 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
+import com.institute.dto.admin.SubjectDisplayDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,7 +39,7 @@ public class SubjectController {
     )
     @GetMapping("/display-subject")
     public ResponseEntity<?> getSubjectMappingDetails() {
-        List<SubjectDto> details = subjectService.getAllSubjects();
+        List<SubjectDisplayDto> details = subjectService.getAllSubjects();
         
         if (details.isEmpty()) {
             return ResponseEntity.noContent().build();
