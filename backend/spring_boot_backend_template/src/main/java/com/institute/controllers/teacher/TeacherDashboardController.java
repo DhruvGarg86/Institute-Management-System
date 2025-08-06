@@ -74,8 +74,9 @@ public class TeacherDashboardController {
 
     @GetMapping("/total-courses/{teacherId}")
     public ResponseEntity<?> getNumberOfCourses(@PathVariable Long teacherId){
+        Long tid = teacherDao.findTeacherIdByUserId(teacherId);
 
-        return ResponseEntity.ok(teacherOwnService.countCoursesByTeacherId(teacherId));
+        return ResponseEntity.ok(teacherOwnService.countCoursesByTeacherId(tid));
     }
 
     @GetMapping("/topper")

@@ -13,6 +13,7 @@ function DisplayStudent() {
     const gridRef = useRef(null);
 
     const [students, setStudents] = useState([]);
+    console.log(students)
 
     const getStudents = async() => {
         try{

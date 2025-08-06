@@ -22,24 +22,72 @@ import { config } from "../config";
 
 
 // GET TEACHER'S ATTENDANCE 
-    export async function getTeacherTotalAttendance(id) {
-    try {
-        // console.log(id) 
-        const token = localStorage.getItem("token");
 
-        const url = `${config.serverUrl}/teacher/dashboard/total-attendance/${id}`;
-        const headers = { Authorization: `Bearer ${token}` };
+    // export async function getTeacherTotalAttendance(id) {
+    // try {
+    //     // console.log(id) 
+    //     const token = localStorage.getItem("token");
 
-        const response = await axios.get(url, { headers });
+    //     const url = `${config.serverUrl}/teacher/dashboard/total-attendance/${id}`;
+    //     const headers = { Authorization: `Bearer ${token}` };
 
-        // console.log(response.data)
-        return response.data.data;
-    } catch (error) {
+    //     const response = await axios.get(url, { headers });
+
+    //     // console.log(response.data)
+    //     return response.data.data;
+    // } catch (error) {
         
-        console.log("Exception", error.message);
-        throw error;
+    //     console.log("Exception", error.message);
+    //     throw error;
+    // }
+    // }
+
+    export async function getTeacherTotalAttendance(id) {
+  try {
+    const token = localStorage.getItem("token");
+    const url = `${config.serverUrl}/teacher/dashboard/total-attendance/${id}`;
+    const headers = { Authorization: `Bearer ${token}` };
+
+    const response = await axios.get(url, { headers });
+
+    const attendanceData = response.data.data;
+
+    // Validate the structure
+    if (
+      typeof attendanceData.presentDays === 'number' &&
+      typeof attendanceData.totalWorkingDays === 'number'
+    ) {
+      return attendanceData;
+    } else {
+      throw new Error("Invalid attendance data format");
     }
-    }
+
+  } catch (error) {
+    console.log("Exception", error.message);
+    throw error;
+  }
+}
+
+// =======
+//     export async function getTeacherTotalAttendance(id) {
+//     try {
+//         // console.log(id) 
+//         const token = localStorage.getItem("token");
+
+//         const url = `${config.serverUrl}/teacher/dashboard/total-attendance/${id}`;
+//         const headers = { Authorization: `Bearer ${token}` };
+
+//         const response = await axios.get(url, { headers });
+
+//         // console.log(response.data)
+//         return response.data.data;
+//     } catch (error) {
+        
+//         console.log("Exception", error.message);
+//         throw error;
+//     }
+//     }
+// >>>>>>> main
 
     // GET TEACHER'S COURSES 
     export async function getTeacherCourses(id) {
