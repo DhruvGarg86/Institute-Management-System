@@ -1,12 +1,15 @@
 package com.institute.dto.admin;
 
 
-import lombok.*;
-
 import java.time.LocalDate;
 
 import com.institute.entities.enums.FeeStatus;
-import com.institute.entities.enums.Status;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
