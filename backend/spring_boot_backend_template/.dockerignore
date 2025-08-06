@@ -1,0 +1,23 @@
+# Compiled files
+target/
+*.class
+*.jar
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker build files
+Dockerfile
+.dockerignore
+
+# Env files (if you have them)
+.env
