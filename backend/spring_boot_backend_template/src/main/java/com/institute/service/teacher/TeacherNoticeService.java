@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface TeacherNoticeService {
     List<TeacherNoticeDTO> getNoticesForTeacher();
-    public List<TeacherNoticeDTO> getLatestFiveTeacherNotices();
+    List<TeacherNoticeDTO> getLatestFiveTeacherNotices();
 }
+
+//FORCING THE PUSH
