@@ -2,6 +2,7 @@ package com.institute.controllers.teacher;
 
 import java.util.List;
 
+import com.institute.dao.TeacherDao;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class TeacherStudentController {
 
     private final TeacherStudentService teacherStudentService;
     private final StudentService studentService;
+    private final TeacherDao teacherDao;
 
 //    ----------with JWT
 //    @GetMapping("/students")
@@ -34,7 +36,9 @@ public class TeacherStudentController {
 //    WITHOUT JWT
     @GetMapping("/{teacherId}")
     public ResponseEntity<List<StudentDetailsDTO>> getStudentsByTeacher(@PathVariable Long teacherId) {
-        return ResponseEntity.ok(teacherStudentService.getStudentsByTeacher(teacherId));
+        Long tid = teacherDao.findTeacherIdByUserId(teacherId);
+
+        return ResponseEntity.ok(teacherStudentService.getStudentsByTeacher(tid));
     }
 
     @GetMapping("/marks/{studentId}")
