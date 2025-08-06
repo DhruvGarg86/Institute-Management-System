@@ -32,5 +32,4 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
         return teacherDao.findTop2NoticesForTeacher(limit);
     }
 
-//    FORCING THE PUSH
 }

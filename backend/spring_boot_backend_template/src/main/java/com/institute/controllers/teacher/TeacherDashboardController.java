@@ -66,7 +66,7 @@ public class TeacherDashboardController {
     @GetMapping("/total-students/{teacherId}")
     public ResponseEntity<?> getNumberOfStudents(@PathVariable Long teacherId) {
         Long tid = teacherDao.findTeacherIdByUserId(teacherId);
-        System.out.println("YE DEKH BSDK" + tid);
+        System.out.println("YE DEKH " + tid);
         Long count = teacherOwnService.countStudentsByTeacherId(tid);
 
             return ResponseEntity.ok(Map.of("status", "success", "data", count));
