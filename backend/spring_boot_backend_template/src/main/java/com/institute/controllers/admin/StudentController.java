@@ -2,6 +2,7 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
+import com.institute.dto.admin.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.institute.dto.admin.AddStudentDto;
-import com.institute.dto.admin.FeeUpdateRequest;
-import com.institute.dto.admin.StudentPercentageDto;
-import com.institute.dto.admin.TopperStudentResponseDto;
-import com.institute.dto.admin.UpdateStudentRequestDto;
 import com.institute.security.AuthUtil;
 import com.institute.service.admin.StudentService;
 
@@ -87,5 +83,16 @@ public class StudentController {
     @PutMapping("/updateFee")
     public ResponseEntity<?> updateFeeByStudentId(@RequestBody FeeUpdateRequest dto) {
         return ResponseEntity.ok(studentService.updateFee(AuthUtil.getCurrentUserId(), dto));
+    }
+
+    @GetMapping("getSubjects/{studentId}")
+    public ResponseEntity<?> getSubjectsByStudentId(@PathVariable Long studentId) {
+        List<StudentSubjectsDto> subjects = studentService.getSubjectNamesByStudentId(studentId);
+        return ResponseEntity.ok(subjects);
+    }
+
+    @PostMapping("/addMarks")
+    public ResponseEntity<?> addOrUpdateMarks(@RequestBody MarksRequestDTO dto) {
+        return ResponseEntity.ok(studentService.addOrUpdateMarks(dto));
     }
 }
