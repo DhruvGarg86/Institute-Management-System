@@ -1,12 +1,13 @@
 package com.institute.dao;
 
+
 import com.institute.dto.admin.StudentDetailsDTO;
 import com.institute.dto.teacher.TeacherAttendanceDTO;
 import com.institute.dto.teacher.TeacherNoticeDTO;
 import com.institute.dto.teacher.TeacherStudentDTO;
 import com.institute.entities.Student;
 import com.institute.entities.Teacher;
-import com.institute.entities.enums.Status;
+
 import java.util.List;
 import java.util.Optional;
 

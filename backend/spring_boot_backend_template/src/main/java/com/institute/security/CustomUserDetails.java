@@ -9,7 +9,11 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final Login login;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final Login login;
 
     public CustomUserDetails(Login login) {
         this.login = login;

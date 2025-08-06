@@ -2,7 +2,6 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,53 +19,61 @@ import com.institute.dto.admin.SubjectDto;
 import com.institute.service.admin.SubjectService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+
 @SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:5173")
 @AllArgsConstructor
 public class SubjectController {
-	
-//	 subject apis ----------------------------------------------------------
-	public final SubjectService subjectService;
-	
-	@GetMapping("/display-subject")
-	public ResponseEntity<?> DisplayAllSubjects(){
-		List<SubjectDto> subjects = subjectService.getAllSubjects();
-		if(subjects.isEmpty())
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		return ResponseEntity.ok(subjects);
-		
-	}
-	
-	@PostMapping("/add-subject")
-	@Operation(description = "add new subject")
-	public ResponseEntity<?> addNewSubject(@Valid @RequestBody SubjectDto subjectDto) {
-	    return ResponseEntity.status(HttpStatus.CREATED)
-	                         .body(subjectService.addSubject(subjectDto));
-	}
-	
-	@PutMapping("/edit-subject/{subjectId}")
-	@Operation(summary = "Update subject", description = "Updates the details of a subject by its ID.")
-	public ResponseEntity<?> editSubjectById(
-	        @PathVariable Long subjectId,
-	        @Valid @RequestBody SubjectDto dto) {
-	    return ResponseEntity.ok(subjectService.updateSubjectsById(subjectId, dto));
+
+    private final SubjectService subjectService;
+    
+    @Operation(
+        summary = "Get subject-course-teacher and other details",
+        description = "Returns a list of subject mappings along with related course and teacher names"
+    )
+    @GetMapping("/display-subject")
+    public ResponseEntity<?> getSubjectMappingDetails() {
+        List<SubjectDto> details = subjectService.getAllSubjects();
+        
+        if (details.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }     
+        return ResponseEntity.ok(details);
+    }
+
+
+    @PostMapping("/add-subject")
+    @Operation(description = "Add new subject")
+    public ResponseEntity<?> addNewSubject(@Valid @RequestBody SubjectDto subjectDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(subjectService.addSubject(subjectDto));
+    }
+
+    @PutMapping("/edit-subject/{subjectId}")
+    @Operation(summary = "Update subject", description = "Updates the details of a subject by its ID.")
+    public ResponseEntity<?> editSubjectById(
+            @PathVariable Long subjectId,
+            @Valid @RequestBody SubjectDto dto) {
+        return ResponseEntity.ok(subjectService.updateSubjectsById(subjectId, dto));
+    }
+
+    @DeleteMapping("/delete-subject/{subjectId}")
+    @Operation(summary = "Soft delete subject", description = "Soft deletes the subject if its status is INACTIVE.")
+    public ResponseEntity<ApiResponse> deleteSubjectById(@PathVariable Long subjectId) {
+        ApiResponse response = subjectService.deleteSubjectsById(subjectId);
+        return ResponseEntity.ok(response);
+    }
+    
+	@GetMapping("/getSubjectById/{id}")
+	public ResponseEntity<SubjectDto> getSubjectById(@PathVariable Long id) {
+		SubjectDto subject = subjectService.getSubjectById(id);
+		return ResponseEntity.ok(subject);
 	}
 
-	@DeleteMapping("/delete-subject/{subjectId}")
-	@Operation(summary = "Soft delete subject", description = "Soft deletes the subject if its status is INACTIVE.")
-	public ResponseEntity<ApiResponse> deleteSubjectById(@PathVariable Long subjectId) {
-	    ApiResponse response = subjectService.deleteSubjectsById(subjectId);
-	    
-	    // Use 200 OK for successful deletion with a message body
-	    HttpStatus status = response.getMessage().equalsIgnoreCase("Subject deleted successfully")
-	            ? HttpStatus.OK
-	            : HttpStatus.BAD_REQUEST;
-
-	    return ResponseEntity.status(status).body(response);
-	}
-		
+	
 }

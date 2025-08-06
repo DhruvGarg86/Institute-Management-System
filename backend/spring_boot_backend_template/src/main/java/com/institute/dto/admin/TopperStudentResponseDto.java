@@ -11,9 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TopperStudentResponseDto {
-
     private String studentName;
-    private String image;
+    private String imagePath;
     private String courseName;
     private double percentage;
 }

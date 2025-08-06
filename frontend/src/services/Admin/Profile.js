@@ -11,7 +11,7 @@ export async function fetchProfile(id) {
       "Content-Type": "application/json",
     };
 
-    const response = await axios.get(url, {headers});
+    const response = await axios.get(url, { headers });
     return response.data;
   } catch (error) {
     console.log("Exception", error.message);
@@ -29,7 +29,7 @@ export async function editProfile(body, id) {
       "Content-Type": "application/json",
     };
 
-    const response = await axios.put(url, body);
+    const response = await axios.put(url, body, { headers });
     return response.data;
   } catch (error) {
     console.log("Exception", error.message);
@@ -38,13 +38,31 @@ export async function editProfile(body, id) {
 }
 
 export async function uploadImage(file) {
-  let url = `${config.serverUrl}/image/upload`;
+  const token = localStorage.getItem("token");
+  const url = `${config.serverUrl}/image/upload`;
 
   const formData = new FormData();
   formData.append("image", file);
 
-  const response = await axios.post(url, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  const headers = {
+    Authorization: `Bearer ${token}`, 
+    "Content-Type": "multipart/form-data",
+  };
+
+  const response = await axios.post(url, formData, { headers });
   return response.data;
+}
+
+export function getAdminIdFromToken() {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const adminId = payload.id;
+    return adminId || null;
+  } catch (error) {
+    console.error("Invalid token:", error);
+    return null;
+  }
 }

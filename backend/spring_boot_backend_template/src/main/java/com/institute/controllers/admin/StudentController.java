@@ -4,8 +4,14 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.institute.dto.admin.AddStudentDto;
 import com.institute.dto.admin.FeeUpdateRequest;
@@ -16,11 +22,7 @@ import com.institute.security.AuthUtil;
 import com.institute.service.admin.StudentService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.Parameter;
-
 import lombok.AllArgsConstructor;
 
 @SecurityRequirement(name = "bearerAuth")
@@ -37,7 +39,7 @@ public class StudentController {
     }
 
     @Operation(summary = "Add a student with profile image")
-    @PostMapping(value = "/addStudent", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/addStudent")
     public ResponseEntity<AddStudentDto> addStudent(@RequestBody AddStudentDto dto){
         AddStudentDto saved = studentService.addStudent(dto);
         return ResponseEntity.ok(saved);
@@ -58,9 +60,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentWithMarks(studentId));
     }
 
-    @PutMapping("/updateStudent")
-    public ResponseEntity<?> updateStudent(@RequestBody UpdateStudentRequestDto request) {
-        return ResponseEntity.ok(studentService.updateStudent(AuthUtil.getCurrentUserId(), request));
+    @PutMapping("/updateStudent/{studentId}")
+    public ResponseEntity<?> updateStudent(@PathVariable Long studentId, @RequestBody UpdateStudentRequestDto request) {
+        return ResponseEntity.ok(studentService.updateStudent(studentId, request));
     }
 
     @GetMapping("/toppers")

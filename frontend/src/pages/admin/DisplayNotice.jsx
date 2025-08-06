@@ -33,12 +33,15 @@ function DisplayNotice() {
     const confirmDelete = async () => {
         try {
             await deleteNoticeById(selectedNotice.id);
-            fetchNotices();
-            setShowModal(false);
+            toast.success("Notice deleted successfully");
+
             setSelectedNotice(null);
-            toast.info("Notice deleted successfully");
+            setShowModal(false);
+
+            await fetchNotices();
         } catch (error) {
             console.error("Error deleting notice:", error);
+            toast.error("Failed to delete notice");
         }
     };
 

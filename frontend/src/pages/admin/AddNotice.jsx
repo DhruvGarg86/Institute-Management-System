@@ -5,16 +5,21 @@ import { RichTextEditorComponent, Toolbar, HtmlEditor, Inject, QuickToolbar } fr
 import { useRef, useState } from 'react';
 import { submitNotice, uploadPdf } from '../../services/Admin/Notices';
 import { useNavigate } from 'react-router-dom';
+import { getAdminIdFromToken } from '../../services/Admin/Profile';
 
 function AddNotice() {
+    
+    const id = getAdminIdFromToken();
+    
     const [notice, setNotice] = useState({
-        adminId: '1',
+        adminId: id,
         audience: '',
         title: '',
         date: new Date().toISOString().split('T')[0],
         description: '',
         filePath: '',
     });
+
 
     const editorRef = useRef(null);
     const navigate = useNavigate();

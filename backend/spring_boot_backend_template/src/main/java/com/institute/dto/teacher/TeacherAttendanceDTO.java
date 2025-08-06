@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 import com.institute.entities.enums.Status;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
