@@ -46,9 +46,10 @@ public class Student extends BaseEntity {
     @Column(name = "admission_date")
     private LocalDate admissionDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private Login user;
+
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)

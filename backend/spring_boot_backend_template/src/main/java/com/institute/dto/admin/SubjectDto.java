@@ -1,6 +1,5 @@
 package com.institute.dto.admin;
 
-import com.institute.entities.enums.Status;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SubjectDto {
+
+    private Long id;
 
     @Min(value = 1, message = "Code must be a positive integer")
     @Max(value = 9999, message = "Code must not exceed 4 digits")
@@ -24,5 +25,4 @@ public class SubjectDto {
     @Size(max = 255, message = "Description must not exceed 255 characters")
     private String description;
 
-    private Status status;
 }

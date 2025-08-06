@@ -1,6 +1,5 @@
-package com.institute.dto.teacher;
+package com.institute.dto.student;
 
-import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +10,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeacherStudentDTO {
+public class StudentProfileDto {
     private Long id;
     private String name;
+    private String email;
     private String phoneNumber;
-    private LocalDate dob;
     private String address;
-    private String courseName;
     private String imagePath;
+    private String courseName;
 }

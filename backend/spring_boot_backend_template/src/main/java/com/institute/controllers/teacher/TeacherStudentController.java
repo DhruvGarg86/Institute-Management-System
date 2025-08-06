@@ -1,20 +1,19 @@
 package com.institute.controllers.teacher;
 
-import com.institute.dto.admin.StudentDetailsDTO;
-import com.institute.dto.admin.StudentPercentageDto;
-import com.institute.entities.Student;
-import com.institute.security.AuthUtil;
-import com.institute.service.admin.StudentService;
-import com.institute.service.teacher.TeacherStudentService;
-import lombok.AllArgsConstructor;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.institute.dto.admin.StudentDetailsDTO;
+import com.institute.dto.admin.StudentPercentageDto;
+import com.institute.service.admin.StudentService;
+import com.institute.service.teacher.TeacherStudentService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/teacher/students")
