@@ -1,59 +1,128 @@
-import React from 'react'
-import TeacherNavbar from "./TeacherNavbar"
-import { useNavigate, } from 'react-router-dom';
+    import React, { useState, useEffect } from "react";
+import TeacherSidebar from './TeacherSidebar';
+import TeacherNavbar from './TeacherNavbar';
+    import { FiEdit } from "react-icons/fi";
+    import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
+    import { useNavigate } from "react-router-dom";
+import { getUserIdFromToken } from "../../services/Teacher/Dashboard";
+import { fetchProfile } from "../../services/Teacher/TeacherProfile";
 
-function TeacherProfile() {
-    const navigate = useNavigate();
+    function TeacherProfile() {
 
-    return (
-        <>
-            <TeacherNavbar />
-            <div class="container rounded bg-white mt-5 mb-5">
-                <div class="row">
-                    <div class="col-md-3 border-right">
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" /><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
-                    </div>
-                    <div class="col-md-5 border-right">
-                        <div class="p-3 py-5">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Profile Settings</h4>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value="" /></div>
-                                <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname" /></div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value="" /></div>
-                                <div class="col-md-12"><label class="labels">Address Line</label><input type="text" class="form-control" placeholder="enter address line 1" value="" /></div>
-                                <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value="" /></div>
-                                <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value="" /></div>
-                                <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value="" /></div>
-                                <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value="" /></div>
-                                <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value="" /></div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value="" /></div>
-                                <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state" /></div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onClick={() => navigate("/teacher/dashboard")}>Back</button></div>
-                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
-                            </div>
+        const id = getUserIdFromToken();
+          console.log(id);
 
+        const [profile, setProfile] = useState({
+            name: "",
+            email: "",
+            address: "",
+            phoneNumber: "",
+            gender: "",
+            image: null
+        });
+        const navigate = useNavigate();
+
+        const getProfile = async () => {
+            try {
+                const response = await fetchProfile(id);
+                setProfile(response);
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        useEffect(() => {
+            getProfile();
+        }, []);
+
+        return (
+            <>
+                <TeacherNavbar />
+                <div className="container-fluid admin-dashboard-container">
+                    <div className="row admin-dashboard-row">
+                        <div className="col-2-5 admin-dashboard-first">
+                            <TeacherSidebar />
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-3 py-5">
-                            <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br></br>
-                            <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value="" /></div> <br></br>
-                            <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value="" /></div>
+
+                        {/* Profile Section */}
+                        <div className="col-7-5 admin-dashboard-second d-flex justify-content-center">
+                            <div className="profile-card">
+
+                                {/* Profile Image Section */}
+                                <div className="profile-image-container">
+                                    <img src={profile.image} alt="Profile" className="profile-image" />
+
+                                    <input
+                                        type="file"
+                                        id="profileImageInput"
+                                        accept="image/*"
+                                        style={{ display: "none" }}
+                                    />
+                                </div>
+
+                                {/* Name & Username */}
+                                <h2 className="profile-name mb-3">{profile.name}</h2>
+                                <p className="profile-username">
+                                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon" id="social-icon-facebook">
+                                        <FaFacebookF />
+                                    </a>
+                                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon" id="social-icon-twitter">
+                                        <FaTwitter />
+                                    </a>
+                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon" id="social-icon-instagram">
+                                        <FaInstagram />
+                                    </a>
+                                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon" id="social-icon-linkedin">
+                                        <FaLinkedinIn />
+                                    </a>
+                                </p>
+
+                                {/* Profile Info */}
+                                <div className="profile-info mt-4">
+                                    <div className="profile-field">
+                                        <span className="field-label">Username</span>
+                                        <span className="field-value">{profile.name}</span>
+                                    </div>
+
+                                    <div className="profile-field">
+                                        <span className="field-label">Email</span>
+                                        <span className="field-value">{profile.email}</span>
+                                    </div>
+
+                                    <div className="profile-field">
+                                        <span className="field-label">Address</span>
+                                        <span className="field-value">{profile.address}</span>
+                                    </div>
+
+                                    <div className="profile-field">
+                                        <span className="field-label">Phone Number</span>
+                                        <span className="field-value">+91 {profile.phoneNumber}</span>
+                                    </div>
+
+                                    <div className="profile-field">
+                                        <span className="field-label">Gender</span>
+                                        <span className="field-value">{profile.gender}</span>
+                                    </div>
+                                </div>
+
+                                <div className="text-center mt-3 mb-2">
+                                    <button
+                                        className="edit-profile-btn"
+                                        onClick={() => navigate(`/teacher/profile/edit/${id}`)}
+                                    >
+                                        <FiEdit style={{ marginRight: "5px" }} /> Edit Profile
+                                    </button>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
-}
+            </>
+        );
+    }
 
-export default TeacherProfile
+    export default TeacherProfile;
