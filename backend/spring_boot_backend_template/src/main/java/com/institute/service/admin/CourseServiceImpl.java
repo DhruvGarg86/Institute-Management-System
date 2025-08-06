@@ -200,8 +200,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public DisplayCourseSubjectTeacherDto getSubjectAndTeacherByCourseId(Long courseId) {
-         courseDao.findByIdAndIsDeletedFalse(courseId)
+        Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
+
         List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
 
         Set<CourseSubjectTeacherResponseDto> mappingDtos = mappings.stream()
@@ -217,11 +218,19 @@ public class CourseServiceImpl implements CourseService {
                             t != null ? t.getName() : null
                     );
                 })
-                .collect(Collectors.toCollection(LinkedHashSet::new)); // LinkedHashSet preserves insertion order
+                .collect(Collectors.toCollection(LinkedHashSet::new)); // preserves insertion order
 
         DisplayCourseSubjectTeacherDto dto = new DisplayCourseSubjectTeacherDto();
+        dto.setId(course.getId());
+        dto.setName(course.getName());
+        dto.setDescription(course.getDescription());
+        dto.setDuration(course.getDuration());
+        dto.setStartDate(course.getStartDate());
+        dto.setEndDate(course.getEndDate());
+        dto.setCourseFees(course.getCourseFees());
+        dto.setMaxStudents(course.getMaxStudents());
+        dto.setStatus(course.getStatus());
         dto.setMappings(mappingDtos);
         return dto;
     }
-
 }

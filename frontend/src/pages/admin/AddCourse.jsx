@@ -95,6 +95,11 @@ function AddCourse() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const duration = parseInt(courseInfo.duration);
+    if (isNaN(duration) || duration <= 0) {
+      toast.error("Duration must be a positive number");
+      return;
+    }
     try {
       await addCourse(courseInfo);
       toast.success("Course added successfully");
@@ -161,6 +166,7 @@ function AddCourse() {
                         value={courseInfo.duration}
                         onChange={handleChange}
                         size="sm"
+                        min="1"
                         required
                       />
                     </Form.Group>
