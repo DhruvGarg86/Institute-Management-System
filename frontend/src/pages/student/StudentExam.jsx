@@ -32,8 +32,12 @@ function StudentExam() {
           <div className="col-10">
             <h2 className="mb-4 student-center">Exam Result</h2>
             <div className="mb-3">
-              <p><strong>Student Name:</strong> {studentData.studentName}</p>
-              <p><strong>Course:</strong> {studentData.courseName}</p>
+              <p>
+                <strong>Student Name:</strong> {studentData.studentName}
+              </p>
+              <p>
+                <strong>Course:</strong> {studentData.courseName}
+              </p>
             </div>
 
             <div className="table-responsive">
@@ -61,9 +65,7 @@ function StudentExam() {
                         <td>
                           <span
                             className={`badge ${
-                              status === "Pass"
-                                ? "bg-success"
-                                : "bg-danger"
+                              status === "Pass" ? "bg-success" : "bg-danger"
                             }`}
                           >
                             {status}
@@ -79,14 +81,14 @@ function StudentExam() {
             <div className="row mt-4">
               <div className="col-md-4">
                 <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Total Marks</p>
-                  <h5>{studentData.totalMarks}</h5>
+                  <p className="mb-1 text-muted">Marks Obtained</p>
+                  <h5>{studentData.totalMarksObtained}</h5>
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Marks Obtained</p>
-                  <h5>{studentData.totalMarksObtained}</h5>
+                  <p className="mb-1 text-muted">Total Marks</p>
+                  <h5>{studentData.totalMarks}</h5>
                 </div>
               </div>
               <div className="col-md-4">
@@ -99,7 +101,6 @@ function StudentExam() {
           </div>
         </div>
       </div>
-      
     </>
   );
 }

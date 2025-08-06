@@ -8,7 +8,10 @@ import {
     ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject
 } from '@syncfusion/ej2-react-grids';
 import { toast } from 'react-toastify';
-import { deleteTeacherById, getAllTeachers } from '../../services/Admin/Teacher';
+import { getAllTeachers } from '../../services/Admin/Teacher';
+import TeacherSidebar from '../teacher/TeacherSidebar';
+
+
 
 function DisplayTeacher() {
 
