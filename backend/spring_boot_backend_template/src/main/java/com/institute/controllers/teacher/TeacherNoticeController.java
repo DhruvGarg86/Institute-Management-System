@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.institute.service.admin.NoticeService;
 
+import com.institute.service.teacher.TeacherNoticeService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 
@@ -14,11 +16,11 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/teacher/notices")
 @AllArgsConstructor
 public class TeacherNoticeController {
-    public final NoticeService noticeService;
+    public final TeacherNoticeService teacherNoticeService;
 
     @GetMapping("/display-notices")
     @Operation(summary = "Teacher-Panel-DisplayAllNotices")
     public ResponseEntity<?> getNotices(){
-        return ResponseEntity.ok(noticeService.getAllNotices());
+        return ResponseEntity.ok(teacherNoticeService.getNoticesForTeacher());
     }
 }

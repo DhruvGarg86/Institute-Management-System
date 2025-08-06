@@ -1,6 +1,7 @@
 package com.institute.service.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.institute.dto.ApiResponse;
 import com.institute.dto.admin.ActiveStudentsDto;
@@ -26,5 +27,6 @@ public interface StudentService {
     List<StudentPercentageDto> getAllStudentPercentages();
     List<FeeResponseDto> getAllStudentFeeDetails();
     ApiResponse updateFee(Long studentId, FeeUpdateRequest dto);
+	Optional<AddStudentDto> getStudentDetailsById(Long id);
 }
 

@@ -13,43 +13,75 @@ import {
   Search,
   Inject,
 } from "@syncfusion/ej2-react-grids";
-import Navbar from "../../components/Navbar";
 import TeacherSidebar from "./TeacherSidebar";
 import TeacherNavbar from "./TeacherNavbar";
+import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
-// Dummy teacher data
-const sampleTeachers = [
+const sampleCourses = [
   {
     id: 1,
-    name: "Dr. Aisha Khan",
-    email: "aisha.khan@example.com",
-    phoneNumber: "9876543210",
-    address: "123 Park Street, Mumbai",
-    joiningDate: "2022-06-15",
-    status: "ACTIVE",
+    name: "Full Stack Development",
+    description: "Frontend and backend web dev.",
+    duration: "6 months",
+    startDate: "2025-08-10",
+    endDate: "2026-02-10",
+    courseFees: 45000.0,
+    maxStudents: 30,
+    status: true,
+    subjects: [
+      {
+        code: 101,
+        name: "HTML",
+        description: "Basics of HTML",
+        status: true,
+        teacher: "Mr. Sharma",
+      },
+      {
+        code: 102,
+        name: "React",
+        description: "Frontend using React",
+        status: false,
+        teacher: "Ms. Verma",
+      },
+    ],
   },
   {
     id: 2,
-    name: "Mr. Rohan Desai",
-    email: "rohan.desai@example.com",
-    phoneNumber: "8765432109",
-    address: "456 Main Road, Pune",
-    joiningDate: "2021-08-25",
-    status: "INACTIVE",
-  },
-  {
-    id: 3,
-    name: "Mrs. Neha Sharma",
-    email: "neha.sharma@example.com",
-    phoneNumber: "9988776655",
-    address: "22 MG Road, Bangalore",
-    joiningDate: "2023-01-10",
-    status: "ACTIVE",
+    name: "Data Science",
+    description: "Python, ML, Visualization.",
+    duration: "4 months",
+    startDate: "2025-09-01",
+    endDate: "2026-01-01",
+    courseFees: 60000.0,
+    maxStudents: 25,
+    status: false,
+    subjects: [
+      {
+        code: 201,
+        name: "Python",
+        description: "Python basics",
+        status: true,
+        teacher: "Dr. Gupta",
+      },
+      {
+        code: 202,
+        name: "ML",
+        description: "Intro to ML",
+        status: true,
+        teacher: "Mr. Bose",
+      },
+    ],
   },
 ];
 
 function TeacherDisplayCourse() {
+  const navigate = useNavigate();
   const gridRef = useRef(null);
+
+  const handleViewSubjects = (course) => {
+    navigate(`/teacher/course/${course.id}/subjects`);
+  };
 
   return (
     <>
@@ -62,16 +94,18 @@ function TeacherDisplayCourse() {
           <div className="col-7-5 admin-dashboard-second p-4">
             <div className="card p-4 shadow">
               <h3 className="fw-bold" style={{ color: "#4361e5" }}>
-                Teacher List
+                Course List
               </h3>
               <GridComponent
                 ref={gridRef}
-                dataSource={sampleTeachers}
+                dataSource={sampleCourses}
                 allowSorting={true}
+                allowPaging={true}
                 allowExcelExport={true}
                 allowPdfExport={true}
-                allowPaging={true}
-                pageSettings={{ pageSize: 7 }}
+                allowTextWrap={true}
+                textWrapSettings={{ wrapMode: "Content" }}
+                pageSettings={{ pageSize: 6 }}
                 toolbar={["Search", "ExcelExport", "PdfExport", "Print"]}
                 toolbarClick={(args) => {
                   if (args.item.id.includes("pdfexport"))
@@ -82,32 +116,68 @@ function TeacherDisplayCourse() {
                 }}
               >
                 <ColumnsDirective>
-                  <ColumnDirective field="name" headerText="Name" width="150" />
                   <ColumnDirective
-                    field="email"
-                    headerText="Email"
-                    width="200"
-                  />
-                  <ColumnDirective
-                    field="phoneNumber"
-                    headerText="Phone"
+                    field="name"
+                    headerText="Course Name"
                     width="120"
+                    clipMode="EllipsisWithTooltip"
                   />
                   <ColumnDirective
-                    field="address"
-                    headerText="Address"
-                    width="220"
+                    field="description"
+                    headerText="Description"
+                    width="150"
+                    clipMode="EllipsisWithTooltip"
                   />
                   <ColumnDirective
-                    field="joiningDate"
-                    headerText="Joining Date"
-                    width="120"
+                    field="duration"
+                    headerText="Duration"
+                    width="90"
+                  />
+                  <ColumnDirective
+                    field="startDate"
+                    headerText="Start Date"
+                    width="100"
+                  />
+                  <ColumnDirective
+                    field="endDate"
+                    headerText="End Date"
+                    width="100"
+                  />
+                  <ColumnDirective
+                    field="courseFees"
+                    headerText="Fees"
+                    width="90"
+                  />
+                  <ColumnDirective
+                    field="maxStudents"
+                    headerText="Max Students"
+                    width="110"
                   />
                   <ColumnDirective
                     field="status"
                     headerText="Status"
-                    width="100"
-                    textAlign="Center"
+                    width="90"
+                    template={(props) => (
+                      <span
+                        className={`badge ${
+                          props.status ? "bg-success" : "bg-secondary"
+                        }`}
+                      >
+                        {props.status ? "Active" : "Inactive"}
+                      </span>
+                    )}
+                  />
+                  <ColumnDirective
+                    headerText="Action"
+                    width="120"
+                    template={(props) => (
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => handleViewSubjects({ id: props.id })}
+                      >
+                        View Subjects
+                      </button>
+                    )}
                   />
                 </ColumnsDirective>
                 <Inject
@@ -127,6 +197,7 @@ function TeacherDisplayCourse() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

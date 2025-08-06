@@ -85,21 +85,12 @@ function DisplaySubject() {
                 }}
               >
                 <ColumnsDirective>
-                  <ColumnDirective
-                    field="name"
-                    headerText="Subject Name"
-                    width="130"
-                  />
-                  <ColumnDirective
-                    field="code"
-                    headerText="Subject Code"
-                    width="90"
-                    textAlign="Center"
-                  />
+                  <ColumnDirective field="code" headerText="Code" width="100" />
+                  <ColumnDirective field="name" headerText="Name" width="150" />
                   <ColumnDirective
                     field="description"
                     headerText="Description"
-                    width="200"
+                    width="250"
                   />
                   <ColumnDirective
                     headerText="Action"
@@ -109,7 +100,7 @@ function DisplaySubject() {
                         <button
                           className="btn btn-sm btn-light me-2 text-primary"
                           onClick={() =>
-                            navigate(`/admin/edit-subject/${props.id}`)
+                            navigate(`/admin/edit-subject/${props.code}`)
                           }
                         >
                           <FaEdit />
@@ -117,6 +108,7 @@ function DisplaySubject() {
                         <button
                           className="btn btn-sm btn-light text-danger"
                           onClick={() => deleteSubject(props.id)}
+
                         >
                           <FaTrash />
                         </button>

@@ -1,5 +1,7 @@
 package com.institute.dto.admin;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +21,5 @@ public class AddStudentDto {
     private String gender;
     private String dob;
     private String courseName;
+    private LocalDate admissionDate;
 }
