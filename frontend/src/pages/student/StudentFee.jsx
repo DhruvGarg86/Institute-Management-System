@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import StudentNavbar from "./StudentNavbar"; // adjust path if needed
-import StudentSidebar from "../../components/StudentSidebar"; // adjust path if needed
+import StudentNavbar from "./StudentNavbar"; 
+import StudentSidebar from "../../components/StudentSidebar"; 
 
 function StudentFee() {
   const [fee, setFee] = useState(null);
