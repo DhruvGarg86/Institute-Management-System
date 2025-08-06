@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { FaUserGraduate, FaChalkboardTeacher } from 'react-icons/fa';
@@ -6,9 +6,32 @@ import { MdMenuBook } from 'react-icons/md';
 import Card from '../../components/Card';
 import TeacherSidebar from './TeacherSidebar'
 import TeacherNavbar from './TeacherNavbar'
+import { getTotalStudents, getUserIdFromToken } from '../../services/Teacher/Dashboard';
+import { toast } from "react-toastify";
 
 
 function TeacherDashboard() {
+  
+  const id = getUserIdFromToken();
+  console.log(id)
+
+  const [totalStudent, setTotalStudent] = useState("")
+
+// get total students 
+  useEffect(() => {
+    const fetchStudents = async ()=>{
+      try{
+        const response = await getTotalStudents(id)
+        console.log(response)
+        setTotalStudent(response);
+      } catch(error){
+        console.log(error)
+        toast.error("Unable to load total students")
+      }
+    };
+    fetchStudents();
+  })
+
   return (  
     <>
       <TeacherNavbar />
@@ -25,7 +48,7 @@ function TeacherDashboard() {
                   Total Students
                 </h3>
                 <div>
-                  <h2 style={{ fontWeight: 'bold', textAlign: 'center' }}>30</h2>
+                  <h2 style={{ fontWeight: 'bold', textAlign: 'center' }}>{totalStudent}</h2>
                 </div>
               </div>
               <div className="col row1-second">
