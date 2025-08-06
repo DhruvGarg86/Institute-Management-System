@@ -17,8 +17,8 @@ function TeacherDashboard() {
 
   const [totalStudent, setTotalStudent] = useState("")
   const [totalTeacherAttendance, setTotalTeacherAttendance] = useState({
-      presentDays: '',
-      totalWorkingDays: ''
+      presentDays: 0,
+      totalWorkingDays: 0
   })
   const [totalCourses, setTotalCourses] = useState("")
   const [notice, setNotice] = useState([])
@@ -27,6 +27,7 @@ function TeacherDashboard() {
   useEffect(() => {
     const fetchStudents = async (id)=>{
       try{
+        console.log('THIS ONE OR WHAT ' + id)
         const response = await getTotalStudents(id)
         console.log(response)
         setTotalStudent(response);
@@ -35,23 +36,41 @@ function TeacherDashboard() {
         toast.error("Unable to load total students")
       }
     };
-    fetchStudents();
+    fetchStudents(id);
   })
 
   // get teacher's attendance 
+  // useEffect(() => {
+  //   const fetchAttendance = async (id)=>{
+  //     try{
+  //       const response = await getTeacherTotalAttendance(id)
+  //       console.log(response)
+  //       setTotalTeacherAttendance(response);
+  //     } catch(error){
+  //       console.log(error)
+  //       toast.error("Unable to load total teacher")
+  //     }
+  //   };
+  //   fetchAttendance();
+  // })
+
   useEffect(() => {
-    const fetchAttendance = async (id)=>{
-      try{
-        const response = await getTeacherTotalAttendance(id)
-        console.log(response)
-        setTotalTeacherAttendance(response);
-      } catch(error){
-        console.log(error)
-        toast.error("Unable to load total teacher")
-      }
-    };
-    fetchAttendance();
-  })
+  if (!id) return;
+
+  const fetchAttendance = async (id) => {
+    try {
+      const response = await getTeacherTotalAttendance(id);
+      console.log("Attendance:", response);
+      setTotalTeacherAttendance(response); // Should be { presentDays, totalWorkingDays }
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to load total teacher attendance");
+    }
+  };
+
+  fetchAttendance(id);
+}, [id]);
+
 
   // get teacher's courses
    useEffect(() => {
