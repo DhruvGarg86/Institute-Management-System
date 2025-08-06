@@ -16,3 +16,4 @@ public class TeacherNoticeDTO {
     private String description;
     private String title;
 }
+
