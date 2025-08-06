@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
@@ -9,59 +9,41 @@ import {
     ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject,
     Group
 } from '@syncfusion/ej2-react-grids';
+import { deleteComplaintById, getAllComplaint } from '../../services/Admin/Complaint';
 
 function DisplayComplaint() {
 
     const navigate = useNavigate();
     const gridRef = useRef(null);
 
-    // ✅ Make complaints state editable
-    const [complaints, setComplaints] = useState([
-        {
-            id: 1,
-            submittedBy: "John Doe",
-            course: "B.Sc Computer Science",
-            title: "Library Issue",
-            description: "Books are not available for reference.",
-            date: "2025-08-01",
-            status: "Active"
-        },
-        {
-            id: 2,
-            submittedBy: "Sarah Smith",
-            course: "B.A English",
-            title: "Classroom Maintenance",
-            description: "Projector in room 203 is not working.",
-            date: "2025-07-30",
-            status: "Resolved"
-        },
-        {
-            id: 3,
-            submittedBy: "Michael Lee",
-            course: "B.Com",
-            title: "Cafeteria Food",
-            description: "Food quality needs improvement.",
-            date: "2025-07-28",
-            status: "Resolved"
-        },
-        {
-            id: 4,
-            submittedBy: "Emily Johnson",
-            course: "B.Sc Mathematics",
-            title: "Hostel Cleanliness",
-            description: "The hostel bathrooms need regular cleaning.",
-            date: "2025-07-25",
-            status: "Active"
-        }
-    ]);
+    const [complaint, setComplaint] = useState([]);
 
-    // ✅ Delete complaint function
-    const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this complaint?")) {
-            setComplaints((prev) => prev.filter((complaint) => complaint.id !== id));
-            toast.success("Complaint deleted successfully!");
+    const getComplaints = async () => {
+        try {
+            const response = await getAllComplaint();
+            setComplaint(response);
+            toast.success("Complaints loaded successfully!");
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to load complaints");
         }
-    };
+    }
+
+    useEffect(() =>{
+        getComplaints();
+    },[])
+
+  
+    const handleDelete = async(id) =>{
+        try {
+            await deleteComplaintById(id);
+            toast.success("Complaint deleted successfully!");
+            getComplaints();
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to delete complaint");
+        }
+    }
 
     return (
         <>
@@ -76,7 +58,7 @@ function DisplayComplaint() {
                             <h3 className='fw-bold' style={{ color: '#4361e5' }}>Complaint List</h3>
                             <GridComponent
                                 ref={gridRef}
-                                dataSource={complaints}
+                                dataSource={complaint}
                                 allowSorting={true}
                                 allowExcelExport={true}
                                 allowPdfExport={true}
@@ -93,8 +75,8 @@ function DisplayComplaint() {
                             >
 
                                 <ColumnsDirective>
-                                    <ColumnDirective field='submittedBy' headerText='Name' width='80' />
-                                    <ColumnDirective field='course' headerText='Course' width='100' textAlign="Center" />
+                                    <ColumnDirective field='studentName' headerText='Name' width='80' />
+                                    {/* <ColumnDirective field='course' headerText='Course' width='100' textAlign="Center" /> */}
                                     <ColumnDirective field='description' headerText='Description' width='220' />
                                     <ColumnDirective field='status' headerText='Status' width='60' textAlign="Center" />
                                     <ColumnDirective field='date' headerText='Date' width='70' textAlign="Center" />
