@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 public class CourseDto {
 
+    private Long id;
+
     @NotBlank(message = "Course name is required")
     @Size(max = 60, message = "Course name must not exceed 30 characters")
     private String name;

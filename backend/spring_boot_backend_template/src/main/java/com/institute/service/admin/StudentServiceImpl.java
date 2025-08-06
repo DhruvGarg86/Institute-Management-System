@@ -62,6 +62,7 @@ public class StudentServiceImpl implements StudentService {
         return students.stream()
                 .map(student -> {
                     ActiveStudentsDto dto = new ActiveStudentsDto();
+                    dto.setImage(student.getImagePath());
                     dto.setId(student.getId());
                     dto.setName(student.getName());
                     dto.setPhoneNumber(student.getPhoneNumber());
@@ -140,7 +141,9 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDetailsDTO> getAllStudentDetails() {
         List<Student> students = studentDao.findAll();
 
-        return students.stream().map(s -> new StudentDetailsDTO(
+        return students.stream()
+                .filter(s -> !s.isDeleted())
+                .map(s -> new StudentDetailsDTO(
                 s.getId(),
                 s.getName(),
                 s.getPhoneNumber(),
@@ -202,8 +205,8 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentDao.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
 
-        if (request.getCourseId() != null) {
-            Course course = courseDao.findById(request.getCourseId())
+        if (request.getCourseName() != null) {
+            Course course = courseDao.findByName(request.getCourseName())
                     .orElseThrow(() -> new ResourceNotFoundException("Course not found !!"));
             student.setCourse(course);
         }
