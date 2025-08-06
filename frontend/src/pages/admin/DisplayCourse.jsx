@@ -28,6 +28,7 @@ const sampleCourses = [
     endDate: "2026-02-10",
     courseFees: 45000.0,
     maxStudents: 30,
+    status: true,
     subjects: [
       { code: 101, name: "HTML", description: "Basics of HTML" },
       { code: 102, name: "React", description: "Frontend using React" },
@@ -42,6 +43,7 @@ const sampleCourses = [
     endDate: "2026-01-01",
     courseFees: 60000.0,
     maxStudents: 25,
+    status: false,
     subjects: [
       { code: 201, name: "Python", description: "Python basics" },
       { code: 202, name: "ML", description: "Intro to Machine Learning" },
@@ -51,14 +53,27 @@ const sampleCourses = [
 
 function DisplayCourse() {
   const navigate = useNavigate();
-  const gridRef = useRef(null);
+
   const [openSubjects, setOpenSubjects] = useState({});
 
-  const toggleSubjects = (courseId) => {
-    setOpenSubjects((prev) => ({
+  const [courseStatus, setCourseStatus] = useState(
+    sampleCourses.reduce((acc, course) => {
+      acc[course.id] = course.status;
+      return acc;
+    }, {})
+  );
+
+  const toggleStatus = (id) => {
+    setCourseStatus((prev) => ({
       ...prev,
-      [courseId]: !prev[courseId],
+      [id]: !prev[id],
     }));
+  };
+
+  const showSubjects = (course) => {
+    navigate(`/admin/course/${course.id}/subjects`, {
+      state: { course }, // pass course via navigation state
+    });
   };
 
   return (
@@ -77,8 +92,19 @@ function DisplayCourse() {
               {sampleCourses.map((course) => (
                 <div
                   key={course.id}
-                  className="mb-4 border rounded p-3 shadow-sm"
+                  className="mb-4 border rounded p-3 shadow-sm position-relative"
                 >
+                  <div className="position-absolute top-0 end-0 mt-2 me-2">
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`statusSwitch${course.id}`}
+                        checked={courseStatus[course.id]}
+                        onChange={() => toggleStatus(course.id)}
+                      />
+                    </div>
+                  </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <h5>{course.name}</h5>
@@ -98,12 +124,11 @@ function DisplayCourse() {
                     <div>
                       <button
                         className="btn btn-outline-primary"
-                        onClick={() => toggleSubjects(course.id)}
+                        onClick={() => showSubjects(course)}
                       >
-                        {openSubjects[course.id]
-                          ? "Hide Subjects"
-                          : "Show Subjects"}
+                        Show Subjects
                       </button>
+
                       <br />
                       <button
                         className="btn btn-sm btn-light mt-2 text-primary"

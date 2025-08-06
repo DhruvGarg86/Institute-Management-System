@@ -24,19 +24,16 @@ const sampleSubjects = [
     code: "SUB101",
     name: "Mathematics",
     description: "Basic Algebra and Calculus",
-    status: "ACTIVE",
   },
   {
     code: "SUB102",
     name: "Physics",
     description: "Mechanics and Thermodynamics",
-    status: "ACTIVE",
   },
   {
     code: "SUB103",
     name: "English Literature",
     description: "Poetry and Prose Analysis",
-    status: "INACTIVE",
   },
 ];
 
@@ -82,12 +79,7 @@ function DisplaySubject() {
                     headerText="Description"
                     width="250"
                   />
-                  <ColumnDirective
-                    field="status"
-                    headerText="Status"
-                    width="100"
-                    textAlign="Center"
-                  />
+
                   <ColumnDirective
                     headerText="Action"
                     width="135"
