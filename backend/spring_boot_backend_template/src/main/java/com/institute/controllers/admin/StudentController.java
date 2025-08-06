@@ -2,7 +2,6 @@ package com.institute.controllers.admin;
 
 import java.util.List;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +47,11 @@ public class StudentController {
     @GetMapping("/studentDetails")
     public ResponseEntity<?> getAllStudentDetails() {
         return ResponseEntity.ok(studentService.getAllStudentDetails());
+    }
+    
+    @GetMapping("/studentDetails/{id}")
+    public ResponseEntity<?> getStudentDetailsById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getStudentDetailsById(id));
     }
 
     @DeleteMapping("/deleteStudent/{id}")
