@@ -17,8 +17,11 @@ function TeacherDashboard() {
 
   const [totalStudent, setTotalStudent] = useState("")
   const [totalTeacherAttendance, setTotalTeacherAttendance] = useState({
-      presentDays: 0,
-      totalWorkingDays: 0
+
+
+      presentDays: '',
+      totalWorkingDays: ''
+
   })
   const [totalCourses, setTotalCourses] = useState("")
   const [notice, setNotice] = useState([])
@@ -86,6 +89,38 @@ function TeacherDashboard() {
     };
     fetchCourses();
   })
+
+// <<<<<<< sahilBranch
+// =======
+//   // get teacher's attendance 
+//   useEffect(() => {
+//     const fetchAttendance = async (id)=>{
+//       try{
+//         const response = await getTeacherTotalAttendance(id)
+//         console.log(response)
+//         setTotalTeacherAttendance(response);
+//       } catch(error){
+//         console.log(error)
+//         toast.error("Unable to load total teacher")
+//       }
+//     };
+//     fetchAttendance();
+//   })
+
+//   // get teacher's courses
+//    useEffect(() => {
+//     const fetchCourses = async (id)=>{
+//       try{
+//         const response = await getTeacherCourses(id)
+//         console.log(response)
+//         setTotalCourses(response);
+//       } catch(error){
+//         console.log(error)
+//         toast.error("Unable to load total teacher")
+//       }
+//     };
+//     fetchCourses();
+//   })
 
     // Fetch Notices
     useEffect(() => {

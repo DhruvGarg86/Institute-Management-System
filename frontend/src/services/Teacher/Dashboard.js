@@ -22,6 +22,7 @@ import { config } from "../config";
 
 
 // GET TEACHER'S ATTENDANCE 
+
     // export async function getTeacherTotalAttendance(id) {
     // try {
     //     // console.log(id) 
@@ -67,6 +68,26 @@ import { config } from "../config";
   }
 }
 
+// =======
+//     export async function getTeacherTotalAttendance(id) {
+//     try {
+//         // console.log(id) 
+//         const token = localStorage.getItem("token");
+
+//         const url = `${config.serverUrl}/teacher/dashboard/total-attendance/${id}`;
+//         const headers = { Authorization: `Bearer ${token}` };
+
+//         const response = await axios.get(url, { headers });
+
+//         // console.log(response.data)
+//         return response.data.data;
+//     } catch (error) {
+        
+//         console.log("Exception", error.message);
+//         throw error;
+//     }
+//     }
+// >>>>>>> main
 
     // GET TEACHER'S COURSES 
     export async function getTeacherCourses(id) {
