@@ -1,7 +1,7 @@
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { FaEnvelope } from 'react-icons/fa';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
     AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
@@ -9,8 +9,21 @@ import {
 } from '@syncfusion/ej2-react-charts';
 import { Export } from '@syncfusion/ej2-charts';
 import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Edit } from '@syncfusion/ej2-react-grids';
+import { getStudentById } from '../../services/Admin/Student';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 function StudentMarks() {
+    const [students, setStudents] = useState({
+        image: '',
+        id: '',
+        name: '',
+        course: '',
+        
+    });
+
+    const id = useParams(); 
+
     const data = [
         { name: 'English', value: 40 },
         { name: 'Science', value: 20 },
@@ -24,15 +37,21 @@ function StudentMarks() {
         { Subject: 'Science', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
     ];
 
-    const student = {
-        name: "Dhruv Garg",
-        email: "dhruvgarg086@gmail.com",
-        rollNo: "2000300100084",
-        dob: "23-12-2002",
-        course: "B.TECH",
-        class: "2nd Year",
-        profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif",
-    };
+    const getStudent = async () => {
+        try {
+            const response = await getStudentById(id);
+            setStudents(response);
+            toast.success("Students loaded successfully");
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+            toast.error("Unable to load students");
+        }
+    }
+
+    useEffect(() => {
+        getStudent();
+    }, [])
 
     const chartRef = useRef(null);
     const gridRef = useRef(null);
@@ -56,25 +75,25 @@ function StudentMarks() {
                                         {/* Left Part of Student details */}
                                         <div className="d-flex align-items-center ms-2" style={{ minWidth: "250px" }}>
                                             <img
-                                                src={student.profilePic}
+                                                src={students.image}
                                                 alt="Profile"
                                                 className="rounded-circle me-3"
                                                 style={{ width: "80px", height: "80px", objectFit: "cover" }}
                                             />
                                             <div>
-                                                <h5 className="mb-1 fw-bold">{student.name}</h5>
+                                                <h5 className="mb-1 fw-bold">{students.name}</h5>
                                                 <p className="mb-0 text-muted">
                                                     <FaEnvelope className="me-2" />
-                                                    {student.email}
+                                                    {students.email}
                                                 </p>
                                             </div>
                                         </div>
                                         {/* Right Part of Student details */}
                                         <div className="me-3">
-                                            <p className="mb-1"><strong>Roll No:</strong> {student.rollNo}</p>
-                                            <p className="mb-1"><strong>DOB:</strong> {student.dob}</p>
-                                            <p className="mb-1"><strong>Course:</strong> {student.course}</p>
-                                            <p className="mb-0"><strong>Class:</strong> {student.class}</p>
+                                            <p className="mb-1"><strong>Roll No:</strong> {students.id}</p>
+                                            <p className="mb-1"><strong>DOB:</strong> {students.dob}</p>
+                                            <p className="mb-1"><strong>Course:</strong> {students.course}</p>
+                                            <p className="mb-0"><strong>Class:</strong> {students.class}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -125,14 +144,14 @@ function StudentMarks() {
                                             allowPdfExport={true}
                                             allowPrint={true}
                                             toolbar={['ExcelExport', 'PdfExport', 'Print', 'Edit']}
-                                            editSettings={{allowEditing: true }}
+                                            editSettings={{ allowEditing: true }}
                                             toolbarClick={(args) => {
                                                 if (args.item.id.includes('pdfexport')) {
                                                     gridRef.current.pdfExport();
                                                 }
                                                 if (args.item.id.includes('excelexport')) {
                                                     gridRef.current.excelExport();
-                                                }if (args.item.id.includes('print')) {
+                                                } if (args.item.id.includes('print')) {
                                                     gridRef.current.print();
                                                 }
                                             }}
