@@ -190,15 +190,7 @@ function TeacherSidebar() {
           >
             <div className="accordion-body">
               <ul style={{ listStyleType: "none" }} className="sidebar-inner">
-                <li>
-                  <button
-                    type="button"
-                    className="sidebar-inner-button"
-                    onClick={() => navigate("/teacher/add-notice")}
-                  >
-                    Add New Notice
-                  </button>
-                </li>
+                
                 <li>
                   <button
                     type="button"
