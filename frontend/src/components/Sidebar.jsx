@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import profileImg from '../assets/profile.svg';
+import { getAdminIdFromToken } from '../services/Admin/Profile';
 
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const id = getAdminIdFromToken();
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -176,15 +179,16 @@ function Sidebar() {
         <div className="accordion-item" style={{ marginTop: 'auto' }}>
           <h2 className="accordion-header" id="headingSix">
             <button
-              className={`accordion-button sidebar-profile ${location.pathname === '/admin/profile/:id' ? 'active-section' : ''}`}
+              className={`accordion-button sidebar-profile ${location.pathname.startsWith('/admin/profile') ? 'active-section' : ''}`}
               type="button"
-              onClick={() => navigate('/admin/profile/1')}
+              onClick={() => navigate(`/admin/profile/${id}`)}
             >
               <img src={profileImg} alt="Profile"
                 style={{
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
+                  border: '2px solid white',
                   marginRight: '40px',
                   objectFit: 'cover',
                   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'

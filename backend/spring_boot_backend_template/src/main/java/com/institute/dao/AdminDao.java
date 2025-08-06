@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AdminDao extends JpaRepository<Admin,Long> {
 
-    Optional<Admin> findById(Long id);
+    Optional<Admin> findByUserId(Long id);
 }

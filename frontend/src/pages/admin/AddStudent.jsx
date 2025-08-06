@@ -1,14 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { uploadImageUniversal } from '../../services/image';
 
 function AddStudent() {
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        toast.success("Student added successfully");
+    const navigate = useNavigate();
+
+    const [student, setStudent] = useState({
+        name: '',
+        phoneNumber: '',
+        email: '',
+        address: '',
+        imagePath: '',
+        gender: '',
+        dob: '',
+        courseName: ''
+    });
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+            // Check file size
+            if (file.size > maxSize) {
+                toast.warning("File size exceeds 2MB. Please upload a smaller image.", {
+                    autoClose: 2000
+                });
+                e.target.value = "";
+                return;
+            }
+
+            try {
+                const res = await uploadImageUniversal(file);
+                setStudent(prev => ({ ...prev, imagePath: res.fileName }));
+                toast.success("Image uploaded successfully");
+            } catch (error) {
+                console.log(error);
+                toast.error("Image upload failed");
+            }
+        }
     };
+
+    const handleSubmit = async (e) => {
+            e.preventDefault();
+            try {
+                await addStudent(student);
+                toast.success("Student added successfully");
+                navigate("/admin/display-students");
+            } catch (error) {
+                toast.error("Failed to add student");
+                console.error(error);
+            }
+        };
 
     return (
         <>
@@ -40,7 +87,7 @@ function AddStudent() {
 
                             <div className="col-md-6">
                                 <label className="form-label">Date of Birth</label>
-                                <input type="date" name="dob"required className="form-control" />
+                                <input type="date" name="dob" required className="form-control" />
                             </div>
 
                             <div className="col-md-6">
