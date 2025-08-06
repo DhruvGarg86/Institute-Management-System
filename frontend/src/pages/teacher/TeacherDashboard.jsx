@@ -6,7 +6,7 @@ import { MdMenuBook } from 'react-icons/md';
 import Card from '../../components/Card';
 import TeacherSidebar from './TeacherSidebar'
 import TeacherNavbar from './TeacherNavbar'
-import { getTotalStudents, getUserIdFromToken } from '../../services/Teacher/Dashboard';
+import { getAllNotices, getTeacherCourses, getTeacherTotalAttendance, getTotalStudents, getUserIdFromToken } from '../../services/Teacher/Dashboard';
 import { toast } from "react-toastify";
 
 
@@ -16,10 +16,16 @@ function TeacherDashboard() {
   console.log(id)
 
   const [totalStudent, setTotalStudent] = useState("")
+  const [totalTeacherAttendance, setTotalTeacherAttendance] = useState({
+      presentDays: '',
+      totalWorkingDays: ''
+  })
+  const [totalCourses, setTotalCourses] = useState("")
+  const [notice, setNotice] = useState([])
 
 // get total students 
   useEffect(() => {
-    const fetchStudents = async ()=>{
+    const fetchStudents = async (id)=>{
       try{
         const response = await getTotalStudents(id)
         console.log(response)
@@ -32,6 +38,51 @@ function TeacherDashboard() {
     fetchStudents();
   })
 
+  // get teacher's attendance 
+  useEffect(() => {
+    const fetchAttendance = async (id)=>{
+      try{
+        const response = await getTeacherTotalAttendance(id)
+        console.log(response)
+        setTotalTeacherAttendance(response);
+      } catch(error){
+        console.log(error)
+        toast.error("Unable to load total teacher")
+      }
+    };
+    fetchAttendance();
+  })
+
+  // get teacher's courses
+   useEffect(() => {
+    const fetchCourses = async (id)=>{
+      try{
+        const response = await getTeacherCourses(id)
+        console.log(response)
+        setTotalCourses(response);
+      } catch(error){
+        console.log(error)
+        toast.error("Unable to load total teacher")
+      }
+    };
+    fetchCourses();
+  })
+
+    // Fetch Notices
+    useEffect(() => {
+      const fetchNotices = async (id) => {
+        try {
+          const data = await getAllNotices(id);
+          setNotice(data);
+        } catch (error) {
+          console.log(error)
+          toast.error("Unable to load notices");
+        }
+      };
+      fetchNotices();
+    }, []);
+
+    
   return (  
     <>
       <TeacherNavbar />
@@ -57,7 +108,7 @@ function TeacherDashboard() {
                   Your Attendance
                 </h3>
                 <div>
-                  <h2 style={{ fontWeight: 'bold', textAlign: 'center' }}>250/256</h2>
+                  <h2 style={{ fontWeight: 'bold', textAlign: 'center' }}>{totalTeacherAttendance.presentWorkingDays}/{totalTeacherAttendance.totalWorkingDays}</h2>
                 </div>
               </div>
               <div className="col row1-third">
@@ -66,7 +117,7 @@ function TeacherDashboard() {
                   Your Courses
                 </h3>
                 <div>
-                  <h2 style={{ fontWeight: 'bold', textAlign: 'center' }}>3</h2>
+                  <h2 style={{ fontWeight: 'bold', textAlign: 'center' }}>{totalCourses}</h2>
                 </div>
               </div>
             </div>
@@ -77,54 +128,31 @@ function TeacherDashboard() {
                   <h2 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px', color: 'black' }}>Top Student</h2>
                   <div className="row2-first-inner-div-profile">
                     <Card />
-                  </div>
+                  </div>  
                 </div>
               </div>
               <div className="col-4 row2-second">
                 <div className="row2-first-inner-div">
                   <h3 className='row2-second-notice' style={{ fontWeight: 'bold' }}>Notices</h3>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
-                  <a href="https://youtu.be/dQw4w9WgXcQ?si=hrNKl2Yo5v__sVXd&t=43" target='blank' className='admin-dashboard-notice-link'>
-                    <div className='row2-second-notice-item'>
-                      <p style={{ fontWeight: 'bold', marginBottom: '-2px' }}>May 21, 2025</p>
-                      <p style={{ fontSize: '0.9rem', marginBottom: '20px' }}>Exam on May 25, 2025</p>
-                    </div>
-                  </a>
+                  {notice.length > 0 ? (
+                    notice.map((n) => (
+                      <a
+                        href="/admin/display-notices"
+                        className="admin-dashboard-notice-link"
+                        key={n.id}
+                      >
+                        <div className="row2-second-notice-item">
+                          <p
+                            style={{ fontSize: "1rem", marginBottom: '0px', fontWeight: "bold" }}
+                            dangerouslySetInnerHTML={{ __html: n.title }}
+                          />
+                          <p style={{  marginBottom: "20px" }}>{n.date}</p>
+                        </div>
+                      </a>
+                    ))
+                  ) : (
+                    <p style={{ textAlign: "center", color: "gray" }}>No notices available</p>
+                  )}  
                 </div>
               </div>
             </div>
