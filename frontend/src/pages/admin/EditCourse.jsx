@@ -4,11 +4,29 @@ import Sidebar from '../../components/Sidebar';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getCourseById } from '../../services/Admin/Course';
+import { useParams } from 'react-router-dom';
 
 function EditCoursePage() {
   const today = new Date().toISOString().split('T')[0];
+  const id = useParams();
+  const [courses, setCourses] = useState([]);
 
-  // Dummy existing course data (replace with API later)
+  const getCourses = async (id) => {
+    try {
+      const response = await getCourseById(id);
+      const data = await response.json();
+      setCourses(data);
+    } catch (error) {
+      toast.error('Unable to load course details');
+      console.error('Error fetching courses:', error);
+    }
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, []);
+
   const dummyCourse = {
     courseName: 'Full Stack Development',
     description: 'Learn MERN stack from scratch.',
@@ -28,7 +46,6 @@ function EditCoursePage() {
   const availableSubjects = ['Math', 'Science', 'English', 'Programming'];
   const availableTeachers = ['Alice', 'Bob', 'Charlie', 'Dave'];
 
-  // ✅ Auto-calculate end date based on duration & start date
   useEffect(() => {
     if (courseInfo.startDate && courseInfo.duration) {
       const start = new Date(courseInfo.startDate);

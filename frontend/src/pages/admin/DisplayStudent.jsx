@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, 
-    ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject } from '@syncfusion/ej2-react-grids';
+import {
+    GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter,
+    ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject
+} from '@syncfusion/ej2-react-grids';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { deleteStudentById, getAllStudents } from '../../services/Admin/Student';
@@ -15,12 +17,13 @@ function DisplayStudent() {
     const [students, setStudents] = useState([]);
     console.log(students)
 
-    const getStudents = async() => {
-        try{
+    const getStudents = async () => {
+        try {
             const response = await getAllStudents();
             setStudents(response);
+            console.log(response);
             toast.success("Students loaded successfully");
-        }catch(error){
+        } catch (error) {
             console.log(error);
             toast.error("Unable to load students");
         }
@@ -30,17 +33,17 @@ function DisplayStudent() {
         getStudents();
     }, [])
 
-    const deleteStudent = async (id) =>{
-        try{
+    const deleteStudent = async (id) => {
+        try {
             await deleteStudentById(id);
             toast.success("Student deleted successfully");
             getStudents();
-        }catch(error){
+        } catch (error) {
             console.log(error);
             toast.error("Unable to delete student");
         }
     }
-    
+
     return (
         <>
             <Navbar />
@@ -72,7 +75,8 @@ function DisplayStudent() {
 
                                 <ColumnsDirective>
                                     <ColumnDirective field='image' headerText='Profile' width='60' allowSorting={false} template={(props) => (
-                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '40px',width: '40 px'}} />
+                                        <img src={props.image} alt="avatar"
+                                            style={{ borderRadius: '50%', height: '40px', width: '40px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="Center" width='85' />
                                     <ColumnDirective field='id' headerText='Roll' textAlign="Center" width='50' />
@@ -97,6 +101,12 @@ function DisplayStudent() {
                                                     </button>
                                                     <button
                                                         className="btn btn-sm btn-light text-danger"
+                                                        onClick={() => deleteStudent(props.id)}
+                                                    >
+                                                        <FaTrash />
+                                                    </button>
+                                                    <button
+                                                        className="ms-2 btn btn-sm btn-light text-danger"
                                                         onClick={() => deleteStudent(props.id)}
                                                     >
                                                         <FaTrash />

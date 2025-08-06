@@ -1,94 +1,31 @@
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Inject } from '@syncfusion/ej2-react-grids';
+import { toast } from 'react-toastify';
+import { getStudentAttendance } from '../../services/Admin/Student';
 
 function StudentAttendance() {
-    const student = [
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "B.TECH",
-            class: "2nd Year",
-            attendance: "38",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "BCOM",
-            class: "2nd Year",
-            attendance: "68",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            attendance: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            attendance: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            attendance: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            attendance: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            attendance: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "B.TECH",
-            class: "2nd Year",
-            attendance: "57",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-    ];
     const gridRef = useRef(null);
 
+    const [students, setStudents] = useState([]);
+
+    const StudentAttendance = async () => {
+        try {
+            const response = await getStudentAttendance();
+            console.log(response);
+            setStudents(response);
+            toast.success("Students loaded successfully");
+        } catch (error) {
+            toast.error("Unable to load students");
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        StudentAttendance();
+    },[]);
     const rowDataBound = (args) => {
         const attendanceStr = args.data.attendance;
         const attendanceValue = parseInt(attendanceStr);
@@ -109,18 +46,18 @@ function StudentAttendance() {
                     <div className="col-7-5  admin-dashboard-second p-4 admin-notice-box">
                         <h2 className="mb-2 fw-bold text-primary">Attendance Overview</h2>
                         {/* Second Row */}
-                        <div className="row p-3 mt-1">
+                        <div className="row p-3 mt-3">
                             <h5 className="fw-bold">LeaderBoard</h5>
 
                             <GridComponent
                                 rowHeight={40}
                                 ref={gridRef}
-                                dataSource={student}
+                                dataSource={students}
                                 allowSorting={true}
                                 allowExcelExport={true}
                                 allowPdfExport={true}
                                 allowPaging={true}
-                                pageSettings={{ pageSize: 10 }}
+                                pageSettings={{ pageSize: 8 }}
                                 allowPrint={true}
                                 allowFiltering={true}
                                 filterSettings={{ type: 'Menu' }}
@@ -136,20 +73,20 @@ function StudentAttendance() {
                             >
 
                                 <ColumnsDirective>
-                                    <ColumnDirective field='profilePic' headerText='Profile' width={30} template={(props) => (
+                                    <ColumnDirective field='image' headerText='Profile' width={30} allowFiltering={false} allowSorting={false} template={(props) => (
                                         <img src={props.profilePic} alt="avatar" style={{ borderRadius: '50%', height: '30px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="center" width={50} />
-                                    <ColumnDirective field='course' headerText='Course' width={40} />
-                                    <ColumnDirective field='rollNo' headerText='Roll No.' textAlign="center" width={50} />
-                                    {/* <ColumnDirective field='class' headerText='Class' width={50} /> */}
+                                    <ColumnDirective field='courseName' headerText='Course' width={40} />
+                                    <ColumnDirective field='id' headerText='Roll No.' textAlign="center" width={30} />
+                                    <ColumnDirective field='PhoneNumber' headerText='Phone' width={50} allowSorting={false} />
                                     <ColumnDirective
-                                        field='attendance'
+                                        field='attendancePercentage'
                                         headerText='Attendance'
                                         width={50}
                                         textAlign="center"
                                         type="number"
-                                        template={(props) => `${props.attendance}%`}
+                                        template={(props) => `${props.attendancePercentage}%`}
                                     />
                                 </ColumnsDirective>
                                 <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group]} />

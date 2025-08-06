@@ -83,7 +83,7 @@ export async function getStudentById(id) {
   }
 }
 
-export async function updateStudentById(id, student) {
+export async function updateStudentById(student, id) {
   try {
     const url = `${config.serverUrl}/admin/student/updateStudent/${id}`;
 
@@ -92,11 +92,44 @@ export async function updateStudentById(id, student) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    
+
     const response = await axios.put(url, student, { headers });
     return response.data;
   } catch (error) {
     console.log("Exception", error.message);
+    throw error;
+  }
+}
+export async function getStudentAttendance() {
+  try {
+    const url = `${config.serverUrl}/admin/student/allActiveStudents`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.get(url, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Exception", error.message);
+    throw error;
+  }
+}
+
+export async function getAllFees() {
+  try {
+    const url = `${config.serverUrl}/admin/student/allStudentsFeeDetails`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.get(url, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Exception", error.message);
     throw error;
   }
 }
