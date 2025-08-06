@@ -1,5 +1,6 @@
 package com.institute.controllers.teacher;
 
+import com.institute.dao.TeacherDao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +20,20 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TeacherProfileController {
     private final TeacherService teacherService;
+    private final TeacherDao teacherDao;
     @GetMapping("/{teacherId}")
     public ResponseEntity<?> getTeacherAttendance(@PathVariable Long teacherId){
-        return ResponseEntity.ok(teacherService.findTeacherById(teacherId));
+        Long tid = teacherDao.findTeacherIdByUserId(teacherId);
+
+        return ResponseEntity.ok(teacherService.findTeacherById(tid));
     }
 
     @PutMapping("/edit/{teacherId}")
 //    Re-using AdminEditTeacherDTO
     public ResponseEntity<?> editTeacher(@RequestBody AdminEditTeacherDTO teacher, @PathVariable Long teacherId){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, teacherId));
+        Long tid = teacherDao.findTeacherIdByUserId(teacherId);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(teacherService.editTeacherById(teacher, tid));
     }
 
 }

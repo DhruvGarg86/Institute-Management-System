@@ -1,56 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { FaTrash } from "react-icons/fa";
 import TeacherNavbar from "./TeacherNavbar";
 import TeacherSidebar from "./TeacherSidebar";
+import { getEveryNotice } from '../../services/Teacher/TeacherNotice';
+import { toast } from 'react-toastify';
 
 function TeacherDisplayNotice() {
-  const [notices, setNotices] = useState([
-    {
-      id: 1,
-      title: "Holiday Notice",
-      date: "2025-08-15",
-      description: "College will remain closed on Independence Day.",
-      link: "https://www.google.com",
-    },
-    {
-      id: 2,
-      title: "Exam Schedule",
-      date: "2025-09-20",
-      description: "Mid-sem exams start from 20th September.",
-      link: "https://exam-link.com",
-    },
-    {
-      id: 3,
-      title: "Seminar",
-      date: "2025-10-01",
-      description: "AI Seminar on 1st October in the auditorium.",
-      link: "https://seminar-link.com",
-    },
-    {
-      id: 4,
-      title: "Sports Day",
-      date: "2025-11-05",
-      description: "Annual sports day will be celebrated with various events.",
-      link: "https://sports-link.com",
-    },
-    {
-      id: 5,
-      title: "Workshop",
-      date: "2025-12-10",
-      description: "Coding workshop on JavaScript for beginners.",
-      link: "https://workshop-link.com",
-    },
-  ]);
+  const [notices, setNotices] = useState([]);
+
+    useEffect(() => {
+      const fetchNotices = async () => {
+        try {
+          const data = await getEveryNotice();
+          setNotices(data);
+        } catch (error) {
+          console.log(error)
+          toast.error("Unable to load notices");
+        }
+      };
+      fetchNotices();
+    }, []);
 
   // ✅ State to track which notice is expanded
   const [expandedId, setExpandedId] = useState(null);
 
-  const handleDelete = (id) => {
-    const updatedNotices = notices.filter((notice) => notice.id !== id);
-    setNotices(updatedNotices);
-  };
 
   // ✅ Toggle expand on click
   const toggleExpand = (id) => {
@@ -84,17 +59,14 @@ function TeacherDisplayNotice() {
                     }}
                   >
                     <div className="notice-header d-flex justify-content-between align-items-start">
-                      <h5 className="fw-bold">{notice.title}</h5>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={(e) => {
-                          e.stopPropagation(); // ✅ Prevent triggering expand when deleting
-                          handleDelete(notice.id);
-                        }}
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
+                                                                <div>
+                                                                    <h5 className="fw-bold mb-1">{notice.title}</h5>
+                                                                    
+                                                                </div>
+                                                                
+                                                              
+                                                            </div>
+                    
                     <span className="notice-date text-muted small">
                       {notice.date}
                     </span>

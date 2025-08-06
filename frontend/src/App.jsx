@@ -56,6 +56,7 @@ import Student_Attendance from "./pages/student/Student_Attendance";
 import StudentExam from "./pages/student/StudentExam";
 import Registration from "./pages/student/Registration";
 import StudentComplaint from "./pages/student/StudentComplaint";
+import TeacherProfileEdit from "./pages/teacher/TeacherProfileEdit";
 import ChangePassword from "./pages/student/ChangePassword";
 
 function App() {
@@ -133,6 +134,8 @@ function App() {
         {/* *****************************TEACHER ROUTES***********************************  */}
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
         <Route path="/teacher/profile" element={<TeacherProfile />} />
+        <Route path="/teacher/profile/edit/:id" element={<TeacherProfileEdit />} />
+
         <Route path="/teacher/add-notice" element={<TeacherAddNotice />} />
         <Route
           path="/teacher/display-notice"

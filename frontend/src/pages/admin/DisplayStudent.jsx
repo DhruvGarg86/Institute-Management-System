@@ -92,6 +92,17 @@ const sampleStudents = [
     avatar: "https://i.pravatar.cc/40?img=7",
   },
 ];
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
+import {
+    GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter,
+    ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject
+} from '@syncfusion/ej2-react-grids';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { deleteStudentById, getAllStudents } from '../../services/Admin/Student';
 
 function DisplayStudent() {
   const navigate = useNavigate();

@@ -32,6 +32,7 @@ public class ComplaintServiceImpl implements ComplaintService{
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();
                     dto.setId(complaint.getId());
+                    dto.setDate(complaint.getCreatedAt().toLocalDate());
                     dto.setDescription(complaint.getDescription());
                     dto.setStatus(complaint.getStatus());
                     dto.setDeleted(complaint.isDeleted()); // LOMBOK GENERATES setDeleted instead of setIsDeleted!!!!
@@ -50,9 +51,6 @@ public class ComplaintServiceImpl implements ComplaintService{
 //        }
 
         Complaints complaint = optionalComplaint.get();
-        if (updateDTO.description != null) {
-            complaint.setDescription(updateDTO.description);
-        }
         if (updateDTO.status != null) {
             complaint.setStatus(updateDTO.status);
         }

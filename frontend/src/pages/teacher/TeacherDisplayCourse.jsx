@@ -1,4 +1,7 @@
-import React, { useRef } from "react";
+import React, {  useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import TeacherSidebar from "./TeacherSidebar";
+import TeacherNavbar from "./TeacherNavbar";
 import {
   GridComponent,
   ColumnsDirective,
@@ -13,74 +16,49 @@ import {
   Search,
   Inject,
 } from "@syncfusion/ej2-react-grids";
-import TeacherSidebar from "./TeacherSidebar";
-import TeacherNavbar from "./TeacherNavbar";
-import Footer from "../../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { getAllSubjects } from "../../services/Teacher/TeacherSubject";
 
-const sampleCourses = [
-  {
-    id: 1,
-    name: "Full Stack Development",
-    description: "Frontend and backend web dev.",
-    duration: "6 months",
-    startDate: "2025-08-10",
-    endDate: "2026-02-10",
-    courseFees: 45000.0,
-    maxStudents: 30,
-    status: true,
-    subjects: [
-      {
-        code: 101,
-        name: "HTML",
-        description: "Basics of HTML",
-        status: true,
-        teacher: "Mr. Sharma",
-      },
-      {
-        code: 102,
-        name: "React",
-        description: "Frontend using React",
-        status: false,
-        teacher: "Ms. Verma",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Data Science",
-    description: "Python, ML, Visualization.",
-    duration: "4 months",
-    startDate: "2025-09-01",
-    endDate: "2026-01-01",
-    courseFees: 60000.0,
-    maxStudents: 25,
-    status: false,
-    subjects: [
-      {
-        code: 201,
-        name: "Python",
-        description: "Python basics",
-        status: true,
-        teacher: "Dr. Gupta",
-      },
-      {
-        code: 202,
-        name: "ML",
-        description: "Intro to ML",
-        status: true,
-        teacher: "Mr. Bose",
-      },
-    ],
-  },
-];
 
-function TeacherDisplayCourse() {
+
+function DisplayCourse() {
   const navigate = useNavigate();
-  const gridRef = useRef(null);
 
-  const handleViewSubjects = (course) => {
-    navigate(`/teacher/course/${course.id}/subjects`);
+  const [openSubjects, setOpenSubjects] = useState([]);
+
+  useEffect(() => {
+       const fetchSubjects = async () => {
+         try {
+           const data = await getAllSubjects();
+           setOpenSubjects(data);
+         } catch (error) {
+           console.log(error)
+           toast.error("Unable to load notices");
+         }
+       };
+       fetchSubjects();
+     }, []);
+
+  // const [courseStatus, setCourseStatus] = useState(
+  //   sampleCourses.reduce((acc, course) => {
+  //     acc[course.id] = course.status;
+  //     return acc;
+  //   }, {})
+  // );
+
+  // const toggleStatus = (id) => {
+  //   setCourseStatus((prev) => ({
+  //     ...prev,
+  //     [id]: !prev[id],
+  //   }));
+  // };
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HAVE TO TAKE CARE OF THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const showSubjects = (course) => {
+    navigate(`/admin/course/${course.id}/subjects`, {
+      state: { course }, // pass course via navigation state
+    });
   };
 
   return (
@@ -96,110 +74,59 @@ function TeacherDisplayCourse() {
               <h3 className="fw-bold" style={{ color: "#4361e5" }}>
                 Course List
               </h3>
-              <GridComponent
-                ref={gridRef}
-                dataSource={sampleCourses}
-                allowSorting={true}
-                allowPaging={true}
-                allowExcelExport={true}
-                allowPdfExport={true}
-                allowTextWrap={true}
-                textWrapSettings={{ wrapMode: "Content" }}
-                pageSettings={{ pageSize: 6 }}
-                toolbar={["Search", "ExcelExport", "PdfExport", "Print"]}
-                toolbarClick={(args) => {
-                  if (args.item.id.includes("pdfexport"))
-                    gridRef.current.pdfExport();
-                  if (args.item.id.includes("excelexport"))
-                    gridRef.current.excelExport();
-                  if (args.item.id.includes("print")) gridRef.current.print();
-                }}
-              >
-                <ColumnsDirective>
-                  <ColumnDirective
-                    field="name"
-                    headerText="Course Name"
-                    width="120"
-                    clipMode="EllipsisWithTooltip"
-                  />
-                  <ColumnDirective
-                    field="description"
-                    headerText="Description"
-                    width="150"
-                    clipMode="EllipsisWithTooltip"
-                  />
-                  <ColumnDirective
-                    field="duration"
-                    headerText="Duration"
-                    width="90"
-                  />
-                  <ColumnDirective
-                    field="startDate"
-                    headerText="Start Date"
-                    width="100"
-                  />
-                  <ColumnDirective
-                    field="endDate"
-                    headerText="End Date"
-                    width="100"
-                  />
-                  <ColumnDirective
-                    field="courseFees"
-                    headerText="Fees"
-                    width="90"
-                  />
-                  <ColumnDirective
-                    field="maxStudents"
-                    headerText="Max Students"
-                    width="110"
-                  />
-                  <ColumnDirective
-                    field="status"
-                    headerText="Status"
-                    width="90"
-                    template={(props) => (
-                      <span
-                        className={`badge ${
-                          props.status ? "bg-success" : "bg-secondary"
-                        }`}
-                      >
-                        {props.status ? "Active" : "Inactive"}
-                      </span>
-                    )}
-                  />
-                  <ColumnDirective
-                    headerText="Action"
-                    width="120"
-                    template={(props) => (
+              {openSubjects.map((course) => (
+                <div
+                  key={course.id}
+                  className="mb-4 border rounded p-3 shadow-sm position-relative"
+                >
+                 
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h5>{course.name}</h5>
+                      <p>{course.description}</p>
+                      <p>
+                        <strong>Duration:</strong> {course.duration}
+                      </p>
+                      <p>
+                        <strong>Start:</strong> {course.startDate} &nbsp;{" "}
+                        <strong>End:</strong> {course.endDate}
+                      </p>
+                      <p>
+                        <strong>Fees:</strong> ₹{course.courseFees} &nbsp;{" "}
+                        <strong>Max Students:</strong> {course.maxStudents}
+                      </p>
+                    </div>
+                    <div>
                       <button
-                        className="btn btn-sm btn-primary"
-                        onClick={() => handleViewSubjects({ id: props.id })}
+                        className="btn btn-outline-primary"
+                        onClick={() => showSubjects(course)}
                       >
-                        View Subjects
+                        Show Subjects
                       </button>
-                    )}
-                  />
-                </ColumnsDirective>
-                <Inject
-                  services={[
-                    Sort,
-                    Filter,
-                    ExcelExport,
-                    PdfExport,
-                    Toolbar,
-                    Print,
-                    Page,
-                    Search,
-                  ]}
-                />
-              </GridComponent>
+
+                      <br />
+                    </div>
+                  </div>
+                  {openSubjects[course.id] && (
+                    <div className="mt-3 ps-3">
+                      <h6>Subjects:</h6>
+                      <ul>
+                        {course.subjects.map((sub) => (
+                          <li key={sub.code}>
+                            <strong>{sub.name}</strong>: {sub.description}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
 
-export default TeacherDisplayCourse;
+export default DisplayCourse;

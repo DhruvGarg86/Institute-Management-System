@@ -4,28 +4,62 @@ import Sidebar from '../../components/Sidebar';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllSubjects } from '../../services/Admin/Subject';
+import { getAllTeachers } from '../../services/Admin/Teacher';
+import { useNavigate } from 'react-router-dom';
+import { addCourse } from '../../services/Admin/Course';
 
 function AddCourse() {
   const today = new Date().toISOString().split('T')[0];
+  const navigate = useNavigate();
 
   const [courseInfo, setCourseInfo] = useState({
-    courseName: '',
+    name: '',
     description: '',
-    duration: 1,
-    startDate: today,
+    duration: '',
+    startDate: '',
     endDate: '',
+    courseFees: '',
     maxStudents: '',
-    fees: '',
-    subjects: [{ subject: '', teacher: '' }],
+    courseSubjectTeachers: [
+      {
+        subjectId: '',
+        teacherId: '',
+      },
+    ],
   });
 
-  const [errors, setErrors] = useState({});
+  const [subjects, setSubjects] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
-  // Dummy data for now (can be fetched from backend later)
-  const availableSubjects = ['Math', 'Science', 'English', 'Programming'];
-  const availableTeachers = ['Alice', 'Bob', 'Charlie', 'Dave'];
+  useEffect(() => {
+    getSubjects();
+    getTeachers();
+  }, []);
 
-  // Auto-update End Date based on Start Date + Duration
+  const getSubjects = async () => {
+    try {
+      const response = await getAllSubjects();
+      if (response.length === 0) toast.info("No subjects found");
+      setSubjects(response);
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to load subjects");
+    }
+  };
+
+  const getTeachers = async () => {
+    try {
+      const response = await getAllTeachers();
+      if (response.length === 0) toast.info("No teachers found");
+      setTeachers(response);
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to load teachers");
+    }
+  };
+
+  // Auto-calculate End Date based on Start Date + Duration
   useEffect(() => {
     if (courseInfo.startDate && courseInfo.duration) {
       const start = new Date(courseInfo.startDate);
@@ -35,94 +69,44 @@ function AddCourse() {
     }
   }, [courseInfo.startDate, courseInfo.duration]);
 
-  // Handle field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCourseInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle subject-teacher mapping
-  const handleSubjectChange = (index, field, value) => {
-    const updatedSubjects = [...courseInfo.subjects];
-    updatedSubjects[index][field] = value;
-    setCourseInfo((prev) => ({ ...prev, subjects: updatedSubjects }));
+  const handleSubjectTeacherChange = (index, field, value) => {
+    const updated = [...courseInfo.courseSubjectTeachers];
+    updated[index][field] = value;
+    setCourseInfo((prev) => ({ ...prev, courseSubjectTeachers: updated }));
   };
 
-  // Add/Remove subjects dynamically
-  const addSubjectField = () => {
+  const addSubjectTeacherField = () => {
     setCourseInfo((prev) => ({
       ...prev,
-      subjects: [...prev.subjects, { subject: '', teacher: '' }],
+      courseSubjectTeachers: [...prev.courseSubjectTeachers, { subjectId: '', teacherId: '' }],
     }));
   };
 
-  const removeSubjectField = (index) => {
-    const updatedSubjects = [...courseInfo.subjects];
-    updatedSubjects.splice(index, 1);
-    setCourseInfo((prev) => ({ ...prev, subjects: updatedSubjects }));
+  const removeSubjectTeacherField = (index) => {
+    const updated = [...courseInfo.courseSubjectTeachers];
+    updated.splice(index, 1);
+    setCourseInfo((prev) => ({ ...prev, courseSubjectTeachers: updated }));
   };
 
-  // Validation
-  const validate = () => {
-    const newErrors = {};
-    const { courseName, description, duration, startDate, endDate, maxStudents, fees, subjects } = courseInfo;
-
-    if (!courseName) newErrors.courseName = 'Required';
-    if (!description) newErrors.description = 'Required';
-    if (!duration || isNaN(duration) || duration < 1) newErrors.duration = 'Minimum duration is 1 month';
-    if (!startDate || startDate < today) newErrors.startDate = 'Must be today or in the future';
-
-    if (!endDate) {
-      newErrors.endDate = 'Required';
-    } else {
-      const expectedEnd = new Date(startDate);
-      expectedEnd.setMonth(expectedEnd.getMonth() + parseInt(duration));
-      const selectedEnd = new Date(endDate);
-      if (
-        expectedEnd.getFullYear() !== selectedEnd.getFullYear() ||
-        expectedEnd.getMonth() !== selectedEnd.getMonth() ||
-        expectedEnd.getDate() !== selectedEnd.getDate()
-      ) {
-        newErrors.endDate = `End date must be exactly ${duration} month(s) from start date`;
-      }
-    }
-
-    if (!maxStudents || maxStudents <= 0) newErrors.maxStudents = 'Enter a positive number';
-    if (!fees || fees <= 0) newErrors.fees = 'Enter a valid fee';
-
-    const usedSubjects = new Set();
-    const usedTeachers = new Set();
-
-    subjects.forEach((item, i) => {
-      if (!item.subject) newErrors[`subject-${i}`] = 'Select subject';
-      if (!item.teacher) newErrors[`teacher-${i}`] = 'Select teacher';
-
-      if (usedSubjects.has(item.subject)) {
-        newErrors[`subject-${i}`] = 'Subject already assigned';
-      } else {
-        usedSubjects.add(item.subject);
-      }
-
-      if (usedTeachers.has(item.teacher)) {
-        newErrors[`teacher-${i}`] = 'Teacher already assigned';
-      } else {
-        usedTeachers.add(item.teacher);
-      }
-    });
-
-    return newErrors;
-  };
-
-  // Submit handler
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Submitted:', courseInfo);
-      toast.success('Course added successfully!', { autoClose: 5000 });
-      // TODO: Send courseInfo to backend API
+    const duration = parseInt(courseInfo.duration);
+    if (isNaN(duration) || duration <= 0) {
+      toast.error("Duration must be a positive number");
+      return;
+    }
+    try {
+      await addCourse(courseInfo);
+      toast.success("Course added successfully");
+      navigate("/admin/display-courses");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to add course");
     }
   };
 
@@ -141,23 +125,18 @@ function AddCourse() {
             <ToastContainer />
             <Card className="shadow p-4">
               <Form onSubmit={handleSubmit}>
-
-                {/* ✅ Course Name & Description Side by Side */}
                 <Row>
                   <Col md={6}>
                     <Form.Group className="mb-3">
-                      <Form.Label>Name</Form.Label>
+                      <Form.Label>Course Name</Form.Label>
                       <Form.Control
                         type="text"
-                        name="courseName"
-                        value={courseInfo.courseName}
+                        name="name"
+                        value={courseInfo.name}
                         onChange={handleChange}
-                        isInvalid={!!errors.courseName}
                         size="sm"
+                        required
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.courseName}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
 
@@ -169,33 +148,27 @@ function AddCourse() {
                         name="description"
                         value={courseInfo.description}
                         onChange={handleChange}
-                        isInvalid={!!errors.description}
                         rows={1}
                         size="sm"
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.description}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
                 </Row>
 
-                {/* Duration, Start Date, End Date */}
                 <Row>
                   <Col md={4}>
                     <Form.Group className="mb-3">
-                      <Form.Label>Duration <sup>(Months)</sup></Form.Label>
+                      <Form.Label>Duration <sub className='text-small'
+                      >(Months)</sub></Form.Label>
                       <Form.Control
                         type="number"
                         name="duration"
                         value={courseInfo.duration}
                         onChange={handleChange}
-                        isInvalid={!!errors.duration}
                         size="sm"
+                        min="1"
+                        required
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.duration}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
                   <Col md={4}>
@@ -207,12 +180,9 @@ function AddCourse() {
                         value={courseInfo.startDate}
                         onChange={handleChange}
                         min={today}
-                        isInvalid={!!errors.startDate}
                         size="sm"
+                        required
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.startDate}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
                   <Col md={4}>
@@ -223,17 +193,12 @@ function AddCourse() {
                         name="endDate"
                         value={courseInfo.endDate}
                         disabled
-                        isInvalid={!!errors.endDate}
                         size="sm"
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.endDate}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
                 </Row>
 
-                {/* Max Students & Fees */}
                 <Row>
                   <Col md={6}>
                     <Form.Group className="mb-3">
@@ -243,77 +208,61 @@ function AddCourse() {
                         name="maxStudents"
                         value={courseInfo.maxStudents}
                         onChange={handleChange}
-                        isInvalid={!!errors.maxStudents}
                         size="sm"
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.maxStudents}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group className="mb-3">
-                      <Form.Label>Fees (₹)</Form.Label>
+                      <Form.Label>Course Fees (₹)</Form.Label>
                       <Form.Control
                         type="number"
-                        name="fees"
-                        value={courseInfo.fees}
+                        name="courseFees"
+                        value={courseInfo.courseFees}
                         onChange={handleChange}
-                        isInvalid={!!errors.fees}
                         size="sm"
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.fees}
-                      </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
                 </Row>
 
                 <hr />
-
-                {/* Subjects and Teachers */}
                 <h5 className="text-center fw-bold mb-3">Subjects and Teachers</h5>
-                {courseInfo.subjects.map((item, index) => (
+                {courseInfo.courseSubjectTeachers.map((item, index) => (
                   <Row key={index} className="mb-2">
                     <Col md={5}>
                       <Form.Select
-                        value={item.subject}
-                        onChange={(e) => handleSubjectChange(index, 'subject', e.target.value)}
-                        isInvalid={!!errors[`subject-${index}`]}
+                        value={item.subjectId}
+                        onChange={(e) => handleSubjectTeacherChange(index, 'subjectId', e.target.value)}
                         size="sm"
+                        required
                       >
                         <option value="">Select Subject</option>
-                        {availableSubjects.map((s) => (
-                          <option key={s} value={s}>{s}</option>
+                        {subjects.map((subj) => (
+                          <option key={subj.id} value={subj.id}>{subj.name}</option>
                         ))}
                       </Form.Select>
-                      <Form.Control.Feedback type="invalid">
-                        {errors[`subject-${index}`]}
-                      </Form.Control.Feedback>
                     </Col>
                     <Col md={5}>
                       <Form.Select
-                        value={item.teacher}
-                        onChange={(e) => handleSubjectChange(index, 'teacher', e.target.value)}
-                        isInvalid={!!errors[`teacher-${index}`]}
+                        value={item.teacherId}
+                        onChange={(e) => handleSubjectTeacherChange(index, 'teacherId', e.target.value)}
                         size="sm"
+                        required
                       >
                         <option value="">Select Teacher</option>
-                        {availableTeachers.map((t) => (
-                          <option key={t} value={t}>{t}</option>
+                        {teachers.map((teach) => (
+                          <option key={teach.id} value={teach.id}>{teach.name}</option>
                         ))}
                       </Form.Select>
-                      <Form.Control.Feedback type="invalid">
-                        {errors[`teacher-${index}`]}
-                      </Form.Control.Feedback>
                     </Col>
                     <Col md={2} className="d-grid">
                       {index === 0 ? (
-                        <Button variant="primary" size="sm" onClick={addSubjectField}>
+                        <Button variant="primary" size="sm" onClick={addSubjectTeacherField}>
                           + Add
                         </Button>
                       ) : (
-                        <Button variant="danger" size="sm" onClick={() => removeSubjectField(index)}>
+                        <Button variant="danger" size="sm" onClick={() => removeSubjectTeacherField(index)}>
                           Remove
                         </Button>
                       )}
@@ -321,7 +270,6 @@ function AddCourse() {
                   </Row>
                 ))}
 
-                {/* Submit Button */}
                 <div className="d-flex justify-content-center mt-3">
                   <Button variant="success" type="submit">
                     Add Course

@@ -128,6 +128,16 @@
 
 ### 5th July — Backend + Frontend Integration
 - 'AdminDashboard', 'AddTeacher', 'DisplayTeachers', 'TeacherAttendance', 'AddNotice', 'DisplayAllNotices' 'Profile'(Admin) are completely integrated with file and pdf upload support, only left is to protect the routes.
+
+### 6th July — Backend & Frontend Integration
+- Integrated `Subjects`, `Courses`, and `Students` modules across backend and frontend.
+- Fixed all issues related to `Subject APIs` (CRUD operations working as expected).
+- Added `frontend service` files with corresponding API call functions for:
+  - `Subject` module
+  - `Course` module
+  - `Student` module
+
+
 ---
 
 *For detailed technical and UI design documentation, see the project’s `/Documentation` folder.*

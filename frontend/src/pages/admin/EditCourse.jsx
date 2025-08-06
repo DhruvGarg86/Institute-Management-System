@@ -4,11 +4,28 @@ import Sidebar from '../../components/Sidebar';
 import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getCourseById } from '../../services/Admin/Course';
+import { useParams } from 'react-router-dom';
 
 function EditCoursePage() {
   const today = new Date().toISOString().split('T')[0];
+  const { id } = useParams();
+  const [course, setCourse] = useState();
 
-  // Dummy existing course data (replace with API later)
+  const getCourses = async (id) => {
+    try {
+      const response = await getCourseById(id);
+      setCourse(response);
+    } catch (error) {
+      toast.error('Unable to load course details');
+      console.error('Error fetching courses:', error);
+    }
+  };
+
+  useEffect(() => {
+    getCourses(id);
+  }, [id]);
+
   const dummyCourse = {
     courseName: 'Full Stack Development',
     description: 'Learn MERN stack from scratch.',
@@ -23,12 +40,10 @@ function EditCoursePage() {
   };
 
   const [courseInfo, setCourseInfo] = useState({ ...dummyCourse, endDate: '' });
-  const [errors, setErrors] = useState({});
 
   const availableSubjects = ['Math', 'Science', 'English', 'Programming'];
   const availableTeachers = ['Alice', 'Bob', 'Charlie', 'Dave'];
 
-  // ✅ Auto-calculate end date based on duration & start date
   useEffect(() => {
     if (courseInfo.startDate && courseInfo.duration) {
       const start = new Date(courseInfo.startDate);
@@ -62,66 +77,10 @@ function EditCoursePage() {
     setCourseInfo(prev => ({ ...prev, subjects: updatedSubjects }));
   };
 
-  const validate = () => {
-    const newErrors = {};
-    const { courseName, description, duration, startDate, endDate, maxStudents, fees, subjects } = courseInfo;
-
-    if (!courseName) newErrors.courseName = 'Required';
-    if (!description) newErrors.description = 'Required';
-    if (!duration || isNaN(duration) || duration < 1) newErrors.duration = 'Minimum duration is 1 month';
-    if (!startDate || startDate < today) newErrors.startDate = 'Must be today or in the future';
-
-    if (!endDate) {
-      newErrors.endDate = 'Required';
-    } else {
-      const expectedEnd = new Date(startDate);
-      expectedEnd.setMonth(expectedEnd.getMonth() + parseInt(duration));
-      const selectedEnd = new Date(endDate);
-
-      if (
-        expectedEnd.getFullYear() !== selectedEnd.getFullYear() ||
-        expectedEnd.getMonth() !== selectedEnd.getMonth() ||
-        expectedEnd.getDate() !== selectedEnd.getDate()
-      ) {
-        newErrors.endDate = `End date must be exactly ${duration} month(s) from start date`;
-      }
-    }
-
-    if (!maxStudents || maxStudents <= 0) newErrors.maxStudents = 'Enter a valid number';
-    if (!fees || fees <= 0) newErrors.fees = 'Enter a valid fee';
-
-    const usedSubjects = new Set();
-    const usedTeachers = new Set();
-
-    subjects.forEach((item, i) => {
-      if (!item.subject) newErrors[`subject-${i}`] = 'Required';
-      if (!item.teacher) newErrors[`teacher-${i}`] = 'Required';
-
-      if (usedSubjects.has(item.subject)) {
-        newErrors[`subject-${i}`] = 'Duplicate subject';
-      } else {
-        usedSubjects.add(item.subject);
-      }
-
-      if (usedTeachers.has(item.teacher)) {
-        newErrors[`teacher-${i}`] = 'One teacher can only teach one subject';
-      } else {
-        usedTeachers.add(item.teacher);
-      }
-    });
-
-    return newErrors;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Updated:', courseInfo);
-      toast.success('Course updated successfully!', { autoClose: 5000 });
-    }
+    console.log('Updated:', courseInfo);
+    toast.success('Course updated successfully!', { autoClose: 5000 });
   };
 
   return (
@@ -153,11 +112,7 @@ function EditCoursePage() {
                       name="courseName"
                       value={courseInfo.courseName}
                       onChange={handleChange}
-                      isInvalid={!!errors.courseName}
                     />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.courseName}
-                    </Form.Control.Feedback>
                   </Form.Group>
 
                   {/* Description */}
@@ -169,11 +124,7 @@ function EditCoursePage() {
                       rows={2}
                       value={courseInfo.description}
                       onChange={handleChange}
-                      isInvalid={!!errors.description}
                     />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description}
-                    </Form.Control.Feedback>
                   </Form.Group>
 
                   {/* Duration, Start Date, End Date */}
@@ -185,11 +136,7 @@ function EditCoursePage() {
                         name="duration"
                         value={courseInfo.duration}
                         onChange={handleChange}
-                        isInvalid={!!errors.duration}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.duration}
-                      </Form.Control.Feedback>
                     </Col>
                     <Col>
                       <Form.Label>Start Date</Form.Label>
@@ -199,11 +146,7 @@ function EditCoursePage() {
                         min={today}
                         value={courseInfo.startDate}
                         onChange={handleChange}
-                        isInvalid={!!errors.startDate}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.startDate}
-                      </Form.Control.Feedback>
                     </Col>
                     <Col>
                       <Form.Label>End Date</Form.Label>
@@ -212,11 +155,7 @@ function EditCoursePage() {
                         name="endDate"
                         value={courseInfo.endDate}
                         disabled
-                        isInvalid={!!errors.endDate}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.endDate}
-                      </Form.Control.Feedback>
                     </Col>
                   </Row>
 
@@ -229,11 +168,7 @@ function EditCoursePage() {
                         name="maxStudents"
                         value={courseInfo.maxStudents}
                         onChange={handleChange}
-                        isInvalid={!!errors.maxStudents}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.maxStudents}
-                      </Form.Control.Feedback>
                     </Col>
                     <Col>
                       <Form.Label>Fees (₹)</Form.Label>
@@ -242,11 +177,7 @@ function EditCoursePage() {
                         name="fees"
                         value={courseInfo.fees}
                         onChange={handleChange}
-                        isInvalid={!!errors.fees}
                       />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.fees}
-                      </Form.Control.Feedback>
                     </Col>
                   </Row>
 
@@ -260,31 +191,23 @@ function EditCoursePage() {
                         <Form.Select
                           value={item.subject}
                           onChange={(e) => handleSubjectChange(index, 'subject', e.target.value)}
-                          isInvalid={!!errors[`subject-${index}`]}
                         >
                           <option value="">Select Subject</option>
                           {availableSubjects.map((subj) => (
                             <option key={subj} value={subj}>{subj}</option>
                           ))}
                         </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          {errors[`subject-${index}`]}
-                        </Form.Control.Feedback>
                       </Col>
                       <Col md={5}>
                         <Form.Select
                           value={item.teacher}
                           onChange={(e) => handleSubjectChange(index, 'teacher', e.target.value)}
-                          isInvalid={!!errors[`teacher-${index}`]}
                         >
                           <option value="">Select Teacher</option>
                           {availableTeachers.map((teacher) => (
                             <option key={teacher} value={teacher}>{teacher}</option>
                           ))}
                         </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          {errors[`teacher-${index}`]}
-                        </Form.Control.Feedback>
                       </Col>
                       <Col md={2}>
                         {index > 0 && (

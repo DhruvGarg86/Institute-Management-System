@@ -2,48 +2,60 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import { getComplaintById, updateComplaint } from '../../services/Admin/Complaint';
 
 function EditComplaint() {
-    const [complaint, setComplaint] = useState(null);
-    const [status, setStatus] = useState('');
+    const [complaint, setComplaint] = useState({
+        studentName: "",
+        studentEmail: "",
+        course: "",
+        date: "",
+        description: "",
+        status: ""
+    });
 
-    useEffect(() => {
-        async function fetchComplaint() {
-            try {
-                const dummyComplaint = {
-                    studentName: "Aarav Sharma",
-                    course: "B.Tech Computer Science",
-                    date: "2025-08-02",
-                    status: "PENDING",
-                    description: "WiFi is not working properly in the library."
-                };
+    const { id } = useParams();
 
-                setComplaint(dummyComplaint);
-                setStatus(dummyComplaint.status);
-            } catch (error) {
-                toast.error("Failed to load complaint");
-            }
-        }
-
-        fetchComplaint();
-    }, []);
-
-    const handleUpdate = async (e) => {
-        e.preventDefault();
-
+    const getComplaint = async (id) => {
         try {
-            const updatedComplaint = { status };
+            const response = await getComplaintById(id);
 
-            // await updateComplaintByAdmin(complaint.id, updatedComplaint);
-            toast.success("Complaint updated successfully!");
+            setComplaint({
+                studentName: response.studentName,
+                studentEmail: response.studentEmail,
+                course: response.course,
+                date: response.createdAt,
+                description: response.description,
+                status: response.status
+            });
         } catch (error) {
-            toast.error("Failed to update complaint");
+            toast.error("Unable to load complaint details");
+            console.error(error);
         }
     };
 
-    if (!complaint) {
-        return <p className="text-center mt-5">Loading complaint...</p>;
-    }
+    useEffect(() => {
+        getComplaint(id);
+    }, [id]);
+
+    const handleStatusChange = (e) => {
+        setComplaint((prev) => ({
+            ...prev,
+            status: e.target.value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await updateComplaint(id, { status: complaint.status });
+            toast.success("Complaint status updated successfully");
+        } catch (error) {
+            toast.error("Failed to update complaint status");
+            console.error(error);
+        }
+    };
 
     return (
         <>
@@ -62,9 +74,7 @@ function EditComplaint() {
                         <div className="card p-3 shadow-sm mb-5 admin-add-notice-box">
                             <h3 className="mb-1 mx-auto fw-bold">Complaint Details</h3>
 
-                            <form onSubmit={handleUpdate} encType="multipart/form-data">
-
-                                {/* Two-column layout for top fields */}
+                            <form onSubmit={handleSubmit}>
                                 <div className="row mt-4">
                                     <div className="col-md-6 mb-3">
                                         <label className="form-label fw-bold">Student Name</label>
@@ -101,12 +111,12 @@ function EditComplaint() {
                                         <select
                                             name="status"
                                             className="form-select"
-                                            value={status}
+                                            value={complaint.status}
                                             required
-                                            onChange={(e) => setStatus(e.target.value)}
+                                            onChange={handleStatusChange}
                                         >
                                             <option value="">Select Status</option>
-                                            <option value="PENDING">Pending</option>
+                                            <option value="ACTIVE">Active</option>
                                             <option value="RESOLVED">Resolved</option>
                                         </select>
                                     </div>
@@ -123,13 +133,11 @@ function EditComplaint() {
                                     />
                                 </div>
 
-                                {/* Submit Button */}
                                 <div className="d-flex justify-content-center">
                                     <button type="submit" className="btn admin-add-notice-button btn-success">
                                         Update Complaint
                                     </button>
                                 </div>
-
                             </form>
                         </div>
                     </div>

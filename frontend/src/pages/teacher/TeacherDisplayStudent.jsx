@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   GridComponent,
@@ -16,69 +16,35 @@ import {
 } from "@syncfusion/ej2-react-grids";
 import TeacherNavbar from "./TeacherNavbar";
 import TeacherSidebar from "./TeacherSidebar";
-
-const sampleStudents = [
-  {
-    name: "Aarav Sharma",
-    roll: "01",
-    address: "D-45, Connaught Place, New Delhi",
-    dob: "02/05/2005",
-    phone: "+91 9876543210",
-    avatar: "https://i.pravatar.cc/40?img=1",
-  },
-  {
-    name: "Ananya Verma",
-    roll: "10",
-    address: "C-12, Bandra West, Mumbai",
-    dob: "03/04/2004",
-    phone: "+91 9123456780",
-    avatar: "https://i.pravatar.cc/40?img=2",
-  },
-  {
-    name: "Rohan Patel",
-    roll: "04",
-    address: "45-A, Navrangpura, Ahmedabad",
-    dob: "12/05/2005",
-    phone: "+91 9988776655",
-    avatar: "https://i.pravatar.cc/40?img=3",
-  },
-  {
-    name: "Meera Iyer",
-    roll: "03",
-    address: "22, T. Nagar, Chennai",
-    dob: "03/05/2005",
-    phone: "+91 8877665544",
-    avatar: "https://i.pravatar.cc/40?img=4",
-  },
-  {
-    name: "Aditya Singh",
-    roll: "15",
-    address: "67, Gomti Nagar, Lucknow",
-    dob: "12/05/2005",
-    phone: "+91 7766554433",
-    avatar: "https://i.pravatar.cc/40?img=5",
-  },
-  {
-    name: "Dhruv Garg",
-    roll: "01",
-    address: "9-10, Banjara Hills, Hyderabad",
-    dob: "12/03/2005",
-    phone: "+91 7654321098",
-    avatar: "https://i.pravatar.cc/40?img=6",
-  },
-  {
-    name: "Vikram Desai",
-    roll: "11",
-    address: "101, Koregaon Park, Pune",
-    dob: "03/05/2006",
-    phone: "+91 7098765432",
-    avatar: "https://i.pravatar.cc/40?img=7",
-  },
-];
+import { getAllStudents, getUserIdFromToken } from "../../services/Teacher/Student";
+import { toast } from "react-toastify";
 
 function TeacherDisplayStudent() {
-  const navigate = useNavigate();
-  const gridRef = useRef(null);
+
+  const id = getUserIdFromToken();
+  console.log("DIPSLAY STUDENT: " + id)
+
+ const navigate = useNavigate();
+    const gridRef = useRef(null);
+
+    const [students, setStudents] = useState([]);
+
+    const getStudents = async (id) => {
+        try{
+            
+            const response = await getAllStudents(id);
+            
+            setStudents(response);
+            toast.success("Students loaded successfully");
+        }catch(error){
+            console.log(error);
+            toast.error("Unable to load students");
+        }
+    }
+
+    useEffect(() => {
+        getStudents(id);
+    }, [id])
 
   return (
     <>
@@ -95,7 +61,7 @@ function TeacherDisplayStudent() {
               </h3>
               <GridComponent
                 ref={gridRef}
-                dataSource={sampleStudents}
+                dataSource={students}
                 allowSorting={true}
                 allowExcelExport={true}
                 allowPdfExport={true}

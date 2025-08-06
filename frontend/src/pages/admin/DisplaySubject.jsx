@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
@@ -17,29 +17,42 @@ import {
   Inject,
 } from "@syncfusion/ej2-react-grids";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-// Updated dummy data as per SubjectDto
-const sampleSubjects = [
-  {
-    code: "SUB101",
-    name: "Mathematics",
-    description: "Basic Algebra and Calculus",
-  },
-  {
-    code: "SUB102",
-    name: "Physics",
-    description: "Mechanics and Thermodynamics",
-  },
-  {
-    code: "SUB103",
-    name: "English Literature",
-    description: "Poetry and Prose Analysis",
-  },
-];
+import { toast } from "react-toastify";
+import { deleteSubjectById, getAllSubjects } from "../../services/Admin/Subject";
 
 function DisplaySubject() {
   const navigate = useNavigate();
   const gridRef = useRef(null);
+
+  const [subjects, setSubjects] = useState([]);
+
+  const getSubjects = async () => {
+    try {
+      const response = await getAllSubjects();
+      console.log(response);
+      if (response.length === 0)
+        toast.info("No subjects found");
+      setSubjects(response);
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to load subjects");
+    }
+  }
+
+  useEffect(() => {
+    getSubjects();
+  }, []);
+
+  const deleteSubject = async (id) => {
+    try {
+      await deleteSubjectById(id);
+      toast.success("Subject deleted successfully");
+      getSubjects();
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to delete subject");
+    }
+  }
 
   return (
     <>
@@ -56,7 +69,7 @@ function DisplaySubject() {
               </h3>
               <GridComponent
                 ref={gridRef}
-                dataSource={sampleSubjects}
+                dataSource={subjects}
                 allowSorting={true}
                 allowExcelExport={true}
                 allowPdfExport={true}
@@ -79,7 +92,6 @@ function DisplaySubject() {
                     headerText="Description"
                     width="250"
                   />
-
                   <ColumnDirective
                     headerText="Action"
                     width="135"
@@ -88,16 +100,15 @@ function DisplaySubject() {
                         <button
                           className="btn btn-sm btn-light me-2 text-primary"
                           onClick={() =>
-                            navigate(`/admin/edit-subject/${props.code}`)
+                            navigate(`/admin/edit-subject/${props.id}`)
                           }
                         >
                           <FaEdit />
                         </button>
                         <button
                           className="btn btn-sm btn-light text-danger"
-                          onClick={() =>
-                            console.log("Delete subject:", props.code)
-                          }
+                          onClick={() => deleteSubject(props.id)}
+
                         >
                           <FaTrash />
                         </button>
