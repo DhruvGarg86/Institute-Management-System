@@ -205,5 +205,4 @@ public class CourseServiceImpl implements CourseService {
         dto.setMappings(mappingDtos);
         return dto;
     }
-
 }

@@ -20,7 +20,7 @@ public class UpdateStudentRequestDto {
     private LocalDate dob;
     private LocalDate admissionDate;
     private String address;
-    private Long courseId;
+    private String courseName;
     private Gender gender;
     private Status status;
     private String imagePath;

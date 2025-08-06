@@ -1,63 +1,60 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
-import {
-  GridComponent,
-  ColumnsDirective,
-  ColumnDirective,
-  Sort,
-  Filter,
-  ExcelExport,
-  PdfExport,
-  Toolbar,
-  Print,
-  Page,
-  Search,
-  Inject,
-} from "@syncfusion/ej2-react-grids";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-// Dummy course data
-const sampleCourses = [
-  {
-    id: 1,
-    name: "Full Stack Development",
-    description: "Learn frontend and backend web development.",
-    duration: "6 months",
-    startDate: "2025-08-10",
-    endDate: "2026-02-10",
-    courseFees: 45000.0,
-    maxStudents: 30,
-    status: "ACTIVE",
-  },
-  {
-    id: 2,
-    name: "Data Science",
-    description: "Explore Python, ML, and Data Visualization.",
-    duration: "4 months",
-    startDate: "2025-09-01",
-    endDate: "2026-01-01",
-    courseFees: 60000.0,
-    maxStudents: 25,
-    status: "INACTIVE",
-  },
-  {
-    id: 3,
-    name: "Cloud Computing",
-    description: "AWS, Azure and DevOps foundations.",
-    duration: "3 months",
-    startDate: "2025-10-15",
-    endDate: "2026-01-15",
-    courseFees: 55000.0,
-    maxStudents: 20,
-    status: "ACTIVE",
-  },
-];
+import { toast } from "react-toastify";
+import { deleteCourseById, getAllCourses } from "../../services/Admin/Course";
 
 function DisplayCourse() {
   const navigate = useNavigate();
-  const gridRef = useRef(null);
+  const [courses, setCourses] = useState([]);
+  const [courseStatus, setCourseStatus] = useState({});
+
+  const getCourses = async () => {
+    try {
+      const response = await getAllCourses();
+      setCourses(response);
+
+      const statusMap = response.reduce((acc, course) => {
+        acc[course.id] = course.status === "ACTIVE";
+        return acc;
+      }, {});
+      setCourseStatus(statusMap);
+      toast.success("Courses loaded successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to get courses");
+    }
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, []);
+
+  const toggleStatus = (id) => {
+    setCourseStatus((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const showSubjects = (course) => {
+    navigate(`/admin/course/${course.id}/subjects`, {
+      state: { course },
+    });
+  };
+
+  const deleteCourse = async (id) => {
+    try {
+      await deleteCourseById(id);
+      getCourses();
+      toast.success("Course deleted successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <>
@@ -72,106 +69,77 @@ function DisplayCourse() {
               <h3 className="fw-bold" style={{ color: "#4361e5" }}>
                 Course List
               </h3>
-              <GridComponent
-                ref={gridRef}
-                dataSource={sampleCourses}
-                allowSorting={true}
-                allowExcelExport={true}
-                allowPdfExport={true}
-                allowPaging={true}
-                pageSettings={{ pageSize: 7 }}
-                toolbar={["Search", "ExcelExport", "PdfExport", "Print"]}
-                toolbarClick={(args) => {
-                  if (args.item.id.includes("pdfexport"))
-                    gridRef.current.pdfExport();
-                  if (args.item.id.includes("excelexport"))
-                    gridRef.current.excelExport();
-                  if (args.item.id.includes("print")) gridRef.current.print();
-                }}
-              >
-                <ColumnsDirective>
-                  <ColumnDirective
-                    field="name"
-                    headerText="Course Name"
-                    width="120"
-                  />
-                  <ColumnDirective
-                    field="description"
-                    headerText="Description"
-                    width="180"
-                  />
-                  <ColumnDirective
-                    field="duration"
-                    headerText="Duration"
-                    width="90"
-                  />
-                  <ColumnDirective
-                    field="startDate"
-                    headerText="Start Date"
-                    width="100"
-                  />
-                  <ColumnDirective
-                    field="endDate"
-                    headerText="End Date"
-                    width="100"
-                  />
-                  <ColumnDirective
-                    field="courseFees"
-                    headerText="Fees (₹)"
-                    width="90"
-                    format="C2"
-                    textAlign="Right"
-                  />
-                  <ColumnDirective
-                    field="maxStudents"
-                    headerText="Max Students"
-                    width="110"
-                    textAlign="Center"
-                  />
-                  <ColumnDirective
-                    field="status"
-                    headerText="Status"
-                    width="90"
-                    textAlign="Center"
-                  />
-                  <ColumnDirective
-                    headerText="Action"
-                    width="135"
-                    template={(props) => (
-                      <div>
-                        <button
-                          className="btn btn-sm btn-light me-2 text-primary"
-                          onClick={() =>
-                            navigate(`/admin/edit-course/${props.id}`)
-                          }
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="btn btn-sm btn-light text-danger"
-                          onClick={() =>
-                            console.log("Delete course:", props.id)
-                          }
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    )}
-                  />
-                </ColumnsDirective>
-                <Inject
-                  services={[
-                    Sort,
-                    Filter,
-                    ExcelExport,
-                    PdfExport,
-                    Toolbar,
-                    Print,
-                    Page,
-                    Search,
-                  ]}
-                />
-              </GridComponent>
+              {courses.map((course) => (
+                <div
+                  key={course.id}
+                  className="mb-4 border rounded p-3 shadow-sm position-relative"
+                >
+                  <div className="position-absolute top-0 end-0 mt-2 me-2">
+                    <div className="form-check form-switch">
+                      <span>Active</span>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`statusSwitch${course.id}`}
+                        checked={courseStatus[course.id]}
+                        onChange={() => toggleStatus(course.id)}
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h5>{course.name}</h5>
+                      <p>{course.description}</p>
+                      <p>
+                        <strong>Duration:</strong> {course.duration} months
+                      </p>
+                      <p>
+                        <strong>Start:</strong> {course.startDate} &nbsp;
+                        <strong>End:</strong> {course.endDate}
+                      </p>
+                      <p>
+                        <strong>Fees:</strong> ₹{course.courseFees} &nbsp;
+                        <strong>Max Students:</strong> {course.maxStudents}
+                      </p>
+                    </div>
+                    <div>
+                      <button
+                        className="btn btn-outline-primary"
+                        onClick={() => showSubjects(course)}
+                      >
+                        Show Subjects
+                      </button>
+                      <br />
+                      <button
+                        className="btn btn-sm btn-light mt-2 text-primary"
+                        onClick={() =>
+                          navigate(`/admin/edit-course/${course.id}`)
+                        }
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="btn btn-sm btn-light mt-2 ms-2 text-danger"
+                        onClick={() => deleteCourse(course.id)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 ps-3">
+                    {/* <h6>Subject-Teacher Assignments:</h6> */}
+                    <ul>
+                      {course.courseSubjectTeachers?.map((item, index) => (
+                        <li key={index}>
+                          Subject ID: <strong>{item.subjectId}</strong>, Teacher ID:{" "}
+                          <strong>{item.teacherId}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

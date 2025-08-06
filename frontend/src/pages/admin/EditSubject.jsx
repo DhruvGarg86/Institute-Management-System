@@ -1,109 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Card } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
+import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getSubjectById, updateSubject } from '../../services/Admin/Subject';
 
 const EditSubject = () => {
-  const { id } = useParams();
 
-  const [subjectData, setSubjectData] = useState({
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [subject, setSubject] = useState({
     name: '',
     code: '',
     description: ''
   });
 
-  const [errors, setErrors] = useState({});
+  const getSubject = async () => {
+    try {
+      const response = await getSubjectById(id);
+      setSubject(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
-    // Replace with real API call to fetch subject
-    const fetchedData = {
-      name: 'Mathematics',
-      code: 'MATH101',
-      description: 'Basic Mathematics for Class 10'
-    };
-    setSubjectData(fetchedData);
+    getSubject();
   }, [id]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSubjectData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (!subjectData.name) newErrors.name = 'Subject name is required';
-    if (!subjectData.code) newErrors.code = 'Subject code is required';
-    if (!subjectData.description) newErrors.description = 'Description is required';
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      // TODO: Update subject in backend
-      console.log('Subject Updated:', subjectData);
-      toast.success('Subject updated successfully!', { autoClose: 5000 });
+    try {
+      await updateSubject(id, subject);
+      toast.success("Subject updated successfully");
+      navigate("/admin/display-subjects");
+    } catch (error) {
+      toast.error("Failed to update subject");
+      console.error(error);
     }
-  };
+  }
 
   return (
-    <div className="container-fluid mt-4 d-flex justify-content-center">
-      <Card className="p-4 shadow" style={{ maxWidth: '600px', width: '100%' }}>
-        <h4 className="mb-3 text-center">Edit Subject</h4>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Subject Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={subjectData.name}
-              onChange={handleChange}
-              isInvalid={!!errors.name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.name}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Subject Code</Form.Label>
-            <Form.Control
-              type="text"
-              name="code"
-              value={subjectData.code}
-              onChange={handleChange}
-              isInvalid={!!errors.code}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.code}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="description"
-              rows={3}
-              value={subjectData.description}
-              onChange={handleChange}
-              isInvalid={!!errors.description}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.description}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <div className="text-center mt-4">
-            <Button variant="primary" type="submit">
-              Update Subject
-            </Button>
+    <>
+      <Navbar />
+      <div className="container-fluid admin-dashboard-container">
+        <div className="row admin-dashboard-row">
+          <div className="col-2-5 admin-dashboard-first">
+            <Sidebar />
           </div>
-        </Form>
-      </Card>
-    </div>
+          <div className="col-7-5 admin-dashboard-second p-4">
+            <h2 className="text-primary mb-4 fw-bold admin-add-student-heading">Edit Subject</h2>
+            <Form className="row g-4 bg-white p-2 rounded admin-add-student-form mt-3" onSubmit={handleSubmit}>
+
+              <Form.Group className="col-md-6">
+                <Form.Label>Subject Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={subject.name}
+                  onChange={(e) => setSubject({ ...subject, name: e.target.value })}
+                />
+              </Form.Group>
+
+              <Form.Group className="col-md-6">
+                <Form.Label>Subject Code</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="code"
+                  value={subject.code}
+                  onChange={(e) => setSubject({ ...subject, code: e.target.value })}
+                />
+              </Form.Group>
+
+              <Form.Group className="col-md-12">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="description"
+                  rows={3}
+                  value={subject.description}
+                  onChange={(e) => setSubject({ ...subject, description: e.target.value })}
+                />
+              </Form.Group>
+
+              <div className="col-12 text-center">
+                <Button type="submit" className="btn btn-primary px-4 custom-button-primary">
+                  Update Subject
+                </Button>
+              </div>
+
+            </Form>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

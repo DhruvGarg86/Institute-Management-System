@@ -50,7 +50,7 @@ export async function deleteTeacherById(id) {
       "Content-Type": "application/json",
     };
     const responseBody = { status: "INACTIVE" };
-    const response = await axios.put(url, responseBody);
+    const response = await axios.put(url, responseBody, { headers });
 
     return response.data;
   } catch (error) {
@@ -68,7 +68,7 @@ export async function addTeacher(teacher) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    const response = await axios.post(url, teacher);
+    const response = await axios.post(url, teacher, { headers });
 
     return response.data;
   } catch (error) {
@@ -104,7 +104,7 @@ export async function submitTeacherById(teacher, id) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    const response = await axios.put(url, teacher);
+    const response = await axios.put(url, teacher, { headers });
 
     return response.data;
   } catch (error) {

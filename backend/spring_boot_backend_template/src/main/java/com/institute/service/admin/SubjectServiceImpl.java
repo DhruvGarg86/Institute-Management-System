@@ -2,6 +2,7 @@ package com.institute.service.admin;
 
 import java.util.List;
 
+import com.institute.dto.admin.SubjectDisplayDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,10 @@ public class SubjectServiceImpl implements SubjectService {
 
     // ---------------------- GET ALL subjects ----------------------
     @Override
-    public List<SubjectDto> getAllSubjects() {
+    public List<SubjectDisplayDto> getAllSubjects() {
         return subjectDao.findAll().stream()
-                .map(subject -> modelMapper.map(subject, SubjectDto.class))
+                .filter(subject -> !subject.isDeleted())
+                .map(subject -> modelMapper.map(subject, SubjectDisplayDto.class))
                 .toList();
     }
     // ---------------------- ADD new SUBJECT ----------------------

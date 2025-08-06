@@ -1,100 +1,94 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
+
+import Sidebar from '../../components/Sidebar';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import {
+    GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter,
+    ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject
+} from '@syncfusion/ej2-react-grids';
+import { toast } from 'react-toastify';
+import { getAllTeachers } from '../../services/Admin/Teacher';
 import TeacherNavbar from "./TeacherNavbar";
 import TeacherSidebar from "./TeacherSidebar";
-import Footer from "../../components/Footer";
+
+
 
 function TeacherDisplayTeacher() {
-  const [teachers, setTeachers] = useState([]);
 
-  useEffect(() => {
-    // Dummy data simulating TeacherDisplayTeacherDTO structure
-    const dummyTeachers = [
-      {
-        id: 1,
-        name: "Dr. Aisha Khan",
-        phoneNumber: "9876543210",
-        address: "123 Park Street, Mumbai",
-        email: "aisha.khan@example.com",
-        joiningDate: "2022-06-15",
-        status: "ACTIVE",
-        image: "https://i.pravatar.cc/100?img=12",
-        subjects: [
-          { id: 1, name: "Mathematics", code: "MATH101" },
-          { id: 2, name: "Statistics", code: "STAT202" },
-        ],
-      },
-      {
-        id: 2,
-        name: "Mr. Rohan Desai",
-        phoneNumber: "8765432109",
-        address: "456 Main Road, Pune",
-        email: "rohan.desai@example.com",
-        joiningDate: "2021-08-25",
-        status: "INACTIVE",
-        image: "https://i.pravatar.cc/100?img=14",
-        subjects: [
-          { id: 3, name: "Java Programming", code: "JAVA101" },
-          { id: 4, name: "Spring Boot", code: "SPR202" },
-        ],
-      },
-    ];
+    // const navigate = useNavigate();
+    const gridRef = useRef(null);
 
-    setTeachers(dummyTeachers); // Set dummy data
-  }, []);
+    const [teachers, setTeachers] = useState([]);
 
-  return (
-    <>
-      <TeacherNavbar />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-2 p-0">
-            <TeacherSidebar />
-          </div>
-          <div className="col-10 p-4">
-            <h2 className="mb-4">Teachers List</h2>
-            <div className="row">
-              {teachers.map((teacher) => (
-                <div key={teacher.id} className="col-md-6 mb-4">
-                  <div className="card shadow-sm p-3">
-                    <div className="d-flex align-items-center">
-                      <img
-                        src={teacher.image}
-                        alt={teacher.name}
-                        className="rounded-circle me-3"
-                        width="70"
-                        height="70"
-                      />
-                      <div>
-                        <h5>{teacher.name}</h5>
-                        <p className="mb-1"><strong>Email:</strong> {teacher.email}</p>
-                        <p className="mb-1"><strong>Phone:</strong> {teacher.phoneNumber}</p>
-                        <p className="mb-1"><strong>Status:</strong> {teacher.status}</p>
-                        <p className="mb-1"><strong>Joined:</strong> {teacher.joiningDate}</p>
-                      </div>
+    const loadAllTeachers = async () => {
+        try {
+            const data = await getAllTeachers();
+            setTeachers(data);
+            console.log(data);
+        } catch (error) {
+            console.error("Error loading teachers:", error); // For debugging purposes only
+            toast.error("Failed to load teachers. Please try again later.");
+        }
+    };
+
+    // Call the loadAllTeachers function when the component mounts
+    useEffect(() => {
+        loadAllTeachers();
+    }, []);
+
+ 
+    return (
+        <>
+            <TeacherNavbar />
+            <div className="container-fluid admin-dashboard-container">
+                <div className="row admin-dashboard-row">
+                    <div className="col-2-5 admin-dashboard-first">
+                        <TeacherSidebar />
                     </div>
-                    <div className="mt-3">
-                      <h6>Subjects:</h6>
-                      <ul>
-                        {teacher.subjects.map((subject) => (
-                          <li key={subject.id}>
-                            {subject.name} ({subject.code})
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="col-7-5 admin-dashboard-second p-4">
+                        <div className="card p-4 shadow">
+                            <h3 className='fw-bold' style={{ color: '#4361e5' }}>Teacher List</h3>
+                            <GridComponent
+                                ref={gridRef}
+                                dataSource={teachers}
+                                allowSorting={true}
+                                allowExcelExport={true}
+                                allowPdfExport={true}
+                                allowPaging={true}
+                                // allowFiltering={true}
+                                pageSettings={{ pageSize: 7 }}
+                                toolbar={['Search', 'ExcelExport', 'PdfExport', 'Print']}
+                                toolbarClick={(args) => {
+                                    if (args.item.id.includes('pdfexport')) gridRef.current.pdfExport();
+                                    if (args.item.id.includes('excelexport')) gridRef.current.excelExport();
+                                    if (args.item.id.includes('print')) gridRef.current.print();
+                                }}
+
+                            >
+
+                                <ColumnsDirective>
+                                    <ColumnDirective field='image' headerText='Profile' width='60' allowSorting={false}
+                                    template={(props) => (
+                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '38px', width: '38px', objectFit: 'cover' }} />
+                                    )} />
+                                    <ColumnDirective field='name' headerText='Name' textAlign="Center" width='87' />
+                                    <ColumnDirective field='phoneNumber' headerText='Contact' textAlign="Center" width='80' />
+                                    <ColumnDirective field='address' headerText='Address' width='110' />
+                                    <ColumnDirective field='email' headerText='Email' textAlign="Center" width='130' />
+                                    <ColumnDirective field='joiningDate' headerText='Joining' textAlign="Center" width='75' />
+                                    <ColumnDirective field='status' headerText='Status' width='95' />
+                                    
+                                </ColumnsDirective>
+
+                                <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search]} />
+                            </GridComponent>
+
+                        </div>
                     </div>
-                  </div>
                 </div>
-              ))}
-              {teachers.length === 0 && (
-                <p className="text-muted text-center">No teacher data available.</p>
-              )}
             </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
+        </>
+    );
 }
 
 export default TeacherDisplayTeacher;

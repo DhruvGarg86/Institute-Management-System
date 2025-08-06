@@ -14,6 +14,7 @@ import lombok.Setter;
 public class ActiveStudentsDto {
 
     private Long id ;
+    private String image;
     private String name;
     private String phoneNumber;
     private String courseName;

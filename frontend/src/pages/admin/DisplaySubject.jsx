@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
@@ -17,38 +17,42 @@ import {
   Inject,
 } from "@syncfusion/ej2-react-grids";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-// Dummy subject data
-const sampleSubjects = [
-  {
-    id: 1,
-    name: "Mathematics",
-    code: "MATH101",
-    description: "Basic Algebra and Calculus",
-    status: "ACTIVE",
-    teacherName: "Dr. Mehta",
-  },
-  {
-    id: 2,
-    name: "Physics",
-    code: "PHY201",
-    description: "Mechanics and Thermodynamics",
-    status: "ACTIVE",
-    teacherName: "Prof. Rajan",
-  },
-  {
-    id: 3,
-    name: "English Literature",
-    code: "ENG301",
-    description: "Poetry and Prose Analysis",
-    status: "INACTIVE",
-    teacherName: "Ms. Isha Sharma",
-  },
-];
+import { toast } from "react-toastify";
+import { deleteSubjectById, getAllSubjects } from "../../services/Admin/Subject";
 
 function DisplaySubject() {
   const navigate = useNavigate();
   const gridRef = useRef(null);
+
+  const [subjects, setSubjects] = useState([]);
+
+  const getSubjects = async () => {
+    try {
+      const response = await getAllSubjects();
+      console.log(response);
+      if (response.length === 0)
+        toast.info("No subjects found");
+      setSubjects(response);
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to load subjects");
+    }
+  }
+
+  useEffect(() => {
+    getSubjects();
+  }, []);
+
+  const deleteSubject = async (id) => {
+    try {
+      await deleteSubjectById(id);
+      toast.success("Subject deleted successfully");
+      getSubjects();
+    } catch (error) {
+      console.log(error);
+      toast.error("Unable to delete subject");
+    }
+  }
 
   return (
     <>
@@ -65,7 +69,7 @@ function DisplaySubject() {
               </h3>
               <GridComponent
                 ref={gridRef}
-                dataSource={sampleSubjects}
+                dataSource={subjects}
                 allowSorting={true}
                 allowExcelExport={true}
                 allowPdfExport={true}
@@ -81,27 +85,12 @@ function DisplaySubject() {
                 }}
               >
                 <ColumnsDirective>
-                  <ColumnDirective
-                    field="name"
-                    headerText="Subject Name"
-                    width="130"
-                  />
                   <ColumnDirective field="code" headerText="Code" width="100" />
+                  <ColumnDirective field="name" headerText="Name" width="150" />
                   <ColumnDirective
                     field="description"
                     headerText="Description"
-                    width="200"
-                  />
-                  <ColumnDirective
-                    field="teacherName"
-                    headerText="Teacher"
-                    width="140"
-                  />
-                  <ColumnDirective
-                    field="status"
-                    headerText="Status"
-                    width="90"
-                    textAlign="Center"
+                    width="250"
                   />
                   <ColumnDirective
                     headerText="Action"
@@ -118,9 +107,8 @@ function DisplaySubject() {
                         </button>
                         <button
                           className="btn btn-sm btn-light text-danger"
-                          onClick={() =>
-                            console.log("Delete subject:", props.id)
-                          }
+                          onClick={() => deleteSubject(props.id)}
+
                         >
                           <FaTrash />
                         </button>
