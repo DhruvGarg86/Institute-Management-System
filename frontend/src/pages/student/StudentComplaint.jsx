@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import StudentSidebar from "../../components/StudentSidebar";
+import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "../../pages/student/StudentNavbar";
 import Footer from "../../components/Footer";
 

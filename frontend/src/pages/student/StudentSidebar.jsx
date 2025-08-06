@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import StudentComplaintForm from "../pages/student/StudentAddComplaint";
+import StudentComplaintForm from "./StudentAddComplaint";
 
 function StudentSidebar() {
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ function StudentSidebar() {
                   </button>
                 </li>
               </ul>
-            </div>
+            </div>  
           </div>
         </div>
 

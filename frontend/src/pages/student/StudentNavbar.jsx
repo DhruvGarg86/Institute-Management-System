@@ -1,37 +1,88 @@
-import React from 'react'
-import { RiLogoutCircleRLine } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import defaultPhoto from "../../assets/student_profile_photo.jpg";
+import "./Student-module.css";
 
 function StudentNavbar() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const handleLogout = () => {
-        setTimeout(() => {
-            navigate("/");
-        }, 500); // in ms
+  const handleLogout = () => {
+    setDropdownOpen(false);
+    setTimeout(() => {
+      navigate("/");
+    }, 500);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
     };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    return (
-        <div>
-            <nav className="navbar navbar-expand-lg bg-body">
-                <div className="container-fluid">
-                    <div className='navbar-first-part'>
-                        <h1 className="navbar-brand">STUDENT DASHBOARD</h1>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div className='navbar-second-part'>
-                        <span className='navbar-second-part-admin-name'><a href='/student/profile' style={{ textDecoration: 'none', color: 'black' }}>Dhruv Garg</a></span>
-                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout'
-                            onClick={() => handleLogout()}
-                        />
-                    </div>
+  return (
+    <nav className="navbar navbar-expand-lg bg-light px-3">
+      <div className="container-fluid justify-content-between">
+        <h4 className="navbar-brand m-0">STUDENT DASHBOARD</h4>
 
-                </div>
-            </nav>
+        <div className="dropdown" ref={dropdownRef}>
+          <img
+            src={defaultPhoto}
+            alt="Profile"
+            className="rounded-circle"
+            style={{ width: "40px", height: "40px", cursor: "pointer" }}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          />
+          {dropdownOpen && (
+            <ul
+              className="dropdown-menu dropdown-menu-end show mt-2"
+              style={{ position: "absolute", right: 0 }}
+            >
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    navigate("/student/profile");
+                    setDropdownOpen(false);
+                  }}
+                >
+                  Profile
+                </button>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    navigate("/student/change-password");
+                    setDropdownOpen(false);
+                  }}
+                >
+                  Change Password
+                </button>
+              </li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <button
+                  className="dropdown-item text-danger"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          )}
         </div>
-    )
+      </div>
+    </nav>
+  );
 }
 
-export default StudentNavbar
+export default StudentNavbar;

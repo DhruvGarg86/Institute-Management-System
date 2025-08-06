@@ -24,6 +24,4 @@ public class CourseSubjectTeacherDTO {
 
     @NotBlank
     private String teacherName;
-}{
-
 }

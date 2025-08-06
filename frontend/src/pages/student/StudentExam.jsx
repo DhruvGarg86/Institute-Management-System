@@ -1,6 +1,6 @@
 import React from "react";
 import StudentNavbar from "./StudentNavbar";
-import StudentSidebar from "../../components/StudentSidebar";
+import StudentSidebar from "./StudentSidebar";
 import Footer from "../../components/Footer";
 
 function StudentExam() {

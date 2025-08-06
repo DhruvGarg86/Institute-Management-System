@@ -24,7 +24,7 @@ function Dashboard() {
       } catch (error) {
         console.log(error)
         toast.error("Unable to load total students");
-      }
+      } 
     };
     fetchStudents();
   }, []);

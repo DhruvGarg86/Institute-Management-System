@@ -95,7 +95,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+            <scope>runtime</scope>
+            <optional>true</optional>
 		</dependency>
 
 		<!-- ✅ Testing -->

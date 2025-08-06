@@ -1,288 +1,262 @@
 import React, { useState } from "react";
-import { FaUpload } from "react-icons/fa";
-import defaultPhoto from "../../assets/student_profile_photo.jpg"; // adjust based on your structure
-import StudentSidebar from "../../components/StudentSidebar";
-import "./Student-module.css";
+import { FiEdit, FiSave } from "react-icons/fi";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
+import defaultPhoto from "../../assets/student_profile_photo.jpg";
+import { toast } from "react-toastify";
+import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "./StudentNavbar";
+import "./Student-module.css";
 
 function StudentProfile() {
-  const [formData, setFormData] = useState({
-    firstName: "Vedant",
-    lastName: "Choudhari",
-    rollNo: "101",
-    course: "DAC",
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    name: "Vedant Choudhari",
     email: "vedant@example.com",
-    phone: "9876543210",
+    phoneNumber: "9876543210",
     address: "Pune, Maharashtra",
-    password: "",
-    confirmPassword: "",
-    profilePhoto: null,
+    gender: "Male",
+    dob: "2000-01-01",
+    admissionDate: "2023-07-15",
+    courseName: "DAC",
+    status: "Active",
+    image: defaultPhoto,
   });
 
-  const [errors, setErrors] = useState({});
-
-  const validateImage = (file) => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    const maxSize = 10 * 1024 * 1024; // 10 MB
-
-    if (!allowedTypes.includes(file.type)) {
-      return "Only JPG or PNG images are allowed.";
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setProfile((prev) => ({ ...prev, image: imageUrl }));
+      toast.success("Image uploaded successfully");
     }
+  };
 
-    if (file.size > maxSize) {
-      return "Image size must not exceed 10MB.";
-    }
-
-    return "";
+  const handleSave = () => {
+    setIsEditing(false);
+    toast.success("Profile saved!");
+    console.log("Saving:", profile);
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "profilePhoto") {
-      const file = files[0];
-      const imageError = file ? validateImage(file) : "";
-      setErrors((prev) => ({ ...prev, profilePhoto: imageError }));
-
-      setFormData((prev) => ({
-        ...prev,
-        profilePhoto: imageError ? null : file,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    const { name, value } = e.target;
+    setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validate = () => {
-    const newErrors = {};
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    email: profile.email,
+    newPassword: "",
+    repeatPassword: "",
+  });
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Phone number must be exactly 10 digits";
-    }
-
-    if (formData.password && formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    if (errors.profilePhoto) {
-      newErrors.profilePhoto = errors.profilePhoto;
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const handlePasswordChangeInput = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validate()) return;
+  const handlePasswordSubmit = () => {
+    if (passwordData.newPassword !== passwordData.repeatPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
 
-    console.log("Updated Profile:", formData);
-    alert("Profile updated successfully!");
+    // Simulate password update
+    toast.success("Password changed successfully!");
+    console.log("Password Change Data:", passwordData);
+
+    // Close modal
+    setShowPasswordModal(false);
+    setPasswordData({
+      email: profile.email,
+      newPassword: "",
+      repeatPassword: "",
+    });
   };
-
-  const photoPreview = formData.profilePhoto
-    ? URL.createObjectURL(formData.profilePhoto)
-    : defaultPhoto;
 
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-2">
-        <div className="row">
-          <div className="col-2 px-2">
+      <div className="container-fluid student-dashboard-container">
+        <div className="row student-dashboard-row">
+          <div className="col-2-5 student-dashboard-first">
             <StudentSidebar />
           </div>
-          <div className="col-10">
-            <div>
-              <h2 className="text-center student-center">Profile</h2>
-            </div>
-            <div className="container-fluid mt-2 d-flex justify-content-center">
-              <div
-                className="card shadow p-4"
-                style={{ maxWidth: "900px", width: "100%" }}
-              >
-                <form onSubmit={handleSubmit} className="row g-3">
-                  {/* Profile Photo Upload */}
-                  <div className="col-12 d-flex justify-content-center mb-3">
-                    <label
-                      htmlFor="profilePhoto"
-                      style={{ cursor: "pointer" }}
-                      className="text-center"
-                    >
-                      <div className="position-relative">
-                        <img
-                          src={photoPreview}
-                          alt="Profile"
-                          className="rounded-circle border border-3 border-primary shadow"
-                          style={{
-                            width: "150px",
-                            height: "150px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div className="mt-2 text-primary">
-                        <FaUpload className="me-2" />
-                        Change Profile Photo
-                      </div>
+          <div className="col-7-5 student-dashboard-second d-flex justify-content-center align-items-center">
+            <div className="profile-card-improved">
+              {/* Profile Card Header */}
+              <div className="profile-header text-center p-4">
+                <div className="profile-image-container-improved mb-3">
+                  <img
+                    src={profile.image}
+                    alt="Profile"
+                    className="profile-image-improved"
+                  />
+                  {isEditing && (
+                    <div className="image-edit-overlay">
+                      <label htmlFor="profileImageInput">
+                        <FiEdit size={24} className="edit-icon" />
+                      </label>
                       <input
                         type="file"
-                        id="profilePhoto"
-                        name="profilePhoto"
+                        id="profileImageInput"
                         accept="image/*"
-                        onChange={handleChange}
                         style={{ display: "none" }}
+                        onChange={handleImageUpload}
                       />
-                    </label>
-                    {errors.profilePhoto && (
-                      <div className="text-danger mt-2 text-center w-100">
-                        {errors.profilePhoto}
+                    </div>
+                  )}
+                </div>
+                <h3 className="profile-name-improved mb-1">{profile.name}</h3>
+                <div className="social-icons mt-2">
+                  <a href="#" className="social-icon me-2">
+                    <FaFacebookF />
+                  </a>
+                  <a href="#" className="social-icon me-2">
+                    <FaTwitter />
+                  </a>
+                  <a href="#" className="social-icon me-2">
+                    <FaInstagram />
+                  </a>
+                  <a href="#" className="social-icon">
+                    <FaLinkedinIn />
+                  </a>
+                </div>
+              </div>
+
+              {/* Profile Details Section */}
+              <div className="profile-details-improved p-4">
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Name</div>
+                  <div className="col-8">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="name"
+                        className="form-control"
+                        value={profile.name}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      <div className="form-control-plaintext">
+                        {profile.name}
                       </div>
                     )}
                   </div>
-
-                  {/* Read-only Fields */}
-                  <div className="col-md-6">
-                    <label className="form-label">First Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={formData.firstName}
-                      disabled
-                      readOnly
-                    />
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Last Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={formData.lastName}
-                      disabled
-                      readOnly
-                    />
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Roll No</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={formData.rollNo}
-                      disabled
-                      readOnly
-                    />
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Course</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={formData.course}
-                      disabled
-                      readOnly
-                    />
-                  </div>
-
-                  {/* Editable Fields */}
-                  <div className="col-md-6">
-                    <label className="form-label">Email</label>
-                    <input
-                      type="email"
-                      className={`form-control ${
-                        errors.email ? "is-invalid" : ""
-                      }`}
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                    {errors.email && (
-                      <div className="invalid-feedback">{errors.email}</div>
-                    )}
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Phone</label>
-                    <input
-                      type="text"
-                      className={`form-control ${
-                        errors.phone ? "is-invalid" : ""
-                      }`}
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                    />
-                    {errors.phone && (
-                      <div className="invalid-feedback">{errors.phone}</div>
-                    )}
-                  </div>
-
-                  <div className="col-12">
-                    <label className="form-label">Address</label>
-                    <textarea
-                      className="form-control"
-                      name="address"
-                      rows="2"
-                      value={formData.address}
-                      onChange={handleChange}
-                    ></textarea>
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Password</label>
-                    <input
-                      type="password"
-                      className={`form-control ${
-                        errors.password ? "is-invalid" : ""
-                      }`}
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      placeholder="New password"
-                    />
-                    {errors.password && (
-                      <div className="invalid-feedback">{errors.password}</div>
-                    )}
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Confirm Password</label>
-                    <input
-                      type="password"
-                      className={`form-control ${
-                        errors.confirmPassword ? "is-invalid" : ""
-                      }`}
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      placeholder="Confirm password"
-                    />
-                    {errors.confirmPassword && (
-                      <div className="invalid-feedback">
-                        {errors.confirmPassword}
+                </div>
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Phone</div>
+                  <div className="col-8">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="phoneNumber"
+                        className="form-control"
+                        value={profile.phoneNumber}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      <div className="form-control-plaintext">
+                        {profile.phoneNumber}
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Address</div>
+                  <div className="col-8">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name="address"
+                        className="form-control"
+                        value={profile.address}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      <div className="form-control-plaintext">
+                        {profile.address}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Email</div>
+                  <div className="col-8">
+                    <div className="form-control-plaintext">
+                      {profile.email}
+                    </div>
+                  </div>
+                </div>
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Gender</div>
+                  <div className="col-8">
+                    <div className="form-control-plaintext">
+                      {profile.gender}
+                    </div>
+                  </div>
+                </div>
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Date of Birth</div>
+                  <div className="col-8">
+                    <div className="form-control-plaintext">{profile.dob}</div>
+                  </div>
+                </div>
+                <div className="row mb-3 align-items-center">
+                  <div className="col-4 text-muted">Admission Date</div>
+                  <div className="col-8">
+                    <div className="form-control-plaintext">
+                      {profile.admissionDate}
+                    </div>
+                  </div>
+                </div>
+                <div className="row align-items-center">
+                  <div className="col-4 text-muted">Course</div>
+                  <div className="col-8">
+                    <div className="form-control-plaintext">
+                      {profile.courseName}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                  <div className="col-12 text-center mt-3">
-                    <button type="submit" className="btn btn-success px-4">
-                      Save
+              {/* Action Buttons */}
+              <div className="card-footer text-center p-3">
+                {isEditing ? (
+                  <>
+                    <button
+                      className="btn btn-success me-2"
+                      onClick={handleSave}
+                    >
+                      <FiSave className="me-1" /> Save
                     </button>
-                  </div>
-                </form>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </button>
+                    <div className="mt-2">
+                      <button
+                        className="btn btn-warning"
+                        onClick={() => setShowPasswordModal(true)}
+                      >
+                        Change Password
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    <FiEdit className="me-1" /> Edit Profile
+                  </button>
+                )}
               </div>
             </div>
           </div>

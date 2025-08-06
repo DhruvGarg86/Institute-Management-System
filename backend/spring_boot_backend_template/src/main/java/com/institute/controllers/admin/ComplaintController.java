@@ -16,6 +16,10 @@ public class ComplaintController {
 
     private final ComplaintService complaintService;
 
+    public ComplaintController(ComplaintService complaintService) {
+        this.complaintService = complaintService;
+    }
+
     @GetMapping
     public ResponseEntity<List<ComplaintResponseDTO>> getAllComplaints() {
         return ResponseEntity.ok(complaintService.getAllComplaints());
