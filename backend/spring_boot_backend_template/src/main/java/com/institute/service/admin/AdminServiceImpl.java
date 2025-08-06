@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminProfileDTO findAdminById(Long id) {
-        Admin entity = adminDao.findById(id)
+        Admin entity = adminDao.findByUserId(id)
                 .orElseThrow(()-> new ResourceNotFoundException("No Admin exists by id: " + id));
 
         AdminProfileDTO dto = modelMapper.map(entity, AdminProfileDTO.class);
@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ApiResponse EditAdminProfile(AdminProfileDTO admin, Long id) {
-        Admin entity = adminDao.findById(id)
+        Admin entity = adminDao.findByUserId(id)
                 .orElseThrow(()-> new ResourceNotFoundException("No Admin exists by id: " + id));
 
         Login login = entity.getUser();

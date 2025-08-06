@@ -3,11 +3,14 @@ import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { FiEdit, FiSave } from "react-icons/fi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { editProfile, fetchProfile, uploadImage } from "../../services/Admin/Profile";
+import { editProfile, fetchProfile, getAdminIdFromToken, uploadImage } from "../../services/Admin/Profile";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 function ProfileEdit() {
+
+    const id = getAdminIdFromToken();
+
     const [profile, setProfile] = useState({
         name: "",
         email: "",
@@ -21,7 +24,7 @@ function ProfileEdit() {
 
     const getProfile = async () => {
         try {
-            const response = await fetchProfile(1);
+            const response = await fetchProfile(id);
             setProfile(response);
             console.log(response);
         } catch (error) {
@@ -50,10 +53,10 @@ function ProfileEdit() {
 
     const handleSave = async () => {
         try {
-            const response = await editProfile(profile, 1);
+            const response = await editProfile(profile, id);
             console.log(response);
             toast.success("Profile Updated Successfully!");
-            navigate("/admin/profile/1");
+            navigate(`/admin/profile/${id}`);
         } catch (error) {
             console.log(error);
             toast.error("Unable to Update Profile");
@@ -175,7 +178,7 @@ function ProfileEdit() {
                                 </button>
                                 <button
                                     className="ms-3 btn btn-danger"
-                                    onClick={() => navigate('/admin/profile/1')}
+                                    onClick={() => navigate(`/admin/profile/${id}`)}
                                 >
                                     <FiSave style={{ marginRight: "5px" }} /> Cancel
                                 </button>
