@@ -1,16 +1,22 @@
 package com.institute.dao;
 
+
+import com.institute.dto.admin.StudentDetailsDTO;
+import com.institute.dto.teacher.TeacherAttendanceDTO;
+import com.institute.dto.teacher.TeacherNoticeDTO;
+import com.institute.dto.teacher.TeacherStudentDTO;
+import com.institute.entities.Student;
+import com.institute.entities.Teacher;
+
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.institute.dto.admin.StudentDetailsDTO;
-import com.institute.dto.teacher.TeacherAttendanceDTO;
-import com.institute.entities.Teacher;
-import com.institute.entities.enums.Status;
+
 
 @Repository
 public interface TeacherDao extends JpaRepository<Teacher, Long> {
@@ -18,6 +24,9 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 	List<Teacher> findAllByOrderByUpdatedAtDesc();
 
 	Optional<Teacher> findById(Long id);
+
+	@Query("SELECT t.id FROM Teacher t WHERE t.user.id = :userId")
+	Long findTeacherIdByUserId(Long userId);
 
 	@Query("""
 			   SELECT t.image, t.name, t.user.email, t.joiningDate, t.phoneNumber, t.status, t.id, a.attendancePercentage
@@ -60,4 +69,13 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
     WHERE cst.teacher.id = :teacherId AND s.isDeleted = false
 """)
 	List<StudentDetailsDTO> findStudentsByTeacherId(Long teacherId);
+
+	@Query("SELECT new com.institute.dto.teacher.TeacherNoticeDTO(n.date, n.description, n.title) " +
+			"FROM Notice n WHERE n.audience = 'TEACHER' AND n.isDeleted = false")
+	List<TeacherNoticeDTO> findAllNoticesForTeacher();
+
+//	FOR TEACHER DASHBOARD. LIMIT TO ONLY 5 NOTICES
+@Query("SELECT new com.institute.dto.teacher.TeacherNoticeDTO(n.date, n.description, n.title) " +
+		"FROM Notice n WHERE n.audience = 'TEACHER' AND n.isDeleted = false")
+	List<TeacherNoticeDTO> findTop2NoticesForTeacher(Pageable pageable);
 }
