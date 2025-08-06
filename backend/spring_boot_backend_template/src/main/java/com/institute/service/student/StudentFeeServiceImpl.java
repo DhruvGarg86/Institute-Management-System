@@ -1,5 +1,6 @@
 package com.institute.service.student;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.institute.dao.FeeDao;
@@ -23,6 +24,7 @@ import lombok.Setter;
 public class StudentFeeServiceImpl implements StudentFeeService {
 
     private final FeeDao feeDao;
+    private final ModelMapper modelMapper;
 
     @Override
     public StudentFeeDto displayStudentFee(Long studentId) {

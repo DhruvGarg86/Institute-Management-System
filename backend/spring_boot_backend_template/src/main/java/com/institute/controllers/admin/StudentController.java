@@ -84,8 +84,8 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudentFeeDetails());
     }
 
-    @PutMapping("/updateFee")
-    public ResponseEntity<?> updateFeeByStudentId(@RequestBody FeeUpdateRequest dto) {
-        return ResponseEntity.ok(studentService.updateFee(AuthUtil.getCurrentUserId(), dto));
+    @PutMapping("/updateFee/{studentId}")
+    public ResponseEntity<?> updateFeeByStudentId(@PathVariable Long studentId,@RequestBody FeeUpdateRequest dto) {
+        return ResponseEntity.ok(studentService.updateFee(studentId, dto));
     }
 }

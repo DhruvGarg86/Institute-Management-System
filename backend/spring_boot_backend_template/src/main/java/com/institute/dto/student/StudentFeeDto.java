@@ -19,8 +19,6 @@ public class StudentFeeDto {
     private Double remainingAmount;
     private FeeStatus status = FeeStatus.UNPAID;
     private LocalDate dueDate;
-
-    // Flattened fields from Student
     private Long studentId;
     private String studentName;
     private String email;

@@ -1,24 +1,24 @@
 package com.institute.controllers.teacher;
 
 
-import com.institute.dao.TeacherDao;
-import com.institute.dto.teacher.TeacherNoticeDTO;
-import com.institute.security.AuthUtil;
-import com.institute.security.JwtUtil;
-import com.institute.service.teacher.TeacherNoticeService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.http.HttpStatus;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.institute.service.admin.StudentService;
-import com.institute.service.teacher.TeacherOwnService;
-
-import lombok.AllArgsConstructor;
-
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.institute.dao.TeacherDao;
+import com.institute.dto.teacher.TeacherNoticeDTO;
+import com.institute.security.JwtUtil;
+import com.institute.service.admin.StudentService;
+import com.institute.service.teacher.TeacherNoticeService;
+import com.institute.service.teacher.TeacherOwnService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/teacher/dashboard")
