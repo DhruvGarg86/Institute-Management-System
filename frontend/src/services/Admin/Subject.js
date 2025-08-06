@@ -56,7 +56,7 @@ export async function deleteSubjectById(id) {
 
 export async function getSubjectById(id) {
   try {
-    let url = `${config.serverUrl}/admin/get-subject/${id}`;
+    let url = `${config.serverUrl}/admin/getSubjectById/${id}`;
 
     const token = localStorage.getItem("token");
     const headers = {
@@ -73,19 +73,18 @@ export async function getSubjectById(id) {
 }
 
 export async function updateSubject(id, subject) {
-    try{
-        const url = `${config.serverUrl}/admin/edit-subject/${id}`
+  try {
+    const url = `${config.serverUrl}/admin/edit-subject/${id}`;
 
-        const token = localStorage.getItem("token");
-        const headers = {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        };
-        const response = await axios.put(url, subject, { headers });
-        return response.data;
-    }catch(error){
-        console.log("Exception", error.message);
-        throw error;    
-    }
-    
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.put(url, subject, { headers });
+    return response.data;
+  } catch (error) {
+    console.log("Exception", error.message);
+    throw error;
+  }
 }
