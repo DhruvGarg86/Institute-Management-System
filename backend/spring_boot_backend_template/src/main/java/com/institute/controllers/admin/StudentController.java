@@ -50,9 +50,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudentDetails());
     }
 
-    @DeleteMapping("/deleteStudent")
-    public ResponseEntity<?> deleteStudent() {
-        return ResponseEntity.ok(studentService.deleteStudentById(AuthUtil.getCurrentUserId()));
+    @DeleteMapping("/deleteStudent/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.deleteStudentById(id));
     }
 
     @GetMapping("/getMarks/{studentId}")

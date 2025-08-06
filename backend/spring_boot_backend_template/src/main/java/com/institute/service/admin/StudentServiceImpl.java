@@ -105,6 +105,7 @@ public class StudentServiceImpl implements StudentService {
         student.setGender(Gender.valueOf(dto.getGender().toUpperCase()));
         student.setCourse(course);
         student.setImagePath(dto.getImagePath());
+        student.setAdmissionDate(dto.getAdmissionDate());
 
         // Create Login first
         Login login = new Login();
