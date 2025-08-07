@@ -63,7 +63,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* *****************************ADMIN ROUTES***********************************  */}
+        {/* ****************************ADMIN ROUTES**********************************  */}
         <Route path="/login" element={<Login />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/profile/:id" element={<Profile />} />
@@ -125,7 +125,7 @@ function App() {
 
         <Route path="/admin/edit-complaint/:id" element={<EditComplaint />} />
 
-        {/* *****************************TEACHER ROUTES***********************************  */}
+        {/* ****************************TEACHER ROUTES**********************************  */}
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
         <Route path="/teacher/profile" element={<TeacherProfile />} />
         <Route path="/teacher/profile/edit/:id" element={<TeacherProfileEdit />} />
@@ -170,7 +170,7 @@ function App() {
           element={<CourseSubjectsPage />}
         />
 
-        {/* *****************************STUDENT ROUTES***********************************  */}
+        {/* ****************************STUDENT ROUTES**********************************  */}
         <Route path="/student/fee" element={<StudentFee />} />
         <Route path="/student/attendance" element={<Student_Attendance />} />
         <Route
