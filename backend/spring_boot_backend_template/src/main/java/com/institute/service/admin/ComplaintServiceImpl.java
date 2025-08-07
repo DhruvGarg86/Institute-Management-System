@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.institute.dto.admin.ComplaintsDto;
+import com.institute.exception.customexceptions.ApiException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import lombok.AllArgsConstructor;
 public class ComplaintServiceImpl implements ComplaintService{
     @Autowired
     private ComplaintDao complaintDao;
+    private ModelMapper modelMapper;
 
     @Override
     public List<ComplaintResponseDTO> getAllComplaints() {
@@ -70,9 +73,12 @@ public class ComplaintServiceImpl implements ComplaintService{
         complaintDao.save(complaint);
         return "Complaint deleted.";
     }
+//
+//    @Override
+//    public ComplaintsDto getComplaintsByComplaintId(Long id) {
+//        Complaints complaint = complaintDao.findById(id)
+//                .orElseThrow(() -> new ApiException("Complaint not found"));;
+//        return(modelMapper.map())
+//    }
 
-    @Override
-    public List<ComplaintsDto> getComplaintsByStudentId(Long studentId) {
-        return complaintDao.findAllByStudentId(studentId);
-    }
 }

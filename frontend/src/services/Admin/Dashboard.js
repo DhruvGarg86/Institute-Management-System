@@ -63,7 +63,7 @@ export async function getAllNotices() {
 
 export async function getTopStudent() {
   try {
-    let url = `${config.serverUrl}/admin/dashboard/topper`;
+    let url = `${config.serverUrl}/admin/student/instituteTopper`;
 
     const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };
