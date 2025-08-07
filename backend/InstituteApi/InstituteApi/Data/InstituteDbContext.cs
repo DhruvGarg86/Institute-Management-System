@@ -1,6 +1,6 @@
 ﻿using InstituteApi.Models;
 using Microsoft.EntityFrameworkCore;
-
+using System.Collections.Generic;
 namespace InstituteApi.Data
 {
     public class InstituteDbContext : DbContext

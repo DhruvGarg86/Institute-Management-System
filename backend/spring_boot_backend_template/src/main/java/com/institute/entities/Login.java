@@ -20,7 +20,7 @@ public class Login extends BaseEntity {
 	private String email;
 
 	@Column(name = "password", length = 255, nullable = false)
-	private String password = "12345";
+	private String password;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", length = 20, nullable = false)

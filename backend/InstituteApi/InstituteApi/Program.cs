@@ -1,4 +1,4 @@
-﻿using InstituteApi.Data;
+using InstituteApi.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

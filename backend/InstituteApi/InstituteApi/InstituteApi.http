@@ -1,5 +1,5 @@
-@InstituteApi_HostAddress = http://localhost:5045
 
+@InstituteApi_HostAddress = http://localhost:5045
 GET {{InstituteApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
