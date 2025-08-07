@@ -3,6 +3,8 @@ package com.institute.dao;
 import java.util.List;
 import java.util.Optional;
 
+import com.institute.entities.Student;
+import com.institute.entities.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,5 +29,6 @@ public interface MarksDao extends JpaRepository<Marks, Long> {
 			)
 			""")
 	Optional<Marks> findTopperStudentWithDetails();
+	Optional<Marks> findByStudentAndSubject(Student student, Subject subject);
 
 }

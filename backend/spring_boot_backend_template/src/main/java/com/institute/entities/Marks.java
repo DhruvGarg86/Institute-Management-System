@@ -17,12 +17,12 @@ public class Marks extends BaseEntity {
     private Double marksObtained;
 
     @Column(name = "total_marks", nullable = false)
-    private Double totalMarks;	
+    private Double totalMarks;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "grade", length = 2, nullable = false)
     private Grade grade;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private Status status = Status.ACTIVE;
@@ -31,9 +31,7 @@ public class Marks extends BaseEntity {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id", nullable = false, unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
-
-
 }

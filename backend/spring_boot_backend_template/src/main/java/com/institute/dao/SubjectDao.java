@@ -16,6 +16,7 @@ public interface SubjectDao extends JpaRepository<Subject, Long> {
 	List<Subject> listAllSubject();
 	boolean existsByName(String subjectName);
 	Optional<Subject> findByIdAndIsDeletedFalse(Long subjectId);
+	Optional<Subject> findByName(String name);
 
 	
 }
