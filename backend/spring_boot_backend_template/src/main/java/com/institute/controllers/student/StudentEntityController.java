@@ -1,7 +1,10 @@
 package com.institute.controllers.student;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.institute.dto.complaint.DisplayComplaintDto;
+import com.institute.service.admin.ComplaintService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +39,7 @@ public class StudentEntityController {
 	private final StudentAttendanceService studentAttendanceService;
 	private final StudentMarksService studentMarksService;
 	private final StudentProfileService studentProfileService;
+	private final ComplaintService complaintService;
 
 	@GetMapping("/notice")
 	public ResponseEntity<?> getNoticesForStudents() {
@@ -88,5 +92,9 @@ public class StudentEntityController {
 			@PathVariable Long id,
 			@Valid @RequestBody UpdateStudentProfileDto dto) {
 		return ResponseEntity.ok(studentProfileService.updateStudentProfile(id, dto));
+	}
+	@GetMapping("/complaints/{studentId}")
+	public List<DisplayComplaintDto> getComplaintsByStudent(@PathVariable Long studentId) {
+		return complaintService.getComplaintsByStudent(studentId);
 	}
 }

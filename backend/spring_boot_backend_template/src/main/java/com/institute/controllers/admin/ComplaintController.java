@@ -3,6 +3,7 @@ package com.institute.controllers.admin;
 import com.institute.dto.admin.ComplaintsDto;
 import com.institute.dto.complaint.ComplaintResponseDTO;
 import com.institute.dto.complaint.ComplaintUpdateStatusDTO;
+import com.institute.dto.complaint.DisplayComplaintDto;
 import com.institute.service.admin.ComplaintService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +34,6 @@ public class ComplaintController {
     public ResponseEntity<String> softDelete(@PathVariable Long id) {
         String response = complaintService.softDeleteComplaint(id);
         return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ComplaintsDto> getComplaintById(@PathVariable Long id) {
-        ComplaintsDto dto = complaintService.getComplaintById(id);
-        return ResponseEntity.ok(dto);
     }
 
 }
