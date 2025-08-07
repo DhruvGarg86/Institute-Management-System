@@ -2,21 +2,6 @@ import React, {  useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TeacherSidebar from "./TeacherSidebar";
 import TeacherNavbar from "./TeacherNavbar";
-import {
-  GridComponent,
-  ColumnsDirective,
-  ColumnDirective,
-  Sort,
-  Filter,
-  ExcelExport,
-  PdfExport,
-  Toolbar,
-  Print,
-  Page,
-  Search,
-  Inject,
-} from "@syncfusion/ej2-react-grids";
-import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { getAllSubjects } from "../../services/Teacher/TeacherSubject";
 
@@ -60,7 +45,7 @@ function DisplayCourse() {
       state: { course }, // pass course via navigation state
     });
   };
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   return (
     <>
       <TeacherNavbar />
@@ -111,11 +96,7 @@ function DisplayCourse() {
                     <div className="mt-3 ps-3">
                       <h6>Subjects:</h6>
                       <ul>
-                        {course.subjects.map((sub) => (
-                          <li key={sub.code}>
-                            <strong>{sub.name}</strong>: {sub.description}
-                          </li>
-                        ))}
+                        
                       </ul>
                     </div>
                   )}

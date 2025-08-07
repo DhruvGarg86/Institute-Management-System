@@ -129,6 +129,7 @@ function ProfileEdit() {
                                         <input
                                             type="email"
                                             className="form-control ms-3"
+                                            readOnly
                                             value={profile.email}
                                             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
                                         />

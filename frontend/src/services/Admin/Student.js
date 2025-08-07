@@ -167,3 +167,20 @@ export async function getStudentMarks() {
     throw error;
   }
 }
+export async function getEditStudentById(id) {
+  try {
+    const url = `${config.serverUrl}/admin/student/studentDetails/${id}`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    const response = await axios.get(url, { headers });
+    return response.data;
+  } catch (error) {
+    console.log("Exception", error.message);
+    throw error;
+  }
+}
