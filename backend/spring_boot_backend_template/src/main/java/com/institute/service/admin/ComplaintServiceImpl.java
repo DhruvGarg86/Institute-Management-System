@@ -33,7 +33,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 
     @Override
     public List<ComplaintResponseDTO> getAllComplaints() {
-        return complaintDao.findByIsDeletedFalse()
+        return complaintDao.findByDeletedFalse()
                 .stream()
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();

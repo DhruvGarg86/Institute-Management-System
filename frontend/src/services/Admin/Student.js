@@ -67,7 +67,7 @@ export async function deleteStudentById(id) {
 
 export async function getStudentById(id) {
   try {
-    const url = `${config.serverUrl}/admin/student/studentDetails/${id}`;
+    const url = `${config.serverUrl}/admin/student/getMarks/${id}`;
 
     const token = localStorage.getItem("token");
     const headers = {

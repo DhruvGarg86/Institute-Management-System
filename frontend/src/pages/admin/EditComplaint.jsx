@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getComplaintById, updateComplaint } from '../../services/Admin/Complaint';
 
 function EditComplaint() {
+
+    const navigate = useNavigate();
+
     const [complaint, setComplaint] = useState({
         studentName: "",
         courseName: "",
@@ -43,6 +46,9 @@ function EditComplaint() {
         try {
             await updateComplaint(id, { status: complaint.status });
             toast.success("Complaint status updated successfully");
+            setTimeout(() => {
+                navigate("/admin/display-complaints");
+            }, 1000);
         } catch (error) {
             toast.error("Failed to update complaint status");
             console.error(error);

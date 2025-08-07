@@ -23,8 +23,8 @@ public class Complaints {
     @Column(name="Id")
     private Long id;
 
-    @Column(name="isDeleted")
-    private boolean isDeleted = false;
+    @Column(name="Deleted")
+    private boolean deleted = false;
 
     @Enumerated(EnumType.STRING)
     @Column(name="Status")
@@ -38,6 +38,6 @@ public class Complaints {
     private LocalDate createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "StudentId", nullable = false)
+    @JoinColumn(name = "studentid", nullable = false)
     private Student student;
 }

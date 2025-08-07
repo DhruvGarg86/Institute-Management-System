@@ -6,7 +6,7 @@ import { MdMenuBook } from "react-icons/md";
 import Card from "../../components/Card";
 import { toast } from "react-toastify";
 import {
-  getAllNotices, getTopStudent, getTotalCourses, getTotalStudents, getTotalTeachers
+  getAllNotices, getTotalCourses, getTotalStudents, getTotalTeachers
 } from "../../services/Admin/Dashboard";
 
 function Dashboard() {
@@ -14,12 +14,6 @@ function Dashboard() {
   const [tteacher, setTteacher] = useState("");
   const [tcourse, setTcourse] = useState("");
   const [notice, setNotice] = useState([]);
-  const [topper, setTopper] = useState({
-    studentName: '',
-    imagePath: '',
-    courseName: '',
-    percentage: ''
-  });
 
   // Fetch Total Students
   useEffect(() => {
