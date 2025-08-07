@@ -4,16 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.institute.dto.ApiResponse;
-import com.institute.dto.admin.ActiveStudentsDto;
-import com.institute.dto.admin.AddStudentDto;
-import com.institute.dto.admin.FeeResponseDto;
-import com.institute.dto.admin.FeeUpdateRequest;
-import com.institute.dto.admin.StudentDetailsDTO;
-import com.institute.dto.admin.StudentMarksResponseDto;
-import com.institute.dto.admin.StudentPercentageDto;
-import com.institute.dto.admin.TopperStudentDTO;
-import com.institute.dto.admin.TopperStudentResponseDto;
-import com.institute.dto.admin.UpdateStudentRequestDto;
+import com.institute.dto.admin.*;
 
 public interface StudentService {
     List<ActiveStudentsDto> allActiveStudents();
@@ -28,5 +19,7 @@ public interface StudentService {
     List<FeeResponseDto> getAllStudentFeeDetails();
     ApiResponse updateFee(Long studentId, FeeUpdateRequest dto);
 	Optional<AddStudentDto> getStudentDetailsById(Long id);
+    List<StudentSubjectsDto> getSubjectNamesByStudentId(Long studentId);
+    ApiResponse addOrUpdateMarks(MarksRequestDTO dto);
 }
 

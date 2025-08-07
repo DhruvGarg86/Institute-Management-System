@@ -2,12 +2,13 @@ package com.institute.service.admin;
 
 import com.institute.dao.*;
 import com.institute.dto.ApiResponse;
+import com.institute.dto.admin.*;
 import com.institute.entities.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import com.institute.entities.enums.Grade;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,17 +18,6 @@ import com.institute.dao.CourseDao;
 import com.institute.dao.FeeDao;
 import com.institute.dao.MarksDao;
 import com.institute.dao.StudentDao;
-import com.institute.dto.admin.ActiveStudentsDto;
-import com.institute.dto.admin.AddStudentDto;
-import com.institute.dto.admin.FeeResponseDto;
-import com.institute.dto.admin.FeeUpdateRequest;
-import com.institute.dto.admin.MarksDetailsDto;
-import com.institute.dto.admin.StudentDetailsDTO;
-import com.institute.dto.admin.StudentMarksResponseDto;
-import com.institute.dto.admin.StudentPercentageDto;
-import com.institute.dto.admin.TopperStudentDTO;
-import com.institute.dto.admin.TopperStudentResponseDto;
-import com.institute.dto.admin.UpdateStudentRequestDto;
 import com.institute.entities.Course;
 import com.institute.entities.Fee;
 import com.institute.entities.Marks;
@@ -38,9 +28,11 @@ import com.institute.entities.enums.Status;
 import com.institute.exception.customexceptions.ApiException;
 import com.institute.exception.customexceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
@@ -51,6 +43,7 @@ public class StudentServiceImpl implements StudentService {
     private final FeeDao feeDao;
     private final LoginDao loginDao;
     private final PasswordEncoder passwordEncoder;
+    private final SubjectDao subjectDao;
 
     @Value("${upload.path}")
     private String uploadDir;
@@ -218,8 +211,23 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<TopperStudentResponseDto> getTopperStudentsByCourse() {
-        return studentDao.findTopperStudentsFromEachCourse();
+        List<TopperStudentResponseDto> all = studentDao.findAllStudentsWithPercentageForTopper();
+
+        // Map of courseName -> topper (highest percentage)
+        Map<String, TopperStudentResponseDto> toppersByCourse = new HashMap<>();
+
+        for (TopperStudentResponseDto dto : all) {
+            String courseName = dto.getCourseName();
+            TopperStudentResponseDto existing = toppersByCourse.get(courseName);
+
+            if (existing == null || dto.getPercentage() > existing.getPercentage()) {
+                toppersByCourse.put(courseName, dto);
+            }
+        }
+
+        return new ArrayList<>(toppersByCourse.values());
     }
+
 
     @Override
     public List<StudentPercentageDto> getAllStudentPercentages() {
@@ -260,4 +268,48 @@ public class StudentServiceImpl implements StudentService {
 		    }
 		    return Optional.ofNullable(dto);
 	}
+
+    @Override
+    public List<StudentSubjectsDto> getSubjectNamesByStudentId(Long studentId) {
+        Student student = studentDao.findById(studentId)
+                .orElseThrow(() -> new ApiException("Student not found with ID: " + studentId));
+
+        return student.getCourse()
+                .getCourseSubjectTeachers()
+                .stream()
+                .map(cst -> new StudentSubjectsDto(cst.getSubject().getName()))
+                .distinct()
+                .toList();
+    }
+
+    @Override
+    public ApiResponse addOrUpdateMarks(MarksRequestDTO dto) {
+        Student student = studentDao.findById(dto.getStudentId())
+                .orElseThrow(() -> new ApiException("Student not found"));
+
+        Subject subject = subjectDao.findByName(dto.getSubjectName())
+                .orElseThrow(() -> new ApiException("Subject not found"));
+
+        Marks marks = marksDao.findByStudentAndSubject(student, subject)
+                .orElse(new Marks());
+
+        marks.setStudent(student);
+        marks.setSubject(subject);
+        marks.setMarksObtained(dto.getMarksObtained());
+        marks.setTotalMarks(100.0);
+        marks.setStatus(Status.ACTIVE);
+        marks.setGrade(calculateGrade(dto.getMarksObtained()));
+
+        marksDao.save(marks);
+        return new ApiResponse("Marks updated successfully !!");
+    }
+
+    private Grade calculateGrade(Double marksObtained) {
+        if (marksObtained >= 90) return Grade.A;
+        else if (marksObtained >= 80) return Grade.B;
+        else if (marksObtained >= 70) return Grade.C;
+        else if (marksObtained >= 55) return Grade.D;
+        else if (marksObtained >= 40) return Grade.E;
+        else return Grade.F;
+    }
 }
