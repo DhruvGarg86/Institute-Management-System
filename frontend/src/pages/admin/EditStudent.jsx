@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
-import { getCoursesList, getStudentById, updateStudentById } from '../../services/Admin/Student';
+import { getCoursesList, getEditStudentById, updateStudentById } from '../../services/Admin/Student';
 import { useNavigate, useParams } from 'react-router-dom';
 import { uploadImageUniversal } from '../../services/image';
 
@@ -25,7 +25,7 @@ function EditStudent() {
 
     const getStudent = async (id) => {
         try {
-            const response = await getStudentById(id);
+            const response = await getEditStudentById(id);
             console.log(response);
             setStudent(response);
         } catch (error) {

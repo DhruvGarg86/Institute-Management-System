@@ -81,12 +81,6 @@ function Login() {
                                 <button onClick={() => handleLogin()}
                                     className="admin-login-page-second-button">LOGIN</button>
                             </div>
-                            <p style={{ marginTop: '20px', fontSize: '15px' }}>
-                                Don't have an account?{' '}
-                                <Link to="/register" style={{ color: '#4361e5', fontWeight: 'bold', textDecoration: 'none' }}>
-                                    Register Here!
-                                </Link>
-                            </p>
                         </div>
                     </div>
                 </div>
