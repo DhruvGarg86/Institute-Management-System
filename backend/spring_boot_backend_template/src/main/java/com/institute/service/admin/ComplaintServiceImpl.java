@@ -36,6 +36,8 @@ public class ComplaintServiceImpl implements ComplaintService{
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();
                     dto.setId(complaint.getId());
+
+//                    CreatedAt IS 'date' in table
                     dto.setDate(complaint.getCreatedAt());
                     dto.setDescription(complaint.getDescription());
                     dto.setStatus(complaint.getStatus());
