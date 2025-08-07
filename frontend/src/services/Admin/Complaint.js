@@ -33,7 +33,7 @@ export async function deleteComplaintById(id) {
 
 export async function getComplaintById(id) {
   try {
-    let url = `${config.serverUrl}/admin/complaints/complaintById/${id}`;
+    let url = `${config.serverUrl}/admin/complaints/${id}`;
 
     const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };

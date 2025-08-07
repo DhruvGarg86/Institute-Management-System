@@ -1,8 +1,15 @@
-﻿namespace InstituteApi.Models
+﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
+namespace InstituteApi.Models
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ComplaintStatus
     {
-        Active = 0,
-        Resolved = 1
+        [EnumMember(Value = "ACTIVE")]
+        ACTIVE,
+
+        [EnumMember(Value = "RESOLVED")]
+        RESOLVED
     }
 }

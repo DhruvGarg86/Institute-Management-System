@@ -9,9 +9,9 @@ namespace InstituteApi.Models
         [Key]
         public long Id { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool Deleted { get; set; } = false;
 
-        public ComplaintStatus Status { get; set; } = ComplaintStatus.Active;
+        public ComplaintStatus Status { get; set; } = ComplaintStatus.ACTIVE;
 
         public int StudentId { get; set; }
 
