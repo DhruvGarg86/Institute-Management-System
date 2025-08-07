@@ -6,25 +6,38 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "complaints")
+@Table(name = "student_complaints")
 @Getter
 @Setter
 @ToString
-public class Complaints extends BaseEntity {
+public class Complaints {
 
-    @Column(name="is_deleted")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="Id")
+    private Long id;
+
+    @Column(name="isDeleted")
     private boolean isDeleted = false;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="complaint_status")
+    @Column(name="Status")
     private ComplaintStatus status = ComplaintStatus.ACTIVE;
 
-    @Column(name="description")
+    @Column(name="Description")
     private String description;
 
+    @CreationTimestamp
+    @Column(name="Date", updatable = false)
+    private LocalDate createdAt;
+
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "StudentId", nullable = false)
     private Student student;
 }
