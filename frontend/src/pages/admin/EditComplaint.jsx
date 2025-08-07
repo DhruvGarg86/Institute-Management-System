@@ -48,7 +48,7 @@ function EditComplaint() {
             toast.success("Complaint status updated successfully");
             setTimeout(() => {
                 navigate("/admin/display-complaints");
-            }, 1000);
+            }, 500);
         } catch (error) {
             toast.error("Failed to update complaint status");
             console.error(error);

@@ -106,4 +106,11 @@ public class ComplaintServiceImpl implements ComplaintService{
             return dto;
         }).collect(Collectors.toList());
     }
+    @Override
+    public ComplaintsDto getComplaintsById(Long id) {
+        return complaintDao.findDtoById(id)
+                .orElseThrow(() -> new ApiException("Complaint not found with ID: " + id));
+    }
+
+
 }
