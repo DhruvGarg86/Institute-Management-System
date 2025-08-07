@@ -5,9 +5,6 @@ const BarChart = ({ data }) => {
   // Ensure the data has a color property for each subject
 
   return (
-    // The parent div is crucial for a responsive chart.
-    // It must have a defined height and width.
-    // This allows the ResponsiveBar component to fill the available space.
     <div style={{ height: 300, width: "100%" }}>
       <ResponsiveBar
         data={data}
@@ -17,7 +14,7 @@ const BarChart = ({ data }) => {
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors={{scheme: "paired"}} // Use the 'color' property from the data object
+        colors={{ scheme: "paired" }} // Use the 'color' property from the data object
         borderColor={{
           from: "color",
           modifiers: [["darker", 1.6]],

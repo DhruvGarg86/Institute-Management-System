@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiEdit, FiSave } from "react-icons/fi";
 import {
   FaFacebookF,
@@ -11,6 +11,13 @@ import { toast } from "react-toastify";
 import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "./StudentNavbar";
 import "./Student-module.css";
+import {
+  getStudentProfile,
+  updateStudentProfile,
+} from "../../services/Student/studentProfile";
+import { getUserIdFromToken } from "../../services/Student/auth";
+import axios from "axios";
+import { config } from "../../services/config";
 
 function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,6 +34,78 @@ function StudentProfile() {
     image: defaultPhoto,
   });
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const studentId = getUserIdFromToken();
+      if (!studentId) {
+        toast.error("User not found");
+        return;
+      }
+
+      try {
+        const response = await getStudentProfile(studentId);
+        const data = response.data;
+
+        setProfile({
+          name: data.name,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+          address: data.address,
+          image: data.imagePath || defaultPhoto,
+          gender: "Male", // Add if returned
+          dob: "2000-01-01", // Add if returned
+          admissionDate: "2023-07-15", // Add if returned
+          courseName: data.courseName,
+          status: "Active",
+        });
+      } catch (err) {
+        console.error("Failed to fetch profile:", err);
+        toast.error("Could not load profile");
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleSave = async () => {
+    const studentId = getUserIdFromToken();
+    if (!studentId) {
+      toast.error("User not found");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("name", profile.name);
+      formData.append("phoneNumber", profile.phoneNumber);
+      formData.append("address", profile.address);
+
+      // If user selected new image file, append it
+      if (profile.imageFile) {
+        formData.append("image", profile.imageFile); // 'image' must match backend @RequestParam
+      }
+
+      const token = localStorage.getItem("token");
+
+      await axios.put(
+        `${config.serverUrl}/student/profile/${studentId}/upload`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      toast.success("Profile updated successfully");
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Error:", err);
+      toast.error("Update failed");
+    }
+  };
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -34,12 +113,6 @@ function StudentProfile() {
       setProfile((prev) => ({ ...prev, image: imageUrl }));
       toast.success("Image uploaded successfully");
     }
-  };
-
-  const handleSave = () => {
-    setIsEditing(false);
-    toast.success("Profile saved!");
-    console.log("Saving:", profile);
   };
 
   const handleChange = (e) => {
@@ -103,10 +176,14 @@ function StudentProfile() {
                       </label>
                       <input
                         type="file"
-                        id="profileImageInput"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        onChange={handleImageUpload}
+                        className="form-control"
+                        onChange={(e) => {
+                          setProfile((prev) => ({
+                            ...prev,
+                            imageFile: e.target.files[0],
+                            image: URL.createObjectURL(e.target.files[0]), // for preview
+                          }));
+                        }}
                       />
                     </div>
                   )}

@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import NoticeList from "../../components/Notices/NoticeList";
-import notices from "../../data/notices";
 import StudentSidebar from "./StudentSidebar";
 import StudentAttendanceCard from "../../pages/student/StudentAttendanceCard";
 import StudentMarksCard from "../../pages/student/StudentMarksCard";
 import StudentNavbar from "../../pages/student/StudentNavbar";
 import "./Student-module.css";
+import { config } from "../../services/config";
 
 function StudentDashboard() {
+  const [notices, setNotices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const res = await axios.get(`${config.serverUrl}/student/notices`); // your backend API
+        setNotices(res.data);
+      } catch (err) {
+        console.error("Failed to fetch notices", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
   return (
     <>
       <StudentNavbar />
@@ -27,7 +46,11 @@ function StudentDashboard() {
                 <div className="bg-white p-4 rounded-4 shadow h-100 d-flex flex-column">
                   <h2 className="fs-4 fw-semibold mb-3">Notice Board</h2>
                   <div className="overflow-auto flex-grow-1">
-                    {notices && <NoticeList notices={notices} />}
+                    {loading ? (
+                      <p>Loading notices...</p>
+                    ) : (
+                      <NoticeList notices={notices} />
+                    )}
                   </div>
                 </div>
               </section>
