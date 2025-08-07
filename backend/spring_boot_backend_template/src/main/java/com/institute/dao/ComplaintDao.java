@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ComplaintDao extends JpaRepository<Complaints, Long> {
     List<Complaints> findByIsDeletedFalse();
-
+    List<Complaints> findByStudentIdAndIsDeletedFalseOrderByCreatedAtDesc(Long studentId);
     Optional<Complaints> findActiveById(Long id);
 
 }
