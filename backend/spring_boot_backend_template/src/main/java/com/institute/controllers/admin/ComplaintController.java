@@ -35,8 +35,10 @@ public class ComplaintController {
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping("/complaintById/{id}")
-//    public ResponseEntity<?> getComplaintsByStudentId(@PathVariable Long id) {
-//        return ResponseEntity.ok(complaintService.getComplaintsByComplaintId(id));
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ComplaintsDto> getComplaintById(@PathVariable Long id) {
+        ComplaintsDto dto = complaintService.getComplaintById(id);
+        return ResponseEntity.ok(dto);
+    }
+
 }
