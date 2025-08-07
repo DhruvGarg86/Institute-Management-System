@@ -16,19 +16,5 @@ public interface ComplaintDao extends JpaRepository<Complaints, Long> {
 
     Optional<Complaints> findActiveById(Long id);
 
-    @Query("""
-        SELECT new com.institute.dto.admin.ComplaintsDto(
-            s.name,
-            c.name,
-            comp.createdAt,
-            comp.status,
-            comp.description
-        )
-        FROM Complaints comp
-        JOIN comp.student s
-        JOIN s.course c
-        WHERE s.id = :studentId AND comp.isDeleted = false
-    """)
-    List<ComplaintsDto> findAllByStudentId(@Param("studentId") Long studentId);
 }
 

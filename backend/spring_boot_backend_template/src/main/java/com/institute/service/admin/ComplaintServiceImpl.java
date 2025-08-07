@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.institute.dto.admin.ComplaintsDto;
+import com.institute.exception.customexceptions.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,7 +73,18 @@ public class ComplaintServiceImpl implements ComplaintService{
     }
 
     @Override
-    public List<ComplaintsDto> getComplaintsByStudentId(Long studentId) {
-        return complaintDao.findAllByStudentId(studentId);
+    public ComplaintsDto getComplaintById(Long complaintId) {
+        Complaints complaint = complaintDao.findById(complaintId)
+                .orElseThrow(() -> new ApiException("Complaint not found with ID: " + complaintId));
+
+        // Manual mapping with nested fields
+        ComplaintsDto dto = new ComplaintsDto();
+        dto.setStudentName(complaint.getStudent().getName());
+        dto.setCourseName(complaint.getStudent().getCourse().getName());
+        dto.setDateOfComplaint(complaint.getCreatedAt());
+        dto.setStatus(complaint.getStatus());
+        dto.setDescription(complaint.getDescription());
+
+        return dto;
     }
 }

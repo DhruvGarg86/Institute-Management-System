@@ -14,5 +14,5 @@ public interface ComplaintService {
 
     String softDeleteComplaint(Long id);
 
-    List<ComplaintsDto> getComplaintsByStudentId(Long studentId);
+    ComplaintsDto getComplaintById(Long complaintId);
 }

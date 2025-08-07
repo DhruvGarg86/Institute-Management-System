@@ -37,7 +37,7 @@ public class StudentEntityController {
 	private final StudentMarksService studentMarksService;
 	private final StudentProfileService studentProfileService;
 
-	@GetMapping("/notice/{studentId}")
+	@GetMapping("/notice")
 	public ResponseEntity<?> getNoticesForStudents() {
 		return ResponseEntity.ok(studentEntityService.getStudentNotices());
 	}
