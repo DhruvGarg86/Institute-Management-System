@@ -10,7 +10,6 @@ import defaultPhoto from "../../assets/student_profile_photo.jpg";
 import { toast } from "react-toastify";
 import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "./StudentNavbar";
-import "./Student-module.css";
 import {
   getStudentProfile,
   updateStudentProfile,
@@ -22,15 +21,15 @@ import { config } from "../../services/config";
 function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
-    name: "Vedant Choudhari",
-    email: "vedant@example.com",
-    phoneNumber: "9876543210",
-    address: "Pune, Maharashtra",
-    gender: "Male",
-    dob: "2000-01-01",
-    admissionDate: "2023-07-15",
-    courseName: "DAC",
-    status: "Active",
+    name: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+    gender: "",
+    dob: "",
+    admissionDate: "",
+    courseName: "",
+    status: "",
     image: defaultPhoto,
   });
 
@@ -44,16 +43,15 @@ function StudentProfile() {
 
       try {
         const data = await getStudentProfile(studentId);
-
         setProfile({
           name: data.name,
           email: data.email,
           phoneNumber: data.phoneNumber,
           address: data.address,
           image: data.imagePath || defaultPhoto,
-          gender: "Male", // Add if returned
-          dob: "2000-01-01", // Add if returned
-          admissionDate: "2023-07-15", // Add if returned
+          gender: "Male",
+          dob: "2000-01-01",
+          admissionDate: "2023-07-15",
           courseName: data.courseName,
           status: "Active",
         });
@@ -74,18 +72,6 @@ function StudentProfile() {
     }
 
     try {
-      const formData = new FormData();
-      formData.append("name", profile.name);
-      formData.append("phoneNumber", profile.phoneNumber);
-      formData.append("address", profile.address);
-
-      // If user selected new image file, append it
-      if (profile.imageFile) {
-        formData.append("image", profile.imageFile); // 'image' must match backend @RequestParam
-      }
-
-      const token = localStorage.getItem("token");
-
       await axios.put(
         `${config.serverUrl}/student/updateProfile/${studentId}`,
         {
@@ -95,7 +81,7 @@ function StudentProfile() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         }
@@ -114,189 +100,101 @@ function StudentProfile() {
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    email: profile.email,
-    newPassword: "",
-    repeatPassword: "",
-  });
-
-  const handlePasswordChangeInput = (e) => {
-    const { name, value } = e.target;
-    setPasswordData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handlePasswordSubmit = () => {
-    if (passwordData.newPassword !== passwordData.repeatPassword) {
-      toast.error("Passwords do not match!");
-      return;
-    }
-
-    // Simulate password update
-    toast.success("Password changed successfully!");
-    console.log("Password Change Data:", passwordData);
-
-    // Close modal
-    setShowPasswordModal(false);
-    setPasswordData({
-      email: profile.email,
-      newPassword: "",
-      repeatPassword: "",
-    });
-  };
-
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid student-dashboard-container">
-        <div className="row student-dashboard-row">
-          <div className="col-2-5 student-dashboard-first">
+      <div className="container-fluid mt-3">
+        <div className="row">
+          <div className="col-md-2">
             <StudentSidebar />
           </div>
-          <div className="col-7-5 student-dashboard-second d-flex justify-content-center align-items-center">
-            <div className="profile-card-improved">
-              {/* Profile Card Header */}
-              <div className="profile-header text-center p-4">
-                <div className="profile-image-container-improved mb-3">
+          <div className="col-md-10 d-flex justify-content-center">
+            <div className="card w-100 shadow p-4">
+              {/* Header */}
+              <div className="text-center mb-4">
+                <div className="position-relative d-inline-block">
                   <img
                     src={profile.image}
                     alt="Profile"
-                    className="profile-image-improved"
+                    className="rounded-circle shadow"
+                    width="120"
+                    height="120"
+                    style={{ objectFit: "cover" }}
                   />
                   {isEditing && (
-                    <div className="image-edit-overlay">
-                      <label htmlFor="profileImageInput">
-                        <FiEdit size={24} className="edit-icon" />
-                      </label>
-                      <input
-                        type="file"
-                        className="form-control"
-                        onChange={(e) => {
-                          setProfile((prev) => ({
-                            ...prev,
-                            imageFile: e.target.files[0],
-                            image: URL.createObjectURL(e.target.files[0]), // for preview
-                          }));
-                        }}
-                      />
-                    </div>
+                    <input
+                      type="file"
+                      className="form-control mt-2"
+                      onChange={(e) =>
+                        setProfile((prev) => ({
+                          ...prev,
+                          imageFile: e.target.files[0],
+                          image: URL.createObjectURL(e.target.files[0]),
+                        }))
+                      }
+                    />
                   )}
                 </div>
-                <h3 className="profile-name-improved mb-1">{profile.name}</h3>
-                <div className="social-icons mt-2">
-                  <a href="#" className="social-icon me-2">
+                <h4 className="mt-3">{profile.name}</h4>
+                <div className="d-flex justify-content-center gap-3 mt-2">
+                  <a href="#">
                     <FaFacebookF />
                   </a>
-                  <a href="#" className="social-icon me-2">
+                  <a href="#">
                     <FaTwitter />
                   </a>
-                  <a href="#" className="social-icon me-2">
+                  <a href="#">
                     <FaInstagram />
                   </a>
-                  <a href="#" className="social-icon">
+                  <a href="#">
                     <FaLinkedinIn />
                   </a>
                 </div>
               </div>
 
-              {/* Profile Details Section */}
-              <div className="profile-details-improved p-4">
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Name</div>
-                  <div className="col-8">
+              {/* Profile Fields */}
+              <div className="row">
+                {[
+                  { label: "Name", value: profile.name, name: "name" },
+                  {
+                    label: "Phone",
+                    value: profile.phoneNumber,
+                    name: "phoneNumber",
+                  },
+                  { label: "Address", value: profile.address, name: "address" },
+                ].map((field, idx) => (
+                  <div className="mb-3 col-md-6" key={idx}>
+                    <label className="form-label">{field.label}</label>
                     {isEditing ? (
                       <input
                         type="text"
-                        name="name"
-                        className="form-control"
-                        value={profile.name}
+                        name={field.name}
+                        value={field.value}
                         onChange={handleChange}
+                        className="form-control"
                       />
                     ) : (
-                      <div className="form-control-plaintext">
-                        {profile.name}
-                      </div>
+                      <p className="form-control-plaintext">{field.value}</p>
                     )}
                   </div>
-                </div>
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Phone</div>
-                  <div className="col-8">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="phoneNumber"
-                        className="form-control"
-                        value={profile.phoneNumber}
-                        onChange={handleChange}
-                      />
-                    ) : (
-                      <div className="form-control-plaintext">
-                        {profile.phoneNumber}
-                      </div>
-                    )}
+                ))}
+
+                {[
+                  { label: "Email", value: profile.email },
+                  { label: "Gender", value: profile.gender },
+                  { label: "Date of Birth", value: profile.dob },
+                  { label: "Admission Date", value: profile.admissionDate },
+                  { label: "Course", value: profile.courseName },
+                ].map((field, idx) => (
+                  <div className="mb-3 col-md-6" key={idx}>
+                    <label className="form-label">{field.label}</label>
+                    <p className="form-control-plaintext">{field.value}</p>
                   </div>
-                </div>
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Address</div>
-                  <div className="col-8">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="address"
-                        className="form-control"
-                        value={profile.address}
-                        onChange={handleChange}
-                      />
-                    ) : (
-                      <div className="form-control-plaintext">
-                        {profile.address}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Email</div>
-                  <div className="col-8">
-                    <div className="form-control-plaintext">
-                      {profile.email}
-                    </div>
-                  </div>
-                </div>
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Gender</div>
-                  <div className="col-8">
-                    <div className="form-control-plaintext">
-                      {profile.gender}
-                    </div>
-                  </div>
-                </div>
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Date of Birth</div>
-                  <div className="col-8">
-                    <div className="form-control-plaintext">{profile.dob}</div>
-                  </div>
-                </div>
-                <div className="row mb-3 align-items-center">
-                  <div className="col-4 text-muted">Admission Date</div>
-                  <div className="col-8">
-                    <div className="form-control-plaintext">
-                      {profile.admissionDate}
-                    </div>
-                  </div>
-                </div>
-                <div className="row align-items-center">
-                  <div className="col-4 text-muted">Course</div>
-                  <div className="col-8">
-                    <div className="form-control-plaintext">
-                      {profile.courseName}
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
 
               {/* Action Buttons */}
-              <div className="card-footer text-center p-3">
+              <div className="text-center">
                 {isEditing ? (
                   <>
                     <button
@@ -306,19 +204,11 @@ function StudentProfile() {
                       <FiSave className="me-1" /> Save
                     </button>
                     <button
-                      className="btn btn-secondary"
+                      className="btn btn-secondary me-2"
                       onClick={() => setIsEditing(false)}
                     >
                       Cancel
                     </button>
-                    <div className="mt-2">
-                      <button
-                        className="btn btn-warning"
-                        onClick={() => setShowPasswordModal(true)}
-                      >
-                        Change Password
-                      </button>
-                    </div>
                   </>
                 ) : (
                   <button

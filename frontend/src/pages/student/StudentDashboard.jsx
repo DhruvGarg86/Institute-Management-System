@@ -6,11 +6,12 @@ import StudentAttendanceCard from "../../pages/student/StudentAttendanceCard";
 import StudentMarksCard from "../../pages/student/StudentMarksCard";
 import StudentNavbar from "../../pages/student/StudentNavbar";
 import { config } from "../../services/config";
+import { getUserIdFromToken } from "../../services/Student/StudentService";
 
 function StudentDashboard() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const studentId = 
+  const studentId = getUserIdFromToken();
 
   useEffect(() => {
     const fetchNotices = async () => {
@@ -33,7 +34,7 @@ function StudentDashboard() {
     <>
       <StudentNavbar />
 
-      <div className="d-flex vh-100 flex-column">
+      <div className="d-flex flex-column vh-100">
         <div className="d-flex flex-grow-1">
           {/* Sidebar */}
           <aside className="d-none d-md-block col-md-2 bg-white p-3 border-end">
@@ -61,6 +62,7 @@ function StudentDashboard() {
 
               {/* Attendance & Marks */}
               <section className="col-12 col-lg-5 d-flex flex-column gap-3">
+                {/* Attendance */}
                 <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
                   <h2 className="fs-5 fw-semibold mb-3 text-success">
                     Attendance
@@ -70,6 +72,7 @@ function StudentDashboard() {
                   </div>
                 </div>
 
+                {/* Marks */}
                 <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
                   <h2 className="fs-5 fw-semibold mb-3 text-info">
                     Student Marks

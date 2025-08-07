@@ -9,26 +9,17 @@ function StudentSidebar() {
   const [isComplaintOpen, setIsComplaintOpen] = useState(false);
   const [showComplaintForm, setShowComplaintForm] = useState(false);
 
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <div
-      style={{ height: "100vh", display: "flex", flexDirection: "column" }}
-      className="d-flex flex-column h-100"
-    >
-      <div
-        className="accordion"
-        id="accordionPanelsStayOpenExample"
-        style={{ display: "flex", flexDirection: "column", flex: 1 }}
-      >
+    <div className="d-flex flex-column vh-100">
+      <div className="accordion flex-grow-1" id="studentSidebarAccordion">
         {/* Dashboard */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingOne">
+          <h2 className="accordion-header">
             <button
               onClick={() => navigate("/student/dashboard")}
-              className={`accordion-button collapsed ${
-                location.pathname === "/student/dashboard"
-                  ? "active-section"
-                  : ""
-              }`}
+              className={`accordion-button ${isActive("/student/dashboard") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
               Dashboard
@@ -36,13 +27,12 @@ function StudentSidebar() {
           </h2>
         </div>
 
+        {/* Profile */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingTwo">
+          <h2 className="accordion-header">
             <button
               onClick={() => navigate("/student/profile")}
-              className={`accordion-button collapsed ${
-                location.pathname === "/student/profile" ? "active-section" : ""
-              }`}
+              className={`accordion-button ${isActive("/student/profile") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
               Profile
@@ -50,13 +40,12 @@ function StudentSidebar() {
           </h2>
         </div>
 
+        {/* Complaint Section */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingThree">
+          <h2 className="accordion-header">
             <button
-              className={`accordion-button ${
-                isComplaintOpen ? "" : "collapsed"
-              } ${
-                location.pathname.includes("complaint") ? "active-section" : ""
+              className={`accordion-button ${isComplaintOpen ? "" : "collapsed"} ${
+                location.pathname.includes("complaint") ? "bg-primary text-white" : ""
               }`}
               onClick={() => setIsComplaintOpen(!isComplaintOpen)}
               type="button"
@@ -64,50 +53,39 @@ function StudentSidebar() {
               Complaint
             </button>
           </h2>
-          <div
-            className={`accordion-collapse ${
-              isComplaintOpen ? "" : "collapse"
-            }`}
-          >
-            <div className="accordion-body">
-              <ul style={{ listStyleType: "none" }} className="sidebar-inner">
-                <li>
+          <div className={`accordion-collapse ${isComplaintOpen ? "show" : "collapse"}`}>
+            <div className="accordion-body p-2">
+              <ul className="list-unstyled ps-3">
+                <li className="mb-2">
                   <button
-                    type="button"
-                    className="sidebar-inner-button"
+                    className="btn btn-outline-primary w-100 btn-sm text-start"
                     onClick={() => setShowComplaintForm(true)}
                   >
                     Add Complaint
                   </button>
-
                   {showComplaintForm && (
-                    <StudentComplaintForm
-                      onClose={() => setShowComplaintForm(false)}
-                    />
+                    <StudentComplaintForm onClose={() => setShowComplaintForm(false)} />
                   )}
                 </li>
                 <li>
                   <button
-                    type="button"
-                    className="sidebar-inner-button"
+                    className="btn btn-outline-primary w-100 btn-sm text-start"
                     onClick={() => navigate("/student/display-complaints")}
                   >
                     Display All Complaints
                   </button>
                 </li>
               </ul>
-            </div>  
+            </div>
           </div>
         </div>
 
         {/* Exam */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingThree">
+          <h2 className="accordion-header">
             <button
               onClick={() => navigate("/student/exam")}
-              className={`accordion-button collapsed ${
-                location.pathname === "/student/exam" ? "active-section" : ""
-              }`}
+              className={`accordion-button ${isActive("/student/exam") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
               Exam
@@ -117,14 +95,10 @@ function StudentSidebar() {
 
         {/* Attendance */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingFour">
+          <h2 className="accordion-header">
             <button
               onClick={() => navigate("/student/attendance")}
-              className={`accordion-button collapsed ${
-                location.pathname === "/student/attendance"
-                  ? "active-section"
-                  : ""
-              }`}
+              className={`accordion-button ${isActive("/student/attendance") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
               Attendance
@@ -134,45 +108,16 @@ function StudentSidebar() {
 
         {/* Fee */}
         <div className="accordion-item">
-          <h2 className="accordion-header" id="headingFive">
+          <h2 className="accordion-header">
             <button
               onClick={() => navigate("/student/fee")}
-              className={`accordion-button collapsed ${
-                location.pathname === "/student/fee" ? "active-section" : ""
-              }`}
+              className={`accordion-button ${isActive("/student/fee") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
               Fee
             </button>
           </h2>
         </div>
-
-        {/* Profile - pinned at bottom */}
-        {/* <div className="accordion-item" style={{ marginTop: "auto" }}>
-          <h2 className="accordion-header" id="headingSix">
-            <button
-              className={`accordion-button sidebar-profile ${
-                location.pathname === "/student/profile" ? "active-section" : ""
-              }`}
-              type="button"
-              onClick={() => navigate("/student/profile")}
-            >
-              <img
-                src={profileImg}
-                alt="Profile"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  marginRight: "40px",
-                  objectFit: "cover",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                }}
-              />
-              Profile
-            </button>
-          </h2>
-        </div> */}
       </div>
     </div>
   );
