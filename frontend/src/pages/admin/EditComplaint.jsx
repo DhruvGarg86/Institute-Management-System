@@ -8,9 +8,8 @@ import { getComplaintById, updateComplaint } from '../../services/Admin/Complain
 function EditComplaint() {
     const [complaint, setComplaint] = useState({
         studentName: "",
-        studentEmail: "",
-        course: "",
-        date: "",
+        courseName: "",
+        dateOfComplaint: "",
         description: "",
         status: ""
     });
@@ -20,20 +19,13 @@ function EditComplaint() {
     const getComplaint = async (id) => {
         try {
             const response = await getComplaintById(id);
-
-            setComplaint({
-                studentName: response.studentName,
-                studentEmail: response.studentEmail,
-                course: response.course,
-                date: response.createdAt,
-                description: response.description,
-                status: response.status
-            });
+            setComplaint(response);
+            console.log(response);
         } catch (error) {
-            toast.error("Unable to load complaint details");
-            console.error(error);
+            toast.error("Failed to load complaint");
+            console.log(error);
         }
-    };
+    }
 
     useEffect(() => {
         getComplaint(id);
@@ -91,7 +83,7 @@ function EditComplaint() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value={complaint.course}
+                                            value={complaint.courseName}
                                             readOnly
                                         />
                                     </div>
@@ -101,7 +93,7 @@ function EditComplaint() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value={new Date(complaint.date).toLocaleDateString('en-GB')}
+                                            value={complaint.dateOfComplaint}
                                             readOnly
                                         />
                                     </div>
