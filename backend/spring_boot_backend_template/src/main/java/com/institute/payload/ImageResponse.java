@@ -1,10 +1,12 @@
 package com.institute.payload;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ImageResponse {
     private String fileName;
     private String message;

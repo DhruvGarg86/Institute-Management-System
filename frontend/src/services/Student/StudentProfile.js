@@ -4,6 +4,7 @@ import { config } from "../config";
 
 const API_BASE_URL = "http://localhost:8080/api/student"; // adjust if needed
 
+
 export const getStudentProfile = async (studentId) => {
   const token = getToken();
   return axios.get(`${config.serverUrl}/profile/${studentId}`, {

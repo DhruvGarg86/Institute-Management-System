@@ -13,7 +13,7 @@ namespace InstituteApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // ? Register your MySQL DbContext
+            // ✅ Register your MySQL DbContext
             builder.Services.AddDbContext<InstituteDbContext>(options =>
                 options.UseMySql(
                     builder.Configuration.GetConnectionString("InstituteDb"),
@@ -21,7 +21,7 @@ namespace InstituteApi
                 )
             );
 
-            // ? Configure JWT authentication
+            // ✅ Configure JWT authentication
             var jwtSecret = builder.Configuration["Jwt:Secret"];
             if (string.IsNullOrEmpty(jwtSecret))
             {
@@ -40,7 +40,7 @@ namespace InstituteApi
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
 
-                        // ? This tells ASP.NET Core to treat "role" claim as roles
+                        // ✅ This tells ASP.NET Core to treat "role" claim as roles
                         RoleClaimType = "role"
                     };
                     options.Events = new JwtBearerEvents
@@ -55,7 +55,7 @@ namespace InstituteApi
 
             builder.Services.AddAuthorization();
 
-            // ? Add Swagger with JWT support
+            // ✅ Add Swagger with JWT support
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Institute API", Version = "v1" });

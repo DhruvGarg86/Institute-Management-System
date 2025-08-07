@@ -10,3 +10,7 @@ export function getUserIdFromToken() {
     return null;
   }
 }
+
+export function getToken() {
+  return localStorage.getItem("token");
+}

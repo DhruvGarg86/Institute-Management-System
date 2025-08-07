@@ -21,5 +21,7 @@ public interface StudentService {
 	Optional<AddStudentDto> getStudentDetailsById(Long id);
     List<StudentSubjectsDto> getSubjectNamesByStudentId(Long studentId);
     ApiResponse addOrUpdateMarks(MarksRequestDTO dto);
+    TopperStudentResponseDto getInstituteTopper();
+    List<TopperStudentResponseDto> getAllStudentsWithPercentage();
 }
 

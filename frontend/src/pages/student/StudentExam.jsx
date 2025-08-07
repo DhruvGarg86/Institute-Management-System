@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import StudentNavbar from "./StudentNavbar";
 import StudentSidebar from "./StudentSidebar";
 import { getUserIdFromToken } from "../../services/Student/auth";
-import { getStudentMarks } from "../../services/Student/StudentMarks";
+import { getStudentMarks } from "../../services/Student/studentMarksService";
 
 function StudentExam() {
   const [studentData, setStudentData] = useState(null);

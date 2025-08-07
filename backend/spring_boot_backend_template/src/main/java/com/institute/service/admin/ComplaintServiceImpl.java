@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.institute.dto.admin.ComplaintsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class ComplaintServiceImpl implements ComplaintService{
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();
                     dto.setId(complaint.getId());
+                    dto.setDate(complaint.getCreatedAt());
                     dto.setDescription(complaint.getDescription());
                     dto.setStatus(complaint.getStatus());
                     dto.setDeleted(complaint.isDeleted()); // LOMBOK GENERATES setDeleted instead of setIsDeleted!!!!
@@ -67,5 +69,10 @@ public class ComplaintServiceImpl implements ComplaintService{
         complaint.setDeleted(true);
         complaintDao.save(complaint);
         return "Complaint deleted.";
+    }
+
+    @Override
+    public List<ComplaintsDto> getComplaintsByStudentId(Long studentId) {
+        return complaintDao.findAllByStudentId(studentId);
     }
 }
