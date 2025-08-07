@@ -16,6 +16,7 @@ import { config } from "../config";
     }
     }
 
+
 export async function getAllStudents(id) {
   const url = `${config.serverUrl}/teacher/students/${id}`;
   console.log(url)

@@ -77,4 +77,8 @@ public interface TeacherDao extends JpaRepository<Teacher, Long> {
 @Query("SELECT new com.institute.dto.teacher.TeacherNoticeDTO(n.date, n.description, n.title) " +
 		"FROM Notice n WHERE n.audience = 'TEACHER' AND n.isDeleted = false")
 	List<TeacherNoticeDTO> findTop2NoticesForTeacher(Pageable pageable);
+
+// GETTING TEACHER'S NAME FOR PROFILE
+	@Query("SELECT t.name FROM Teacher t WHERE t.id = :id")
+	String findTeacherNameById(Long id);
 }
