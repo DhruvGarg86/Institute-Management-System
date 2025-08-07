@@ -1,138 +1,49 @@
-
-import { useRef } from 'react';
-import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit, Inject } from '@syncfusion/ej2-react-grids';
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
+import { useEffect, useRef, useState } from 'react';
+import {
+    AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective,
+    Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip
+} from '@syncfusion/ej2-react-charts';
+import { GridComponent, ColumnsDirective, ColumnDirective, Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit } from '@syncfusion/ej2-react-grids';
+import { toast } from 'react-toastify';
+import { getCourseTopper, getStudentMarks } from '../../services/Admin/Student';
 import TeacherNavbar from './TeacherNavbar';
 import TeacherSidebar from './TeacherSidebar';
 
-
 function TeacherStudentMarksOverview() {
 
+    const [student, setStudent] = useState([]);
 
-    const student = [
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "B.TECH",
-            class: "2nd Year",
-            marks: "38",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "BCOM",
-            class: "2nd Year",
-            marks: "68",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            marks: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            marks: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            marks: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            marks: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            marks: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "B.TECH",
-            class: "2nd Year",
-            marks: "57",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-    ];
-    const students = [
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "B.TECH",
-            class: "2nd Year",
-            marks: "38",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "BCOM",
-            class: "2nd Year",
-            marks: "68",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "MBBS",
-            class: "2nd Year",
-            marks: "98",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-        {
-            name: "Dhruv Garg",
-            email: "dhruvgarg086@gmail.com",
-            rollNo: "2000300100084",
-            dob: "23-12-2002",
-            course: "B.TECH",
-            class: "2nd Year",
-            marks: "57",
-            profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif"
-        },
-    ];
-    const sortedStudents = [...students].sort((a, b) => b.marks - a.marks);
+    const studentMarks = async () => {
+        try {
+            const response = await getStudentMarks();
+            setStudent(response);
+        } catch (error) {
+            console.error(error);
+            toast.error("Unable to load students");
+        }
+    };
+
+
+    const [students, setStudents] = useState([]);
+    const CourseTopper = async () => {
+        try {
+            const response = await getCourseTopper();
+            setStudents(response);
+        } catch (error) {
+            console.log(error);
+            toast.error("Unable to load students");
+        }
+    }
+
+    useEffect(() => {
+        CourseTopper();
+        studentMarks();
+    }, [])
+
+    const sortedStudents = [...students].sort((a, b) => b.percentage - a.percentage);
+    const sortedStudent = [...student].sort((a, b) => b.percentage - a.percentage);
 
 
     const gridRef = useRef(null);
@@ -161,26 +72,26 @@ function TeacherStudentMarksOverview() {
                                 {/* First Row */}
                                 <div className="row">
                                     <div className="top-students-container d-flex flex-wrap gap-2">
-                                        {sortedStudents.map((student, index) => (
+                                        {sortedStudents.map((students, index) => (
                                             <div key={index} className="student-card d-flex align-items-center p-2 bg-white rounded shadow-sm">
                                                 <img
-                                                    src={student.profilePic}
-                                                    alt={student.name}
+                                                    src={students.imagePath || 'https://via.placeholder.com/70'}  // fallback image
+                                                    alt={students.studentName}
                                                     className="rounded-circle student-img me-3"
                                                     style={{ height: '70px', width: '70px', objectFit: 'cover' }}
                                                 />
                                                 <div>
-                                                    <div className="fw-bold" style={{ fontSize: '1.1rem' }}>{student.name}</div>
+                                                    <div className="fw-bold" style={{ fontSize: '1.1rem' }}>{students.studentName}</div>
                                                     <div className="student-subtitle text-muted" style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                                                        {student.course}
+                                                        {students.courseName}
                                                     </div>
                                                     <div className="student-score fw-semibold" style={{ fontSize: '1.3rem' }}>
-                                                        {student.marks}
+                                                        {students.percentage}%
                                                     </div>
                                                 </div>
                                             </div>
-
                                         ))}
+
                                     </div>
                                 </div>
                                 {/* Second Row */}
@@ -188,7 +99,7 @@ function TeacherStudentMarksOverview() {
                                     <h5 className="fw-bold">LeaderBoard</h5>
                                     <GridComponent
                                         ref={gridRef}
-                                        dataSource={student}
+                                        dataSource={sortedStudent}
                                         allowSorting={true}
                                         allowExcelExport={true}
                                         allowPdfExport={true}
@@ -204,16 +115,13 @@ function TeacherStudentMarksOverview() {
                                             if (args.item.id.includes('excelexport')) gridRef.current.excelExport();
                                             if (args.item.id.includes('print')) gridRef.current.print();
                                         }}
-
                                     >
-
                                         <ColumnsDirective>
-
-                                            <ColumnDirective field='course' headerText='Course' width={'40'} />
-                                            <ColumnDirective field='name' headerText='Name' textAlign="center" width={'50'} />
-                                            <ColumnDirective field='marks' headerText='Marks Obtained' textAlign="center" width={'50'} />
-                                            <ColumnDirective field='rollNo' headerText='Roll No.' textAlign="center" width={'70'} />
-                                            <ColumnDirective field='class' headerText='Class' width={'50'} />
+                                            <ColumnDirective field='studentName' headerText='Name' textAlign="center" width={'50'} />
+                                            <ColumnDirective field='courseName' headerText='Course' width={'40'} />
+                                            <ColumnDirective field='percentage' headerText='Percentage' textAlign="center" width={'50'} />
+                                            <ColumnDirective field='studentId' headerText='Roll No.' textAlign="center" width={'70'} />
+                                            {/* <ColumnDirective field='class' headerText='Class' width={'50'} /> */}
                                         </ColumnsDirective>
                                         <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Group, Edit]} />
                                     </GridComponent>
