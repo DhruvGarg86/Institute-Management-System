@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import com.institute.dto.admin.ComplaintsDto;
 import com.institute.exception.customexceptions.ApiException;
+
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +29,7 @@ import lombok.AllArgsConstructor;
 public class ComplaintServiceImpl implements ComplaintService{
     @Autowired
     private ComplaintDao complaintDao;
+    private ModelMapper modelMapper;
 
     @Override
     public List<ComplaintResponseDTO> getAllComplaints() {
@@ -34,6 +38,8 @@ public class ComplaintServiceImpl implements ComplaintService{
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();
                     dto.setId(complaint.getId());
+
+//                    CreatedAt IS 'date' in table
                     dto.setDate(complaint.getCreatedAt());
                     dto.setDescription(complaint.getDescription());
                     dto.setStatus(complaint.getStatus());
@@ -71,6 +77,7 @@ public class ComplaintServiceImpl implements ComplaintService{
         complaintDao.save(complaint);
         return "Complaint deleted.";
     }
+
 
     @Override
     public ComplaintsDto getComplaintById(Long complaintId) {
