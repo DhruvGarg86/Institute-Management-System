@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 import { getStudentMarks } from "../../services/Student/studentMarksService"; // Adjust path as needed
+import { getUserIdFromToken } from "../../services/Student/auth";
 import "./Student-module.css";
 
 function StudentMarksCard() {
   const [marksData, setMarksData] = useState(null);
-  const studentId = 1; // Replace with dynamic value (from token or props)
+  const studentId = getUserIdFromToken(); // Assuming you have a function to get the student ID
 
   useEffect(() => {
     const fetchMarks = async () => {
       try {
         const response = await getStudentMarks(studentId);
-        setMarksData(response.data);
+        setMarksData(response);
       } catch (err) {
         console.error("Error fetching marks", err);
       }
@@ -22,7 +23,7 @@ function StudentMarksCard() {
 
   if (!marksData) return <p>Loading...</p>;
 
-  const chartData = marksData.subjectMarks.map((item) => ({
+  const chartData = marksData?.subjectMarks?.map((item) => ({
     subject: item.subjectName,
     marks: item.marksObtained,
   }));

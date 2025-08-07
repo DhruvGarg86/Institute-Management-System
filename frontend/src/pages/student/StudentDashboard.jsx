@@ -10,11 +10,14 @@ import { config } from "../../services/config";
 function StudentDashboard() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const studentId = 
 
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get(`${config.serverUrl}/student/notices`);
+        const res = await axios.get(
+          `${config.serverUrl}/student/notice/${studentId}`
+        );
         setNotices(res.data);
       } catch (err) {
         console.error("Failed to fetch notices", err);

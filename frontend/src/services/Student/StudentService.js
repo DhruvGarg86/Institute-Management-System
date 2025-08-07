@@ -46,3 +46,31 @@ export function getUserIdFromToken() {
     return null;
   }
 }
+
+export async function getAllFees() {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) throw new Error("Token not found");
+
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const studentId = payload.userId || payload.id || payload.sub;
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    const response = await axios.get(
+      `${config.serverUrl}/student/fee/${studentId}`,
+      {
+        headers,
+      }
+    );
+
+    return response.data; // Ensure this returns a list of fee DTOs
+  } catch (error) {
+    console.error("Failed to fetch fee details", error);
+    throw error;
+  }
+}

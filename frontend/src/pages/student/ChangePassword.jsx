@@ -5,20 +5,29 @@ import { FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import StudentNavbar from "./StudentNavbar";
 import StudentSidebar from "./StudentSidebar";
 import "./Student-module.css"; // Optional if you're reusing styles
+import { getUserIdFromToken } from "../../services/Student/StudentService";
 
 function ChangePassword() {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token"); // 
+
   const [formData, setFormData] = useState({
-    email: "vedant@example.com", // replace with actual user email if available
+    email: "vedant@example.com",
+    oldPassword: "",
     newPassword: "",
     repeatPassword: "",
   });
 
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+  const toggleOldPasswordVisibility = () =>
+    setShowOldPassword(!showOldPassword);
+
   const toggleRepeatPasswordVisibility = () =>
     setShowRepeatPassword(!showRepeatPassword);
 
@@ -27,7 +36,7 @@ function ChangePassword() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.newPassword.length < 6) {
@@ -40,13 +49,43 @@ function ChangePassword() {
       return;
     }
 
-    // Simulate API call
-    console.log("Password change data:", formData);
-    toast.success("Password changed successfully!");
+    try {
+      const response = await fetch(
+        "http://localhost:8080/auth/changePassword/change-password",
+        {
+          method: "POST",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // uncomment if using JWT
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            oldPassword: formData.oldPassword,
+            newPassword: formData.newPassword,
+          }),
+        }
+      );
 
-    // Reset form
-    setFormData({ ...formData, newPassword: "", repeatPassword: "" });
-    setTimeout(() => navigate("/student/profile"), 1500);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Password change failed");
+      }
+
+      const data = await response.json();
+      toast.success(data.message || "Password changed successfully!");
+
+      // Reset form
+      setFormData({
+        ...formData,
+        oldPassword: "",
+        newPassword: "",
+        repeatPassword: "",
+      });
+
+      setTimeout(() => navigate("/student/profile"), 1500);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -72,6 +111,31 @@ function ChangePassword() {
                   value={formData.email}
                   readOnly
                 />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Old Password</label>
+                <div className="input-group">
+                  <span className="input-group-text">
+                    <FiLock />
+                  </span>
+                  <input
+                    type={showOldPassword ? "text" : "password"}
+                    name="oldPassword"
+                    className="form-control"
+                    value={formData.oldPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={toggleOldPasswordVisibility}
+                    tabIndex={-1}
+                  >
+                    {showOldPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
 
               <div className="mb-3">

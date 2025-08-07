@@ -43,8 +43,7 @@ function StudentProfile() {
       }
 
       try {
-        const response = await getStudentProfile(studentId);
-        const data = response.data;
+        const data = await getStudentProfile(studentId);
 
         setProfile({
           name: data.name,
@@ -88,12 +87,16 @@ function StudentProfile() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `${config.serverUrl}/student/profile/${studentId}/upload`,
-        formData,
+        `${config.serverUrl}/student/updateProfile/${studentId}`,
+        {
+          name: profile.name,
+          phoneNumber: profile.phoneNumber,
+          address: profile.address,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -103,15 +106,6 @@ function StudentProfile() {
     } catch (err) {
       console.error("Error:", err);
       toast.error("Update failed");
-    }
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfile((prev) => ({ ...prev, image: imageUrl }));
-      toast.success("Image uploaded successfully");
     }
   };
 
