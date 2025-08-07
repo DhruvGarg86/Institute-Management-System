@@ -74,7 +74,7 @@ function StudentAttendance() {
 
                                 <ColumnsDirective>
                                     <ColumnDirective field='image' headerText='Profile' width={30} allowFiltering={false} allowSorting={false} template={(props) => (
-                                        <img src={props.profilePic} alt="avatar" style={{ borderRadius: '50%', height: '30px', objectFit: 'cover' }} />
+                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '30px', width: '30px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="center" width={50} />
                                     <ColumnDirective field='courseName' headerText='Course' width={40} />

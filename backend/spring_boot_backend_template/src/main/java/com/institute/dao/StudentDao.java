@@ -56,4 +56,5 @@ public interface StudentDao extends JpaRepository<Student, Long> {
         GROUP BY s.id, s.name, s.imagePath, c.name
     """)
     List<TopperStudentResponseDto> findAllStudentsWithPercentageForTopper();
+    List<Student> findByStatus(Status status);
 }

@@ -1,5 +1,6 @@
 package com.institute.controllers.admin;
 
+import com.institute.dto.admin.ComplaintsDto;
 import com.institute.dto.complaint.ComplaintResponseDTO;
 import com.institute.dto.complaint.ComplaintUpdateStatusDTO;
 import com.institute.service.admin.ComplaintService;
@@ -33,4 +34,9 @@ public class ComplaintController {
         String response = complaintService.softDeleteComplaint(id);
         return ResponseEntity.ok(response);
     }
+
+//    @GetMapping("/complaintById/{id}")
+//    public ResponseEntity<?> getComplaintsByStudentId(@PathVariable Long id) {
+//        return ResponseEntity.ok(complaintService.getComplaintsByComplaintId(id));
+//    }
 }
