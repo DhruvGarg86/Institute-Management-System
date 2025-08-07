@@ -49,7 +49,6 @@ public class StudentEntityController {
 		return ResponseEntity.ok(studentFee);
 	}
 
-	// 📊 Dashboard attendance
 	@GetMapping("/dashboard/attendance/{studentId}")
 	@Operation(description = "Student dashboard attendance")
 	public ResponseEntity<?> displayStudentAttendancePercentageDashboard(@PathVariable Long studentId) {
@@ -58,7 +57,6 @@ public class StudentEntityController {
 		return ResponseEntity.ok(studentAttendance);
 	}
 
-	// 📅 Full attendance page
 	@GetMapping("/attendance/{studentId}")
 	@Operation(description = "Student attendance full details")
 	public ResponseEntity<?> displayStudentAttendancePercentage(@PathVariable Long studentId) {
@@ -74,7 +72,6 @@ public class StudentEntityController {
 		return ResponseEntity.ok(studentMarksService.getStudentMarks(studentId));
 	}
 
-	// 🧾 All exam marks
 	@GetMapping("/exam/{studentId}")
 	@Operation(description = "Fetch full exam marks for student")
 	public ResponseEntity<?> displayStudentMarks(@PathVariable Long studentId) {

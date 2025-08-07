@@ -96,17 +96,13 @@ public class CourseServiceImpl implements CourseService {
     public ApiResponse deleteCourseById(Long courseId) {
         Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + courseId));
-
         if (course.getStatus() != Status.INACTIVE) {
             throw new ApiException("Only INACTIVE courses can be deleted.");
         }
-
         course.setDeleted(true);
-
         List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
         mappings.forEach(mapping -> mapping.setDeleted(true));
         courseSubjectTeacherDao.saveAll(mappings);
-
         return new ApiResponse("Course deleted successfully (soft delete).");
     }
 
@@ -114,15 +110,11 @@ public class CourseServiceImpl implements CourseService {
     public ApiResponse updateCourseStatus(Long courseId, Status status) {
         Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
-
         Status oldStatus = course.getStatus();
-
         if (oldStatus == status) {
             return new ApiResponse("Status is already " + status);
         }
-
         course.setStatus(status);
-
         if (oldStatus == Status.INACTIVE && status == Status.ACTIVE) {
             List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseId(courseId);
             boolean modified = false;
@@ -137,12 +129,10 @@ public class CourseServiceImpl implements CourseService {
                     }
                 }
             }
-
             if (modified) {
                 courseSubjectTeacherDao.saveAll(mappings);
             }
         }
-
         courseDao.save(course);
         return new ApiResponse("Course status updated to " + status);
     }
@@ -150,16 +140,13 @@ public class CourseServiceImpl implements CourseService {
     private Set<CourseSubjectTeacher> cstMapping(List<CourseSubjectTeacherDTO> cstDtos, Course course, boolean reactivating) {
         Set<String> seenPairs = new HashSet<>();
         Set<CourseSubjectTeacher> cstSet = new HashSet<>();
-
         for (CourseSubjectTeacherDTO dto : cstDtos) {
             Long subjectId = dto.getSubjectId();
             Long teacherId = dto.getTeacherId();
-
             Subject subject = subjectDao.findById(subjectId)
                     .orElseThrow(() -> new ResourceNotFoundException("Subject not found: " + subjectId));
             Teacher teacher = teacherDao.findById(teacherId)
                     .orElseThrow(() -> new ResourceNotFoundException("Teacher not found: " + teacherId));
-
             if (subject.isDeleted() || teacher.isDeleted()) {
                 if (reactivating) {
                     continue;
@@ -167,16 +154,13 @@ public class CourseServiceImpl implements CourseService {
                     throw new ApiException("Subject or Teacher is deleted: subject " + subjectId + ", teacher " + teacherId);
                 }
             }
-
             String key = subjectId + "-" + teacherId;
             if (!seenPairs.add(key)) {
                 throw new ApiException("Duplicate subject-teacher pair: subject " + subjectId + ", teacher " + teacherId);
             }
-
             // Look up the mapping regardless of deleted flag
             Optional<CourseSubjectTeacher> existingOpt =
                     courseSubjectTeacherDao.findByCourseIdAndSubjectIdAndTeacherId(course.getId(), subjectId, teacherId);
-
             CourseSubjectTeacher cst;
             if (existingOpt.isPresent()) {
                 // Re-use existing DB row (reactivate it)
@@ -203,7 +187,6 @@ public class CourseServiceImpl implements CourseService {
          courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
         List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
-
         Set<CourseSubjectTeacherResponseDto> mappingDtos = mappings.stream()
                 .filter(Objects::nonNull)
                 .filter(cst -> !cst.isDeleted())
@@ -218,10 +201,8 @@ public class CourseServiceImpl implements CourseService {
                     );
                 })
                 .collect(Collectors.toCollection(LinkedHashSet::new)); // LinkedHashSet preserves insertion order
-
         DisplayCourseSubjectTeacherDto dto = new DisplayCourseSubjectTeacherDto();
         dto.setMappings(mappingDtos);
         return dto;
     }
-
 }

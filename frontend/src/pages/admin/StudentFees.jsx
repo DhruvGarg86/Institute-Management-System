@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import {
@@ -7,93 +6,43 @@ import {
   ExcelExport, PdfExport, Toolbar, Print, Page, Search, Inject, Edit
 } from '@syncfusion/ej2-react-grids';
 import { FaEdit } from 'react-icons/fa';
-
-const sampleFeesData = [
-  {
-    id: 1,
-    name: "Aarav Sharma",
-    roll: "CS101",
-    studentClass: "CS-1",
-    course: "Computer Science",
-    totalFees: 80000,
-    paid: 55000,
-    avatar: "https://i.pravatar.cc/40?img=1"
-  },
-  {
-    id: 1,
-    name: "Aarav Sharma",
-    roll: "CS101",
-    studentClass: "CS-1",
-    course: "Computer Science",
-    totalFees: 80000,
-    paid: 55000,
-    avatar: "https://i.pravatar.cc/40?img=1"
-  },
-  {
-    id: 1,
-    name: "Aarav Sharma",
-    roll: "CS101",
-    studentClass: "CS-1",
-    course: "Computer Science",
-    totalFees: 80000,
-    paid: 55000,
-    avatar: "https://i.pravatar.cc/40?img=1"
-  },
-  {
-    id: 1,
-    name: "Aarav Sharma",
-    roll: "CS101",
-    studentClass: "CS-1",
-    course: "Computer Science",
-    totalFees: 80000,
-    paid: 55000,
-    avatar: "https://i.pravatar.cc/40?img=1"
-  },
-  {
-    id: 1,
-    name: "Aarav Sharma",
-    roll: "CS101",
-    studentClass: "CS-1",
-    course: "Computer Science",
-    totalFees: 80000,
-    paid: 55000,
-    avatar: "https://i.pravatar.cc/40?img=1"
-  },
-  {
-    id: 2,
-    name: "Ananya Verma",
-    roll: "IT202",
-    studentClass: "IT-2",
-    course: "Information Tech",
-    totalFees: 75000,
-    paid: 75000,
-    avatar: "https://i.pravatar.cc/40?img=2"
-  },
-  {
-    id: 3,
-    name: "Rohan Patel",
-    roll: "ME303",
-    studentClass: "ME-3",
-    course: "Mechanical",
-    totalFees: 72000,
-    paid: 60000,
-    avatar: "https://i.pravatar.cc/40?img=3"
-  },
-  {
-    id: 4,
-    name: "Meera Iyer",
-    roll: "EEE404",
-    studentClass: "EEE-4",
-    course: "Electrical",
-    totalFees: 78000,
-    paid: 50000,
-    avatar: "https://i.pravatar.cc/40?img=4"
-  }
-];
+import { toast } from 'react-toastify';
+import { getAllFees } from '../../services/Admin/Student';
 
 function StudentFees() {
+
   const gridRef = useRef(null);
-  const navigate = useNavigate();
+
+  const [fees, setFees] = useState([]);
+
+  const getFee = async () => {
+    try {
+      const response = await getAllFees();
+      toast.success("Fees loaded successfully");
+      setFees(response);
+    } catch (error) {
+      toast.error("Unable to load fee details");
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getFee();
+  }, [])
+
+  const rowDataBound = (args) => {
+    if (args.data.feeStatus === 'PENDING') {
+      args.row.style.backgroundColor = '#fff3cd';
+    }
+    if (args.data.feeStatus === 'UNPAID') {
+      args.row.style.backgroundColor = '#f1aeb5';
+    }
+
+  };
+
+
+
+
 
   return (
     <>
@@ -109,7 +58,7 @@ function StudentFees() {
 
               <GridComponent
                 ref={gridRef}
-                dataSource={sampleFeesData}
+                dataSource={fees}
                 allowSorting={true}
                 allowExcelExport={true}
                 allowPdfExport={true}
@@ -117,6 +66,7 @@ function StudentFees() {
                 pageSettings={{ pageSize: 7 }}
                 allowPrint={true}
                 allowFiltering={true}
+                rowDataBound={rowDataBound}
                 filterSettings={{ type: 'Menu' }}
                 editSettings={{ allowEditing: true }}
                 toolbar={['Search', 'ExcelExport', 'Print', 'Edit']}
@@ -128,31 +78,32 @@ function StudentFees() {
 
               >
                 <ColumnsDirective>
-                  <ColumnDirective field='avatar' headerText='Profile' width='90' textAlign="Center"
-                    allowFiltering={false} allowSorting={false}
+                  <ColumnDirective field='imagePath' headerText='Profile' width='100' textAlign="Center"
+                    allowFiltering={false} allowSorting={false} allowSearching={false}
                     template={(props) => (
                       <img
-                        src={props.avatar}
+                        src={props.imagePath}
                         alt="avatar"
-                        style={{ borderRadius: '50%', height: '45px', objectFit: 'cover' }}
+                        style={{ borderRadius: '50%', height: '30px', width: '30px', objectFit: 'cover' }}
                       />
                     )}
                   />
-                  <ColumnDirective field='name' headerText='Name' textAlign='Center' width='130' />
-                  <ColumnDirective field='roll' headerText='RollNo' textAlign='Center' width='120' />
-                  <ColumnDirective field='studentClass' headerText='Due Date' textAlign='Center' width='140' />
-                  <ColumnDirective field='course' headerText='Course' width='120' />
-                  <ColumnDirective field='totalFees' headerText='Total (₹)' textAlign='Center' width='120' />
-                  <ColumnDirective field='paid' headerText='Paid (₹)' textAlign='Center' width='130' />
-                  <ColumnDirective headerText='Remaining (₹)' width='100' textAlign='Center'
+                  <ColumnDirective field='studentName' headerText='Name' textAlign='Center' width='120' />
+                  <ColumnDirective field='studentId' headerText='RollNo' textAlign='Center' width='120' />
+                  <ColumnDirective field='dueDate' headerText='Due Date' textAlign='Center' width='140' />
+                  <ColumnDirective field='courseName' headerText='Course' width='120' />
+                  <ColumnDirective field='totalAmount' headerText='Total' textAlign='Center' width='110' />
+                  <ColumnDirective field='amountPaid' headerText='Paid' textAlign='Center' width='110' />
+                  <ColumnDirective field='remainingAmount' headerText='Pending' width='130' textAlign='Center'
                     template={(props) => (
                       <span>
-                        ₹{(props.totalFees - props.paid).toLocaleString()}
+                        ₹{(props.totalAmount - props.amountPaid).toLocaleString()}
                       </span>
                     )}
                   />
 
-                  <ColumnDirective headerText='Action' width='100' textAlign='Center'
+                  <ColumnDirective field='feeStatus' headerText='status' width='120' textAlign='Center' />
+                  {/* <ColumnDirective headerText='Action' width='100' textAlign='Center'
                     template={(props) => (
                       <div>
                         <button
@@ -163,7 +114,7 @@ function StudentFees() {
                         </button>
                       </div>
                     )}
-                  />
+                  /> */}
                 </ColumnsDirective>
 
                 <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search, Edit]} />

@@ -100,7 +100,7 @@ function DisplaySubject() {
                         <button
                           className="btn btn-sm btn-light me-2 text-primary"
                           onClick={() =>
-                            navigate(`/admin/edit-subject/${props.code}`)
+                            navigate(`/admin/edit-subject/${props.id}`)
                           }
                         >
                           <FaEdit />
