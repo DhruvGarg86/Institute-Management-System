@@ -18,4 +18,6 @@ public interface ComplaintService {
     ComplaintsDto getComplaintById(Long complaintId);
 
     List<DisplayComplaintDto> getComplaintsByStudent(Long studentId);
+
+    ComplaintsDto getComplaintsById(Long id);
 }

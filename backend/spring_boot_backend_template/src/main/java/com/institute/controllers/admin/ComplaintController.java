@@ -36,4 +36,10 @@ public class ComplaintController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/complaintById/{id}")
+    public ResponseEntity<ComplaintsDto> getComplaintById(@PathVariable Long id) {
+        ComplaintsDto complaint = complaintService.getComplaintsById(id);
+        return ResponseEntity.ok(complaint);
+    }
+
 }
