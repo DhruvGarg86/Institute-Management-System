@@ -90,7 +90,6 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new ApiException("Course not found"));
 
 
-
         // Create Student and link Login
         Student student = new Student();
         student.setName(dto.getName());
@@ -137,15 +136,15 @@ public class StudentServiceImpl implements StudentService {
         return students.stream()
                 .filter(s -> !s.isDeleted())
                 .map(s -> new StudentDetailsDTO(
-                s.getId(),
-                s.getName(),
-                s.getPhoneNumber(),
-                s.getDob(),
-                s.getAddress(),
-                s.getCourse().getName(),
-                s.getImagePath(),
-                s.getStatus()
-        )).collect(Collectors.toList());
+                        s.getId(),
+                        s.getName(),
+                        s.getPhoneNumber(),
+                        s.getDob(),
+                        s.getAddress(),
+                        s.getCourse().getName(),
+                        s.getImagePath(),
+                        s.getStatus()
+                )).collect(Collectors.toList());
     }
 
     @Override
@@ -156,7 +155,6 @@ public class StudentServiceImpl implements StudentService {
         if (student.isDeleted()) {
             throw new ApiException("Student already deleted");
         }
-
 
 
         student.setDeleted(true);
@@ -255,19 +253,19 @@ public class StudentServiceImpl implements StudentService {
         return new ApiResponse("Fee data updated successfully!");
     }
 
-	@Override
-	public Optional<AddStudentDto> getStudentDetailsById(Long id) {
-		Student student = studentDao.findById(id)
-		        .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
-		    AddStudentDto dto = modelMapper.map(student, AddStudentDto.class);
-		    if (student.getUser() != null) {
-		        dto.setEmail(student.getUser().getEmail());
-		    }
-		    if (student.getCourse() != null) {
-		        dto.setCourseName(student.getCourse().getName());
-		    }
-		    return Optional.ofNullable(dto);
-	}
+    @Override
+    public Optional<AddStudentDto> getStudentDetailsById(Long id) {
+        Student student = studentDao.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+        AddStudentDto dto = modelMapper.map(student, AddStudentDto.class);
+        if (student.getUser() != null) {
+            dto.setEmail(student.getUser().getEmail());
+        }
+        if (student.getCourse() != null) {
+            dto.setCourseName(student.getCourse().getName());
+        }
+        return Optional.ofNullable(dto);
+    }
 
     @Override
     public List<StudentSubjectsDto> getSubjectNamesByStudentId(Long studentId) {
@@ -312,4 +310,81 @@ public class StudentServiceImpl implements StudentService {
         else if (marksObtained >= 40) return Grade.E;
         else return Grade.F;
     }
+
+    @Override
+    public TopperStudentResponseDto getInstituteTopper() {
+        List<Student> activeStudents = studentDao.findByStatus(Status.ACTIVE);
+
+        double maxPercentage = -1;
+        Student topper = null;
+
+        for (Student student : activeStudents) {
+            Set<Marks> marksSet = student.getMarks();
+
+            double totalObtained = 0;
+            double totalMarks = 0;
+
+            for (Marks mark : marksSet) {
+                if (mark.getStatus() == Status.ACTIVE) {
+                    totalObtained += mark.getMarksObtained();
+                    totalMarks += mark.getTotalMarks();
+                }
+            }
+
+            if (totalMarks > 0) {
+                double percentage = (totalObtained / totalMarks) * 100;
+
+                if (percentage > maxPercentage) {
+                    maxPercentage = percentage;
+                    topper = student;
+                }
+            }
+        }
+
+        if (topper == null) {
+            throw new RuntimeException("No topper found. Make sure students and marks are available.");
+        }
+
+        TopperStudentResponseDto dto = new TopperStudentResponseDto();
+        dto.setStudentName(topper.getName());
+        dto.setImagePath(topper.getImagePath());
+        dto.setCourseName(topper.getCourse().getName());
+        dto.setPercentage(maxPercentage);
+
+        return dto;
+    }
+
+
+
+        @Override
+        public List<TopperStudentResponseDto> getAllStudentsWithPercentage() {
+            List<Student> students = studentDao.findAll();
+            List<TopperStudentResponseDto> responseList = new ArrayList<>();
+
+            for (Student student : students) {
+                Set<Marks> marksSet = student.getMarks();
+                double totalMarksObtained = 0;
+                double totalMaxMarks = 0;
+
+                for (Marks mark : marksSet) {
+                    totalMarksObtained += mark.getMarksObtained();
+                    totalMaxMarks += mark.getTotalMarks();
+                }
+
+                double percentage = 0;
+                if (totalMaxMarks > 0) {
+                    percentage = (totalMarksObtained / totalMaxMarks) * 100;
+                }
+
+                TopperStudentResponseDto dto = new TopperStudentResponseDto();
+                dto.setStudentName(student.getName());
+                dto.setImagePath(student.getImagePath());
+                dto.setCourseName(student.getCourse().getName());
+                dto.setPercentage(Math.round(percentage * 100.0) / 100.0); // rounded to 2 decimals
+
+                responseList.add(dto);
+            }
+
+            return responseList;
+        }
 }

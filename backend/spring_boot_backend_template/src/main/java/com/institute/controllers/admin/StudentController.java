@@ -95,4 +95,15 @@ public class StudentController {
     public ResponseEntity<?> addOrUpdateMarks(@RequestBody MarksRequestDTO dto) {
         return ResponseEntity.ok(studentService.addOrUpdateMarks(dto));
     }
+
+    @GetMapping("/instituteTopper")
+    public ResponseEntity<TopperStudentResponseDto> getTopperOfInstitute() {
+        TopperStudentResponseDto topper = studentService.getInstituteTopper();
+        return ResponseEntity.ok(topper);
+    }
+
+    @GetMapping("/percentages")
+    public List<TopperStudentResponseDto> getAllStudentPercentages() {
+        return studentService.getAllStudentsWithPercentage();
+    }
 }
