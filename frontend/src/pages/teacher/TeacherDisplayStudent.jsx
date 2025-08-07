@@ -100,7 +100,7 @@ function TeacherDisplayStudent() {
                     width="85"
                   />
                   <ColumnDirective
-                    field="roll"
+                    field="id"
                     headerText="Roll"
                     textAlign="Center"
                     width="50"
@@ -117,7 +117,7 @@ function TeacherDisplayStudent() {
                     width="75"
                   />
                   <ColumnDirective
-                    field="phone"
+                    field="phoneNumber"
                     headerText="Phone"
                     width="95"
                   />
@@ -129,7 +129,7 @@ function TeacherDisplayStudent() {
                         <button
                           className="btn btn-sm btn-light text-primary me-2"
                           onClick={() =>
-                            navigate(`/teacher/student-marks/${props.roll}`)
+                            navigate(`/teacher/students/marks/${props.id}`)
                           }
                         >
                           View Marks

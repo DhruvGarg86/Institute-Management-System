@@ -1,14 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import { getTeacherName, getUserIdFromToken } from '../../services/Teacher/Dashboard';
+import { toast } from 'react-toastify';
 
-function TeacherNavbar() {
+function Navbar() {
     const navigate = useNavigate();
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [teacherName, setTeacherName] = useState("");
+    
+    const id = getUserIdFromToken()
 
-    const handleLogout = () => {
-        setTimeout(() => {
-            navigate("/");
-        }, 500); // in ms
+
+
+     useEffect(() => {
+        const fetchTeacherName = async (id) => {
+          try {
+            const response = await getTeacherName(id);
+            setTeacherName(response);
+          } catch (error) {
+            console.log(error);
+            toast.error("Unable to load total students");
+          }
+        };
+        fetchTeacherName(id);
+      }, [id]);
+    
+
+
+    const handleLogOut = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        navigate("/login");
     };
 
     return (
@@ -22,16 +45,36 @@ function TeacherNavbar() {
                         </button>
                     </div>
                     <div className='navbar-second-part'>
-                        <span className='navbar-second-part-admin-name'><a href='/admin/profile' style={{ textDecoration: 'none', color: 'black' }}>TEACHER NAME</a></span>
-                        <RiLogoutCircleRLine size={24} className='admin-navbar-logout'
-                            onClick={() => handleLogout()}
+                        <span
+                            className='navbar-second-part-admin-name'
+                            style={{ textDecoration: 'none', color: 'black', cursor: 'pointer' }}
+                            onClick={() => navigate(`/teacher/profile/${id}`)}
+                        >
+                            {teacherName}
+                        </span>
+                        <RiLogoutCircleRLine
+                            size={24}
+                            className='admin-navbar-logout'
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => setShowLogoutModal(true)}
                         />
                     </div>
-
                 </div>
             </nav>
+
+            {showLogoutModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h5>Are you sure you want to logout?</h5>
+                        <div className="mt-3 d-flex justify-content-center gap-3">
+                            <button className="btn btn-danger custom-button" onClick={handleLogOut}>Yes, Logout</button>
+                            <button className="btn btn-secondary custom-button" onClick={() => setShowLogoutModal(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-    )
+    );
 }
 
-export default TeacherNavbar
+export default Navbar;

@@ -128,6 +128,8 @@ function App() {
         {/* ****************************TEACHER ROUTES**********************************  */}
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
         <Route path="/teacher/profile" element={<TeacherProfile />} />
+        <Route path="/teacher/profile/:id" element={<TeacherProfile />} />
+
         <Route path="/teacher/profile/edit/:id" element={<TeacherProfileEdit />} />
 
         <Route path="/teacher/add-notice" element={<TeacherAddNotice />} />
