@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { uploadImage } from '../../services/Admin/Profile';
 import { addTeacher } from '../../services/Admin/Teacher';
 import { useNavigate } from 'react-router-dom';
+import { config } from '../../services/config';
 
 function AddTeacher() {
 
@@ -37,7 +38,8 @@ function AddTeacher() {
 
             try {
                 const res = await uploadImage(file);
-                setTeacher(prev => ({ ...prev, image: res.fileName }));
+                const teacherUrl = `${config.serverUrl}${res.fileName}`;
+                setTeacher(prev => ({ ...prev, image: teacherUrl }));
                 toast.success("Image uploaded successfully");
             } catch (error) {
                 console.log(error);

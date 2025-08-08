@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { fetchTeacherById, submitTeacherById } from '../../services/Admin/Teacher';
 import { useNavigate, useParams } from 'react-router-dom';
 import { uploadImage } from '../../services/Admin/Profile';
+import { config } from '../../services/config';
 
 function EditTeacher() {
 
@@ -41,7 +42,8 @@ function EditTeacher() {
         if (file) {
             try {
                 const res = await uploadImage(file);
-                setTeacher((prev) => ({ ...prev, image: res.fileName }));
+                const teacherUrl = `${config.serverUrl}${res.fileName}`;
+                setTeacher(prev => ({ ...prev, image: teacherUrl }));
                 toast.success("Image uploaded successfully");
             } catch (err) {
                 toast.error("Image upload failed");
@@ -96,7 +98,7 @@ function EditTeacher() {
                                 <label className="form-label">Salary</label>
                                 <input type="number" inputMode='decimal' step="0.01" name="salary" required
                                     className="form-control" placeholder='Enter salary' value={teacher.salary} onChange={(e) => setTeacher({ ...teacher, salary: e.target.value })} />
-                            
+
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label">Joining Date</label>
