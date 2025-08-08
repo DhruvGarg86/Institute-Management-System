@@ -29,8 +29,10 @@ namespace InstituteApi.Controllers
             {
                 StudentId = studentId,
                 Description = dto.Description,
-                Status = ComplaintStatus.Active,
-                IsDeleted = false,
+                
+                Status = ComplaintStatus.ACTIVE,
+                Deleted = false,
+                
                 Date = DateTime.UtcNow
             };
 

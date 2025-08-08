@@ -8,6 +8,7 @@ import com.institute.entities.Student;
 import com.institute.exception.customexceptions.ApiException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class StudentProfileServiceImpl implements StudentProfileService{
 
     private final StudentDao studentDao;
+    private final ModelMapper modelMapper;
 
     @Override
     public StudentProfileDto getStudentProfile(Long studentId) {
@@ -30,6 +32,9 @@ public class StudentProfileServiceImpl implements StudentProfileService{
         dto.setAddress(student.getAddress());
         dto.setImagePath(student.getImagePath());
         dto.setCourseName(student.getCourse().getName());
+        dto.setDob(student.getDob());
+        dto.setGender(student.getGender());
+        dto.setAdmissionDate(student.getAdmissionDate());
 
         return dto;
     }

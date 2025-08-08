@@ -121,7 +121,6 @@ function AddTeacher() {
                                     type="file"
                                     accept=".jpg, .jpeg, .png"
                                     name="image"
-                                    required
                                     className="form-control"
                                     onChange={handleImageUpload}
                                 />

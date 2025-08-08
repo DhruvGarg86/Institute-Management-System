@@ -19,6 +19,7 @@ export async function fetchProfile(id) {
   }
 }
 
+
 export async function editProfile(body, id) {
   try {
     let url = `${config.serverUrl}/teacher/profile/edit/${id}`;

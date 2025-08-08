@@ -3,6 +3,7 @@ package com.institute.controllers.admin;
 import com.institute.dto.admin.ComplaintsDto;
 import com.institute.dto.complaint.ComplaintResponseDTO;
 import com.institute.dto.complaint.ComplaintUpdateStatusDTO;
+import com.institute.dto.complaint.DisplayComplaintDto;
 import com.institute.service.admin.ComplaintService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,9 @@ public class ComplaintController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/complaintById/{studentId}")
-    public ResponseEntity<List<ComplaintsDto>> getComplaintsByStudentId(@PathVariable Long studentId) {
-        List<ComplaintsDto> complaints = complaintService.getComplaintsByStudentId(studentId);
-        return ResponseEntity.ok(complaints);
+    @GetMapping("/complaintById/{id}")
+    public ResponseEntity<ComplaintsDto> getComplaintById(@PathVariable Long id) {
+        ComplaintsDto complaint = complaintService.getComplaintsById(id);
+        return ResponseEntity.ok(complaint);
     }
 }

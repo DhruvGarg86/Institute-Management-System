@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.institute.dto.admin.ComplaintsDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +26,11 @@ import lombok.AllArgsConstructor;
 public class ComplaintServiceImpl implements ComplaintService{
     @Autowired
     private ComplaintDao complaintDao;
+    private ModelMapper modelMapper;
 
     @Override
     public List<ComplaintResponseDTO> getAllComplaints() {
-        return complaintDao.findByIsDeletedFalse()
+        return complaintDao.findByDeletedFalse()
                 .stream()
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();
@@ -72,7 +74,38 @@ public class ComplaintServiceImpl implements ComplaintService{
     }
 
     @Override
-    public List<ComplaintsDto> getComplaintsByStudentId(Long studentId) {
-        return complaintDao.findAllByStudentId(studentId);
+    public ComplaintsDto getComplaintById(Long complaintId) {
+        Complaints complaint = complaintDao.findById(complaintId)
+                .orElseThrow(() -> new ApiException("Complaint not found with ID: " + complaintId));
+
+        // Manual mapping with nested fields
+        ComplaintsDto dto = new ComplaintsDto();
+        dto.setStudentName(complaint.getStudent().getName());
+        dto.setCourseName(complaint.getStudent().getCourse().getName());
+        dto.setDateOfComplaint(complaint.getCreatedAt());
+        dto.setStatus(complaint.getStatus());
+        dto.setDescription(complaint.getDescription());
+
+        return dto;
     }
+
+    @Override
+    public List<DisplayComplaintDto> getComplaintsByStudent(Long studentId) {
+        List<Complaints> complaints = complaintDao
+                .findByStudentIdAndDeletedFalseOrderByCreatedAtDesc(studentId);
+
+        return complaints.stream().map(complaint -> {
+            DisplayComplaintDto dto = modelMapper.map(complaint, DisplayComplaintDto.class);
+            String fullName = complaint.getStudent().getName();
+            dto.setStudentName(fullName);
+            dto.setDate(complaint.getCreatedAt());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+    @Override
+    public ComplaintsDto getComplaintsById(Long id) {
+        return complaintDao.findDtoById(id)
+                .orElseThrow(() -> new ApiException("Complaint not found with ID: " + id));
+    }
+
 }

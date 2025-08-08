@@ -36,5 +36,9 @@ public class TeacherOwnServiceImpl implements TeacherOwnService {
         return teacherDao.countCoursesByTeacherId(teacherId);
     }
 
+    @Override
+    public String findTeacherNameById(Long id) {
+        return teacherDao.findTeacherNameById(id);
+    }
 
 }

@@ -12,23 +12,24 @@ import java.util.Optional;
 
 @Repository
 public interface ComplaintDao extends JpaRepository<Complaints, Long> {
-    List<Complaints> findByIsDeletedFalse();
-
+    List<Complaints> findByDeletedFalse();
+    List<Complaints> findByStudentIdAndDeletedFalseOrderByCreatedAtDesc(Long studentId);
     Optional<Complaints> findActiveById(Long id);
 
     @Query("""
-        SELECT new com.institute.dto.admin.ComplaintsDto(
-            s.name,
-            c.name,
-            comp.createdAt,
-            comp.status,
-            comp.description
-        )
-        FROM Complaints comp
-        JOIN comp.student s
-        JOIN s.course c
-        WHERE s.id = :studentId AND comp.isDeleted = false
-    """)
-    List<ComplaintsDto> findAllByStudentId(@Param("studentId") Long studentId);
+    SELECT new com.institute.dto.admin.ComplaintsDto(
+        s.name,
+        c.name,
+        comp.createdAt,
+        comp.status,
+        comp.description
+    )
+    FROM Complaints comp
+    JOIN comp.student s
+    JOIN s.course c
+    WHERE comp.id = :id AND comp.deleted = false
+""")
+    Optional<ComplaintsDto> findDtoById(Long id);
 }
+
 

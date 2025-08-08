@@ -6,14 +6,14 @@ import { MdMenuBook } from "react-icons/md";
 import Card from "../../components/Card";
 import { toast } from "react-toastify";
 import {
-  getAllNotices, getTotalCourses, getTotalStudents, getTotalTeachers} from "../../services/Admin/Dashboard";
+  getAllNotices, getTotalCourses, getTotalStudents, getTotalTeachers
+} from "../../services/Admin/Dashboard";
 
 function Dashboard() {
   const [tstudent, setTstudent] = useState("");
   const [tteacher, setTteacher] = useState("");
   const [tcourse, setTcourse] = useState("");
   const [notice, setNotice] = useState([]);
-
 
   // Fetch Total Students
   useEffect(() => {
@@ -70,7 +70,6 @@ function Dashboard() {
     };
     fetchNotices();
   }, []);
-
 
 
   return (
@@ -143,7 +142,7 @@ function Dashboard() {
                             style={{ fontSize: "1rem", marginBottom: '0px', fontWeight: "bold" }}
                             dangerouslySetInnerHTML={{ __html: n.title }}
                           />
-                          <p style={{  marginBottom: "20px" }}>{n.date}</p>
+                          <p style={{ marginBottom: "20px" }}>{n.date}</p>
                         </div>
                       </a>
                     ))

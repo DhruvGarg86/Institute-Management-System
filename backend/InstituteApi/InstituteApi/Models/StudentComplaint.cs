@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace InstituteApi.Models
 {
@@ -9,9 +10,11 @@ namespace InstituteApi.Models
         [Key]
         public long Id { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool Deleted { get; set; } = false;
 
-        public ComplaintStatus Status { get; set; } = ComplaintStatus.Active;
+        [Column("Status", TypeName = "varchar(20)")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ComplaintStatus Status { get; set; } = ComplaintStatus.ACTIVE;
 
         public int StudentId { get; set; }
 

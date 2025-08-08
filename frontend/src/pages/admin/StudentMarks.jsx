@@ -34,43 +34,51 @@ import { getStudentById } from '../../services/Admin/Student';
 function StudentMarks() {
     const [student, setStudent] = useState({
         image: '',
-        id: '',
+        studentId: '',
         name: '',
         email: '',
         dob: '',
-        course: '',
-        class: '',
+        courseName: '',
     });
 
-    const { id } = useParams(); // corrected from `useParams()` to destructuring
+    const { id } = useParams();
 
     const chartRef = useRef(null);
     const gridRef = useRef(null);
 
-    const data = [
-        { name: 'English', value: 40 },
-        { name: 'Science', value: 20 },
-        { name: 'Social', value: 10 },
-        { name: 'Maths', value: 30 },
-    ];
+    const [chartData, setChartData] = useState([]);
+    const [tableData, setTableData] = useState([]);
 
-    const data1 = [
-        { Subject: 'English', Total: 50, Obtained: 40, Percentage: 80, Grade: 'B+' },
-        { Subject: 'Science', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
-        { Subject: 'Social', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
-        { Subject: 'Maths', Total: 50, Obtained: 20, Percentage: 40, Grade: 'D' },
-    ];
 
     const getStudent = async () => {
         try {
             const response = await getStudentById(id);
             setStudent(response);
+
+            // Convert API marksDetails to chart and table data
+            const formattedChartData = response.marksDetails.map((item) => ({
+                name: item.subjectName,
+                value: item.marksObtained,
+            }));
+
+            const formattedTableData = response.marksDetails.map((item) => ({
+                Subject: item.subjectName,
+                Total: item.totalMarks,
+                Obtained: item.marksObtained,
+                Percentage: item.percentage,
+                Grade: item.grade
+            }));
+
+            setChartData(formattedChartData);
+            setTableData(formattedTableData);
+
             toast.success("Student loaded successfully");
         } catch (error) {
             console.error(error);
             toast.error("Unable to load student");
         }
     };
+
 
     useEffect(() => {
         getStudent();
@@ -109,10 +117,9 @@ function StudentMarks() {
                                         </div>
                                         {/* Right - Additional Info */}
                                         <div className="me-3">
-                                            <p className="mb-1"><strong>Roll No:</strong> {student.id}</p>
+                                            <p className="mb-1"><strong>Roll No:</strong> {student.studentId}</p>
                                             <p className="mb-1"><strong>DOB:</strong> {student.dob}</p>
-                                            <p className="mb-1"><strong>Course:</strong> {student.course}</p>
-                                            <p className="mb-0"><strong>Class:</strong> {student.class}</p>
+                                            <p className="mb-1"><strong>Course:</strong> {student.courseName}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +151,7 @@ function StudentMarks() {
                                             <AccumulationSeriesCollectionDirective>
                                                 <AccumulationSeriesDirective
                                                     type='Pie'
-                                                    dataSource={data}
+                                                    dataSource={chartData}
                                                     innerRadius='50%'
                                                     xName='name'
                                                     yName='value'
@@ -165,7 +172,7 @@ function StudentMarks() {
                                     <div className="col-8 rounded" style={{ marginTop: '80px' }}>
                                         <GridComponent
                                             ref={gridRef}
-                                            dataSource={data1}
+                                            dataSource={tableData}
                                             allowSorting={true}
                                             allowExcelExport={true}
                                             allowPdfExport={true}

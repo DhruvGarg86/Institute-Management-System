@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
-import Sidebar from "../../components/Sidebar";
 import { FaUserGraduate, FaChalkboardTeacher } from "react-icons/fa";
 import { MdMenuBook } from "react-icons/md";
 import Card from "../../components/Card";
@@ -14,6 +12,7 @@ import {
   getUserIdFromToken,
 } from "../../services/Teacher/Dashboard";
 import { toast } from "react-toastify";
+
 
 function TeacherDashboard() {
   const [totalStudent, setTotalStudent] = useState("");

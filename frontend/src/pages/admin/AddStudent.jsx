@@ -155,7 +155,7 @@ function AddStudent() {
 
                             <div className="col-md-6">
                                 <label className="form-label">Upload Image</label><sub>(Only .jpg, .jpeg and .png files are allowed)</sub>
-                                <input type="file" accept='.jpg, .jpeg, .png' name="image" required className="form-control"
+                                <input type="file" accept='.jpg, .jpeg, .png' name="image" className="form-control"
                                     onChange={handleImageUpload} />
                             </div>
 

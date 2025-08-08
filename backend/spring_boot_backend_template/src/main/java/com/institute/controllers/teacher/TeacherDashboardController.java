@@ -39,6 +39,13 @@ public class TeacherDashboardController {
         return ResponseEntity.ok(teacherOwnService.getTeacherAttendance(tid));
     }
 
+    @GetMapping("teacher-name/{teacherId}")
+    public ResponseEntity<?> getTeacherNameById(@PathVariable Long teacherId){
+        Long tid = teacherDao.findTeacherIdByUserId(teacherId);
+
+        return ResponseEntity.ok(teacherOwnService.findTeacherNameById(tid));
+    }
+
 ////    WORKING WITH JWT FROM FRONTEND BUT JWT RETURNS USER_ID
 //    @GetMapping("/total-students")
 //    public ResponseEntity<?> getNumberOfStudents(@RequestHeader("Authorization") String tokenHeader){

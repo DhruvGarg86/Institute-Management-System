@@ -1,10 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import { fetchProfile, getAdminIdFromToken } from '../services/Admin/Profile';
 
 function Navbar() {
     const navigate = useNavigate();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [profile, setProfile] = useState({
+        name: "",
+        email: "",
+        address: "",
+        phoneNumber: "",
+        gender: "",
+        image: null
+    });
+    const id = getAdminIdFromToken();
+    const getProfile = async (id) => {
+        try {
+            const response = await fetchProfile(id);
+            setProfile(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getProfile(id);
+    }, [id]);
+    console.log(name);
 
     const handleLogOut = () => {
         localStorage.removeItem("token");
@@ -28,7 +50,7 @@ function Navbar() {
                             style={{ textDecoration: 'none', color: 'black', cursor: 'pointer' }}
                             onClick={() => navigate("/admin/profile/1")}
                         >
-                            Dhruv Garg
+                            {profile.name}
                         </span>
                         <RiLogoutCircleRLine
                             size={24}

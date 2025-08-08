@@ -67,7 +67,7 @@ export async function deleteStudentById(id) {
 
 export async function getStudentById(id) {
   try {
-    const url = `${config.serverUrl}/admin/student/studentDetails/${id}`;
+    const url = `${config.serverUrl}/admin/student/getMarks/${id}`;
 
     const token = localStorage.getItem("token");
     const headers = {
@@ -130,6 +130,57 @@ export async function getAllFees() {
     return response.data;
   } catch (error) {
     console.error("Exception", error.message);
+    throw error;
+  }
+}
+
+export async function getCourseTopper() {
+  try {
+    const url = `${config.serverUrl}/admin/student/toppers`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.get(url, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Exception", error.message);
+    throw error;
+  }
+}
+
+export async function getStudentMarks() {
+  try {
+    const url = `${config.serverUrl}/admin/student/allStudentsPercentage`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.get(url, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Exception", error.message);
+    throw error;
+  }
+}
+export async function getEditStudentById(id) {
+  try {
+    const url = `${config.serverUrl}/admin/student/studentDetails/${id}`;
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    const response = await axios.get(url, { headers });
+    return response.data;
+  } catch (error) {
+    console.log("Exception", error.message);
     throw error;
   }
 }

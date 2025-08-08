@@ -19,7 +19,24 @@ export async function getTotalStudents(id) {
   }
 }
 
-// GET TEACHER'S ATTENDANCE
+//  GET TEACHER'S NAME 
+export async function getTeacherName(id) {
+  try {
+    const token = localStorage.getItem("token");
+
+    const url = `${config.serverUrl}/teacher/dashboard/teacher-name/${id}`;
+    const headers = { Authorization: `Bearer ${token}` };
+
+    const response = await axios.get(url, { headers });
+
+    return response.data;
+  } catch (error) {
+    console.log("Exception", error.message);
+    throw error;
+  }
+}
+
+// GET TEACHER'S ATTENDANCE [USED IN TEACHERNAVBAR ]
 export async function getTeacherTotalAttendance(id) {
   try {
     const token = localStorage.getItem("token");

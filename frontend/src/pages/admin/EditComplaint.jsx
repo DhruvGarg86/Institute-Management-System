@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getComplaintById, updateComplaint } from '../../services/Admin/Complaint';
 
 function EditComplaint() {
+
+    const navigate = useNavigate();
+
     const [complaint, setComplaint] = useState({
         studentName: "",
-        studentEmail: "",
-        course: "",
-        date: "",
+        courseName: "",
+        dateOfComplaint: "",
         description: "",
         status: ""
     });
@@ -20,20 +22,13 @@ function EditComplaint() {
     const getComplaint = async (id) => {
         try {
             const response = await getComplaintById(id);
-
-            setComplaint({
-                studentName: response.studentName,
-                studentEmail: response.studentEmail,
-                course: response.course,
-                date: response.createdAt,
-                description: response.description,
-                status: response.status
-            });
+            setComplaint(response);
+            console.log(response);
         } catch (error) {
-            toast.error("Unable to load complaint details");
-            console.error(error);
+            toast.error("Failed to load complaint");
+            console.log(error);
         }
-    };
+    }
 
     useEffect(() => {
         getComplaint(id);
@@ -51,6 +46,9 @@ function EditComplaint() {
         try {
             await updateComplaint(id, { status: complaint.status });
             toast.success("Complaint status updated successfully");
+            setTimeout(() => {
+                navigate("/admin/display-complaints");
+            }, 500);
         } catch (error) {
             toast.error("Failed to update complaint status");
             console.error(error);
@@ -91,7 +89,7 @@ function EditComplaint() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value={complaint.course}
+                                            value={complaint.courseName}
                                             readOnly
                                         />
                                     </div>
@@ -101,7 +99,7 @@ function EditComplaint() {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            value={new Date(complaint.date).toLocaleDateString('en-GB')}
+                                            value={complaint.dateOfComplaint}
                                             readOnly
                                         />
                                     </div>
