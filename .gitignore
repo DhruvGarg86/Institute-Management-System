@@ -15,9 +15,8 @@ out/
 # If you only want to ignore a top-level main folder, use:
 #/main/
 
-# Ignore uploaded images in public/uploads/
-frontend/public/NoticePDFs/*
-frontend/public/TeacherImages/*
+# Ignore uploaded images/PDFs in backend/uploads/
+/backend/spring_boot_backend_template/uploads/**
 
 # Explicitly allow backend Java source files
 !backend/spring_boot_backend_template/src/main/**
