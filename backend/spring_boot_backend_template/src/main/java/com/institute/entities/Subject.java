@@ -30,8 +30,8 @@ public class Subject extends BaseEntity {
 	@Column(name = "description", length = 255)
 	private String description;
 
-	@OneToOne(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Marks marks;
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Marks> marks = new HashSet<>();
 
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CourseSubjectTeacher> courseSubjectTeachers = new HashSet<>();

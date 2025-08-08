@@ -7,7 +7,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "marks")
+@Table(
+        name = "marks",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"student_id", "subject_id"})
+        }
+)
 @Getter
 @Setter
 @ToString
