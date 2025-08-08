@@ -16,7 +16,7 @@ out/
 #/main/
 
 # Ignore uploaded images/PDFs in backend/uploads/
-/backend/uploads/
+/backend/spring_boot_backend_template/uploads/**
 
 # Explicitly allow backend Java source files
 !backend/spring_boot_backend_template/src/main/**
