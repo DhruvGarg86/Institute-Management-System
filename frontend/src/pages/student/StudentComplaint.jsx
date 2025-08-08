@@ -32,6 +32,7 @@ function StudentComplaint() {
           `http://localhost:8080/student/complaints/${studentId}`
         );
         setComplaints(response.data);
+        console.log(response.data);
       } catch (err) {
         console.error("Failed to fetch complaints:", err);
         setError("Failed to fetch complaints.");

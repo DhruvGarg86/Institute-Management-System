@@ -32,7 +32,6 @@ function StudentNavbar() {
       try {
         const response = await getStudentProfile(studentId);
         setProfile(response);
-        console.log(response);
       } catch (err) {
         console.error("Failed to fetch profile:", err);
         toast.error("Could not load profile");

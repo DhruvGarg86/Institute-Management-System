@@ -1,35 +1,68 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserIdFromToken } from "../../services/Student/StudentService";
 import axios from "axios";
+import { config } from "../../services/config";
+import { toast } from "react-toastify";
 
 function StudentComplaintForm({ onClose }) {
   const [description, setDescription] = useState("");
 
   const studentId = getUserIdFromToken();
+  const [requiredId, setRequiredId] = useState('');
+  const [complaintId, setComplaintId] = useState('');
+
+  const getrequiredId = async (studentId) => {
+    try {
+      const response = await axios.get(
+        `${config.serverUrl}/student/dotnet/${studentId}`
+      );
+      setRequiredId(response.data);
+    } catch (error) {
+      console.error("Error fetching requiredId:", error);
+    }
+  }
+
+  useEffect(() => {
+    getrequiredId(studentId);
+  }, [studentId]);
+
 
   const addComplaint = async () => {
     const complaint = {
       description: description,
     };
 
+    const url = `http://localhost:5045/api/StudentComplaint/${requiredId}`;
+    console.log("POST URL:", url);
+
     try {
-      const response = await axios.post(
-        `http://localhost:5045/api/StudentComplaint/${studentId}`,
-        complaint
-      );
+      const response = await axios.post(url, complaint);
       console.log("Complaint added successfully:", response.data);
-      onClose(); // Only call onClose here
+      const id = response.data.complaintId;
+      setComplaintId(id);
+      toast.success("Complaint added successfully, Complaint ID: " + id);
+      onClose();
     } catch (error) {
       console.error("Error adding complaint:", error);
+      toast.error("Error adding complaint.");
     }
   };
 
-  const handleSubmit = (e) => {
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addComplaint();
+
+    if (!requiredId) {
+      toast.error("Please wait, student ID is still loading.");
+      return;
+    }
+
+    await addComplaint();
     console.log("Complaint DTO to send:", { description });
-    // No need for setDescription(description);
   };
+
+
 
   return (
     <div

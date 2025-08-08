@@ -112,4 +112,10 @@ public class StudentEntityController {
 
 		return complaintService.getComplaintsByStudent(id);
 	}
+
+	@GetMapping("/dotnet/{studentId}")
+	public Long sendStudentId(@PathVariable Long studentId){
+
+        return studentDao.findStudentByUserId(studentId);
+	}
 }

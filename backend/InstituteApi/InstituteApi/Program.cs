@@ -88,6 +88,18 @@ namespace InstituteApi
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
+            // ✅ Add CORS for localhost:5173
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -98,10 +110,14 @@ namespace InstituteApi
 
             app.UseHttpsRedirection();
 
+            // ✅ Use CORS before authentication
+            app.UseCors("AllowFrontend");
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+
             app.Use(async (context, next) =>
             {
                 var user = context.User;
@@ -112,7 +128,6 @@ namespace InstituteApi
                 }
                 await next();
             });
-
 
             app.Run();
         }

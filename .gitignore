@@ -21,3 +21,5 @@ frontend/public/TeacherImages/*
 
 # Explicitly allow backend Java source files
 !backend/spring_boot_backend_template/src/main/**
+
+*.log

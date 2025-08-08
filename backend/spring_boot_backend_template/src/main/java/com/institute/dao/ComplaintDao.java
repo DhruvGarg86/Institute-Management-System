@@ -13,7 +13,10 @@ import java.util.Optional;
 @Repository
 public interface ComplaintDao extends JpaRepository<Complaints, Long> {
     List<Complaints> findByDeletedFalse();
-    List<Complaints> findByStudentIdAndDeletedFalseOrderByCreatedAtDesc(Long studentId);
+
+    @Query(value = "SELECT * FROM student_complaints WHERE studentid = :studentId ORDER BY date DESC", nativeQuery = true)
+    List<Complaints> findAllComplaintsByStudentId(@Param("studentId") Long studentId);
+
     Optional<Complaints> findActiveById(Long id);
 
     @Query("""

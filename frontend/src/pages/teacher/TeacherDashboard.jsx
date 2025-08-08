@@ -177,7 +177,7 @@ function TeacherDashboard() {
                   {notice.length > 0 ? (
                     notice.map((n) => (
                       <a
-                        href="/admin/display-notices"
+                        href="/teacher/display-notice"
                         className="admin-dashboard-notice-link"
                         key={n.id}
                       >
