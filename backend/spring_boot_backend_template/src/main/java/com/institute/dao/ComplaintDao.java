@@ -30,8 +30,6 @@ public interface ComplaintDao extends JpaRepository<Complaints, Long> {
     WHERE comp.id = :id AND comp.deleted = false
 """)
     Optional<ComplaintsDto> findDtoById(Long id);
-
-
-
 }
+
 

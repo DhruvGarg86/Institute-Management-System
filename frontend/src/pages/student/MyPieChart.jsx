@@ -1,50 +1,60 @@
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 
-const MyPieChart = ({ data }) => (
-  // The parent div is important for the ResponsivePie component to work.
-  // It needs a defined width and height to calculate its size.
-    <div style={{ height: '100%', width: '100'}}>
+const MyPieChart = ({ data: rawData }) => {
+  // Transform inside the chart
+  const data = [
+    {
+      id: 'Present',
+      label: 'Present',
+      value: rawData.presentDays,
+      color: '#4CAF50',
+    },
+    {
+      id: 'Absent',
+      label: 'Absent',
+      value: rawData.absentDays,
+      color: '#F44336',
+    },
+  ];
+
+  return (
+    <div style={{ height: '100%', width: '100%' }}>
       <ResponsivePie
         data={data}
-        startAngle={0}
-        endAngle={360}
-        margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
         innerRadius={0}
-        padAngle={0.8}
+        padAngle={1}
         cornerRadius={3}
-        activeOuterRadiusOffset={9}
-        borderWidth={3}
-        borderColor={{
-          from: 'color',
-          modifiers: [['darker', 0.2]],
-        }}
-        colors={{datum: 'data.color'}}
+        activeOuterRadiusOffset={10}
+        colors={{ datum: 'data.color' }}
+        borderWidth={2}
+        borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
         arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsTextColor="#333333"
+        arcLinkLabelsTextColor="#333"
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: 'color' }}
         arcLabelsSkipAngle={10}
-        arcLabelsTextColor={{
-          from: 'color',
-          modifiers: [['darker', 2]],
-        }}
-        
-        
+        arcLabel="value"
+        arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+        tooltip={({ datum }) => (
+          <div style={{ padding: 5, background: '#fff', border: '1px solid #ccc' }}>
+            <strong>{datum.id}</strong>: {datum.value} days
+          </div>
+        )}
         legends={[
           {
             anchor: 'bottom',
             direction: 'row',
             justify: false,
-            translateX: 20,
+            translateX: 0,
             translateY: 56,
             itemsSpacing: 0,
-            itemWidth: 100,
+            itemWidth: 40,
             itemHeight: 18,
             itemTextColor: '#999',
             itemDirection: 'left-to-right',
             itemOpacity: 1,
-            symbolSize: 18,
+            symbolSize: 10,
             symbolShape: 'circle',
             effects: [
               {
@@ -59,5 +69,6 @@ const MyPieChart = ({ data }) => (
       />
     </div>
   );
+};
 
-  export default MyPieChart;
+export default MyPieChart;

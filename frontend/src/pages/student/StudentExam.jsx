@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StudentNavbar from "./StudentNavbar";
-import StudentSidebar from "../../components/StudentSidebar";
-import Footer from "../../components/Footer";
+import StudentSidebar from "./StudentSidebar";
+import { getUserIdFromToken } from "../../services/Student/auth";
+import { getStudentMarks } from "../../services/Student/studentMarksService";
 
 function StudentExam() {
-  // Dummy student marks data
-  const studentData = {
-    studentName: "Shreyansh Bhardwaj",
-    courseId: 101,
-    courseName: "PG-DAC",
-    subjectMarks: [
-      { subjectName: "Math", marksObtained: 85, maxMarks: 100 },
-      { subjectName: "Science", marksObtained: 90, maxMarks: 100 },
-      { subjectName: "English", marksObtained: 78, maxMarks: 100 },
-      { subjectName: "History", marksObtained: 70, maxMarks: 100 },
-    ],
-    totalMarksObtained: 323,
-    totalMarks: 400,
-    percentage: 80.75,
-  };
+  const [studentData, setStudentData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const studentId = getUserIdFromToken();
+    if (!studentId) {
+      console.error("Student ID not found from token.");
+      return;
+    }
+
+    getStudentMarks(studentId)
+      .then((data) => {
+        setStudentData(data.data); // Ensure you access `.data` if backend wraps the response
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error loading student marks:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>
@@ -28,76 +34,82 @@ function StudentExam() {
           <div className="col-2 px-2">
             <StudentSidebar />
           </div>
-
           <div className="col-10">
-            <h2 className="mb-4 student-center">Exam Result</h2>
-            <div className="mb-3">
-              <p>
-                <strong>Student Name:</strong> {studentData.studentName}
-              </p>
-              <p>
-                <strong>Course:</strong> {studentData.courseName}
-              </p>
-            </div>
+            {loading ? (
+              <p className="text-center">Loading...</p>
+            ) : !studentData ? (
+              <p className="text-center text-danger">No data available</p>
+            ) : (
+              <>
+                <h2 className="mb-4 student-center">Exam Result</h2>
+                <div className="mb-3">
+                  <p>
+                    <strong>Student Name:</strong> {studentData.studentName}
+                  </p>
+                  <p>
+                    <strong>Course:</strong> {studentData.courseName}
+                  </p>
+                </div>
 
-            <div className="table-responsive">
-              <table className="table table-bordered table-hover table-striped">
-                <thead className="table-primary">
-                  <tr>
-                    <th>Subject</th>
-                    <th>Marks Obtained</th>
-                    <th>Max Marks</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {studentData.subjectMarks.map((subject, index) => {
-                    const status =
-                      subject.marksObtained >= subject.maxMarks * 0.4
-                        ? "Pass"
-                        : "Fail";
-
-                    return (
-                      <tr key={index}>
-                        <td>{subject.subjectName}</td>
-                        <td>{subject.marksObtained}</td>
-                        <td>{subject.maxMarks}</td>
-                        <td>
-                          <span
-                            className={`badge ${
-                              status === "Pass" ? "bg-success" : "bg-danger"
-                            }`}
-                          >
-                            {status}
-                          </span>
-                        </td>
+                <div className="table-responsive">
+                  <table className="table table-bordered table-hover table-striped">
+                    <thead className="table-primary">
+                      <tr>
+                        <th>Subject</th>
+                        <th>Marks Obtained</th>
+                        <th>Max Marks</th>
+                        <th>Status</th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      {studentData.subjectMarks.map((subject, index) => {
+                        const status =
+                          subject.marksObtained >= subject.totalMarks * 0.4
+                            ? "Pass"
+                            : "Fail";
+                        return (
+                          <tr key={index}>
+                            <td>{subject.subjectName}</td>
+                            <td>{subject.marksObtained}</td>
+                            <td>{subject.totalMarks}</td>
+                            <td>
+                              <span
+                                className={`badge ${
+                                  status === "Pass" ? "bg-success" : "bg-danger"
+                                }`}
+                              >
+                                {status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
 
-            <div className="row mt-4">
-              <div className="col-md-4">
-                <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Marks Obtained</p>
-                  <h5>{studentData.totalMarksObtained}</h5>
+                <div className="row mt-4">
+                  <div className="col-md-4">
+                    <div className="card p-3 text-center">
+                      <p className="mb-1 text-muted">Marks Obtained</p>
+                      <h5>{studentData.totalMarksObtained}</h5>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="card p-3 text-center">
+                      <p className="mb-1 text-muted">Total Marks</p>
+                      <h5>{studentData.totalMarks}</h5>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="card p-3 text-center">
+                      <p className="mb-1 text-muted">Percentage</p>
+                      <h5>{studentData.percentage.toFixed(2)}%</h5>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Total Marks</p>
-                  <h5>{studentData.totalMarks}</h5>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Percentage</p>
-                  <h5>{studentData.percentage}%</h5>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>

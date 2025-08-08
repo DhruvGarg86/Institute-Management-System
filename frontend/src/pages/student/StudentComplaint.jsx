@@ -1,47 +1,44 @@
 import React, { useEffect, useState } from "react";
-import StudentSidebar from "../../components/StudentSidebar";
+import axios from "axios";
+import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "../../pages/student/StudentNavbar";
-import Footer from "../../components/Footer";
 
 function StudentComplaint() {
   const [complaints, setComplaints] = useState([]);
+  const [error, setError] = useState(null);
+
+  const getStudentIdFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const decoded = JSON.parse(atob(token.split(".")[1]));
+      return decoded.id; 
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    // Dummy data for the logged-in student
-    const dummyComplaints = [
-      {
-        id: 1,
-        description: "Fan not working in classroom.",
-        status: "ACTIVE",
-      },
-      {
-        id: 2,
-        description: "Broken desk in lab.",
-        status: "RESOLVED",
-      },
-      {
-        id: 3,
-        description: "Projector not functioning in Seminar Hall.",
-        status: "ACTIVE",
-      },
-      {
-        id: 4,
-        description: "Wi-Fi connectivity issues in library.",
-        status: "RESOLVED",
-      },
-      {
-        id: 5,
-        description: "Lights flickering in corridor.",
-        status: "ACTIVE",
-      },
-      {
-        id: 6,
-        description: "Computer not turning on in Lab 3.",
-        status: "RESOLVED",
-      },
-    ];
+    const fetchComplaints = async () => {
+      const studentId = getStudentIdFromToken();
+      if (!studentId) {
+        setError("Invalid token or not logged in.");
+        return;
+      }
 
-    setComplaints(dummyComplaints);
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/student/complaints/${studentId}`
+        );
+        setComplaints(response.data);
+      } catch (err) {
+        console.error("Failed to fetch complaints:", err);
+        setError("Failed to fetch complaints.");
+      }
+    };
+
+    fetchComplaints();
   }, []);
 
   return (
@@ -57,6 +54,8 @@ function StudentComplaint() {
         {/* Main Content */}
         <main className="col-12 col-md-10 d-flex flex-column p-3 overflow-auto">
           <h4 className="mb-3">Your Complaints</h4>
+
+          {error && <p className="text-danger">{error}</p>}
 
           {complaints.length === 0 ? (
             <p>No complaints found.</p>

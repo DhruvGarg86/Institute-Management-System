@@ -41,5 +41,4 @@ public class ComplaintController {
         ComplaintsDto complaint = complaintService.getComplaintsById(id);
         return ResponseEntity.ok(complaint);
     }
-
 }

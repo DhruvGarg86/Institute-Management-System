@@ -1,30 +1,49 @@
 import React, { useEffect, useState } from "react";
-import StudentNavbar from "./StudentNavbar"; 
-import StudentSidebar from "../../components/StudentSidebar"; 
+import StudentNavbar from "./StudentNavbar";
+import StudentSidebar from "./StudentSidebar";
+import axios from "axios";
+import { getUserIdFromToken } from "../../services/Student/StudentService";
 
 function StudentFee() {
   const [fee, setFee] = useState(null);
+  const studentId = getUserIdFromToken();
 
   useEffect(() => {
-    const dummyFeeData = {
-      id: 1,
-      rollNo: "101",
-      course: "DAC",
-      name: "Vedant Choudhari",
-      amount: 10000,
-      amountPaid: 3000,
-      DueDate: "2025-07-20",
+    const fetchFeeDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!studentId || !token) {
+          console.error("Missing student ID or token.");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8080/student/fee/${studentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = response.data;
+
+        const remainingAmount = data.totalAmount - data.amountPaid;
+
+        let statusText = "Pending";
+        if (data.amountPaid === 0) statusText = "Unpaid";
+        else if (remainingAmount === 0) statusText = "Paid";
+
+        setFee({ ...data, remainingAmount, statusText });
+      } catch (error) {
+        console.error("Error fetching fee details:", error);
+      }
     };
 
-    const remainingAmount = dummyFeeData.amount - dummyFeeData.amountPaid;
+    fetchFeeDetails();
+  });
 
-    let status = "Pending";
-    if (dummyFeeData.amountPaid === 0) status = "Unpaid";
-    else if (remainingAmount === 0) status = "Paid";
-
-    setFee({ ...dummyFeeData, remainingAmount, status });
-    // Calculate remaining amount and fee status
-  }, []);
   return (
     <>
       <StudentNavbar />
@@ -39,9 +58,9 @@ function StudentFee() {
               <table className="table table-bordered table-hover table-striped">
                 <thead className="table-primary">
                   <tr>
-                    <th>Roll No.</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
                     <th>Course</th>
-                    <th>Name</th>
                     <th>Total Amount</th>
                     <th>Amount Paid</th>
                     <th>Remaining</th>
@@ -52,24 +71,24 @@ function StudentFee() {
                 <tbody>
                   {fee ? (
                     <tr>
-                      <td>{fee.rollNo}</td>
-                      <td>{fee.course}</td>
-                      <td>{fee.name}</td>
-                      <td>₹{fee.amount}</td>
+                      <td>{fee.studentName}</td>
+                      <td>{fee.email}</td>
+                      <td>{fee.courseName}</td>
+                      <td>₹{fee.totalAmount}</td>
                       <td>₹{fee.amountPaid}</td>
                       <td>₹{fee.remainingAmount}</td>
-                      <td>{fee.DueDate}</td>
+                      <td>{fee.dueDate}</td>
                       <td>
                         <span
                           className={`badge ${
-                            fee.status === "Paid"
+                            fee.statusText === "Paid"
                               ? "bg-success"
-                              : fee.status === "Pending"
+                              : fee.statusText === "Pending"
                               ? "bg-warning text-dark"
                               : "bg-danger"
                           }`}
                         >
-                          {fee.status}
+                          {fee.statusText}
                         </span>
                       </td>
                     </tr>

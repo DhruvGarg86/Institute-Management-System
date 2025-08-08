@@ -1,42 +1,49 @@
-import React, { useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
-import StudentSidebar from "../../components/StudentSidebar";
+import StudentSidebar from "./StudentSidebar";
 import "./Student-module.css";
 import Footer from "../../components/Footer";
 import StudentNavbar from "./StudentNavbar";
 
+import {
+  getStudentAttendance,
+  getStudentProfile,
+  getUserIdFromToken,
+} from "../../services/Student/StudentService";
+
 function StudentAttendance() {
-  const student = {
-    rollNo: "101",
-    name: "Vedant Choudhari",
-    course: "DAC",
-  };
+  const [attendance, setAttendance] = useState({});
 
-  const attendanceData = Array.from({ length: 30 }, (_, i) => ({
-    date: `2025-07-${(i + 1).toString().padStart(2, "0")}`,
-    status: i % 3 === 0 ? "Absent" : "Present",
-  }));
+  const[student, setStudent] = useState({});
+  const id = getUserIdFromToken();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 12;
-  const totalPages = Math.ceil(attendanceData.length / recordsPerPage);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getStudentAttendance(id);
+        setAttendance(data);
+      } catch (error) {
+        console.error("Failed to fetch attendance data:", error);
+      }
+    };
 
-  const indexOfLast = currentPage * recordsPerPage;
-  const indexOfFirst = indexOfLast - recordsPerPage;
-  const currentData = attendanceData.slice(indexOfFirst, indexOfLast);
+    fetchData();
+  }, [id]);
 
-  const totalPresentDays = attendanceData.filter(
-    (entry) => entry.status === "Present"
-  ).length;
+  useEffect(() => {
+    const fetchStudentData = async (id) => {
+      try {
+        const data = await getStudentProfile(id);
+        setStudent(data);
+      } catch (error) {
+        console.error("Failed to fetch attendance data:", error);
+      }
+    };
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+    fetchStudentData(id);
+  }, [id]);
 
   return (
-    // 👇 Full-page flex container
     <div className="d-flex flex-column min-vh-100">
       <StudentNavbar />
       <div className="container-fluid flex-grow-1 mt-2">
@@ -47,91 +54,50 @@ function StudentAttendance() {
           <div className="col-10">
             <h2 className="mb-4 text-center">Student Attendance</h2>
 
-            <div className="table-responsive">
-              <table className="table table-striped table-bordered table-hover">
-                <thead className="table-primary">
-                  <tr>
-                    <th>Roll No.</th>
-                    <th>Name</th>
-                    <th>Course</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentData.map((entry, index) => (
-                    <tr key={index}>
-                      <td>{student.rollNo}</td>
+            {attendance && (
+              <div className="table-responsive">
+                <table className="table table-bordered table-striped">
+                  <thead className="table-primary">
+                    <tr>
+                      <th>Roll No.</th>
+                      <th>Name</th>
+                      <th>Course</th>
+                      <th>Total Working Days</th>
+                      <th>Days Present</th>
+                      <th>Days Absent</th>
+                      <th>Attendance %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{student.id}</td>
                       <td>{student.name}</td>
-                      <td>{student.course}</td>
-                      <td>{entry.date}</td>
+                      <td>{student.courseName}</td>
+                      <td>{attendance.totalWorkingDays}</td>
                       <td>
-                        <span
-                          className={`badge ${
-                            entry.status === "Present"
-                              ? "bg-success"
-                              : "bg-danger"
-                          }`}
-                        >
-                          {entry.status}
+                        <span className="badge bg-success">
+                          {attendance.presentDays}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="badge bg-danger">
+                          {attendance.absentDays}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="badge bg-info">
+                          {attendance.attendancePercentage}%
                         </span>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colSpan="4" className="text-end fw-bold">
-                      Total Days Present:
-                    </td>
-                    <td>
-                      <span className="badge bg-info">{totalPresentDays}</span>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-
-            <nav className="d-flex justify-content-center">
-              <ul className="pagination">
-                <li className={`page-item ${currentPage === 1 && "disabled"}`}>
-                  <button
-                    className="page-link"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                  >
-                    Previous
-                  </button>
-                </li>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <li
-                    key={i}
-                    className={`page-item ${currentPage === i + 1 && "active"}`}
-                  >
-                    <button
-                      className="page-link"
-                      onClick={() => handlePageChange(i + 1)}
-                    >
-                      {i + 1}
-                    </button>
-                  </li>
-                ))}
-                <li
-                  className={`page-item ${
-                    currentPage === totalPages && "disabled"
-                  }`}
-                >
-                  <button
-                    className="page-link"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                  >
-                    Next
-                  </button>
-                </li>
-              </ul>
-            </nav>
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

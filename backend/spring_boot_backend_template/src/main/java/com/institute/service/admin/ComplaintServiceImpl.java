@@ -5,9 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.institute.dto.admin.ComplaintsDto;
-import com.institute.dto.complaint.DisplayComplaintDto;
-import com.institute.exception.customexceptions.ApiException;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +35,6 @@ public class ComplaintServiceImpl implements ComplaintService{
                 .map(complaint -> {
                     ComplaintResponseDTO dto = new ComplaintResponseDTO();
                     dto.setId(complaint.getId());
-
-//                    CreatedAt IS 'date' in table
                     dto.setDate(complaint.getCreatedAt());
                     dto.setDescription(complaint.getDescription());
                     dto.setStatus(complaint.getStatus());
@@ -77,7 +73,6 @@ public class ComplaintServiceImpl implements ComplaintService{
         return "Complaint deleted.";
     }
 
-
     @Override
     public ComplaintsDto getComplaintById(Long complaintId) {
         Complaints complaint = complaintDao.findById(complaintId)
@@ -112,6 +107,5 @@ public class ComplaintServiceImpl implements ComplaintService{
         return complaintDao.findDtoById(id)
                 .orElseThrow(() -> new ApiException("Complaint not found with ID: " + id));
     }
-
 
 }

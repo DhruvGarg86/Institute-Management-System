@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 // ADMIN IMPORTSimport Login from './pages/admin/Login';
 import Dashboard from "./pages/admin/Dashboard";
 import AddStudent from "./pages/admin/AddStudent";
+import AddStudentMarks from "./pages/admin/AddStudentMarks";
 import EditStudent from "./pages/admin/EditStudent";
 import StudentMarks from "./pages/admin/StudentMarks";
 import DisplayStudent from "./pages/admin/DisplayStudent";
@@ -42,6 +43,7 @@ import TeacherStudentMarksOverview from "./pages/teacher/TeacherStudentMarksOver
 import TeacherDisplayTeacher from "./pages/teacher/TeacherDisplayTeacher";
 import TeacherDisplayCourse from "./pages/teacher/TeacherDisplayCourse";
 import CourseSubjectsPage from "./pages/teacher/CourseSubjectsPage";
+import TeacherChangePassword from "./pages/teacher/TeacherChangePassword";
 
 // STUDENT IMPORTS
 import StudentMarksOverview from "./pages/admin/StudentMarksOverview";
@@ -51,12 +53,11 @@ import StudentDashboard from "./pages/student/StudentDashboard";
 import StudentProfile from "./pages/student/StudentProfile";
 import StudentFee from "./pages/student/StudentFee";
 import Student_Attendance from "./pages/student/Student_Attendance";
-import StudentExam from "./pages/student/StudentExam";
+import StudentResult from "./pages/student/StudentResult";
 import Registration from "./pages/student/Registration";
 import StudentComplaint from "./pages/student/StudentComplaint";
 import TeacherProfileEdit from "./pages/teacher/TeacherProfileEdit";
-
-
+import ChangePassword from "./pages/student/ChangePassword";
 
 function App() {
   return (
@@ -88,7 +89,12 @@ function App() {
           path="/admin/student-attendance"
           element={<StudentAttendance />}
         />
+
         <Route path="/admin/student-marks" element={<StudentMarksOverview />} />
+        <Route
+          path="/admin/add-student-marks/:id"
+          element={<AddStudentMarks />}
+        />
         <Route path="/admin/student-marks/:id" element={<StudentMarks />} />
         <Route path="/admin/student-fees" element={<StudentFees />} />
         <Route path="/admin/add-teacher" element={<AddTeacher />} />
@@ -148,6 +154,11 @@ function App() {
         />
 
         <Route
+          path="/teacher/change-password"
+          element={<TeacherChangePassword />}
+        />
+
+        <Route
           path="/teacher/display-teachers"
           element={<TeacherDisplayTeacher />}
         />
@@ -180,7 +191,8 @@ function App() {
           element={<StudentComplaint />}
         ></Route>
         <Route path="/student/profile" element={<StudentProfile />} />
-        <Route path="/student/exam" element={<StudentExam />} />
+        <Route path="/student/change-password" element={<ChangePassword />} />
+        <Route path="/student/exam" element={<StudentResult />} />
         <Route path="/student/login" element={<StudentLogin />} />
         <Route path="/student/dashboard" element={<StudentDashboard />}></Route>
       </Routes>

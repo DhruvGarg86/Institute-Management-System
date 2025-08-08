@@ -1,58 +1,88 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import NoticeList from "../../components/Notices/NoticeList";
-import notices from "../../data/notices";
-import StudentSidebar from "../../components/StudentSidebar";
+import StudentSidebar from "./StudentSidebar";
 import StudentAttendanceCard from "../../pages/student/StudentAttendanceCard";
 import StudentMarksCard from "../../pages/student/StudentMarksCard";
 import StudentNavbar from "../../pages/student/StudentNavbar";
-import Footer from "../../components/Footer";
-import "./Student-module.css";
+import { config } from "../../services/config";
 
 function StudentDashboard() {
+  const [notices, setNotices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const res = await axios.get(
+          `${config.serverUrl}/student/notice`
+        );
+        setNotices(res.data);
+      } catch (err) {
+        console.error("Failed to fetch notices", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
   return (
     <>
       <StudentNavbar />
 
-      <div className="d-flex vh-100 bg-light text-dark mt-1">
-        {/* Sidebar - Left Section */}
-        {/* Using a 2-column layout for the sidebar, responsive on medium screens and up */}
-        <div className="d-none d-md-flex col-2 bg-white px-2 flex-column">
-          <div className="flex-grow-1">
+      <div className="d-flex flex-column vh-100">
+        <div className="d-flex flex-grow-1">
+          {/* Sidebar */}
+          <aside className="d-none d-md-block col-md-2 bg-white p-3 border-end">
             <StudentSidebar />
-          </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className="col-12 col-md-10 p-3 overflow-auto bg-light">
+            <div className="row g-3">
+              {/* Notice Board */}
+              <section className="col-12 col-lg-7">
+                <div className="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column">
+                  <h2 className="fs-5 fw-semibold mb-3 text-primary">
+                    Notice Board
+                  </h2>
+                  <div className="overflow-auto flex-grow-1">
+                    {loading ? (
+                      <p>Loading notices...</p>
+                    ) : (
+                      <NoticeList notices={notices} />
+                    )}
+                  </div>
+                </div>
+              </section>
+
+              {/* Attendance & Marks */}
+              <section className="col-12 col-lg-5 d-flex flex-column gap-3">
+                {/* Attendance */}
+                <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
+                  <h2 className="fs-5 fw-semibold mb-3 text-success">
+                    Attendance
+                  </h2>
+                  <div className="d-flex justify-content-center align-items-center flex-grow-1">
+                    <StudentAttendanceCard />
+                  </div>
+                </div>
+
+                Marks
+                <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
+                  <h2 className="fs-5 fw-semibold mb-3 text-info">
+                    Student Marks
+                  </h2>
+                  <div className="d-flex justify-content-center align-items-center flex-grow-1">
+                    <StudentMarksCard />
+                  </div>
+                </div>
+              </section>
+            </div>
+          </main>
         </div>
-
-        {/* Main Content - Right Section */}
-        <main className="col-12 col-md-10 d-flex flex-column p-2 overflow-auto">
-          <div className="d-flex flex-grow-1 flex-column flex-md-row">
-            {/* Left Column (Notice Board) */}
-            <div className="col-12 col-md-7 bg-white p-4 rounded-4 shadow d-flex flex-column my-2">
-              <h2 className="fs-4 fw-semibold mb-4">Notice Board</h2>
-              <div className="flex-grow-1 overflow-y-scroll">
-                {notices && <NoticeList notices={notices} />}
-              </div>
-            </div>
-
-            {/* Right Column (Charts) */}
-            <div className="col-12 col-md-5 d-flex flex-column p-2">
-              {/* Upper Component (Attendance Pie Chart) */}
-              <div className="flex-grow-1 bg-white p-4 rounded-4 shadow d-flex flex-column mb-2">
-                <h2 className="fs-4 fw-semibold">Attendance</h2>
-                <div className="flex-grow-1 d-flex w-100 align-items-center justify-content-center">
-                  <StudentAttendanceCard />
-                </div>
-              </div>
-
-              {/* Lower Component (Student Marks Bar Graph) */}
-              <div className="flex-grow-1 bg-white p-4 rounded-4 shadow d-flex flex-column">
-                <h2 className="fs-4 fw-semibold mb-4">Student Marks</h2>
-                <div className="flex-grow-1 d-flex w-100 align-items-center justify-content-center">
-                  <StudentMarksCard />
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
       </div>
     </>
   );
