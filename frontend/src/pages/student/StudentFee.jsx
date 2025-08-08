@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import StudentNavbar from "./StudentNavbar";
 import StudentSidebar from "./StudentSidebar";
 import axios from "axios";
+import { getUserIdFromToken } from "../../services/Student/StudentService";
 
 function StudentFee() {
   const [fee, setFee] = useState(null);
+  const studentId = getUserIdFromToken();
 
   useEffect(() => {
     const fetchFeeDetails = async () => {
       try {
         const token = localStorage.getItem("token");
-        const studentId = localStorage.getItem("studentId");
 
         if (!studentId || !token) {
           console.error("Missing student ID or token.");
@@ -41,7 +42,7 @@ function StudentFee() {
     };
 
     fetchFeeDetails();
-  }, []);
+  });
 
   return (
     <>

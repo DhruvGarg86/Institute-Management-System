@@ -1,17 +1,53 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import defaultPhoto from "../../assets/student_profile_photo.jpg";
 import "./Student-module.css";
+import { toast } from "react-toastify";
+import { getStudentProfile } from "../../services/Student/studentProfile";
+import { getUserIdFromToken } from "../../services/Student/auth";
+
 
 function StudentNavbar() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+    gender: "",
+    dob: "",
+    admissionDate: "",
+    courseName: "",
+    status: "",
+    imagePath: "",
+  });
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const studentId = getUserIdFromToken();
+      if (!studentId) {
+        return;
+      }
+
+      try {
+        const response = await getStudentProfile(studentId);
+        setProfile(response);
+        console.log(response);
+      } catch (err) {
+        console.error("Failed to fetch profile:", err);
+        toast.error("Could not load profile");
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleLogout = () => {
     setDropdownOpen(false);
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
     setTimeout(() => {
-      navigate("/");
+      navigate("/login");
     }, 500);
   };
 
@@ -32,12 +68,15 @@ function StudentNavbar() {
         <h4 className="navbar-brand m-0">STUDENT DASHBOARD</h4>
 
         <div className="dropdown" ref={dropdownRef}>
+          <span className="me-2 fw-bold">
+            {profile.name}
+          </span>
           <img
-            src={defaultPhoto}
+            src={profile.imagePath}
             alt="Profile"
             className="rounded-circle"
             style={{ width: "40px", height: "40px", cursor: "pointer" }}
-            onClick={() => setDropdownOpen(!dropdownOpen)}
+            onClick={() => setDropdownOpen(!dropdownOpen)} u
           />
           {dropdownOpen && (
             <ul
@@ -79,6 +118,7 @@ function StudentNavbar() {
               </li>
             </ul>
           )}
+
         </div>
       </div>
     </nav>

@@ -2,16 +2,23 @@ import axios from "axios";
 import { getToken } from "../Student/auth";
 import { config } from "../config";
 
-const API_BASE_URL = "http://localhost:8080/api/student"; // adjust if needed
-
 
 export const getStudentProfile = async (studentId) => {
-  const token = getToken();
-  return axios.get(`${config.serverUrl}/profile/${studentId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const token = getToken();
+    const response = await axios.get(
+      `${config.serverUrl}/student/profile/${studentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch student profile:", error);
+    throw error;
+  }
 };
 
 export const updateStudentProfile = async (studentId, profileData) => {

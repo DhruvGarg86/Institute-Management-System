@@ -53,7 +53,7 @@ import StudentDashboard from "./pages/student/StudentDashboard";
 import StudentProfile from "./pages/student/StudentProfile";
 import StudentFee from "./pages/student/StudentFee";
 import Student_Attendance from "./pages/student/Student_Attendance";
-import StudentExam from "./pages/student/StudentExam";
+import StudentResult from "./pages/student/StudentResult";
 import Registration from "./pages/student/Registration";
 import StudentComplaint from "./pages/student/StudentComplaint";
 import TeacherProfileEdit from "./pages/teacher/TeacherProfileEdit";
@@ -190,7 +190,7 @@ function App() {
         ></Route>
         <Route path="/student/profile" element={<StudentProfile />} />
         <Route path="/student/change-password" element={<ChangePassword />} />
-        <Route path="/student/exam" element={<StudentExam />} />
+        <Route path="/student/exam" element={<StudentResult />} />
         <Route path="/student/login" element={<StudentLogin />} />
         <Route path="/student/dashboard" element={<StudentDashboard />}></Route>
       </Routes>

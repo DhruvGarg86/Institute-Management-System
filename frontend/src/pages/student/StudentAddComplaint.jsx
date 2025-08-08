@@ -1,20 +1,34 @@
 import React, { useState } from "react";
+import { getUserIdFromToken } from "../../services/Student/StudentService";
+import axios from "axios";
 
 function StudentComplaintForm({ onClose }) {
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const studentId = getUserIdFromToken();
 
+  const addComplaint = async () => {
     const complaint = {
       description: description,
-      status: "ACTIVE",
-      studentId: 1
     };
 
-    console.log("Complaint DTO to send:", complaint);
-    setDescription("");
-    onClose();
+    try {
+      const response = await axios.post(
+        `http://localhost:5045/api/StudentComplaint/${studentId}`,
+        complaint
+      );
+      console.log("Complaint added successfully:", response.data);
+      onClose(); // Only call onClose here
+    } catch (error) {
+      console.error("Error adding complaint:", error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addComplaint();
+    console.log("Complaint DTO to send:", { description });
+    // No need for setDescription(description);
   };
 
   return (
@@ -30,7 +44,7 @@ function StudentComplaintForm({ onClose }) {
         zIndex: 1050,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       <div
@@ -42,7 +56,7 @@ function StudentComplaintForm({ onClose }) {
           width: "90%",
           maxWidth: "500px",
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-          position: "relative"
+          position: "relative",
         }}
       >
         <div className="d-flex justify-content-between align-items-center mb-3">

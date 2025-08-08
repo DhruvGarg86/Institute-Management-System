@@ -88,7 +88,7 @@ function StudentSidebar() {
               className={`accordion-button ${isActive("/student/exam") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
-              Exam
+              Result
             </button>
           </h2>
         </div>

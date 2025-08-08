@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import StudentSidebar from "./StudentSidebar";
 import "./Student-module.css";
@@ -7,34 +7,41 @@ import StudentNavbar from "./StudentNavbar";
 
 import {
   getStudentAttendance,
+  getStudentProfile,
   getUserIdFromToken,
 } from "../../services/Student/StudentService";
 
 function StudentAttendance() {
-  const [attendance, setAttendance] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [attendance, setAttendance] = useState({});
 
-  const student = {
-    rollNo: "101",
-    name: "Vedant Choudhari",
-    course: "DAC",
-  };
+  const[student, setStudent] = useState({});
+  const id = getUserIdFromToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const id = getUserIdFromToken();
         const data = await getStudentAttendance(id);
         setAttendance(data);
       } catch (error) {
         console.error("Failed to fetch attendance data:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    const fetchStudentData = async (id) => {
+      try {
+        const data = await getStudentProfile(id);
+        setStudent(data);
+      } catch (error) {
+        console.error("Failed to fetch attendance data:", error);
+      }
+    };
+
+    fetchStudentData(id);
+  }, [id]);
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -47,9 +54,7 @@ function StudentAttendance() {
           <div className="col-10">
             <h2 className="mb-4 text-center">Student Attendance</h2>
 
-            {loading ? (
-              <p>Loading...</p>
-            ) : attendance ? (
+            {attendance && (
               <div className="table-responsive">
                 <table className="table table-bordered table-striped">
                   <thead className="table-primary">
@@ -65,9 +70,9 @@ function StudentAttendance() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{student.rollNo}</td>
+                      <td>{student.id}</td>
                       <td>{student.name}</td>
-                      <td>{student.course}</td>
+                      <td>{student.courseName}</td>
                       <td>{attendance.totalWorkingDays}</td>
                       <td>
                         <span className="badge bg-success">
@@ -81,15 +86,13 @@ function StudentAttendance() {
                       </td>
                       <td>
                         <span className="badge bg-info">
-                          {attendance.attendancePercentage.toFixed(2)}%
+                          {attendance.attendancePercentage}%
                         </span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            ) : (
-              <p>No attendance data available.</p>
             )}
           </div>
         </div>

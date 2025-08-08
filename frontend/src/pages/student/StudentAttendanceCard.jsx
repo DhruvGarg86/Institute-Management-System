@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from "react";
 import MyPieChart from "./MyPieChart";
-import { getStudentAttendance, getUserIdFromToken } from "../../services/Student/StudentService"; // Adjust path
+import { toast } from "react-toastify";
+import { getUserIdFromToken } from "../../services/Student/StudentService"; // Adjust path
+import axios from "axios";
+import { config } from "../../services/config";
 
 
 function StudentAttendanceCard() {
-  const [data, setData] = useState(null);
+  const [datas, setDatas] = useState({
+    studentId: '',
+    presentDays: '',
+    absentDays: '',
+    totalWorkingDays: '',
+    attendancePercentage: '',
+  });
   const studentId = getUserIdFromToken();
 
   useEffect(() => {
     if (!studentId) return;
 
-    getStudentAttendance(studentId)
-      .then((attendance) => {
-        const chartData = [
-          { x: "Present", y: attendance.presentDays },
-          { x: "Absent", y: attendance.absentDays },
-        ];
-        setData(chartData);
-      })
-      .catch((error) => {
-        console.error("Error fetching attendance:", error);
-      });
+    const fetchData = async (studentId) => {
+      try {
+        const response = await axios.get(`${config.serverUrl}/student/dashboard/attendance/${studentId}`);
+        const data = response.data;
+        setDatas(data);
+      } catch (error) {
+        toast.error("Failed to load attendance data");
+        console.error("Failed to fetch attendance data:", error);
+      }
+    };
+
+    fetchData(studentId);
   }, [studentId]);
 
   return (
-    <div style={{ height: "300px" }} className="text-center w-100">
-      {data ? <MyPieChart data={data} /> : <p>Loading attendance...</p>}
+    <div style={{ height: "150px" }} className="text-center w-100">
+      {datas ? <MyPieChart data={datas} /> : <p>Loading attendance...</p>}
     </div>
   );
 }

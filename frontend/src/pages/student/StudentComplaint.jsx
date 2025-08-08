@@ -12,8 +12,9 @@ function StudentComplaint() {
     if (!token) return null;
     try {
       const decoded = JSON.parse(atob(token.split(".")[1]));
-      return decoded.id; // adjust based on your token structure
+      return decoded.id; 
     } catch (e) {
+      console.log(e);
       return null;
     }
   };
@@ -28,7 +29,7 @@ function StudentComplaint() {
 
       try {
         const response = await axios.get(
-          `http://localhost:8080/student/notice/${studentId}`
+          `http://localhost:8080/student/complaints/${studentId}`
         );
         setComplaints(response.data);
       } catch (err) {

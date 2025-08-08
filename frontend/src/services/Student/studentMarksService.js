@@ -7,7 +7,7 @@ export async function getStudentMarks(studentId) {
   try {
     const token = localStorage.getItem("token");
 
-    const url = `${config.serverUrl}/student/marks/${studentId}`;
+    const url = `${config.serverUrl}/student/dashboard/marks/${studentId}`;
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",

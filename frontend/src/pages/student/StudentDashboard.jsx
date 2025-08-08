@@ -6,18 +6,16 @@ import StudentAttendanceCard from "../../pages/student/StudentAttendanceCard";
 import StudentMarksCard from "../../pages/student/StudentMarksCard";
 import StudentNavbar from "../../pages/student/StudentNavbar";
 import { config } from "../../services/config";
-import { getUserIdFromToken } from "../../services/Student/StudentService";
 
 function StudentDashboard() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const studentId = getUserIdFromToken();
 
   useEffect(() => {
     const fetchNotices = async () => {
       try {
         const res = await axios.get(
-          `${config.serverUrl}/student/notice/${studentId}`
+          `${config.serverUrl}/student/notice`
         );
         setNotices(res.data);
       } catch (err) {
@@ -72,7 +70,7 @@ function StudentDashboard() {
                   </div>
                 </div>
 
-                {/* Marks */}
+                Marks
                 <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
                   <h2 className="fs-5 fw-semibold mb-3 text-info">
                     Student Marks

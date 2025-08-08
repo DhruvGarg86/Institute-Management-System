@@ -9,7 +9,7 @@ function StudentMarksCard() {
   const studentId = getUserIdFromToken(); // Assuming you have a function to get the student ID
 
   useEffect(() => {
-    const fetchMarks = async () => {
+    const fetchMarks = async (studentId) => {
       try {
         const response = await getStudentMarks(studentId);
         setMarksData(response);
@@ -18,7 +18,7 @@ function StudentMarksCard() {
       }
     };
 
-    fetchMarks();
+    fetchMarks(studentId);
   }, [studentId]);
 
   if (!marksData) return <p>Loading...</p>;

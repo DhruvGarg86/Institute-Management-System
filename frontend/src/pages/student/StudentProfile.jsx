@@ -6,20 +6,19 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-import defaultPhoto from "../../assets/student_profile_photo.jpg";
 import { toast } from "react-toastify";
 import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "./StudentNavbar";
-import {
-  getStudentProfile,
-  updateStudentProfile,
-} from "../../services/Student/studentProfile";
+import { getStudentProfile } from "../../services/Student/studentProfile";
 import { getUserIdFromToken } from "../../services/Student/auth";
 import axios from "axios";
 import { config } from "../../services/config";
+import { uploadImageUniversal } from "../../services/image";
 
 function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);
+  const studentId = getUserIdFromToken();
+
   const [profile, setProfile] = useState({
     name: "",
     email: "",
@@ -30,31 +29,19 @@ function StudentProfile() {
     admissionDate: "",
     courseName: "",
     status: "",
-    image: defaultPhoto,
+    imagePath: "",
   });
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const studentId = getUserIdFromToken();
       if (!studentId) {
         toast.error("User not found");
         return;
       }
 
       try {
-        const data = await getStudentProfile(studentId);
-        setProfile({
-          name: data.name,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          address: data.address,
-          image: data.imagePath || defaultPhoto,
-          gender: "Male",
-          dob: "2000-01-01",
-          admissionDate: "2023-07-15",
-          courseName: data.courseName,
-          status: "Active",
-        });
+        const response = await getStudentProfile(studentId);
+        setProfile(response);
       } catch (err) {
         console.error("Failed to fetch profile:", err);
         toast.error("Could not load profile");
@@ -62,15 +49,31 @@ function StudentProfile() {
     };
 
     fetchProfile();
-  }, []);
+  }, [studentId]);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const maxSize = 2 * 1024 * 1024; // 2MB
+
+      if (file.size > maxSize) {
+        toast.warning("File size exceeds 2MB. Please upload a smaller image.");
+        e.target.value = "";
+        return;
+      }
+
+      try {
+        const res = await uploadImageUniversal(file);
+        setProfile((prev) => ({ ...prev, imagePath: res.fileName }));
+        toast.success("Image uploaded successfully");
+      } catch (error) {
+        console.error("Upload error:", error);
+        toast.error("Image upload failed");
+      }
+    }
+  };
 
   const handleSave = async () => {
-    const studentId = getUserIdFromToken();
-    if (!studentId) {
-      toast.error("User not found");
-      return;
-    }
-
     try {
       await axios.put(
         `${config.serverUrl}/student/updateProfile/${studentId}`,
@@ -78,6 +81,7 @@ function StudentProfile() {
           name: profile.name,
           phoneNumber: profile.phoneNumber,
           address: profile.address,
+          imagePath: profile.imagePath,
         },
         {
           headers: {
@@ -90,7 +94,7 @@ function StudentProfile() {
       toast.success("Profile updated successfully");
       setIsEditing(false);
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Update error:", err);
       toast.error("Update failed");
     }
   };
@@ -100,122 +104,101 @@ function StudentProfile() {
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
+  if (!studentId) return null;
+
   return (
     <>
       <StudentNavbar />
-      <div className="container-fluid mt-3">
+      <div className="container-fluid py-4 bg-light" style={{ minHeight: "100vh" }}>
         <div className="row">
           <div className="col-md-2">
             <StudentSidebar />
           </div>
           <div className="col-md-10 d-flex justify-content-center">
-            <div className="card w-100 shadow p-4">
-              {/* Header */}
-              <div className="text-center mb-4">
-                <div className="position-relative d-inline-block">
+            <div className="card shadow rounded-4 w-100" style={{ maxWidth: 900 }}>
+              {/* Profile Image, Name, Social */}
+              <div className="d-flex flex-column align-items-center py-4 border-bottom">
+                <div className="position-relative text-center">
                   <img
-                    src={profile.image}
+                    src={profile.imagePath || "/default-profile.png"}
+                    className="rounded-circle border shadow-sm"
+                    style={{ width: 110, height: 110, objectFit: "cover" }}
                     alt="Profile"
-                    className="rounded-circle shadow"
-                    width="120"
-                    height="120"
-                    style={{ objectFit: "cover" }}
                   />
                   {isEditing && (
                     <input
                       type="file"
+                      accept="image/jpeg, image/png"
                       className="form-control mt-2"
-                      onChange={(e) =>
-                        setProfile((prev) => ({
-                          ...prev,
-                          imageFile: e.target.files[0],
-                          image: URL.createObjectURL(e.target.files[0]),
-                        }))
-                      }
+                      style={{ maxWidth: 200 }}
+                      onChange={handleImageUpload}
                     />
                   )}
                 </div>
-                <h4 className="mt-3">{profile.name}</h4>
-                <div className="d-flex justify-content-center gap-3 mt-2">
-                  <a href="#">
+                <h3 className="mt-3 mb-2">{profile.name}</h3>
+                <div className="d-flex gap-2 mt-2">
+                  <a href="https://facebook.com" className="btn btn-light btn-sm rounded-circle border" target="_blank" rel="noopener noreferrer">
                     <FaFacebookF />
                   </a>
-                  <a href="#">
+                  <a href="https://twitter.com" className="btn btn-light btn-sm rounded-circle border" target="_blank" rel="noopener noreferrer">
                     <FaTwitter />
                   </a>
-                  <a href="#">
+                  <a href="https://instagram.com" className="btn btn-light btn-sm rounded-circle border" target="_blank" rel="noopener noreferrer">
                     <FaInstagram />
                   </a>
-                  <a href="#">
+                  <a href="https://linkedin.com" className="btn btn-light btn-sm rounded-circle border" target="_blank" rel="noopener noreferrer">
                     <FaLinkedinIn />
                   </a>
                 </div>
               </div>
 
-              {/* Profile Fields */}
-              <div className="row">
+              {/* Profile Info Fields */}
+              <div className="row px-4 pt-4 pb-2">
                 {[
-                  { label: "Name", value: profile.name, name: "name" },
-                  {
-                    label: "Phone",
-                    value: profile.phoneNumber,
-                    name: "phoneNumber",
-                  },
-                  { label: "Address", value: profile.address, name: "address" },
+                  { label: "Name", name: "name", editable: true },
+                  { label: "Email", value: profile.email },
+                  { label: "Phone", name: "phoneNumber", editable: true },
+                  { label: "Date of Birth", value: profile.dob },
+                  { label: "Address", name: "address", editable: true },
+                  { label: "Course", value: profile.courseName },
+                  { label: "Gender", value: profile.gender },
+                  { label: "Admission Date", value: profile.admissionDate },
                 ].map((field, idx) => (
-                  <div className="mb-3 col-md-6" key={idx}>
-                    <label className="form-label">{field.label}</label>
-                    {isEditing ? (
+                  <div key={idx} className="col-md-6 mb-3 d-flex align-items-center">
+                    <label className="me-3 fw-bold" style={{ width: "150px" }}>
+                      {field.label}
+                    </label>
+                    {isEditing && field.editable ? (
                       <input
                         type="text"
                         name={field.name}
-                        value={field.value}
+                        value={profile[field.name]}
                         onChange={handleChange}
                         className="form-control"
                       />
                     ) : (
-                      <p className="form-control-plaintext">{field.value}</p>
+                      <div className="text">
+                        {field.value || profile[field.name]}
+                      </div>
                     )}
-                  </div>
-                ))}
-
-                {[
-                  { label: "Email", value: profile.email },
-                  { label: "Gender", value: profile.gender },
-                  { label: "Date of Birth", value: profile.dob },
-                  { label: "Admission Date", value: profile.admissionDate },
-                  { label: "Course", value: profile.courseName },
-                ].map((field, idx) => (
-                  <div className="mb-3 col-md-6" key={idx}>
-                    <label className="form-label">{field.label}</label>
-                    <p className="form-control-plaintext">{field.value}</p>
                   </div>
                 ))}
               </div>
 
               {/* Action Buttons */}
-              <div className="text-center">
+              <div className="d-flex justify-content-center gap-2 pb-4">
                 {isEditing ? (
                   <>
-                    <button
-                      className="btn btn-success me-2"
-                      onClick={handleSave}
-                    >
-                      <FiSave className="me-1" /> Save
+                    <button className="btn btn-success me-2" onClick={handleSave}>
+                      <FiSave className="me-2" /> Save
                     </button>
-                    <button
-                      className="btn btn-secondary me-2"
-                      onClick={() => setIsEditing(false)}
-                    >
+                    <button className="btn btn-secondary" onClick={() => setIsEditing(false)}>
                       Cancel
                     </button>
                   </>
                 ) : (
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    <FiEdit className="me-1" /> Edit Profile
+                  <button className="btn btn-primary" onClick={() => setIsEditing(true)}>
+                    <FiEdit className="me-2" /> Edit Profile
                   </button>
                 )}
               </div>
