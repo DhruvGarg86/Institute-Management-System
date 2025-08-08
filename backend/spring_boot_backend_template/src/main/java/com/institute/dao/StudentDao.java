@@ -57,4 +57,8 @@ public interface StudentDao extends JpaRepository<Student, Long> {
     """)
     List<TopperStudentResponseDto> findAllStudentsWithPercentageForTopper();
     List<Student> findByStatus(Status status);
+
+    @Query("SELECT s.id FROM Student s WHERE s.user.id = :userId")
+    Long findStudentByUserId(Long userId);
+
 }
