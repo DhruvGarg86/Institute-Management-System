@@ -103,6 +103,7 @@ public class ComplaintServiceImpl implements ComplaintService{
             DisplayComplaintDto dto = modelMapper.map(complaint, DisplayComplaintDto.class);
             String fullName = complaint.getStudent().getName();
             dto.setStudentName(fullName);
+            dto.setDate(complaint.getCreatedAt());
             return dto;
         }).collect(Collectors.toList());
     }
