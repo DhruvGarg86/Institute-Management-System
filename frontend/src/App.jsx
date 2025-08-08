@@ -169,7 +169,7 @@ function App() {
         />
 
         <Route
-          path="/teacher/student-marks/:id"
+          path="/teacher/students/marks/:id"
           element={<TeacherStudentMarks />}
         />
 

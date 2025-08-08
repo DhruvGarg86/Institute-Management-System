@@ -1,9 +1,7 @@
-import Navbar from '../../components/Navbar';
-import Sidebar from '../../components/Sidebar';
-import { FaEnvelope } from 'react-icons/fa';
-import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { FaEnvelope } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import {
     AccumulationChartComponent,
@@ -13,9 +11,9 @@ import {
     PieSeries,
     AccumulationDataLabel,
     AccumulationLegend,
-    AccumulationTooltip
-} from '@syncfusion/ej2-react-charts';
-import { Export } from '@syncfusion/ej2-charts';
+    AccumulationTooltip,
+} from "@syncfusion/ej2-react-charts";
+import { Export } from "@syncfusion/ej2-charts";
 import {
     GridComponent,
     ColumnsDirective,
@@ -26,21 +24,21 @@ import {
     PdfExport,
     Toolbar,
     Print,
-    Edit
-} from '@syncfusion/ej2-react-grids';
+    Edit,
+} from "@syncfusion/ej2-react-grids";
 
-import { getStudentById } from '../../services/Admin/Student';
-import TeacherNavbar from './TeacherNavbar';
-import TeacherSidebar from './TeacherSidebar';
+import { getStudentById } from "../../services/Admin/Student";
+import TeacherNavbar from "./TeacherNavbar";
+import TeacherSidebar from "./TeacherSidebar";
 
-function StudentMarks() {
+function TeacherStudentMarks() {
     const [student, setStudent] = useState({
-        image: '',
-        studentId: '',
-        name: '',
-        email: '',
-        dob: '',
-        courseName: '',
+        image: "",
+        studentId: "",
+        name: "",
+        email: "",
+        dob: "",
+        courseName: "",
     });
 
     const { id } = useParams();
@@ -50,7 +48,6 @@ function StudentMarks() {
 
     const [chartData, setChartData] = useState([]);
     const [tableData, setTableData] = useState([]);
-
 
     const getStudent = async () => {
         try {
@@ -68,7 +65,7 @@ function StudentMarks() {
                 Total: item.totalMarks,
                 Obtained: item.marksObtained,
                 Percentage: item.percentage,
-                Grade: item.grade
+                Grade: item.grade,
             }));
 
             setChartData(formattedChartData);
@@ -80,7 +77,6 @@ function StudentMarks() {
             toast.error("Unable to load student");
         }
     };
-
 
     useEffect(() => {
         getStudent();
@@ -102,12 +98,19 @@ function StudentMarks() {
                                 <div className="row mb-4">
                                     <div className="col border rounded mx-2 p-3 d-flex align-items-center justify-content-between">
                                         {/* Left - Student Info */}
-                                        <div className="d-flex align-items-center ms-2" style={{ minWidth: "250px" }}>
+                                        <div
+                                            className="d-flex align-items-center ms-2"
+                                            style={{ minWidth: "250px" }}
+                                        >
                                             <img
                                                 src={student.image || "https://via.placeholder.com/80"}
                                                 alt="Profile"
                                                 className="rounded-circle me-3"
-                                                style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                                                style={{
+                                                    width: "80px",
+                                                    height: "80px",
+                                                    objectFit: "cover",
+                                                }}
                                             />
                                             <div>
                                                 <h5 className="mb-1 fw-bold">{student.name}</h5>
@@ -119,26 +122,40 @@ function StudentMarks() {
                                         </div>
                                         {/* Right - Additional Info */}
                                         <div className="me-3">
-                                            <p className="mb-1"><strong>Roll No:</strong> {student.studentId}</p>
-                                            <p className="mb-1"><strong>DOB:</strong> {student.dob}</p>
-                                            <p className="mb-1"><strong>Course:</strong> {student.courseName}</p>
+                                            <p className="mb-1">
+                                                <strong>Roll No:</strong> {student.studentId}
+                                            </p>
+                                            <p className="mb-1">
+                                                <strong>DOB:</strong> {student.dob}
+                                            </p>
+                                            <p className="mb-1">
+                                                <strong>Course:</strong> {student.courseName}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Chart and Table Row */}
-                                <div className="row g-2 position-relative" style={{ minHeight: '60px' }}>
+                                <div
+                                    className="row g-2 position-relative"
+                                    style={{ minHeight: "60px" }}
+                                >
                                     <button
                                         className="btn btn-outline-primary btn-sm position-absolute"
                                         style={{
-                                            width: 'auto',
+                                            width: "auto",
                                             top: 0,
                                             right: 10,
                                             zIndex: 10,
-                                            padding: '0.25rem 0.75rem',
-                                            fontSize: '0.85rem'
+                                            padding: "0.25rem 0.75rem",
+                                            fontSize: "0.85rem",
                                         }}
-                                        onClick={() => chartRef.current.exportModule.export('PNG', 'Student_Marks')}
+                                        onClick={() =>
+                                            chartRef.current.exportModule.export(
+                                                "PNG",
+                                                "Student_Marks"
+                                            )
+                                        }
                                     >
                                         Download Chart
                                     </button>
@@ -146,32 +163,40 @@ function StudentMarks() {
                                         <AccumulationChartComponent
                                             id="studentMarksChart"
                                             ref={chartRef}
-                                            legendSettings={{ position: 'Bottom' }}
+                                            legendSettings={{ position: "Bottom" }}
                                             tooltip={{ enable: true }}
                                         >
-                                            <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip, Export]} />
+                                            <Inject
+                                                services={[
+                                                    PieSeries,
+                                                    AccumulationDataLabel,
+                                                    AccumulationLegend,
+                                                    AccumulationTooltip,
+                                                    Export,
+                                                ]}
+                                            />
                                             <AccumulationSeriesCollectionDirective>
                                                 <AccumulationSeriesDirective
-                                                    type='Pie'
+                                                    type="Pie"
                                                     dataSource={chartData}
-                                                    innerRadius='50%'
-                                                    xName='name'
-                                                    yName='value'
+                                                    innerRadius="50%"
+                                                    xName="name"
+                                                    yName="value"
                                                     dataLabel={{
                                                         visible: true,
-                                                        position: 'Inside',
-                                                        name: 'value',
-                                                        font: { fontWeight: '600' }
+                                                        position: "Inside",
+                                                        name: "value",
+                                                        font: { fontWeight: "600" },
                                                     }}
                                                     explode={true}
-                                                    explodeOffset='10%'
+                                                    explodeOffset="10%"
                                                     startAngle={0}
                                                     endAngle={360}
                                                 />
                                             </AccumulationSeriesCollectionDirective>
                                         </AccumulationChartComponent>
                                     </div>
-                                    <div className="col-8 rounded" style={{ marginTop: '80px' }}>
+                                    <div className="col-8 rounded" style={{ marginTop: "80px" }}>
                                         <GridComponent
                                             ref={gridRef}
                                             dataSource={tableData}
@@ -179,28 +204,50 @@ function StudentMarks() {
                                             allowExcelExport={true}
                                             allowPdfExport={true}
                                             allowPrint={true}
-                                            toolbar={['ExcelExport', 'PdfExport', 'Print', 'Edit']}
+                                            toolbar={["ExcelExport", "PdfExport", "Print", "Edit"]}
                                             editSettings={{ allowEditing: true }}
                                             toolbarClick={(args) => {
-                                                if (args.item.id.includes('pdfexport')) {
+                                                if (args.item.id.includes("pdfexport")) {
                                                     gridRef.current.pdfExport();
                                                 }
-                                                if (args.item.id.includes('excelexport')) {
+                                                if (args.item.id.includes("excelexport")) {
                                                     gridRef.current.excelExport();
                                                 }
-                                                if (args.item.id.includes('print')) {
+                                                if (args.item.id.includes("print")) {
                                                     gridRef.current.print();
                                                 }
                                             }}
                                         >
                                             <ColumnsDirective>
                                                 <ColumnDirective field="Subject" headerText="Subject" />
-                                                <ColumnDirective field="Total" headerText="Total Marks" textAlign="center" />
-                                                <ColumnDirective field="Obtained" headerText="Marks Obtained" textAlign="center" />
-                                                <ColumnDirective field="Percentage" headerText="Percentage" textAlign="center" />
+                                                <ColumnDirective
+                                                    field="Total"
+                                                    headerText="Total Marks"
+                                                    textAlign="center"
+                                                />
+                                                <ColumnDirective
+                                                    field="Obtained"
+                                                    headerText="Marks Obtained"
+                                                    textAlign="center"
+                                                />
+                                                <ColumnDirective
+                                                    field="Percentage"
+                                                    headerText="Percentage"
+                                                    textAlign="center"
+                                                />
                                                 <ColumnDirective field="Grade" headerText="Grade" />
                                             </ColumnsDirective>
-                                            <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Edit]} />
+                                            <Inject
+                                                services={[
+                                                    Sort,
+                                                    Filter,
+                                                    ExcelExport,
+                                                    PdfExport,
+                                                    Toolbar,
+                                                    Print,
+                                                    Edit,
+                                                ]}
+                                            />
                                         </GridComponent>
                                     </div>
                                 </div>
@@ -213,4 +260,4 @@ function StudentMarks() {
     );
 }
 
-export default StudentMarks;
+export default TeacherStudentMarks;

@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import com.institute.dto.admin.ComplaintsDto;
 
+import com.institute.dto.complaint.DisplayComplaintDto;
+import com.institute.exception.customexceptions.ApiException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,12 +95,13 @@ public class ComplaintServiceImpl implements ComplaintService{
     @Override
     public List<DisplayComplaintDto> getComplaintsByStudent(Long studentId) {
         List<Complaints> complaints = complaintDao
-                .findByStudentIdAndDeletedFalseOrderByCreatedAtDesc(studentId);
+                .findAllComplaintsByStudentId(studentId);
 
         return complaints.stream().map(complaint -> {
             DisplayComplaintDto dto = modelMapper.map(complaint, DisplayComplaintDto.class);
             String fullName = complaint.getStudent().getName();
             dto.setStudentName(fullName);
+            dto.setStatus(complaint.getStatus());
             dto.setDate(complaint.getCreatedAt());
             return dto;
         }).collect(Collectors.toList());

@@ -8,11 +8,16 @@ const NoticeList = ({ notices }) => (
           key={n.id}
         >
           <div className="row2-second-notice-item">
+            <p style={{ marginBottom: "0px" }}>{n.date}</p>
             <p
-              style={{ fontSize: "1rem", marginBottom: '0px', fontWeight: "bold" }}
+              style={{ fontSize: "1.2rem", marginBottom: '0px', fontWeight: "bold" }}
               dangerouslySetInnerHTML={{ __html: n.title }}
             />
-            <p style={{ marginBottom: "20px" }}>{n.date}</p>
+            <p
+              style={{ fontSize: "0.8rem", marginBottom: '20px' }}
+              dangerouslySetInnerHTML={{ __html: n.description }}
+            />
+            
           </div>
         </a>
       ))
