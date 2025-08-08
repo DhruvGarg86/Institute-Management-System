@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { uploadImageUniversal } from '../../services/image';
 import { addStudent, getCoursesList } from '../../services/Admin/Student';
+import { config } from '../../services/config';
 
 function AddStudent() {
 
@@ -38,7 +39,10 @@ function AddStudent() {
 
             try {
                 const res = await uploadImageUniversal(file);
-                setStudent(prev => ({ ...prev, imagePath: res.fileName }));
+                console.log(res);
+                const imageUrl = `${config.serverUrl}${res.fileName}`;
+                console.log(imageUrl);
+                setStudent(prev => ({ ...prev, imagePath: imageUrl }));
                 toast.success("Image uploaded successfully");
             } catch (error) {
                 console.log(error);
