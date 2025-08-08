@@ -6,6 +6,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/f
 import { editProfile, fetchProfile, getAdminIdFromToken, uploadImage } from "../../services/Admin/Profile";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { config } from "../../services/config";
 
 function ProfileEdit() {
 
@@ -41,7 +42,8 @@ function ProfileEdit() {
         if (file) {
             try {
                 const res = await uploadImage(file);
-                setProfile((prev) => ({ ...prev, image: res.fileName }));
+                const profileUrl = `${config.serverUrl}${res.fileName}`;
+                setProfile(prev => ({ ...prev, image: profileUrl }));
                 toast.success("Image uploaded successfully");
             } catch (err) {
                 toast.error("Image upload failed");
