@@ -41,7 +41,6 @@ function AddStudent() {
                 const res = await uploadImageUniversal(file);
                 console.log(res);
                 const imageUrl = `${config.serverUrl}${res.fileName}`;
-                console.log(imageUrl);
                 setStudent(prev => ({ ...prev, imagePath: imageUrl }));
                 toast.success("Image uploaded successfully");
             } catch (error) {

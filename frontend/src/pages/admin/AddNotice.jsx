@@ -6,11 +6,12 @@ import { useRef, useState } from 'react';
 import { submitNotice, uploadPdf } from '../../services/Admin/Notices';
 import { useNavigate } from 'react-router-dom';
 import { getAdminIdFromToken } from '../../services/Admin/Profile';
+import { config } from '../../services/config';
 
 function AddNotice() {
-    
+
     const id = getAdminIdFromToken();
-    
+
     const [notice, setNotice] = useState({
         adminId: id,
         audience: '',
@@ -29,7 +30,8 @@ function AddNotice() {
         if (file) {
             try {
                 const res = await uploadPdf(file);
-                setNotice(prev => ({ ...prev, filePath: res.fileName }));
+                const noticeUrl = `${config.serverUrl}${res.fileName}`;
+                setNotice(prev => ({ ...prev, filePath: noticeUrl }));
                 toast.success("PDF uploaded successfully");
             } catch (error) {
                 console.log(error);
