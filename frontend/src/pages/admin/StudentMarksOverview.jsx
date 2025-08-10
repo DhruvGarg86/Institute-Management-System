@@ -18,7 +18,7 @@ function StudentMarksOverview() {
             const response = await getStudentMarks();
             setStudent(response);
         } catch (error) {
-            console.error(error);
+            // console.error(error);
             toast.error("Unable to load students");
         }
     };
@@ -30,7 +30,7 @@ function StudentMarksOverview() {
             const response = await getCourseTopper();
             setStudents(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to load students");
         }
     }

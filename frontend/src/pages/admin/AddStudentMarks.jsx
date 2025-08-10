@@ -82,7 +82,7 @@ function StudentMarks() {
         );
         setAvailableSubjects(response.data); // assuming API returns array of subject names
       } catch (error) {
-        console.error("Failed to fetch subjects", error);
+        // console.error("Failed to fetch subjects", error);
         toast.error("Unable to load subjects.");
       }
     };
@@ -162,7 +162,7 @@ function StudentMarks() {
       setSelectedSubject("");
       setMarksInput("");
     } catch (error) {
-      console.error("Error saving marks:", error);
+      // console.error("Error saving marks:", error);
       toast.error(
         error.response?.data?.message || "Failed to add/update marks."
       );

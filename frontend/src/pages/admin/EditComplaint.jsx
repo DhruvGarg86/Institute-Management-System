@@ -23,10 +23,10 @@ function EditComplaint() {
         try {
             const response = await getComplaintById(id);
             setComplaint(response);
-            console.log(response);
+            // console.log(response);
         } catch (error) {
             toast.error("Failed to load complaint");
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -51,7 +51,7 @@ function EditComplaint() {
             }, 500);
         } catch (error) {
             toast.error("Failed to update complaint status");
-            console.error(error);
+            // console.error(error);
         }
     };
 

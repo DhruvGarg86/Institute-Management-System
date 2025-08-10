@@ -22,7 +22,7 @@ function AddSubject() {
       await addSubject(subject);
       toast.success("Subject added successfully");
       navigate("/admin/display-subjects");
-      console.log('success');
+      // console.log('success');
     } catch (error) {
       toast.error("Failed to add subject");
       console.error(error);

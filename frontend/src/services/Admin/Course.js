@@ -123,3 +123,19 @@ export async function getCourseById(id) {
     throw error;
   }
 }
+
+export const updateCourseById = async (courseId, payload, headers = {}) => {
+  const token = localStorage.getItem("token");
+  return axios.put(
+    `${config.serverUrl}/admin/edit-course/${courseId}`,
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        ...headers,
+      },
+    }
+  );
+};
+

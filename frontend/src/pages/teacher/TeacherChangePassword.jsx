@@ -41,8 +41,7 @@ function TeacherChangePassword() {
       return;
     }
 
-    // Simulate API call
-    console.log("Password change data:", formData);
+    // console.log("Password change data:", formData);
     toast.success("Password changed successfully!");
 
     // Reset form

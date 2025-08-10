@@ -18,11 +18,11 @@ function DisplayNotice() {
             if (response.length == 0) {
                 toast.info("No notices to display");
             } else {
-                console.log(response);
+                // console.log(response);
                 setNotices(response);
             }
         } catch (error) {
-            console.error("Error fetching notices:", error);
+            // console.error("Error fetching notices:", error);
         }
     };
 
@@ -40,7 +40,7 @@ function DisplayNotice() {
 
             await fetchNotices();
         } catch (error) {
-            console.error("Error deleting notice:", error);
+            // console.error("Error deleting notice:", error);
             toast.error("Failed to delete notice");
         }
     };

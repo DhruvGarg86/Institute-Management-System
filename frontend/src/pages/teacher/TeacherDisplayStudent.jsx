@@ -22,29 +22,29 @@ import { toast } from "react-toastify";
 function TeacherDisplayStudent() {
 
   const id = getUserIdFromToken();
-  console.log("DIPSLAY STUDENT: " + id)
+  // console.log("DIPSLAY STUDENT: " + id)
 
- const navigate = useNavigate();
-    const gridRef = useRef(null);
+  const navigate = useNavigate();
+  const gridRef = useRef(null);
 
-    const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState([]);
 
-    const getStudents = async (id) => {
-        try{
-            
-            const response = await getAllStudents(id);
-            
-            setStudents(response);
-            toast.success("Students loaded successfully");
-        }catch(error){
-            console.log(error);
-            toast.error("Unable to load students");
-        }
+  const getStudents = async (id) => {
+    try {
+
+      const response = await getAllStudents(id);
+
+      setStudents(response);
+      toast.success("Students loaded successfully");
+    } catch (error) {
+      // console.log(error);
+      toast.error("Unable to load students");
     }
+  }
 
-    useEffect(() => {
-        getStudents(id);
-    }, [id])
+  useEffect(() => {
+    getStudents(id);
+  }, [id])
 
   return (
     <>
@@ -78,16 +78,17 @@ function TeacherDisplayStudent() {
               >
                 <ColumnsDirective>
                   <ColumnDirective
-                    field="avatar"
+                    field="image"
                     headerText="Profile"
                     width="60"
                     template={(props) => (
                       <img
-                        src={props.avatar}
+                        src={props.image}
                         alt="avatar"
                         style={{
                           borderRadius: "50%",
-                          height: "45px",
+                          height: "40px",
+                          width: "40px",
                           objectFit: "cover",
                         }}
                       />

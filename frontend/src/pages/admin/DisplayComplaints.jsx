@@ -24,7 +24,7 @@ function DisplayComplaint() {
             setComplaint(response);
             toast.success("Complaints loaded successfully!");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Failed to load complaints");
         }
     }
@@ -40,7 +40,7 @@ function DisplayComplaint() {
             toast.success("Complaint deleted successfully!");
             getComplaints();
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Failed to delete complaint");
         }
     }

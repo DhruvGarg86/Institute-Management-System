@@ -16,4 +16,5 @@ public class StudentNoticeResponseDto {
     private LocalDate date;
     private String title;
     private String description;
+    private String filePath;
 }

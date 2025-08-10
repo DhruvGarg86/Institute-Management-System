@@ -18,7 +18,7 @@ function StudentComplaintForm({ onClose }) {
       );
       setRequiredId(response.data);
     } catch (error) {
-      console.error("Error fetching requiredId:", error);
+      // console.error("Error fetching requiredId:", error);
     }
   }
 
@@ -33,17 +33,17 @@ function StudentComplaintForm({ onClose }) {
     };
 
     const url = `http://localhost:5045/api/StudentComplaint/${requiredId}`;
-    console.log("POST URL:", url);
+    // console.log("POST URL:", url);
 
     try {
       const response = await axios.post(url, complaint);
-      console.log("Complaint added successfully:", response.data);
+      // console.log("Complaint added successfully:", response.data);
       const id = response.data.complaintId;
       setComplaintId(id);
       toast.success("Complaint added successfully, Complaint ID: " + id);
       onClose();
     } catch (error) {
-      console.error("Error adding complaint:", error);
+      // console.error("Error adding complaint:", error);
       toast.error("Error adding complaint.");
     }
   };
@@ -59,7 +59,7 @@ function StudentComplaintForm({ onClose }) {
     }
 
     await addComplaint();
-    console.log("Complaint DTO to send:", { description });
+    // console.log("Complaint DTO to send:", { description });
   };
 
 

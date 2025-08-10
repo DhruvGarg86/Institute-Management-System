@@ -34,7 +34,7 @@ function AddNotice() {
                 setNotice(prev => ({ ...prev, filePath: noticeUrl }));
                 toast.success("PDF uploaded successfully");
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 toast.error("PDF upload failed");
             }
         }
@@ -62,7 +62,7 @@ function AddNotice() {
             editorRef.current.dataBind();
             navigate("/admin/display-notices");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to add notice");
         }
     };

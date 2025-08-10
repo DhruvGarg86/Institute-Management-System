@@ -39,12 +39,12 @@ function AddStudent() {
 
             try {
                 const res = await uploadImageUniversal(file);
-                console.log(res);
+                // console.log(res);
                 const imageUrl = `${config.serverUrl}${res.fileName}`;
                 setStudent(prev => ({ ...prev, imagePath: imageUrl }));
                 toast.success("Image uploaded successfully");
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 toast.error("Image upload failed");
             }
         }
@@ -56,7 +56,7 @@ function AddStudent() {
             const response = await getCoursesList();
             setCourses(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to get courses");
         }
     };

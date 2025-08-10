@@ -24,7 +24,7 @@ function TeacherDisplayTeacher() {
         try {
             const data = await getAllTeachers();
             setTeachers(data);
-            console.log(data);
+            // console.log(data);
         } catch (error) {
             console.error("Error loading teachers:", error); // For debugging purposes only
             toast.error("Failed to load teachers. Please try again later.");
@@ -36,7 +36,7 @@ function TeacherDisplayTeacher() {
         loadAllTeachers();
     }, []);
 
- 
+
     return (
         <>
             <TeacherNavbar />
@@ -68,16 +68,16 @@ function TeacherDisplayTeacher() {
 
                                 <ColumnsDirective>
                                     <ColumnDirective field='image' headerText='Profile' width='60' allowSorting={false}
-                                    template={(props) => (
-                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '38px', width: '38px', objectFit: 'cover' }} />
-                                    )} />
+                                        template={(props) => (
+                                            <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '38px', width: '38px', objectFit: 'cover' }} />
+                                        )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="Center" width='87' />
                                     <ColumnDirective field='phoneNumber' headerText='Contact' textAlign="Center" width='80' />
                                     <ColumnDirective field='address' headerText='Address' width='110' />
                                     <ColumnDirective field='email' headerText='Email' textAlign="Center" width='130' />
                                     <ColumnDirective field='joiningDate' headerText='Joining' textAlign="Center" width='75' />
                                     <ColumnDirective field='status' headerText='Status' width='95' />
-                                    
+
                                 </ColumnsDirective>
 
                                 <Inject services={[Sort, Filter, ExcelExport, PdfExport, Toolbar, Print, Page, Search]} />

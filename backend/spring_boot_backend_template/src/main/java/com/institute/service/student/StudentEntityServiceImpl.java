@@ -25,7 +25,7 @@ public class StudentEntityServiceImpl implements StudentEntityService{
     public List<StudentNoticeResponseDto> getStudentNotices() {
         List<Notice> notices = noticeDao.findByAudienceAndStatusOrderByDateDesc(Audience.STUDENT, Status.ACTIVE);
         return notices.stream()
-                .map(n -> new StudentNoticeResponseDto(n.getDate(), n.getTitle(), n.getDescription()))
+                .map(n -> new StudentNoticeResponseDto(n.getDate(), n.getTitle(), n.getDescription(), n.getFilePath()   ))
                 .collect(Collectors.toList());
 
     }

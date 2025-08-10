@@ -121,6 +121,7 @@ public class TeacherServiceImpl implements TeacherService {
 				.orElseThrow(() -> new ResourceNotFoundException("No teacher exist with id: " + teacherId));
 
 		TeacherProfileDTO teacherProfileDTO = modelMapper.map(entity, TeacherProfileDTO.class);
+		teacherProfileDTO.setEmail(entity.getUser().getEmail());
 
 		return teacherProfileDTO;
 	}

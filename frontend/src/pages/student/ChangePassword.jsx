@@ -1,40 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import StudentNavbar from "./StudentNavbar";
 import StudentSidebar from "./StudentSidebar";
-import "./Student-module.css"; // Optional if you're reusing styles
-import { getUserIdFromToken } from "../../services/Student/StudentService";
+import "./Student-module.css";
+import { getStudentProfile, getUserIdFromToken } from "../../services/Student/StudentService";
+import axios from "axios";
 
 function ChangePassword() {
   const navigate = useNavigate();
-
-  const token = localStorage.getItem("token"); // 
-
+  const studentId = getUserIdFromToken();
+  const token = localStorage.getItem("token");
   const [formData, setFormData] = useState({
-    email: "vedant@example.com",
+    email: "",
     oldPassword: "",
     newPassword: "",
     repeatPassword: "",
   });
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await getStudentProfile(studentId);
+        setFormData((prev) => ({ ...prev, email: response.email }));
+      } catch (err) {
+        // console.error("Failed to fetch profile:", err);
+        toast.error("Could not load profile");
+      }
+    };
+    fetchProfile();
+  }, [studentId]);
+
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
-
-  const toggleOldPasswordVisibility = () =>
-    setShowOldPassword(!showOldPassword);
-
-  const toggleRepeatPasswordVisibility = () =>
-    setShowRepeatPassword(!showRepeatPassword);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleOldPasswordVisibility = () => setShowOldPassword(!showOldPassword);
+  const toggleRepeatPasswordVisibility = () => setShowRepeatPassword(!showRepeatPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,41 +59,35 @@ function ChangePassword() {
     }
 
     try {
-      const response = await fetch(
+      const { data } = await axios.post(
         "http://localhost:8080/auth/changePassword/change-password",
         {
-          method: "POST",
+          email: formData.email,
+          oldPassword: formData.oldPassword,
+          newPassword: formData.newPassword,
+        },
+        {
           headers: {
-            // "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // uncomment if using JWT
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            email: formData.email,
-            oldPassword: formData.oldPassword,
-            newPassword: formData.newPassword,
-          }),
         }
       );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Password change failed");
-      }
-
-      const data = await response.json();
       toast.success(data.message || "Password changed successfully!");
 
-      // Reset form
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         oldPassword: "",
         newPassword: "",
         repeatPassword: "",
-      });
+      }));
 
       setTimeout(() => navigate("/student/profile"), 1500);
     } catch (error) {
-      toast.error(error.message);
+      const errMsg =
+        error.response?.data?.message || "Password change failed";
+      toast.error(errMsg);
     }
   };
 
@@ -95,7 +98,7 @@ function ChangePassword() {
         <div className="student-dashboard-first">
           <StudentSidebar />
         </div>
-        <div className="d-flex justify-content-center align-items-center full-height-center p-4">
+        <div className="full-height-center p-4">
           <div
             className="card p-4 shadow"
             style={{ width: "100%", maxWidth: "500px" }}

@@ -43,7 +43,7 @@ function AddCourse() {
       if (response.length === 0) toast.info("No subjects found");
       setSubjects(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to load subjects");
     }
   };
@@ -54,7 +54,7 @@ function AddCourse() {
       if (response.length === 0) toast.info("No teachers found");
       setTeachers(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to load teachers");
     }
   };
@@ -105,7 +105,7 @@ function AddCourse() {
       toast.success("Course added successfully");
       navigate("/admin/display-courses");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Failed to add course");
     }
   };

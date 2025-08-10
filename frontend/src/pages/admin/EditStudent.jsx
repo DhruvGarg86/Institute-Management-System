@@ -27,10 +27,10 @@ function EditStudent() {
     const getStudent = async (id) => {
         try {
             const response = await getEditStudentById(id);
-            console.log(response);
+            // console.log(response);
             setStudent(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to load student details")
         }
     }
@@ -48,7 +48,7 @@ function EditStudent() {
                 toast.success("Image uploaded successfully");
             } catch (err) {
                 toast.error("Image upload failed");
-                console.error(err);
+                // console.error(err);
             }
         }
     };
@@ -58,9 +58,9 @@ function EditStudent() {
         try {
             const response = await getCoursesList();
             setCourses(response);
-            console.log(response);
+            // console.log(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to get courses");
         }
     };
@@ -76,7 +76,7 @@ function EditStudent() {
             toast.success("Student updated successfully");
             navigate("/admin/display-students");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to update student details")
         }
     }

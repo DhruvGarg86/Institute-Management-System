@@ -14,12 +14,12 @@ function StudentAttendance() {
     const StudentAttendance = async () => {
         try {
             const response = await getStudentAttendance();
-            console.log(response);
+            // console.log(response);
             setStudents(response);
             toast.success("Students loaded successfully");
         } catch (error) {
             toast.error("Unable to load students");
-            console.log(error);
+            // console.log(error);
         }
     }
 

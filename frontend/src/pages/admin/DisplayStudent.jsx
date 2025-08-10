@@ -32,7 +32,7 @@ function DisplayStudent() {
       const response = await getAllStudents();
       setStudents(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   useEffect(() => {
