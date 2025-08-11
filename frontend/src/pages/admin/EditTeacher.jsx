@@ -25,11 +25,11 @@ function EditTeacher() {
     const getTeacher = async (id) => {
         try {
             const response = await fetchTeacherById(id);
-            console.log(response);
+            // console.log(response);
             setTeacher(response);
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to load teacher details")
         }
     }
@@ -47,7 +47,7 @@ function EditTeacher() {
                 toast.success("Image uploaded successfully");
             } catch (err) {
                 toast.error("Image upload failed");
-                console.error(err);
+                // console.error(err);
             }
         }
     };
@@ -58,7 +58,7 @@ function EditTeacher() {
             toast.success("Teacher updated successfully");
             navigate("/admin/display-teachers");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to update teacher details")
         }
     }

@@ -18,13 +18,11 @@ function TeacherSidebar() {
           <h2 className="accordion-header" id="headingOne">
             <button
               onClick={() => navigate("/teacher/dashboard")}
-              className={`accordion-button ${
-                location.pathname !== "/teacher/dashboard" ? "collapsed" : ""
-              } ${
-                location.pathname === "/teacher/dashboard"
+              className={`accordion-button ${location.pathname !== "/teacher/dashboard" ? "collapsed" : ""
+                } ${location.pathname === "/teacher/dashboard"
                   ? "active-section"
                   : ""
-              }`}
+                }`}
               type="button"
             >
               Dashboard
@@ -36,12 +34,11 @@ function TeacherSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingTwo">
             <button
-              className={`accordion-button collapsed ${
-                location.pathname.startsWith("/teacher/student") ||
-                location.pathname.includes("student")
+              className={`accordion-button collapsed ${location.pathname.startsWith("/teacher/student") ||
+                  location.pathname.includes("student")
                   ? "active-section"
                   : ""
-              }`}
+                }`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseTwo"
@@ -96,11 +93,10 @@ function TeacherSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingThree">
             <button
-              className={`accordion-button collapsed ${
-                location.pathname === "/teacher/display-teachers"
+              className={`accordion-button collapsed ${location.pathname === "/teacher/display-teachers"
                   ? "active-section"
                   : ""
-              }`}
+                }`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseThree"
@@ -136,9 +132,8 @@ function TeacherSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingFour">
             <button
-              className={`accordion-button collapsed ${
-                location.pathname.includes("course") ? "active-section" : ""
-              }`}
+              className={`accordion-button collapsed ${location.pathname.includes("course") ? "active-section" : ""
+                }`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseFour"
@@ -170,9 +165,8 @@ function TeacherSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingFive">
             <button
-              className={`accordion-button collapsed ${
-                location.pathname.includes("notice") ? "active-section" : ""
-              }`}
+              className={`accordion-button collapsed ${location.pathname.includes("notice") ? "active-section" : ""
+                }`}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseFive"
@@ -190,7 +184,7 @@ function TeacherSidebar() {
           >
             <div className="accordion-body">
               <ul style={{ listStyleType: "none" }} className="sidebar-inner">
-                
+
                 <li>
                   <button
                     type="button"
@@ -209,9 +203,8 @@ function TeacherSidebar() {
         <div className="accordion-item" style={{ marginTop: "auto" }}>
           <h2 className="accordion-header" id="headingSix">
             <button
-              className={`accordion-button sidebar-profile ${
-                location.pathname === "/teacher/profile" ? "active-section" : ""
-              }`}
+              className={`accordion-button sidebar-profile ${location.pathname === "/teacher/profile" ? "active-section" : ""
+                }`}
               type="button"
               onClick={() => navigate("/teacher/profile")}
             >

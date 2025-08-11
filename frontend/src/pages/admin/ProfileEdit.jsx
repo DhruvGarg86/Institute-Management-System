@@ -27,9 +27,9 @@ function ProfileEdit() {
         try {
             const response = await fetchProfile(id);
             setProfile(response);
-            console.log(response);
+            // console.log(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
@@ -47,7 +47,7 @@ function ProfileEdit() {
                 toast.success("Image uploaded successfully");
             } catch (err) {
                 toast.error("Image upload failed");
-                console.error(err);
+                // console.error(err);
             }
         }
     };
@@ -56,11 +56,11 @@ function ProfileEdit() {
     const handleSave = async () => {
         try {
             const response = await editProfile(profile, id);
-            console.log(response);
+            // console.log(response);
             toast.success("Profile Updated Successfully!");
             navigate(`/admin/profile/${id}`);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to Update Profile");
         }
     };

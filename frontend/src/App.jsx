@@ -3,6 +3,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, Zoom } from "react-toastify";
 
 import Home from "./pages/Home";
+import Forbidden from "./pages/Forbidden";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 // ADMIN IMPORTSimport Login from './pages/admin/Login';
 import Dashboard from "./pages/admin/Dashboard";
@@ -64,138 +66,159 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* ****************************ADMIN ROUTES**********************************  */}
         <Route path="/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/profile/:id" element={<Profile />} />
-        <Route path="/admin/profile-edit/:id" element={<ProfileEdit />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/admin/add-student" element={<AddStudent />} />
-        <Route path="/admin/display-students" element={<DisplayStudent />} />
-        <Route path="/admin/edit-student/:id" element={<EditStudent />} />
-        <Route
-          path="/admin/student-attendance"
-          element={<StudentAttendance />}
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/profile" element={<Profile />} />
-
-        <Route path="/register" element={<Registration />} />
-        <Route path="/admin/add-student" element={<AddStudent />} />
-        <Route path="/admin/display-students" element={<DisplayStudent />} />
-        <Route path="/admin/edit-student/:id" element={<EditStudent />} />
-        <Route
-          path="/admin/student-attendance"
-          element={<StudentAttendance />}
-        />
-
-        <Route path="/admin/student-marks" element={<StudentMarksOverview />} />
-        <Route
-          path="/admin/add-student-marks/:id"
-          element={<AddStudentMarks />}
-        />
-        <Route path="/admin/student-marks/:id" element={<StudentMarks />} />
-        <Route path="/admin/student-fees" element={<StudentFees />} />
-        <Route path="/admin/add-teacher" element={<AddTeacher />} />
-        <Route path="/admin/display-teachers" element={<DisplayTeacher />} />
-        <Route path="/admin/edit-teacher/:id" element={<EditTeacher />} />
-        <Route
-          path="/admin/teacher-attendance"
-          element={<TeacherAttendance />}
-        />
-        <Route path="/admin/add-notice" element={<AddNotice />} />
-        <Route path="/admin/display-notices" element={<DisplayNotice />} />
-        <Route path="/admin/add-subject" element={<AddSubject />} />
-        <Route path="/admin/display-subjects" element={<DisplaySubject />} />
-        <Route path="/admin/edit-subject/:id" element={<EditSubject />} />
-        <Route path="/admin/add-course" element={<AddCourse />} />
-        <Route path="/admin/display-courses" element={<DisplayCourse />} />
-        <Route path="/admin/edit-course/:id" element={<EditCourse />} />
-        <Route path="/admin/add-notice" element={<AddNotice />} />
-        <Route path="/admin/display-notices" element={<DisplayNotice />} />
-        <Route path="/admin/add-subject" element={<AddSubject />} />
-        <Route path="/admin/edit-subject/:id" element={<EditSubject />} />
-        <Route path="/admin/add-course" element={<AddCourse />} />
-        <Route path="/admin/edit-course/:id" element={<EditCourse />} />
-        <Route
-          path="/admin/display-complaints"
-          element={<DisplayComplaint />}
-        />
-        <Route path="/admin/edit-complaint/:id" element={<EditComplaint />} />
-        <Route
-          path="/admin/display-complaints"
-          element={<DisplayComplaint />}
-        />
-        <Route path="/admin/course/:id/subjects" element={<CourseSubjects />} />
-
-        <Route path="/admin/edit-complaint/:id" element={<EditComplaint />} />
-
-        {/* ****************************TEACHER ROUTES**********************************  */}
-        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
-        <Route path="/teacher/profile" element={<TeacherProfile />} />
-        <Route path="/teacher/profile/:id" element={<TeacherProfile />} />
-
-        <Route path="/teacher/profile/edit/:id" element={<TeacherProfileEdit />} />
-
-        <Route path="/teacher/add-notice" element={<TeacherAddNotice />} />
-        <Route
-          path="/teacher/display-notice"
-          element={<TeacherDisplayNotice />}
-        />
-        <Route
-          path="/teacher/display-course"
-          element={<TeacherDisplayCourse />}
-        />
-
-        <Route
-          path="/teacher/display-students"
-          element={<TeacherDisplayStudent />}
-        />
-
-        <Route
-          path="/teacher/change-password"
-          element={<TeacherChangePassword />}
-        />
-
-        <Route
-          path="/teacher/display-teachers"
-          element={<TeacherDisplayTeacher />}
-        />
-
-        <Route
-          path="/teacher/student-attendance"
-          element={<TeacherStudentAttendance />}
-        />
-
-        <Route
-          path="/teacher/students/marks/:id"
-          element={<TeacherStudentMarks />}
-        />
-
-        <Route
-          path="/teacher/student-marks"
-          element={<TeacherStudentMarksOverview />}
-        />
-
-        <Route
-          path="/teacher/course/:courseId/subjects"
-          element={<CourseSubjectsPage />}
-        />
-
-        {/* ****************************STUDENT ROUTES**********************************  */}
-        <Route path="/student/fee" element={<StudentFee />} />
-        <Route path="/student/attendance" element={<Student_Attendance />} />
-        <Route
-          path="/student/display-complaints"
-          element={<StudentComplaint />}
-        ></Route>
-        <Route path="/student/profile" element={<StudentProfile />} />
-        <Route path="/student/change-password" element={<ChangePassword />} />
-        <Route path="/student/exam" element={<StudentResult />} />
         <Route path="/student/login" element={<StudentLogin />} />
-        <Route path="/student/dashboard" element={<StudentDashboard />}></Route>
+        <Route path="/forbidden" element={<Forbidden />} />
+
+        {/* **************************** ADMIN ROUTES **************************** */}
+        <Route path="/admin/dashboard" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><Dashboard /></ProtectedRoute>
+        } />
+        <Route path="/admin/profile/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><Profile /></ProtectedRoute>
+        } />
+        <Route path="/admin/profile-edit/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><ProfileEdit /></ProtectedRoute>
+        } />
+        <Route path="/admin/add-student" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><AddStudent /></ProtectedRoute>
+        } />
+        <Route path="/admin/display-students" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><DisplayStudent /></ProtectedRoute>
+        } />
+        <Route path="/admin/edit-student/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><EditStudent /></ProtectedRoute>
+        } />
+        <Route path="/admin/student-attendance" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><StudentAttendance /></ProtectedRoute>
+        } />
+        <Route path="/admin/student-marks" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><StudentMarksOverview /></ProtectedRoute>
+        } />
+        <Route path="/admin/add-student-marks/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><AddStudentMarks /></ProtectedRoute>
+        } />
+        <Route path="/admin/student-marks/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><StudentMarks /></ProtectedRoute>
+        } />
+        <Route path="/admin/student-fees" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><StudentFees /></ProtectedRoute>
+        } />
+        <Route path="/admin/add-teacher" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><AddTeacher /></ProtectedRoute>
+        } />
+        <Route path="/admin/display-teachers" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><DisplayTeacher /></ProtectedRoute>
+        } />
+        <Route path="/admin/edit-teacher/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><EditTeacher /></ProtectedRoute>
+        } />
+        <Route path="/admin/teacher-attendance" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><TeacherAttendance /></ProtectedRoute>
+        } />
+        <Route path="/admin/add-notice" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><AddNotice /></ProtectedRoute>
+        } />
+        <Route path="/admin/display-notices" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><DisplayNotice /></ProtectedRoute>
+        } />
+        <Route path="/admin/add-subject" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><AddSubject /></ProtectedRoute>
+        } />
+        <Route path="/admin/display-subjects" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><DisplaySubject /></ProtectedRoute>
+        } />
+        <Route path="/admin/edit-subject/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><EditSubject /></ProtectedRoute>
+        } />
+        <Route path="/admin/add-course" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><AddCourse /></ProtectedRoute>
+        } />
+        <Route path="/admin/display-courses" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><DisplayCourse /></ProtectedRoute>
+        } />
+        <Route path="/admin/edit-course/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><EditCourse /></ProtectedRoute>
+        } />
+        <Route path="/admin/display-complaints" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><DisplayComplaint /></ProtectedRoute>
+        } />
+        <Route path="/admin/edit-complaint/:id" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><EditComplaint /></ProtectedRoute>
+        } />
+        <Route path="/admin/course/:id/subjects" element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}><CourseSubjects /></ProtectedRoute>
+        } />
+
+        {/* **************************** TEACHER ROUTES **************************** */}
+        <Route path="/teacher/dashboard" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDashboard /></ProtectedRoute>
+        } />
+        <Route path="/teacher/profile" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherProfile /></ProtectedRoute>
+        } />
+        <Route path="/teacher/profile/:id" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherProfile /></ProtectedRoute>
+        } />
+        <Route path="/teacher/profile/edit/:id" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherProfileEdit /></ProtectedRoute>
+        } />
+        <Route path="/teacher/add-notice" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherAddNotice /></ProtectedRoute>
+        } />
+        <Route path="/teacher/display-notice" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDisplayNotice /></ProtectedRoute>
+        } />
+        <Route path="/teacher/display-course" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDisplayCourse /></ProtectedRoute>
+        } />
+        <Route path="/teacher/display-students" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDisplayStudent /></ProtectedRoute>
+        } />
+        <Route path="/teacher/change-password" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherChangePassword /></ProtectedRoute>
+        } />
+        <Route path="/teacher/display-teachers" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDisplayTeacher /></ProtectedRoute>
+        } />
+        <Route path="/teacher/student-attendance" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherStudentAttendance /></ProtectedRoute>
+        } />
+        <Route path="/teacher/students/marks/:id" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherStudentMarks /></ProtectedRoute>
+        } />
+        <Route path="/teacher/student-marks" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><TeacherStudentMarksOverview /></ProtectedRoute>
+        } />
+        <Route path="/teacher/course/:courseId/subjects" element={
+          <ProtectedRoute allowedRoles={["TEACHER"]}><CourseSubjectsPage /></ProtectedRoute>
+        } />
+
+        {/* **************************** STUDENT ROUTES **************************** */}
+        <Route path="/student/dashboard" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><StudentDashboard /></ProtectedRoute>
+        } />
+        <Route path="/student/profile" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><StudentProfile /></ProtectedRoute>
+        } />
+        <Route path="/student/change-password" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><ChangePassword /></ProtectedRoute>
+        } />
+        <Route path="/student/fee" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><StudentFee /></ProtectedRoute>
+        } />
+        <Route path="/student/attendance" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><Student_Attendance /></ProtectedRoute>
+        } />
+        <Route path="/student/display-complaints" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><StudentComplaint /></ProtectedRoute>
+        } />
+        <Route path="/student/exam" element={
+          <ProtectedRoute allowedRoles={["STUDENT"]}><StudentResult /></ProtectedRoute>
+        } />
       </Routes>
+
 
       <ToastContainer
         position="top-center"

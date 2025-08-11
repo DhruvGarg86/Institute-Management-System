@@ -29,12 +29,12 @@ function DisplaySubject() {
   const getSubjects = async () => {
     try {
       const response = await getAllSubjects();
-      console.log(response);
+      // console.log(response);
       if (response.length === 0)
         toast.info("No subjects found");
       setSubjects(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to load subjects");
     }
   }
@@ -49,7 +49,7 @@ function DisplaySubject() {
       toast.success("Subject deleted successfully");
       getSubjects();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to delete subject");
     }
   }

@@ -40,7 +40,7 @@ export function getUserIdFromToken() {
 
   try {
     const payload = JSON.parse(atob(token.split(".")[1])); // Decode the payload
-    return payload.userId || payload.id || payload.sub || null; // adapt based on your backend JWT structure
+    return payload.userId;
   } catch (error) {
     console.error("Failed to parse JWT token", error);
     return null;

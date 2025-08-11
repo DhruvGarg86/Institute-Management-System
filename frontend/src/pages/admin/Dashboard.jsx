@@ -22,7 +22,7 @@ function Dashboard() {
         const response = await getTotalStudents();
         setTstudent(response.count);
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         toast.error("Unable to load total students");
       } 
     };
@@ -36,7 +36,7 @@ function Dashboard() {
         const response = await getTotalTeachers();
         setTteacher(response.count);
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         toast.error("Unable to load total teachers");
       }
     };
@@ -50,7 +50,7 @@ function Dashboard() {
         const response = await getTotalCourses();
         setTcourse(response.count);
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         toast.error("Unable to load total courses");
       }
     };
@@ -64,7 +64,7 @@ function Dashboard() {
         const data = await getAllNotices();
         setNotice(data);
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         toast.error("Unable to load notices");
       }
     };

@@ -45,9 +45,6 @@ public class StudentServiceImpl implements StudentService {
     private final PasswordEncoder passwordEncoder;
     private final SubjectDao subjectDao;
 
-    @Value("${upload.path}")
-    private String uploadDir;
-
     @Override
     public List<ActiveStudentsDto> allActiveStudents() {
         List<Student> students = studentDao.findByStatusAndIsDeletedFalse(Status.ACTIVE);

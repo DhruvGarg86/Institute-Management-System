@@ -11,41 +11,42 @@ function StudentResult() {
   useEffect(() => {
     const studentId = getUserIdFromToken();
     if (!studentId) {
-      console.error("Student ID not found from token.");
+      // console.error("Student ID not found from token.");
       return;
     }
 
-    const getStudentData = async (studentId) => {
+    const getStudentData = async () => {
       try {
-        const response = await axios.get(`${config.serverUrl}/student/dashboard/marks/${studentId}`);
+        const response = await axios.get(
+          `${config.serverUrl}/student/dashboard/marks/${studentId}`
+        );
         setStudentData(response.data);
       } catch (error) {
-        console.error("Failed to fetch student data:", error);
+        // console.error("Failed to fetch student data:", error);
       }
     };
 
-    getStudentData(studentId);
+    getStudentData();
   }, []);
 
-  if (!studentData) return null; // Hide UI until data is loaded
+  if (!studentData) return null;
 
   return (
     <>
       <StudentNavbar />
       <div className="container-fluid mt-2">
         <div className="row">
+          {/* Sidebar */}
           <div className="col-2 px-2">
             <StudentSidebar />
           </div>
-          <div className="col-10">
-            <h2 className="mb-4 student-center">Exam Result</h2>
-            <div className="mb-3">
-              <p><strong>Student Name:</strong> {studentData.studentName}</p>
-              <p><strong>Course:</strong> {studentData.courseName}</p>
-            </div>
 
-            <div className="table-responsive">
-              <table className="table table-bordered table-hover table-striped">
+          {/* Main Content */}
+          <div className="col-10">
+            <h2 className="mb-4 text-center fw-bold text-primary">Exam Result</h2>
+            {/* Results Table */}
+            <div className="table-responsive shadow-sm rounded">
+              <table className="table table-hover align-middle">
                 <thead className="table-primary">
                   <tr>
                     <th>Subject</th>
@@ -67,9 +68,8 @@ function StudentResult() {
                         <td>{subject.totalMarks}</td>
                         <td>
                           <span
-                            className={`badge ${
-                              status === "Pass" ? "bg-success" : "bg-danger"
-                            }`}
+                            className={`badge rounded-pill px-3 py-2 ${status === "Pass" ? "bg-success" : "bg-danger"
+                              }`}
                           >
                             {status}
                           </span>
@@ -81,23 +81,41 @@ function StudentResult() {
               </table>
             </div>
 
-            <div className="row mt-4">
+            {/* Stats Cards */}
+            <div className="row mt-4 g-3">
               <div className="col-md-4">
-                <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Marks Obtained</p>
-                  <h5>{studentData.totalMarksObtained}</h5>
+                <div className="card text-center shadow border-0 bg-light">
+                  <div className="card-body">
+                    <p className="mb-1 text-muted">Marks Obtained</p>
+                    <h4 className="fw-bold text-primary">
+                      {studentData.totalMarksObtained}
+                    </h4>
+                  </div>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Total Marks</p>
-                  <h5>{studentData.totalMarks}</h5>
+                <div className="card text-center shadow border-0 bg-light">
+                  <div className="card-body">
+                    <p className="mb-1 text-muted">Total Marks</p>
+                    <h4 className="fw-bold text-warning">
+                      {studentData.totalMarks}
+                    </h4>
+                  </div>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className="card p-3 text-center">
-                  <p className="mb-1 text-muted">Percentage</p>
-                  <h5>{studentData.percentage.toFixed(2)}%</h5>
+                <div className="card text-center shadow border-0 bg-light">
+                  <div className="card-body">
+                    <p className="mb-1 text-muted">Percentage</p>
+                    <h4
+                      className={`fw-bold ${studentData.percentage >= 40
+                        ? "text-success"
+                        : "text-danger"
+                        }`}
+                    >
+                      {studentData.percentage.toFixed(2)}%
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>

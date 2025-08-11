@@ -23,9 +23,9 @@ function Profile() {
         try {
             const response = await fetchProfile(id);
             setProfile(response);
-            console.log(response);
+            // console.log(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 

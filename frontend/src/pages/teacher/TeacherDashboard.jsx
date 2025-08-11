@@ -24,7 +24,6 @@ function TeacherDashboard() {
   const [notice, setNotice] = useState([]);
 
   const id = getUserIdFromToken();
-  console.log(id);
 
   // get total students
   useEffect(() => {
@@ -33,35 +32,20 @@ function TeacherDashboard() {
         const response = await getTotalStudents(id);
         setTotalStudent(response);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast.error("Unable to load total students");
       }
     };
     fetchStudents(id);
   }, []);
 
-  // get teacher's attendance
-  // useEffect(() => {
-  //   const fetchAttendance = async (id) => {
-  //     try {
-  //       const response = await getTeacherTotalAttendance(id);
-  //       console.log("IN FETCH ATTENDANCE" + response);
-  //       setTotalTeacherAttendance(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast.error("Unable to load total teacher");
-  //     }
-  //   };
-  //   fetchAttendance(id);
-  // }, [id]);
-
   const fetchAttendance = async (id) => {
     try {
       const response = await getTeacherTotalAttendance(id);
-      console.log(response);
+      // console.log(response);
       setTotalTeacherAttendance(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to load total teacher");
     }
   };
@@ -73,18 +57,18 @@ function TeacherDashboard() {
 
   const fetchCourses = async (id) => {
     try {
-      console.log("in course" + id);
+      // console.log("in course" + id);
       const response = await getTeacherTotalCourses(id);
       setTotalCourses(response);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to load total teacher");
     }
   };
 
   useEffect(() => {
-    if(id)
+    if (id)
       fetchCourses(id);
   }, [id]);
 
@@ -95,7 +79,7 @@ function TeacherDashboard() {
         const data = await getAllNotices();
         setNotice(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast.error("Unable to load notices");
       }
     };

@@ -32,7 +32,7 @@ function TeacherStudentMarksOverview() {
             const response = await getCourseTopper();
             setStudents(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to load students");
         }
     }

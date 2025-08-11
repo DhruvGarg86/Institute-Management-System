@@ -74,7 +74,7 @@ function StudentMarks() {
 
             toast.success("Student loaded successfully");
         } catch (error) {
-            console.error(error);
+            // console.error(error);
             toast.error("Unable to load student");
         }
     };

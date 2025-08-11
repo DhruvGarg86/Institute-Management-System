@@ -33,7 +33,7 @@ function StudentNavbar() {
         const response = await getStudentProfile(studentId);
         setProfile(response);
       } catch (err) {
-        console.error("Failed to fetch profile:", err);
+        // console.error("Failed to fetch profile:", err);
         toast.error("Could not load profile");
       }
     };
@@ -74,7 +74,7 @@ function StudentNavbar() {
             src={profile.imagePath}
             alt="Profile"
             className="rounded-circle"
-            style={{ width: "40px", height: "40px", cursor: "pointer" }}
+            style={{ width: "40px", height: "40px", cursor: "pointer", objectFit: "cover" }}
             onClick={() => setDropdownOpen(!dropdownOpen)} u
           />
           {dropdownOpen && (

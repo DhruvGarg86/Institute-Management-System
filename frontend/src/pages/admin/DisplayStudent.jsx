@@ -17,7 +17,8 @@ import {
   Inject,
 } from "@syncfusion/ej2-react-grids";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { getAllStudents } from "../../services/Admin/Student";
+import { deleteStudentById, getAllStudents } from "../../services/Admin/Student";
+import { toast } from "react-toastify";
 
 
 
@@ -32,12 +33,23 @@ function DisplayStudent() {
       const response = await getAllStudents();
       setStudents(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   useEffect(() => {
     getStudents();
   }, [])
+
+  const deleteStudent = async (id) => {
+    try {
+      await deleteStudentById(id);
+      toast.success("Student deleted successfully");
+      getStudents();
+    } catch (error) {
+      // console.log(error);
+      toast.error("Unable to delete student");
+    }
+  };
 
   return (
     <>
@@ -98,7 +110,7 @@ function DisplayStudent() {
                           <button
                             className="btn btn-sm btn-light text-primary me-2"
                             onClick={() =>
-                              navigate(`/admin/add-student-marks/${props.idl}`)
+                              navigate(`/admin/add-student-marks/${props.id}`)
                             }
                           >
                             Add Marks
@@ -113,9 +125,7 @@ function DisplayStudent() {
                           </button>
                           <button
                             className="btn btn-sm btn-light text-danger"
-                            onClick={() =>
-                              navigate(`Delete action for:/${props.id}`)
-                            }
+                            onClick={() => deleteStudent(props.id)}
                           >
                             <FaTrash />
                           </button>

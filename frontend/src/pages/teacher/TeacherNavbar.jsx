@@ -8,24 +8,24 @@ function Navbar() {
     const navigate = useNavigate();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [teacherName, setTeacherName] = useState("");
-    
+
     const id = getUserIdFromToken()
 
 
 
-     useEffect(() => {
+    useEffect(() => {
         const fetchTeacherName = async (id) => {
-          try {
-            const response = await getTeacherName(id);
-            setTeacherName(response);
-          } catch (error) {
-            console.log(error);
-            toast.error("Unable to load total students");
-          }
+            try {
+                const response = await getTeacherName(id);
+                setTeacherName(response);
+            } catch (error) {
+                // console.log(error);
+                toast.error("Unable to load total students");
+            }
         };
         fetchTeacherName(id);
-      }, [id]);
-    
+    }, [id]);
+
 
 
     const handleLogOut = () => {
@@ -50,7 +50,7 @@ function Navbar() {
                             style={{ textDecoration: 'none', color: 'black', cursor: 'pointer' }}
                             onClick={() => navigate(`/teacher/profile/${id}`)}
                         >
-                            {teacherName}
+                            Welcome, {teacherName}
                         </span>
                         <RiLogoutCircleRLine
                             size={24}

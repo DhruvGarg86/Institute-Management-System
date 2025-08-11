@@ -8,8 +8,12 @@ import lombok.Setter;
 @Setter
 public class CourseSubjectTeacherDTO {
 
+    private String name;
+
     @NotNull(message = "Subject ID is required")
     private Long subjectId;
+
+    private String teacherName;
 
     @NotNull(message = "Teacher ID is required")
     private Long teacherId;

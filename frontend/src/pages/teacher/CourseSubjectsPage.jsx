@@ -23,17 +23,17 @@ function CourseSubjectsPage() {
   const { courseId } = useParams();
   const navigate = useNavigate();
 
-//   const statusTemplate = (props) => {
-//     return (
-//       <span
-//         className={`badge ${
-//           props.status === true ? "bg-success" : "bg-danger"
-//         }`}
-//       >
-//         {props.status}
-//       </span>
-//     );
-//   };
+  //   const statusTemplate = (props) => {
+  //     return (
+  //       <span
+  //         className={`badge ${
+  //           props.status === true ? "bg-success" : "bg-danger"
+  //         }`}
+  //       >
+  //         {props.status}
+  //       </span>
+  //     );
+  //   };
 
   // Dummy course and subjects data
   const course = {
@@ -42,37 +42,37 @@ function CourseSubjectsPage() {
     subjects:
       courseId === "1"
         ? [
-            {
-              code: 101,
-              name: "HTML",
-              description: "Basics of HTML",
-              teachers: ["Alice", "Bob"],
+          {
+            code: 101,
+            name: "HTML",
+            description: "Basics of HTML",
+            teachers: ["Alice", "Bob"],
             //   status: true,
-            },
-            {
-              code: 102,
-              name: "React",
-              description: "Frontend with React",
-              teachers: ["Charlie"],
+          },
+          {
+            code: 102,
+            name: "React",
+            description: "Frontend with React",
+            teachers: ["Charlie"],
             //   status: false,
-            },
-          ]
+          },
+        ]
         : [
-            {
-              code: 201,
-              name: "Python",
-              description: "Python Basics",
-              teachers: ["Dave", "Eve"],
+          {
+            code: 201,
+            name: "Python",
+            description: "Python Basics",
+            teachers: ["Dave", "Eve"],
             //   status: true,
-            },
-            {
-              code: 202,
-              name: "ML",
-              description: "Intro to ML",
-              teachers: ["Frank"],
+          },
+          {
+            code: 202,
+            name: "ML",
+            description: "Intro to ML",
+            teachers: ["Frank"],
             //   status: false,
-            },
-          ],
+          },
+        ],
   };
 
   return (

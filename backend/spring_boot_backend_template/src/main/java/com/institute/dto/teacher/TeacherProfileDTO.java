@@ -22,16 +22,12 @@ public class TeacherProfileDTO {
 
     private String email;
 
-    private String password;
-
     private String phoneNumber;
 
     private String address;
 
-    @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
     private LocalDate joiningDate;

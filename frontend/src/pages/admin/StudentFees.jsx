@@ -22,7 +22,7 @@ function StudentFees() {
       setFees(response);
     } catch (error) {
       toast.error("Unable to load fee details");
-      console.error(error);
+      // console.error(error);
     }
   }
 

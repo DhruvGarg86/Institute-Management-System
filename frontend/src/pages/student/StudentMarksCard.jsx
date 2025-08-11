@@ -14,7 +14,7 @@ function StudentMarksCard() {
         const response = await getStudentMarks(studentId);
         setMarksData(response);
       } catch (err) {
-        console.error("Error fetching marks", err);
+        // console.error("Error fetching marks", err);
       }
     };
 

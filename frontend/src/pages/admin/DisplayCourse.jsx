@@ -9,21 +9,14 @@ import { deleteCourseById, getAllCourses } from "../../services/Admin/Course";
 function DisplayCourse() {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
-  const [courseStatus, setCourseStatus] = useState({});
 
   const getCourses = async () => {
     try {
       const response = await getAllCourses();
       setCourses(response);
-
-      const statusMap = response.reduce((acc, course) => {
-        acc[course.id] = course.status === "ACTIVE";
-        return acc;
-      }, {});
-      setCourseStatus(statusMap);
       toast.success("Courses loaded successfully");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Unable to get courses");
     }
   };
@@ -32,12 +25,6 @@ function DisplayCourse() {
     getCourses();
   }, []);
 
-  const toggleStatus = (id) => {
-    setCourseStatus((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
 
   const showSubjects = (course) => {
     navigate(`/admin/course/${course.id}/subjects`, {
@@ -51,7 +38,7 @@ function DisplayCourse() {
       getCourses();
       toast.success("Course deleted successfully");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response.data.message);
     }
   };
@@ -75,16 +62,7 @@ function DisplayCourse() {
                   className="mb-4 border rounded p-3 shadow-sm position-relative"
                 >
                   <div className="position-absolute top-0 end-0 mt-2 me-2">
-                    <div className="form-check form-switch">
-                      <span>Active</span>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id={`statusSwitch${course.id}`}
-                        checked={courseStatus[course.id]}
-                        onChange={() => toggleStatus(course.id)}
-                      />
-                    </div>
+
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
@@ -132,8 +110,8 @@ function DisplayCourse() {
                     <ul>
                       {course.courseSubjectTeachers?.map((item, index) => (
                         <li key={index}>
-                          Subject ID: <strong>{item.subjectId}</strong>, Teacher ID:{" "}
-                          <strong>{item.teacherId}</strong>
+                          Subject Name: <strong>{item.name}</strong>, Teacher Name:{" "}
+                          <strong>{item.teacherName}</strong>
                         </li>
                       ))}
                     </ul>

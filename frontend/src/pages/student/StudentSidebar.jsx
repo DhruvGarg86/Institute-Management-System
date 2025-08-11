@@ -44,9 +44,8 @@ function StudentSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header">
             <button
-              className={`accordion-button ${isComplaintOpen ? "" : "collapsed"} ${
-                location.pathname.includes("complaint") ? "bg-primary text-white" : ""
-              }`}
+              className={`accordion-button ${isComplaintOpen ? "" : "collapsed"} ${location.pathname.includes("complaint") ? "bg-primary text-white" : ""
+                }`}
               onClick={() => setIsComplaintOpen(!isComplaintOpen)}
               type="button"
             >

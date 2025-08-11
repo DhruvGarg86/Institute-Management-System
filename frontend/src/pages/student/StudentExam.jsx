@@ -11,7 +11,7 @@ function StudentExam() {
   useEffect(() => {
     const studentId = getUserIdFromToken();
     if (!studentId) {
-      console.error("Student ID not found from token.");
+      // console.error("Student ID not found from token.");
       return;
     }
 
@@ -21,7 +21,7 @@ function StudentExam() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error loading student marks:", error);
+        // console.error("Error loading student marks:", error);
         setLoading(false);
       });
   }, []);

@@ -15,18 +15,18 @@ function TeacherStudentAttendance() {
     const StudentAttendance = async () => {
         try {
             const response = await getStudentAttendance();
-            console.log(response);
+            // console.log(response);
             setStudents(response);
             toast.success("Students loaded successfully");
         } catch (error) {
             toast.error("Unable to load students");
-            console.log(error);
+            // console.log(error);
         }
     }
 
     useEffect(() => {
         StudentAttendance();
-    },[]);
+    }, []);
     const rowDataBound = (args) => {
         const attendanceStr = args.data.attendance;
         const attendanceValue = parseInt(attendanceStr);
@@ -75,7 +75,7 @@ function TeacherStudentAttendance() {
 
                                 <ColumnsDirective>
                                     <ColumnDirective field='image' headerText='Profile' width={30} allowFiltering={false} allowSorting={false} template={(props) => (
-                                        <img src={props.profilePic} alt="avatar" style={{ borderRadius: '50%', height: '30px', objectFit: 'cover' }} />
+                                        <img src={props.image} alt="avatar" style={{ borderRadius: '50%', height: '30px', width: '30px', objectFit: 'cover' }} />
                                     )} />
                                     <ColumnDirective field='name' headerText='Name' textAlign="center" width={50} />
                                     <ColumnDirective field='courseName' headerText='Course' width={40} />

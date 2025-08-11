@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { FiEdit, FiSave } from "react-icons/fi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import {  uploadImage } from "../../services/Admin/Profile";
+import { uploadImage } from "../../services/Admin/Profile";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { getUserIdFromToken } from "../../services/Teacher/Dashboard";
@@ -11,8 +11,8 @@ import { editProfile, fetchProfile } from "../../services/Teacher/TeacherProfile
 
 function TeacherProfileEdit() {
 
-     const id = getUserIdFromToken();
-    console.log(id);
+    const id = getUserIdFromToken();
+    // console.log(id);
 
     const [profile, setProfile] = useState({
         name: "",
@@ -29,9 +29,9 @@ function TeacherProfileEdit() {
         try {
             const response = await fetchProfile(id);
             setProfile(response);
-            console.log(response);
+            // console.log(response);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
@@ -57,11 +57,11 @@ function TeacherProfileEdit() {
     const handleSave = async () => {
         try {
             const response = await editProfile(profile, id);
-            console.log(response);
+            // console.log(response); 
             toast.success("Profile Updated Successfully!");
             navigate(`/teacher/profile`);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Unable to Update Profile");
         }
     };
@@ -133,6 +133,7 @@ function TeacherProfileEdit() {
                                             type="email"
                                             className="form-control ms-3"
                                             value={profile.email}
+                                            readOnly
                                             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
                                         />
                                     </div>

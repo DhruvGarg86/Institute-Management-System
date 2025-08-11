@@ -24,9 +24,9 @@ function DisplayTeacher() {
         try {
             const data = await getAllTeachers();
             setTeachers(data);
-            console.log(data);
+            // console.log(data);
         } catch (error) {
-            console.error("Error loading teachers:", error); // For debugging purposes only
+            // console.error("Error loading teachers:", error); // For debugging purposes only
             toast.error("Failed to load teachers. Please try again later.");
         }
     };
@@ -43,7 +43,7 @@ function DisplayTeacher() {
             toast.success("Teacher deleted successfully");
             loadAllTeachers();
         } catch (error) {
-            console.error("Error deleting teacher:", error); // For debugging purposes only
+            // console.error("Error deleting teacher:", error); // For debugging purposes only
             toast.error("Failed to delete teachers. Please try again later.");
         }
     }

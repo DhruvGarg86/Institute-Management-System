@@ -19,9 +19,9 @@ function TeacherAttendance() {
         try {
             const data = await getAllTeachersWithAttendance();
             setTeachers(data);
-            console.log(data);
+            // console.log(data);
         } catch (error) {
-            console.error("Error loading teachers:", error); // For debugging purposes only
+            // console.error("Error loading teachers:", error); // For debugging purposes only
             toast.error("Failed to load teachers. Please try again later.");
         }
     };

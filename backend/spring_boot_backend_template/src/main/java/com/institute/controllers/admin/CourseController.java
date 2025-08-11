@@ -66,17 +66,14 @@ public class CourseController {
 
     @PutMapping("/update-course-status/{courseId}")
     @Operation(summary = "Update course status", description = "Changes the status (ACTIVE/INACTIVE) of a course")
-    public ResponseEntity<ApiResponse> updateCourseStatusById(
-            @PathVariable Long courseId,
-            @Valid @RequestBody CourseStatusUpdateDto statusDto
-    ) {
+    public ResponseEntity<ApiResponse> updateCourseStatusById(@PathVariable Long courseId,
+            @Valid @RequestBody CourseStatusUpdateDto statusDto) {
         ApiResponse response = courseService.updateCourseStatus(courseId, statusDto.getStatus());
         return ResponseEntity.ok(response);
     }
     
     @GetMapping("/display-course/{courseId}")
-    public ResponseEntity<?> getSubjectAndTeacherByCourseId(
-            @PathVariable Long courseId) {
+    public ResponseEntity<?> getSubjectAndTeacherByCourseId(@PathVariable Long courseId) {
         DisplayCourseSubjectTeacherDto dto = courseService.getSubjectAndTeacherByCourseId(courseId);
         return ResponseEntity.ok(dto);
     }

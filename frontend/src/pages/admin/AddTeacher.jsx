@@ -42,7 +42,7 @@ function AddTeacher() {
                 setTeacher(prev => ({ ...prev, image: teacherUrl }));
                 toast.success("Image uploaded successfully");
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 toast.error("Image upload failed");
             }
         }

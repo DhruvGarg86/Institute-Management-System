@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 public class TeacherProfileController {
     private final TeacherService teacherService;
     private final TeacherDao teacherDao;
+
     @GetMapping("/{teacherId}")
     public ResponseEntity<?> getTeacherAttendance(@PathVariable Long teacherId){
         Long tid = teacherDao.findTeacherIdByUserId(teacherId);

@@ -22,7 +22,7 @@ const EditSubject = () => {
       const response = await getSubjectById(id);
       setSubject(response);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   }
 
@@ -38,7 +38,7 @@ const EditSubject = () => {
       navigate("/admin/display-subjects");
     } catch (error) {
       toast.error("Failed to update subject");
-      console.error(error);
+      // console.error(error);
     }
   }
 

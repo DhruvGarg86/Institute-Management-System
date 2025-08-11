@@ -14,12 +14,10 @@ function StudentDashboard() {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get(
-          `${config.serverUrl}/student/notice`
-        );
+        const res = await axios.get(`${config.serverUrl}/student/notice`);
         setNotices(res.data);
       } catch (err) {
-        console.error("Failed to fetch notices", err);
+        // console.error("Failed to fetch notices", err);
       } finally {
         setLoading(false);
       }
@@ -42,41 +40,31 @@ function StudentDashboard() {
           {/* Main Content */}
           <main className="col-12 col-md-10 p-3 overflow-auto bg-light">
             <div className="row g-3">
-              {/* Notice Board */}
-              <section className="col-12 col-lg-7">
-                <div className="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column">
-                  <h2 className="fs-5 fw-semibold mb-3 text-primary">
-                    Notice Board
-                  </h2>
-                  <div className="overflow-auto flex-grow-1">
-                    {loading ? (
-                      <p>Loading notices...</p>
-                    ) : (
-                      <NoticeList notices={notices} />
-                    )}
+              {/* Left Column */}
+              <section className="col-12 col-lg-7 d-flex flex-column gap-3">
+                {/* Notice Board */}
+                <div className="bg-white p-4 rounded shadow-sm flex-grow-1" style={{ minHeight: "300px" }}>
+                  <h2 className="fs-5 fw-semibold mb-3 text-primary">Notice Board</h2>
+                  <div className="overflow-auto" style={{ maxHeight: "220px" }}>
+                    {loading ? <p>Loading notices...</p> : <NoticeList notices={notices} />}
+                  </div>
+                </div>
+
+                {/* Marks */}
+                <div className="bg-white p-4 rounded shadow-sm flex-grow-1">
+                  <h2 className="fs-5 fw-semibold mb-3 text-info">Student Marks</h2>
+                  <div style={{ height: "250px" }}>
+                    <StudentMarksCard />
                   </div>
                 </div>
               </section>
 
-              {/* Attendance & Marks */}
-              <section className="col-12 col-lg-5 d-flex flex-column gap-3">
-                {/* Attendance */}
-                <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
-                  <h2 className="fs-5 fw-semibold mb-3 text-success">
-                    Attendance
-                  </h2>
-                  <div className="d-flex justify-content-center align-items-center flex-grow-1">
+              {/* Right Column: Attendance */}
+              <section className="col-12 col-lg-5">
+                <div className="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column" >
+                  <h2 className="fs-5 fw-semibold mb-3 text-success">Attendance Overview</h2>
+                  <div style={{ flexGrow: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <StudentAttendanceCard />
-                  </div>
-                </div>
-
-                Marks
-                <div className="bg-white p-4 rounded shadow-sm flex-grow-1 d-flex flex-column">
-                  <h2 className="fs-5 fw-semibold mb-3 text-info">
-                    Student Marks
-                  </h2>
-                  <div className="d-flex justify-content-center align-items-center flex-grow-1">
-                    <StudentMarksCard />
                   </div>
                 </div>
               </section>

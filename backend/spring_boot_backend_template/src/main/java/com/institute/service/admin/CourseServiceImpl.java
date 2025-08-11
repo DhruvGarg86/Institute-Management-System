@@ -53,7 +53,9 @@ public class CourseServiceImpl implements CourseService {
                             .filter(cst -> !cst.isDeleted())
                             .map(cst -> {
                                 CourseSubjectTeacherDTO cstDto = new CourseSubjectTeacherDTO();
+                                cstDto.setName(cst.getSubject().getName());
                                 cstDto.setSubjectId(cst.getSubject().getId());
+                                cstDto.setTeacherName(cst.getTeacher().getName());
                                 cstDto.setTeacherId(cst.getTeacher().getId());
                                 return cstDto;
                             }).collect(Collectors.toList());
@@ -78,7 +80,9 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course ID not found or it has been deleted: " + courseId));
         Status previousStatus = course.getStatus();
+        Long preservedId = course.getId();
         modelMapper.map(dto, course);
+        course.setId(preservedId);
         List<CourseSubjectTeacher> existingMappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
         existingMappings.forEach(mapping -> mapping.setDeleted(true));
         courseSubjectTeacherDao.saveAll(existingMappings);
@@ -184,9 +188,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public DisplayCourseSubjectTeacherDto getSubjectAndTeacherByCourseId(Long courseId) {
-         courseDao.findByIdAndIsDeletedFalse(courseId)
+        Course course = courseDao.findByIdAndIsDeletedFalse(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
+
         List<CourseSubjectTeacher> mappings = courseSubjectTeacherDao.findByCourseIdAndIsDeletedFalse(courseId);
+
         Set<CourseSubjectTeacherResponseDto> mappingDtos = mappings.stream()
                 .filter(Objects::nonNull)
                 .filter(cst -> !cst.isDeleted())
@@ -200,9 +206,22 @@ public class CourseServiceImpl implements CourseService {
                             t != null ? t.getName() : null
                     );
                 })
-                .collect(Collectors.toCollection(LinkedHashSet::new)); // LinkedHashSet preserves insertion order
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        // Build the response DTO
         DisplayCourseSubjectTeacherDto dto = new DisplayCourseSubjectTeacherDto();
+        dto.setId(course.getId());
+        dto.setName(course.getName());
+        dto.setDescription(course.getDescription());
+        dto.setDuration(course.getDuration());
+        dto.setStartDate(course.getStartDate());
+        dto.setEndDate(course.getEndDate());
+        dto.setCourseFees(course.getCourseFees());
+        dto.setMaxStudents(course.getMaxStudents());
+        dto.setStatus(course.getStatus());
         dto.setMappings(mappingDtos);
+
         return dto;
     }
+
 }
