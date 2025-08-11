@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 import { getStudentMarks } from "../../services/Student/studentMarksService"; // Adjust path as needed
-import { getUserIdFromToken } from "../../services/Student/auth";
 import "./Student-module.css";
+import { getUserIdFromToken } from "../../services/student/Dashboard";
 
 function StudentMarksCard() {
   const [marksData, setMarksData] = useState(null);

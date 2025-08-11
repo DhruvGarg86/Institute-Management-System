@@ -4,7 +4,7 @@ export function getUserIdFromToken() {
 
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.userId || payload.id || payload.sub || null;
+    return payload.userId;
   } catch (error) {
     console.error("Invalid token:", error);
     return null;
