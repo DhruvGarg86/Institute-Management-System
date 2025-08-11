@@ -5,10 +5,10 @@ import { toast } from "react-toastify";
 import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "./StudentNavbar";
 import { getStudentProfile } from "../../services/Student/studentProfile";
-import { getUserIdFromToken } from "../../services/Student/auth";
 import axios from "axios";
 import { config } from "../../services/config";
 import { uploadImageUniversal } from "../../services/image";
+import { getUserIdFromToken } from "../../services/Teacher/Dashboard";
 
 function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);

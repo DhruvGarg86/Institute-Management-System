@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import MyPieChart from "./MyPieChart";
 import { toast } from "react-toastify";
-import { getUserIdFromToken } from "../../services/Student/StudentService";
 import axios from "axios";
 import { config } from "../../services/config";
+import { getUserIdFromToken } from "../../services/student/Dashboard";
 
 function StudentAttendanceCard() {
   const [datas, setDatas] = useState(null);
   const studentId = getUserIdFromToken();
+  console.log("ye dekh"+studentId);
 
   useEffect(() => {
     if (!studentId) return;

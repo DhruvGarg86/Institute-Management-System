@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Student-module.css";
 import { toast } from "react-toastify";
 import { getStudentProfile } from "../../services/Student/studentProfile";
-import { getUserIdFromToken } from "../../services/Student/auth";
+import { getUserIdFromToken } from "../../services/Teacher/Dashboard";
 
 
 function StudentNavbar() {

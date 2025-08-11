@@ -7,8 +7,8 @@ import StudentNavbar from "./StudentNavbar";
 import {
   getStudentAttendance,
   getStudentProfile,
-  getUserIdFromToken,
 } from "../../services/Student/StudentService";
+import { getUserIdFromToken } from "../../services/Teacher/Dashboard";
 
 function StudentAttendance() {
   const [attendance, setAttendance] = useState({});

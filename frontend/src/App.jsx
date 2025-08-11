@@ -214,7 +214,7 @@ function App() {
         <Route path="/student/display-complaints" element={
           <ProtectedRoute allowedRoles={["STUDENT"]}><StudentComplaint /></ProtectedRoute>
         } />
-        <Route path="/student/exam" element={
+        <Route path="/student/result" element={
           <ProtectedRoute allowedRoles={["STUDENT"]}><StudentResult /></ProtectedRoute>
         } />
       </Routes>

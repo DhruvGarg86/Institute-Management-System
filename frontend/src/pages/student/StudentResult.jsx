@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import StudentNavbar from "./StudentNavbar";
 import StudentSidebar from "./StudentSidebar";
-import { getUserIdFromToken } from "../../services/Student/auth";
 import axios from "axios";
 import { config } from "../../services/config";
+import { getUserIdFromToken } from "../../services/Teacher/Dashboard";
 
 function StudentResult() {
   const [studentData, setStudentData] = useState(null);

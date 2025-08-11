@@ -83,8 +83,8 @@ function StudentSidebar() {
         <div className="accordion-item">
           <h2 className="accordion-header">
             <button
-              onClick={() => navigate("/student/exam")}
-              className={`accordion-button ${isActive("/student/exam") ? "bg-primary text-white" : "collapsed"}`}
+              onClick={() => navigate("/student/result")}
+              className={`accordion-button ${isActive("/student/result") ? "bg-primary text-white" : "collapsed"}`}
               type="button"
             >
               Result
