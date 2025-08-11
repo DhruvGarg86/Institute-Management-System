@@ -31,69 +31,82 @@ import {
 } from "@syncfusion/ej2-react-grids";
 import axios from "axios";
 import { config } from "../../services/config";
+import { useParams } from "react-router-dom";
+import { getStudentById } from "../../services/Admin/Student";
 
 function StudentMarks() {
-  // Sample data for the Marks Table (initially empty or fetched from backend)
-  const [marksData, setMarksData] = useState([
-    {
-      Subject: "English",
-      Total: 100,
-      Obtained: 80,
-      Percentage: 80,
-      Grade: "B+",
-    },
-    {
-      Subject: "Science",
-      Total: 100,
-      Obtained: 75,
-      Percentage: 75,
-      Grade: "B",
-    },
-    { Subject: "Maths", Total: 100, Obtained: 90, Percentage: 90, Grade: "A" },
-    { Subject: "Social", Total: 100, Obtained: 60, Percentage: 60, Grade: "C" },
-  ]);
-
+  const { id } = useParams();
+  
   // List of available subjects for the dropdown
   const [availableSubjects, setAvailableSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [marksInput, setMarksInput] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState([]);
+  const [marksInput, setMarksInput] = useState([]);
+  const [student, setStudent] = useState({});
 
-  // Student details (you might fetch this from a route parameter or API)
-  const student = {
-    name: "Dhruv Garg",
-    email: "dhruvgarg086@gmail.com",
-    rollNo: "2000300100084", // This will be used as studentId
-    dob: "23-12-2002",
-    course: "B.TECH",
-    profilePic: "https://media1.tenor.com/m/uavHvpMwWSEAAAAC/cat-cat-meme.gif",
+  const chartRef = useRef(null);
+  const gridRef = useRef(null);
+
+  const [chartData, setChartData] = useState([]);
+  const [tableData, setTableData] = useState([]);
+
+
+  const getStudents = async (id) => {
+    try {
+      const response = await getStudentById(id);
+      setStudent(response);
+
+      // Convert API marksDetails to chart and table data
+      const formattedChartData = response.marksDetails.map((item) => ({
+        name: item.subjectName,
+        value: item.marksObtained,
+      }));
+
+      const formattedTableData = response.marksDetails.map((item) => ({
+        Subject: item.subjectName,
+        Total: item.totalMarks,
+        Obtained: item.marksObtained,
+        Percentage: item.percentage,
+        Grade: item.grade,
+      }));
+
+      setChartData(formattedChartData);
+      setTableData(formattedTableData);
+
+      toast.success("Student loaded successfully");
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to load student");
+    }
   };
+
+  useEffect(() => {
+    getStudents(id);
+  }, [id])
 
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `${config.serverUrl}/admin/student/getSubjects/${student.rollNo}`,
+          `${config.serverUrl}/admin/student/getSubjects/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setAvailableSubjects(response.data); // assuming API returns array of subject names
+        setAvailableSubjects(response.data);
       } catch (error) {
-        console.error("Failed to fetch subjects", error);
+        // console.error("Failed to fetch subjects", error);
         toast.error("Unable to load subjects.");
       }
     };
 
     fetchSubjects();
-  }, [student.rollNo]);
+  }, [id]);
 
   // State for the new marks input
-
-  const chartRef = useRef(null);
-  const gridRef = useRef(null);
 
   // Function to handle adding/updating marks and sending to backend
   const handleAddMarks = async () => {
@@ -125,6 +138,7 @@ function StudentMarks() {
         }
       );
 
+      console.log(response.data)
       // Optional: You can show the response message
       toast.success("Marks added/updated successfully!");
 
@@ -162,7 +176,7 @@ function StudentMarks() {
       setSelectedSubject("");
       setMarksInput("");
     } catch (error) {
-      console.error("Error saving marks:", error);
+      // console.error("Error saving marks:", error);
       toast.error(
         error.response?.data?.message || "Failed to add/update marks."
       );
@@ -186,7 +200,7 @@ function StudentMarks() {
                   <div className="col border rounded mx-2 p-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
                     <div className="d-flex align-items-center ms-2">
                       <img
-                        src={student.profilePic}
+                        src={student.image}
                         alt="Profile"
                         className="rounded-circle me-3"
                         style={{
@@ -205,13 +219,13 @@ function StudentMarks() {
                     </div>
                     <div className="me-3 text-md-end">
                       <p className="mb-1">
-                        <strong>Roll No:</strong> {student.rollNo}
+                        <strong>Roll No:</strong> {id}
                       </p>
                       <p className="mb-1">
                         <strong>DOB:</strong> {student.dob}
                       </p>
                       <p className="mb-1">
-                        <strong>Course:</strong> {student.course}
+                        <strong>Course:</strong> {student.courseName}
                       </p>
                     </div>
                   </div>
@@ -236,8 +250,8 @@ function StudentMarks() {
                         >
                           <option value="">-- Select Subject --</option>
                           {availableSubjects.map((subject) => (
-                            <option key={subject} value={subject}>
-                              {subject}
+                            <option key={subject.id || subject.name} value={subject.name}>
+                              {subject.name}
                             </option>
                           ))}
                         </select>
@@ -277,7 +291,7 @@ function StudentMarks() {
                     </h4>
                     <GridComponent
                       ref={gridRef}
-                      dataSource={marksData}
+                      dataSource={tableData}
                       allowSorting={true}
                       allowExcelExport={true}
                       allowPdfExport={true}
@@ -356,6 +370,12 @@ function StudentMarks() {
                       title="Subject-wise Marks Distribution"
                       legendSettings={{ visible: true, position: "Right" }}
                       tooltip={{ enable: true }}
+                      onClick={() =>
+                        chartRef.current.exportModule.export(
+                          "PNG",
+                          "Student_Marks"
+                        )
+                      }
                       enableSmartLabels={true}
                     >
                       <Inject
@@ -369,9 +389,9 @@ function StudentMarks() {
                       />
                       <AccumulationSeriesCollectionDirective>
                         <AccumulationSeriesDirective
-                          dataSource={marksData}
-                          xName="Subject"
-                          yName="Obtained"
+                          dataSource={chartData}
+                          xName="name"
+                          yName="value"
                           dataLabel={{
                             visible: true,
                             name: "Percentage",
