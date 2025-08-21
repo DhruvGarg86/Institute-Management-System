@@ -18,7 +18,7 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21.0.5_9-jdk
 
 # Set working directory
-WORKDIR /app
+WORKDIR /app     
 
 # Copy the jar from the build stage
 COPY --from=build /app/target/spring_boot_backend_template-0.0.1.jar app.jar
